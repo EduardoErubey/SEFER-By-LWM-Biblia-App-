@@ -1,0 +1,4402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEFER ספר — BY LIFE WORD MISSION</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ TEMA 1: NOCHE (luna) ============ */
+:root, [data-theme="sandalo"]{
+  --parchment:#1A1612;
+  --parchment-2:#241F1A;
+  --ink:#EDE6D9;
+  --ink-soft:#A89F8E;
+  --rubric:#C75B54;
+  --rubric-soft:#D47A74;
+  --gold:#D4AF37;
+  --gold-soft:#4A3F2A;
+  --line:#3A3228;
+  --stage-bg:#0D0B09;
+  --stage-text:#EFDFAE;
+  --stage-accent:#C0392B;
+  --stage-jump:#D9A441;
+  --stage-jump-text:#1A1204;
+  --card-bg:#2A241C;
+  --jesus:#E8A0A0;
+  --fav:#E74C3C;
+}
+/* ============ TEMA 2: CIELO ============ */
+[data-theme="paz"]{
+  --parchment:#F4F8FC;
+  --parchment-2:#E7EFF7;
+  --ink:#1E2A38;
+  --ink-soft:#54697D;
+  --rubric:#2B5F8A;
+  --rubric-soft:#4C7FA8;
+  --gold:#3E7CB1;
+  --gold-soft:#BFDCF2;
+  --line:#CFE0EE;
+  --stage-bg:#0B1A2A;
+  --stage-text:#DCEBF9;
+  --stage-accent:#5FA8DE;
+  --stage-jump:#F2A65A;
+  --stage-jump-text:#1A1204;
+  --card-bg:#ffffff;
+  --jesus:#1A5276;
+  --fav:#2980B9;
+}
+/* ============ TEMA 3: PLAYA / CÁLIDO ============ */
+[data-theme="arena"]{
+  --parchment:#F6F0DF;
+  --parchment-2:#EFE6CC;
+  --ink:#2B241C;
+  --ink-soft:#5B5142;
+  --rubric:#8A2E28;
+  --rubric-soft:#B65750;
+  --gold:#A6822B;
+  --gold-soft:#D8C48B;
+  --line:#D9CCA6;
+  --stage-bg:#141009;
+  --stage-text:#EFDFAE;
+  --stage-accent:#C0392B;
+  --stage-jump:#D9A441;
+  --stage-jump-text:#1A1204;
+  --card-bg:#ffffff;
+  --jesus:#8B1E1E;
+  --fav:#C0392B;
+}
+/* ============ TEMA 4: MONOCROMO ============ */
+[data-theme="claro"]{
+  --parchment:#F4F4F4;
+  --parchment-2:#E6E6E6;
+  --ink:#1B1B1B;
+  --ink-soft:#5A5A5A;
+  --rubric:#1B1B1B;
+  --rubric-soft:#444444;
+  --gold:#3D3D3D;
+  --gold-soft:#CFCFCF;
+  --line:#D2D2D2;
+  --stage-bg:#0D0D0D;
+  --stage-text:#EDEDED;
+  --stage-accent:#FFFFFF;
+  --stage-jump:#9A9A9A;
+  --stage-jump-text:#0D0D0D;
+  --card-bg:#ffffff;
+  --jesus:#333333;
+  --fav:#1B1B1B;
+}
+/* ============ TEMA 5: AMOLED (negro puro) ============ */
+[data-theme="amoled"]{
+  --parchment:#000000;
+  --parchment-2:#0A0A0A;
+  --ink:#E8E8E8;
+  --ink-soft:#888888;
+  --rubric:#FF5252;
+  --rubric-soft:#FF7A7A;
+  --gold:#FFD54F;
+  --gold-soft:#2A2A2A;
+  --line:#222222;
+  --stage-bg:#000000;
+  --stage-text:#F0F0F0;
+  --stage-accent:#FF5252;
+  --stage-jump:#FFD54F;
+  --stage-jump-text:#000000;
+  --card-bg:#111111;
+  --jesus:#FF8A80;
+  --fav:#FF5252;
+}
+[data-theme="amoled"] .verse.selected{
+  background:rgba(255,213,79,0.22);
+  box-shadow:inset 3px 0 0 #FFD54F;
+}
+[data-theme="amoled"] .verse.active-detail{
+  background:rgba(255,82,82,0.18);
+  box-shadow:inset 3px 0 0 #FF5252;
+}
+[data-theme="amoled"] .verse.highlighted{
+  background:rgba(255,82,82,0.28);
+}
+/* ============ TEMA 6: EDÉN ============ */
+[data-theme="eden"]{
+  --parchment:#F3F6EE;
+  --parchment-2:#E8EEDF;
+  --ink:#2C3B2A;
+  --ink-soft:#5A6B55;
+  --rubric:#5B7A4A;
+  --rubric-soft:#7A9A68;
+  --gold:#A68B3C;
+  --gold-soft:#D4C89A;
+  --line:#C9D4B8;
+  --stage-bg:#1A2218;
+  --stage-text:#E8F0E0;
+  --stage-accent:#7A9A68;
+  --stage-jump:#C9A84A;
+  --stage-jump-text:#1A1608;
+  --card-bg:#ffffff;
+  --jesus:#4A6B3A;
+  --fav:#6B8A4A;
+}
+/* ============ TEMA 7: REINO ============ */
+[data-theme="reino"]{
+  --parchment:#0F1A2E;
+  --parchment-2:#16233A;
+  --ink:#E8E4D8;
+  --ink-soft:#9AA3B5;
+  --rubric:#C9A227;
+  --rubric-soft:#D4B84A;
+  --gold:#E0C35A;
+  --gold-soft:#3A3218;
+  --line:#2A3A55;
+  --stage-bg:#0A1220;
+  --stage-text:#F0EAD8;
+  --stage-accent:#C9A227;
+  --stage-jump:#E0C35A;
+  --stage-jump-text:#1A1204;
+  --card-bg:#1A283F;
+  --jesus:#E8C070;
+  --fav:#C9A227;
+}
+[data-theme="reino"] .verse.selected{
+  background:rgba(201,162,39,0.22);
+  box-shadow:inset 3px 0 0 #C9A227;
+}
+[data-theme="reino"] .verse.active-detail{
+  background:rgba(201,162,39,0.15);
+  box-shadow:inset 3px 0 0 #C9A227;
+}
+[data-theme="reino"] .verse.highlighted{
+  background:rgba(201,162,39,0.28);
+}
+[data-theme="reino"] #stage .jesus-words{ color:#E8C070; }
+[data-theme="eden"] #stage .jesus-words{ color:#A8C898; }
+
+:root{
+  --font-display:'Fraunces', serif;
+  --font-body:'Literata', serif;
+  --font-ui:'Inter', sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;height:100%;}
+body{
+  background:var(--parchment);
+  color:var(--ink);
+  font-family:var(--font-ui);
+  overflow:hidden;
+  transition:background .2s, color .2s;
+}
+#app{display:flex;height:100vh;width:100vw;}
+
+/* ---------- NAV ---------- */
+#nav{
+  width:280px;
+  min-width:280px;
+  background:var(--parchment-2);
+  border-right:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+#nav-header-actions{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-top:2px;
+}
+#mobile-toggle{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--line);
+  background:var(--parchment);
+  color:var(--ink-soft);
+  border-radius:6px;
+  width:30px;
+  height:30px;
+  padding:0;
+  font-size:15px;
+  cursor:pointer;
+  line-height:1;
+}
+#mobile-toggle:hover{border-color:var(--gold);color:var(--rubric);}
+#mobile-toggle.active{
+  border-color:var(--rubric);
+  color:var(--rubric);
+  background:var(--gold-soft);
+}
+/* Contenedores exclusivos del modo móvil (ocultos en escritorio) */
+#mobile-header, #mobile-footer{display:none;}
+
+/* ---- Modo móvil (vertical) ----
+   Orden: 1) logo+acciones+buscador palabra · 2) topbar fila1 + toolbar fila2
+   · 3) lector · 4) libros · 5) temas+ref search */
+body.mobile-mode{
+  overflow:hidden;
+  position:fixed;
+  inset:0;
+  width:100%;
+}
+body.mobile-mode #app{
+  flex-direction:column;
+  height:100vh;
+  height:100dvh;
+  width:100%;
+  overflow:hidden;
+}
+/* 1) Encabezado móvil */
+body.mobile-mode #mobile-header{
+  display:flex;
+  flex:0 0 auto;
+  flex-direction:column;
+  gap:8px;
+  padding:12px 12px 10px;
+  border-bottom:1px solid var(--line);
+  background:var(--parchment-2);
+}
+body.mobile-mode #mobile-header #nav-header-row{
+  display:flex;
+  width:100%;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:8px;
+}
+body.mobile-mode #nav-header{display:none;}
+body.mobile-mode #mobile-word-search-wrap{
+  display:block;
+  width:100%;
+}
+body.mobile-mode #mobile-word-search-wrap input{
+  width:100%;
+  padding:8px 10px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--parchment);
+  font-family:var(--font-ui);
+  font-size:12.5px;
+  color:var(--ink);
+  outline:none;
+}
+body.mobile-mode #mobile-word-search-wrap input:focus{
+  border-color:var(--gold);
+  background:var(--card-bg);
+}
+body.mobile-mode #mobile-word-search-wrap input::placeholder{
+  color:var(--ink-soft);opacity:0.7;font-size:11.5px;
+}
+/* Buscador de palabra inline junto al reiniciar (también en desktop header) */
+#word-search-inline-wrap{
+  display:none;
+}
+body:not(.mobile-mode) #word-search-inline-wrap{
+  display:block;
+  margin-left:6px;
+}
+#word-search-inline-wrap input{
+  width:140px;
+  padding:6px 8px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--parchment);
+  font-family:var(--font-ui);
+  font-size:12px;
+  color:var(--ink);
+  outline:none;
+}
+#word-search-inline-wrap input:focus{
+  border-color:var(--gold);
+  background:var(--card-bg);
+}
+#word-search-inline-wrap input::placeholder{
+  color:var(--ink-soft);opacity:0.7;font-size:11px;
+}
+/* 2) Área de lectura */
+body.mobile-mode #main{
+  flex:1.3 1 0;
+  min-height:0;
+  width:100%;
+}
+/* Fila 1: ref + A- A+ Proyectar */
+body.mobile-mode #topbar{
+  flex-direction:row;
+  flex-wrap:nowrap;
+  align-items:center;
+  gap:6px;
+  padding:8px 10px;
+  flex:0 0 auto;
+  overflow:hidden;
+}
+body.mobile-mode #topbar-left{flex:1 1 auto; min-width:0;}
+body.mobile-mode #current-ref{font-size:14px; overflow:hidden; text-overflow:ellipsis;}
+body.mobile-mode #topbar-actions{
+  margin-left:0;
+  flex:0 0 auto;
+  flex-wrap:nowrap;
+  gap:4px;
+}
+body.mobile-mode #topbar-actions .btn{
+  font-size:12px;
+  padding:7px 9px;
+  flex:0 0 auto;
+}
+/* Ocultar en fila 1 los botones que van a la toolbar */
+body.mobile-mode #easy-btn,
+body.mobile-mode #sermons-btn,
+body.mobile-mode #meanings-btn,
+body.mobile-mode #notes-btn,
+body.mobile-mode #favs-btn,
+body.mobile-mode #help-btn,
+body.mobile-mode #clear-selection-btn{
+  display:none !important;
+}
+/* Fila 2: toolbar móvil */
+#mobile-toolbar{
+  display:none;
+}
+body.mobile-mode #mobile-toolbar{
+  display:flex;
+  flex:0 0 auto;
+  flex-wrap:wrap;
+  gap:5px;
+  padding:6px 10px 8px;
+  border-bottom:1px solid var(--line);
+  background:var(--parchment);
+  transition:max-height .25s ease, opacity .25s ease, padding .25s ease, border .25s ease;
+  max-height:120px;
+  opacity:1;
+  overflow:hidden;
+}
+body.mobile-mode #mobile-toolbar.hidden-scroll{
+  max-height:0;
+  opacity:0;
+  padding-top:0;
+  padding-bottom:0;
+  border-bottom-width:0;
+}
+body.mobile-mode #mobile-toolbar .btn{
+  font-size:11px;
+  padding:6px 8px;
+  flex:1 1 auto;
+  min-width:calc(33% - 6px);
+  text-align:center;
+}
+body.mobile-mode #selection-bar{
+  padding:4px 12px 8px;
+  flex:0 0 auto;
+}
+body.mobile-mode #content-wrap{
+  flex:1 1 auto;
+  min-height:0;
+  flex-direction:column;
+}
+body.mobile-mode #reader{
+  flex:1 1 auto;
+  min-height:0;
+  -webkit-overflow-scrolling:touch;
+  padding:14px 14px 40px;
+}
+body.mobile-mode #side{
+  width:100%;
+  max-width:none;
+  border-left:none;
+  border-top:1px solid var(--line);
+  max-height:48vh;
+  flex:0 0 auto;
+  -webkit-overflow-scrolling:touch;
+}
+body.mobile-mode .book-title{font-size:22px;}
+body.mobile-mode .chap-title{font-size:15px;}
+body.mobile-mode .verse{font-size:calc(var(--verse-size, 17px) * 1.02);}
+/* 3) Libros */
+body.mobile-mode #nav{
+  width:100%;
+  min-width:0;
+  flex:1 1 0;
+  min-height:0;
+  border-right:none;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+body.mobile-mode .book-item{padding:8px 14px; font-size:15px;}
+body.mobile-mode .testament-label{padding:12px 14px 6px;}
+/* 4) Footer: temas + ref search */
+body.mobile-mode #mobile-footer{
+  display:flex;
+  flex:0 0 auto;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px;
+  background:var(--parchment-2);
+  flex-wrap:wrap;
+}
+body.mobile-mode #mobile-footer-themes{flex:0 0 auto;}
+body.mobile-mode #mobile-footer-themes #theme-switch{margin-top:0; flex-wrap:wrap;}
+body.mobile-mode #mobile-footer-search{flex:1 1 150px; min-width:150px;}
+body.mobile-mode #mobile-footer-search #ref-search-wrap{margin-top:0;}
+body.mobile-mode #ref-suggest{
+  top:auto; bottom:100%; margin-top:0; margin-bottom:4px;
+}
+body.mobile-mode #word-search-bar{width:min(96vw, 520px);}
+body.mobile-mode #stage{padding:28px 18px;}
+body.mobile-mode #stage-text{font-size:clamp(20px, 6.5vw, 36px); padding:0; max-height:62vh;}
+body.mobile-mode #stage-nav{bottom:16px; gap:8px;}
+body.mobile-mode .stage-btn{font-size:11px; padding:7px 12px;}
+body.mobile-mode #stage-exit{top:14px; right:14px; font-size:11px; padding:5px 10px;}
+body.mobile-mode #info-modal .im-card{max-height:80vh;}
+body.mobile-mode .verse-actions{margin-left:0;}
+body.mobile-mode .note-box{margin-left:0;}
+body.mobile-mode .verse .vaction{padding:6px 10px;font-size:11.5px;}
+/* Bienvenida móvil: fija, centrada, sin scroll */
+body.mobile-mode #reader.welcome-fixed{
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+body.mobile-mode .welcome-mobile{
+  max-width:340px;
+  margin:0 auto;
+  text-align:center;
+  padding:16px 12px;
+}
+body.mobile-mode .welcome-mobile h1{
+  font-family:var(--font-display);
+  font-size:24px;
+  font-weight:600;
+  color:var(--rubric);
+  margin:0 0 4px;
+}
+body.mobile-mode .welcome-mobile .welcome-heb{
+  font-size:18px;
+  color:var(--gold);
+  margin-bottom:10px;
+}
+body.mobile-mode .welcome-mobile p{
+  font-family:var(--font-body);
+  font-size:13.5px;
+  line-height:1.55;
+  color:var(--ink-soft);
+  margin:0 0 8px;
+}
+body.mobile-mode .welcome-mobile .wm-list{
+  text-align:left;
+  font-family:var(--font-ui);
+  font-size:12.5px;
+  line-height:1.7;
+  color:var(--ink);
+  margin:12px 0;
+  padding:0 8px;
+}
+body.mobile-mode .welcome-mobile .welcome-hint{
+  font-size:12px;
+  font-style:italic;
+  color:var(--ink-soft);
+  margin-top:12px;
+}
+/* Bottom sheet proyectar */
+#project-sheet{
+  display:none;
+  position:fixed;inset:0;
+  z-index:1250;
+  background:rgba(0,0,0,0.4);
+  align-items:flex-end;
+  justify-content:center;
+}
+#project-sheet.open{display:flex;}
+#project-sheet .ps-card{
+  background:var(--card-bg);
+  color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:14px 14px 0 0;
+  width:100%;
+  max-width:480px;
+  padding:16px 18px 28px;
+  box-shadow:0 -8px 32px rgba(0,0,0,0.2);
+  font-family:var(--font-ui);
+}
+#project-sheet .ps-title{
+  font-family:var(--font-display);
+  font-size:16px;
+  font-weight:700;
+  color:var(--rubric);
+  margin:0 0 12px;
+  text-align:center;
+}
+#project-sheet .ps-opt{
+  display:block;
+  width:100%;
+  text-align:left;
+  font-family:var(--font-ui);
+  font-size:14px;
+  font-weight:600;
+  padding:14px 14px;
+  margin-bottom:8px;
+  border-radius:8px;
+  border:1px solid var(--line);
+  background:var(--parchment-2);
+  color:var(--ink);
+  cursor:pointer;
+}
+#project-sheet .ps-opt:hover,
+#project-sheet .ps-opt:active{
+  border-color:var(--rubric);
+  color:var(--rubric);
+  background:var(--gold-soft);
+}
+#project-sheet .ps-cancel{
+  display:block;
+  width:100%;
+  margin-top:6px;
+  padding:12px;
+  border:none;
+  background:transparent;
+  color:var(--ink-soft);
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* Salvaguarda general */
+@media (max-width:640px){
+  #stage{padding:32px 16px;}
+  #stage-text{font-size:clamp(20px, 6vw, 34px);}
+  #word-popup{width:min(92vw, 300px);}
+}
+#nav-header{
+  padding:18px 16px 12px;
+  border-bottom:1px solid var(--line);
+}
+#nav-header .brand, #mobile-header .brand{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:19px;
+  color:var(--rubric);
+  letter-spacing:0.2px;
+}
+#nav-header .brand-sub, #mobile-header .brand-sub{
+  font-size:10px;
+  color:var(--ink-soft);
+  text-transform:uppercase;
+  letter-spacing:0.8px;
+  margin-top:2px;
+  line-height:1.3;
+}
+#nav-header-row{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:8px;
+}
+.brand-heb{
+  font-size:15px;
+  color:var(--gold);
+  margin-left:4px;
+  font-weight:400;
+}
+#nav-toggle{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--line);
+  background:var(--parchment);
+  color:var(--ink-soft);
+  border-radius:6px;
+  width:30px;
+  height:30px;
+  padding:0;
+  font-family:var(--font-ui);
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  margin-top:2px;
+  line-height:1;
+}
+#nav-toggle:hover{border-color:var(--gold);color:var(--rubric);}
+#ref-search-wrap{
+  margin-top:12px;
+  position:relative;
+}
+#ref-search{
+  width:100%;
+  padding:8px 10px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--parchment);
+  font-family:var(--font-ui);
+  font-size:12.5px;
+  color:var(--ink);
+  outline:none;
+}
+#ref-search:focus{border-color:var(--gold);background:var(--card-bg);}
+#ref-search::placeholder{color:var(--ink-soft);opacity:0.7;font-size:11.5px;}
+#ref-suggest{
+  display:none;
+  position:absolute;
+  left:0;right:0;
+  top:100%;
+  margin-top:4px;
+  background:var(--card-bg);
+  border:1px solid var(--line);
+  border-radius:6px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.12);
+  z-index:50;
+  max-height:180px;
+  overflow-y:auto;
+}
+#ref-suggest.open{display:block;}
+#ref-suggest .sug-item{
+  padding:7px 10px;
+  font-family:var(--font-ui);
+  font-size:12.5px;
+  color:var(--ink);
+  cursor:pointer;
+}
+#ref-suggest .sug-item:hover,
+#ref-suggest .sug-item.active{
+  background:var(--gold-soft);
+  color:var(--ink);
+}
+#ref-suggest .sug-hint{
+  padding:5px 10px 7px;
+  font-size:10.5px;
+  color:var(--ink-soft);
+  font-style:italic;
+  border-top:1px solid var(--line);
+}
+.testament-label .t-chevron{
+  display:inline-block;
+  width:14px;
+  font-size:10px;
+  opacity:0.7;
+}
+.book-item .b-chevron{
+  font-size:10px;
+  opacity:0.55;
+  margin-left:6px;
+}
+.info-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:22px;height:22px;
+  margin-left:6px;
+  border-radius:50%;
+  border:1px solid var(--line);
+  background:var(--parchment);
+  color:var(--gold);
+  font-size:12px;
+  font-weight:700;
+  font-family:var(--font-ui);
+  cursor:pointer;
+  flex-shrink:0;
+  line-height:1;
+  padding:0;
+  vertical-align:middle;
+}
+.info-btn:hover{
+  border-color:var(--rubric);
+  color:var(--rubric);
+  background:var(--gold-soft);
+}
+.testament-label{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:6px;
+}
+.testament-label .t-label-text{flex:1;}
+#info-modal{
+  display:none;
+  position:fixed;inset:0;
+  z-index:1300;
+  background:rgba(0,0,0,0.45);
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+#info-modal.open{display:flex;}
+#info-modal .im-card{
+  background:var(--card-bg);
+  color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:10px;
+  max-width:480px;
+  width:100%;
+  max-height:85vh;
+  overflow-y:auto;
+  box-shadow:0 16px 48px rgba(0,0,0,0.28);
+  padding:20px 22px 18px;
+  position:relative;
+  font-family:var(--font-ui);
+}
+#info-modal .im-close{
+  position:absolute;top:10px;right:12px;
+  border:none;background:transparent;
+  font-size:18px;cursor:pointer;
+  color:var(--ink-soft);line-height:1;
+  width:28px;height:28px;
+  border-radius:4px;
+}
+#info-modal .im-close:hover{color:var(--rubric);background:var(--parchment-2);}
+#info-modal .im-title{
+  font-family:var(--font-display);
+  font-size:20px;font-weight:700;
+  color:var(--rubric);
+  margin:0 28px 4px 0;
+}
+#info-modal .im-sub{
+  font-size:12px;color:var(--gold);
+  font-weight:600;letter-spacing:0.5px;
+  text-transform:uppercase;margin-bottom:14px;
+}
+#info-modal .im-block{margin-bottom:12px;}
+#info-modal .im-label{
+  font-size:10.5px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:3px;
+}
+#info-modal .im-text{
+  font-family:var(--font-body);
+  font-size:13.5px;line-height:1.55;
+  color:var(--ink);
+}
+#info-modal .im-text strong{color:var(--rubric);}
+#theme-switch{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:12px;
+}
+.theme-dot{
+  position:relative;
+  width:26px;height:26px;
+  border-radius:6px;
+  cursor:pointer;
+  border:1.5px solid var(--line);
+  background:var(--parchment);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+  line-height:1;
+  transition:border-color .15s, background .15s;
+}
+.theme-dot:hover{border-color:var(--gold);}
+.theme-dot.active{
+  border-color:var(--rubric);
+  background:var(--gold-soft);
+}
+/* Tooltip flotante personalizado */
+.theme-dot::after{
+  content:attr(data-tooltip);
+  position:absolute;
+  left:50%;
+  bottom:calc(100% + 8px);
+  transform:translateX(-50%) translateY(4px);
+  background:var(--ink);
+  color:var(--parchment);
+  font-family:var(--font-ui);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:0.3px;
+  white-space:nowrap;
+  padding:5px 10px;
+  border-radius:5px;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .18s, transform .18s, visibility .18s;
+  z-index:100;
+  box-shadow:0 4px 12px rgba(0,0,0,0.18);
+}
+.theme-dot::before{
+  content:'';
+  position:absolute;
+  left:50%;
+  bottom:calc(100% + 2px);
+  transform:translateX(-50%);
+  border:5px solid transparent;
+  border-top-color:var(--ink);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .18s, visibility .18s;
+  z-index:100;
+}
+.theme-dot:hover::after,
+.theme-dot:hover::before{
+  opacity:1;
+  visibility:visible;
+  transform:translateX(-50%) translateY(0);
+}
+.theme-dot:hover::before{
+  transform:translateX(-50%);
+}
+
+#book-list{
+  flex:1;
+  overflow-y:auto;
+  padding:6px 0 20px;
+}
+.testament-label{
+  font-family:var(--font-ui);
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--gold);
+  padding:14px 16px 6px;
+  cursor:pointer;
+  user-select:none;
+}
+.book-item{
+  padding:7px 16px;
+  font-family:var(--font-body);
+  font-size:14px;
+  cursor:pointer;
+  border-left:3px solid transparent;
+  color:var(--ink);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.book-item:hover{background:rgba(166,130,43,0.12);}
+.book-item.active{
+  border-left-color:var(--rubric);
+  background:rgba(138,46,40,0.10);
+  color:var(--rubric);
+  font-weight:600;
+}
+.chap-strip{
+  display:none;
+  flex-wrap:wrap;
+  gap:5px;
+  padding:6px 14px 10px 16px;
+}
+.chap-strip.open{display:flex;}
+.chap-pill{
+  width:27px;height:25px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;
+  font-family:var(--font-ui);
+  background:var(--parchment);
+  border:1px solid var(--line);
+  border-radius:3px;
+  cursor:pointer;
+  color:var(--ink-soft);
+}
+.chap-pill:hover{border-color:var(--rubric);color:var(--rubric);}
+.chap-pill.active{background:var(--rubric);color:var(--parchment);border-color:var(--rubric);}
+
+/* ---------- MAIN ---------- */
+#main{flex:1;display:flex;flex-direction:column;min-width:0;}
+#topbar{
+  padding:10px 22px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  background:var(--parchment);
+  flex-wrap:wrap;
+}
+#topbar-left{
+  display:flex;
+  align-items:center;
+  min-width:0;
+  flex:0 1 auto;
+}
+#topbar-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-left:auto;
+}
+#selection-bar{
+  display:none;
+  padding:4px 22px 8px;
+  border-bottom:1px solid var(--line);
+  background:var(--parchment);
+  text-align:right;
+}
+#selection-bar.has-sel{display:block;}
+/* Barra flotante de búsqueda por palabra (centro de pantalla) */
+#word-search-bar{
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  z-index:1100;
+  width:min(520px, 92vw);
+  background:var(--card-bg);
+  border:1px solid var(--line);
+  border-radius:10px;
+  box-shadow:0 16px 48px rgba(0,0,0,0.28);
+  overflow:hidden;
+}
+#word-search-bar.open{display:block;}
+.verse .w{
+  cursor:pointer;
+  border-radius:2px;
+}
+.verse .w:hover{
+  background:rgba(166,130,43,0.18);
+}
+.jesus-words{
+  color:var(--jesus);
+  font-style:italic;
+}
+#stage .jesus-words{
+  color:#E8B4B4;
+  font-style:italic;
+}
+[data-theme="paz"] #stage .jesus-words{ color:#A8D4F0; }
+[data-theme="claro"] #stage .jesus-words{ color:#CFCFCF; }
+[data-theme="amoled"] #stage .jesus-words{ color:#FF8A80; }
+.verse.highlighted{
+  background:color-mix(in srgb, var(--fav) 14%, transparent);
+}
+.verse .fav-flag{
+  display:inline-block;
+  margin-left:6px;
+  font-size:11px;
+  color:var(--fav);
+}
+.btn.fav-btn{
+  color:var(--fav);
+  border-color:var(--line);
+}
+.btn.fav-btn:hover{border-color:var(--fav);}
+.btn.fav-btn.active-panel{
+  background:var(--fav);
+  border-color:var(--fav);
+  color:#fff;
+}
+#notes-btn.active-panel{
+  background:var(--rubric);
+  border-color:var(--rubric);
+  color:var(--parchment);
+}
+#word-search-bar .ws-input-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  border-bottom:1px solid var(--line);
+}
+#word-search-bar .ws-input-row::before{
+  content:"🔎";
+  font-size:13px;
+  opacity:0.55;
+}
+#word-search-input{
+  flex:1;
+  border:none;
+  outline:none;
+  background:transparent;
+  font-family:var(--font-ui);
+  font-size:14px;
+  color:var(--ink);
+}
+#word-search-results{
+  max-height:340px;
+  overflow-y:auto;
+}
+#word-search-results .result-item{padding:9px 14px;}
+#word-search-results .empty-msg{padding:14px;}
+#current-ref{
+  font-family:var(--font-display);
+  font-size:17px;
+  font-weight:600;
+  color:var(--ink);
+  white-space:nowrap;
+}
+#selection-info{
+  font-family:var(--font-ui);
+  font-size:11.5px;
+  color:var(--gold);
+  font-weight:600;
+  line-height:1.35;
+  white-space:normal;
+  word-break:break-word;
+  display:inline-block;
+  text-align:right;
+  max-width:100%;
+}
+#info-modal .im-card{
+  outline:none;
+}
+#info-modal .im-scroll{
+  max-height:min(60vh, 480px);
+  overflow-y:auto;
+  outline:none;
+}
+.book-item, .testament-label, .chap-pill, .verse, .result-item, .theme-dot, .vaction{
+  /* accesibles con teclado */
+}
+.book-item:focus, .testament-label:focus, .chap-pill:focus, .verse:focus, .result-item:focus, .theme-dot:focus, .vaction:focus, .btn:focus, .info-btn:focus{
+  outline:2px solid var(--gold);
+  outline-offset:2px;
+}
+#info-modal .im-nav{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:16px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+}
+#info-modal .im-nav button{
+  font-family:var(--font-ui);
+  font-size:12px;
+  font-weight:600;
+  padding:7px 12px;
+  border-radius:6px;
+  border:1px solid var(--line);
+  background:var(--parchment-2);
+  color:var(--ink);
+  cursor:pointer;
+}
+#info-modal .im-nav button:hover{border-color:var(--rubric);color:var(--rubric);}
+#info-modal .im-nav button:disabled{opacity:0.35;cursor:default;}
+.sermon-editor input, .sermon-editor textarea{
+  width:100%;
+  font-family:var(--font-ui);
+  font-size:13px;
+  padding:8px 10px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--parchment);
+  color:var(--ink);
+  margin-bottom:8px;
+  box-sizing:border-box;
+}
+.sermon-editor textarea{min-height:56px;resize:vertical;}
+.sermon-editor .se-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;}
+.sermon-editor .se-section{
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:10px;
+  margin-bottom:10px;
+  background:var(--parchment-2);
+}
+.sermon-editor .se-verse-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  font-size:11.5px;
+  padding:3px 8px;
+  border-radius:12px;
+  background:var(--gold-soft);
+  border:1px solid var(--line);
+  margin:2px 4px 2px 0;
+}
+.sermon-editor .se-verse-chip button{
+  border:none;background:transparent;cursor:pointer;color:var(--rubric);font-weight:700;
+}
+.result-item .fav-del, .result-item .sermon-del{
+  float:right;
+  border:none;
+  background:transparent;
+  cursor:pointer;
+  font-size:14px;
+  opacity:0.55;
+  padding:2px 4px;
+}
+.result-item:hover .fav-del, .result-item:hover .sermon-del{opacity:1;}
+.btn{
+  font-family:var(--font-ui);
+  font-size:12.5px;
+  font-weight:600;
+  padding:8px 14px;
+  border-radius:6px;
+  border:1px solid var(--line);
+  background:var(--parchment-2);
+  color:var(--ink);
+  cursor:pointer;
+  white-space:nowrap;
+}
+.btn:hover{border-color:var(--gold);}
+.btn.primary{
+  background:var(--rubric);
+  border-color:var(--rubric);
+  color:var(--parchment);
+}
+.btn.primary:hover{background:var(--rubric-soft);}
+.btn:disabled{opacity:.4;cursor:default;}
+.btn:disabled:hover{border-color:var(--line);}
+
+#content-wrap{flex:1;display:flex;overflow:hidden;}
+#reader{
+  flex:1;
+  overflow-y:auto;
+  padding:30px 48px 60px;
+}
+#reader .book-title{
+  font-family:var(--font-display);
+  font-size:13px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:2px;
+}
+#reader .chap-title{
+  font-family:var(--font-display);
+  font-size:36px;
+  font-weight:700;
+  color:var(--ink);
+  margin:0 0 6px;
+}
+#select-hint{
+  font-family:var(--font-ui);
+  font-size:12px;
+  color:var(--ink-soft);
+  font-style:italic;
+  margin-bottom:18px;
+}
+.verse{
+  font-family:var(--font-body);
+  font-size:17px;
+  line-height:1.85;
+  color:var(--ink);
+  margin-bottom:2px;
+  padding:3px 8px 3px 4px;
+  border-radius:5px;
+  cursor:pointer;
+  position:relative;
+}
+.verse:hover{background:rgba(166,130,43,0.10);}
+.verse.selected{background:var(--gold-soft);}
+.verse.active-detail{background:rgba(138,46,40,0.10);}
+.verse .vnum{
+  font-family:var(--font-ui);
+  font-weight:700;
+  font-size:11px;
+  color:var(--rubric);
+  vertical-align:super;
+  margin-right:5px;
+}
+/* favorito: ver .verse.highlighted más arriba (usa --fav) */
+.verse .note-flag{
+  display:inline-block;
+  margin-left:6px;
+  font-size:10.5px;
+  color:var(--gold);
+  font-family:var(--font-ui);
+  font-style:italic;
+}
+.verse-actions{
+  display:none;
+  gap:6px;
+  margin-top:4px;
+  margin-left:22px;
+  flex-wrap:wrap;
+}
+.verse.active-detail .verse-actions{display:flex;}
+.vaction{
+  font-family:var(--font-ui);
+  font-size:11px;
+  padding:4px 9px;
+  border-radius:4px;
+  border:1px solid var(--line);
+  background:var(--parchment);
+  cursor:pointer;
+  color:var(--ink-soft);
+}
+.vaction:hover{border-color:var(--rubric);color:var(--rubric);}
+.vaction.on{background:var(--gold-soft);border-color:var(--gold);color:var(--ink);}
+
+.note-box{
+  margin:6px 0 10px 22px;
+  padding:8px 10px;
+  background:var(--card-bg);
+  border:1px solid var(--line);
+  border-left:3px solid var(--gold);
+  border-radius:4px;
+  font-family:var(--font-ui);
+  font-size:12.5px;
+  color:var(--ink-soft);
+  display:none;
+  position:relative;
+}
+.note-box.open{display:block;}
+.note-box .note-toolbar{
+  position:absolute;
+  top:4px;right:4px;
+  display:flex;
+  gap:2px;
+  z-index:2;
+}
+.note-box .note-close,
+.note-box .note-trash{
+  width:24px;height:24px;
+  display:flex;align-items:center;justify-content:center;
+  border:none;background:transparent;
+  color:var(--ink-soft);
+  font-size:14px;
+  cursor:pointer;
+  border-radius:4px;
+  line-height:1;
+  padding:0;
+}
+.note-box .note-close{font-size:16px;}
+.note-box .note-close:hover{color:var(--rubric);background:var(--parchment-2);}
+.note-box .note-trash:hover{color:var(--fav);background:var(--parchment-2);}
+.result-item .note-del{
+  position:absolute;
+  top:8px;right:4px;
+  border:none;background:transparent;
+  cursor:pointer;
+  font-size:13px;
+  opacity:0.45;
+  padding:2px 4px;
+  border-radius:4px;
+  color:var(--ink-soft);
+}
+.result-item:hover .note-del{opacity:1;}
+.result-item .note-del:hover{color:var(--fav);background:var(--parchment);}
+.trash-link{
+  margin-top:16px;
+  padding:10px 0 4px;
+  border-top:1px solid var(--line);
+  font-family:var(--font-ui);
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--ink-soft);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.trash-link:hover{color:var(--rubric);}
+.trash-actions{
+  display:flex;
+  gap:8px;
+  margin:8px 0 12px;
+  flex-wrap:wrap;
+}
+.trash-actions .btn{font-size:11.5px;padding:6px 10px;}
+.note-box textarea{
+  width:100%;
+  min-height:50px;
+  border:none;
+  outline:none;
+  font-family:var(--font-ui);
+  font-size:12.5px;
+  resize:vertical;
+  background:transparent;
+  color:var(--ink);
+  padding-right:24px;
+}
+#reader{
+  --verse-size:17px;
+}
+#reader .verse{
+  font-size:var(--verse-size);
+}
+.welcome{
+  max-width:560px;
+  margin:48px auto;
+  text-align:center;
+  padding:24px;
+}
+.welcome h1{
+  font-family:var(--font-display);
+  font-size:28px;
+  font-weight:600;
+  color:var(--rubric);
+  margin:0 0 8px;
+}
+.welcome .welcome-heb{
+  font-size:22px;
+  color:var(--gold);
+  margin-bottom:18px;
+}
+.welcome p{
+  font-family:var(--font-body);
+  font-size:15.5px;
+  line-height:1.7;
+  color:var(--ink-soft);
+  margin:0 0 12px;
+}
+.welcome .welcome-hint{
+  font-family:var(--font-ui);
+  font-size:12.5px;
+  color:var(--ink-soft);
+  margin-top:28px;
+  font-style:italic;
+}
+.btn-icon, .btn.has-tip{
+  position:relative;
+}
+.btn-icon{
+  min-width:36px;
+  padding:8px 10px;
+  font-size:15px;
+}
+.btn-icon::after, .btn.has-tip::after{
+  content:attr(data-tooltip);
+  position:absolute;
+  left:50%;
+  top:calc(100% + 8px);
+  bottom:auto;
+  transform:translateX(-50%) translateY(-4px);
+  background:var(--ink);
+  color:var(--parchment);
+  font-family:var(--font-ui);
+  font-size:11px;
+  font-weight:600;
+  white-space:nowrap;
+  padding:5px 10px;
+  border-radius:5px;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .18s, transform .18s, visibility .18s;
+  z-index:100;
+  box-shadow:0 4px 12px rgba(0,0,0,0.18);
+}
+.btn-icon:hover::after, .btn.has-tip:hover::after,
+.btn-icon:focus-visible::after, .btn.has-tip:focus-visible::after{
+  opacity:1;
+  visibility:visible;
+  transform:translateX(-50%) translateY(0);
+}
+.side-close-btn{
+  float:right;
+  border:none;
+  background:transparent;
+  cursor:pointer;
+  font-size:16px;
+  line-height:1;
+  padding:2px 4px;
+  color:var(--ink-soft);
+}
+.side-close-btn:hover{color:var(--rubric);}
+#side h3{overflow:hidden;}
+#word-popup .wp-actions{
+  display:flex;
+  gap:6px;
+  margin-top:10px;
+  flex-wrap:wrap;
+}
+#word-popup .wp-save{
+  font-family:var(--font-ui);
+  font-size:12px;
+  font-weight:600;
+  padding:5px 10px;
+  border-radius:5px;
+  border:1px solid var(--line);
+  background:var(--parchment-2);
+  color:var(--ink);
+  cursor:pointer;
+}
+#word-popup .wp-save:hover{border-color:var(--gold);color:var(--rubric);}
+#word-popup .wp-save.saved{border-color:var(--rubric);color:var(--rubric);}
+.btn.easy-on{
+  background:var(--gold-soft);
+  border-color:var(--gold);
+  color:var(--ink);
+  font-weight:600;
+}
+.easy-name{font-weight:700;}
+.easy-city{font-style:italic;}
+.note-box .note-ok{
+  font-family:var(--font-ui);
+  font-size:11.5px;
+  font-weight:600;
+  padding:4px 10px;
+  border-radius:4px;
+  border:1px solid var(--rubric);
+  background:var(--rubric);
+  color:var(--parchment);
+  cursor:pointer;
+  margin-top:6px;
+}
+.note-box .note-ok:hover{background:var(--rubric-soft);border-color:var(--rubric-soft);}
+.note-box .note-actions-row{
+  display:flex;
+  justify-content:flex-end;
+  gap:6px;
+  margin-top:4px;
+}
+
+/* side panel: results / notes list */
+#side{
+  width:290px;
+  min-width:290px;
+  border-left:1px solid var(--line);
+  background:var(--parchment-2);
+  overflow-y:auto;
+  padding:16px;
+  display:none;
+}
+#side.open{display:block;}
+#side h3{
+  font-family:var(--font-display);
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  color:var(--rubric);
+  margin:0 0 10px;
+}
+.result-item{
+  padding:9px 0;
+  border-bottom:1px solid var(--line);
+  cursor:pointer;
+  position:relative;
+  padding-right:28px;
+}
+.result-item:hover .result-ref{color:var(--rubric);}
+.result-ref{
+  font-family:var(--font-ui);
+  font-weight:700;
+  font-size:12px;
+  color:var(--gold);
+}
+.result-text{
+  font-family:var(--font-body);
+  font-size:13px;
+  color:var(--ink);
+  margin-top:2px;
+  line-height:1.5;
+}
+.empty-msg{
+  font-family:var(--font-ui);
+  font-size:12.5px;
+  color:var(--ink-soft);
+  font-style:italic;
+}
+
+/* ---------- STAGE / PROJECTION MODE ---------- */
+#stage{
+  display:none;
+  position:fixed;inset:0;
+  background:var(--stage-bg);
+  z-index:999;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:60px;
+}
+#stage.open{display:flex;}
+#stage .stage-ref{
+  font-family:var(--font-ui);
+  font-size:clamp(15px,1.8vw,22px);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--stage-accent);
+  margin-bottom:26px;
+  text-align:center;
+}
+#stage .stage-text{
+  font-family:var(--font-display);
+  font-weight:500;
+  font-size:clamp(22px,3.4vw,52px);
+  line-height:1.45;
+  color:var(--stage-text);
+  text-align:center;
+  max-width:1200px;
+  overflow-y:auto;
+  max-height:70vh;
+}
+#stage .stage-text .stage-vnum{
+  font-size:0.5em;
+  vertical-align:super;
+  color:var(--stage-accent);
+  margin-right:4px;
+  opacity:0.85;
+}
+#stage .stage-text .stage-vnum.jump{
+  vertical-align:middle;
+  font-size:0.4em;
+  background:var(--stage-jump);
+  color:var(--stage-jump-text);
+  padding:3px 8px;
+  border-radius:20px;
+  opacity:1;
+  font-weight:700;
+}
+#stage .stage-text .jump-block{
+  display:block;
+  margin-top:0.6em;
+}
+#stage-exit{
+  position:absolute;top:22px;right:26px;
+  font-family:var(--font-ui);
+  font-size:12px;
+  color:var(--stage-text);
+  opacity:0.5;
+  border:1px solid var(--stage-text);
+  padding:7px 12px;
+  border-radius:5px;
+  cursor:pointer;
+}
+#stage-exit:hover{opacity:1;}
+#stage-nav{
+  position:absolute;bottom:26px;
+  display:flex;gap:10px;
+}
+.stage-btn{
+  font-family:var(--font-ui);
+  font-size:12px;
+  color:var(--stage-text);
+  opacity:0.55;
+  border:1px solid var(--stage-text);
+  padding:8px 16px;
+  border-radius:5px;
+  cursor:pointer;
+  background:transparent;
+}
+.stage-btn:hover{opacity:1;}
+.stage-btn:disabled{opacity:.2;cursor:default;}
+
+::-webkit-scrollbar{width:9px;}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:5px;}
+
+/* ---------- POPUP DE DICCIONARIO ---------- */
+#word-popup{
+  position:fixed;
+  z-index:1200;
+  width:300px;
+  max-width:90vw;
+  background:var(--card-bg);
+  border:1px solid var(--line);
+  border-left:4px solid var(--gold);
+  border-radius:8px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.22);
+  padding:14px 16px;
+  font-family:var(--font-ui);
+  display:none;
+}
+#word-popup.open{display:block;}
+#word-popup .wp-close{
+  position:absolute;
+  top:8px;right:10px;
+  cursor:pointer;
+  font-size:12px;
+  color:var(--ink-soft);
+}
+#word-popup .wp-close:hover{color:var(--rubric);}
+#word-popup .wp-term{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:16px;
+  color:var(--rubric);
+  margin-bottom:6px;
+  text-transform:capitalize;
+  padding-right:16px;
+}
+#word-popup .wp-def{
+  font-family:var(--font-body);
+  font-size:13px;
+  line-height:1.55;
+  color:var(--ink);
+  max-height:220px;
+  overflow-y:auto;
+}
+#word-popup .wp-loading{
+  font-family:var(--font-ui);
+  font-size:12.5px;
+  color:var(--ink-soft);
+  font-style:italic;
+}
+#word-popup .wp-source{
+  font-size:10.5px;
+  color:var(--ink-soft);
+  margin-top:9px;
+  font-style:italic;
+}
+</style>
+</head>
+<body data-theme="sandalo">
+<div id="app">
+
+  <div id="mobile-header">
+    <!-- nav-header-row se mueve aquí en layoutForMobile -->
+    <div id="mobile-word-search-wrap" style="display:none;">
+      <input id="mobile-word-search-input" placeholder="Buscar palabra…" autocomplete="off" spellcheck="false">
+    </div>
+  </div>
+
+  <div id="nav">
+    <div id="nav-header">
+      <div id="nav-header-row">
+        <div>
+          <div class="brand">SEFER<span class="brand-heb">ספר</span></div>
+          <div class="brand-sub">BY LIFE WORD MISSION</div>
+        </div>
+        <div id="nav-header-actions">
+          <button type="button" id="mobile-toggle" class="btn-icon" data-tooltip="Modo móvil" title="Modo móvil / PC">📱</button>
+          <button type="button" id="nav-toggle" class="btn-icon" data-tooltip="Reiniciar navegación" title="Reiniciar navegación (contraer todo)">↺</button>
+          <div id="word-search-inline-wrap">
+            <input id="word-search-inline" placeholder="Buscar palabra…" autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+      </div>
+      <div id="theme-switch">
+        <div class="theme-dot active" data-t="sandalo" data-tooltip="Sándalo">🕯️</div>
+        <div class="theme-dot" data-t="paz" data-tooltip="Paz">🕊️</div>
+        <div class="theme-dot" data-t="arena" data-tooltip="Arena">⏳</div>
+        <div class="theme-dot" data-t="claro" data-tooltip="Claro">📄</div>
+        <div class="theme-dot" data-t="amoled" data-tooltip="Amoled">🌌</div>
+        <div class="theme-dot" data-t="eden" data-tooltip="Edén">🌿</div>
+        <div class="theme-dot" data-t="reino" data-tooltip="Reino">👑</div>
+      </div>
+      <div id="ref-search-wrap">
+        <input id="ref-search" placeholder="Génesis 1:1 · 1:1-5 · 1:1,3,6" autocomplete="off" spellcheck="false">
+        <div id="ref-suggest"></div>
+      </div>
+    </div>
+    <div id="book-list"></div>
+  </div>
+
+  <div id="main">
+    <div id="topbar">
+      <div id="topbar-left">
+        <div id="current-ref">—</div>
+      </div>
+      <div id="topbar-actions">
+        <button class="btn has-tip" id="clear-selection-btn" style="display:none;" data-tooltip="Quitar todos los versículos seleccionados">Limpiar selección</button>
+        <button class="btn btn-icon" id="font-dec" data-tooltip="Disminuir texto">A−</button>
+        <button class="btn btn-icon" id="font-inc" data-tooltip="Aumentar texto">A+</button>
+        <button class="btn has-tip" id="easy-btn" data-tooltip="Resalta nombres, ciudades y palabras de Jesús">🔍 Modo Detalle</button>
+        <button class="btn has-tip" id="sermons-btn" data-tooltip="Estudiar y crear sermones por tema">📖 Sermones</button>
+        <button class="btn has-tip" id="meanings-btn" data-tooltip="Significados de palabras guardados">📚 Significados</button>
+        <button class="btn has-tip" id="notes-btn" data-tooltip="Notas de exposición por versículo">📝 Mis notas</button>
+        <button class="btn fav-btn has-tip" id="favs-btn" data-tooltip="Versículos marcados como favoritos">♥ Mis favoritos</button>
+        <button class="btn primary has-tip" id="project-btn" data-tooltip="Proyectar selección o versículo en pantalla completa">🎬 Proyectar</button>
+        <button class="btn has-tip" id="help-btn" data-tooltip="Guía de uso y atajos de teclado">❓ Instrucciones</button>
+      </div>
+    </div>
+    <!-- Segunda fila de herramientas (solo móvil) -->
+    <div id="mobile-toolbar">
+      <button type="button" class="btn" id="mt-easy" data-tooltip="Modo Detalle">🔍 Detalle</button>
+      <button type="button" class="btn" id="mt-sermons" data-tooltip="Sermones">📖 Sermones</button>
+      <button type="button" class="btn" id="mt-meanings" data-tooltip="Significados">📚 Significados</button>
+      <button type="button" class="btn" id="mt-notes" data-tooltip="Notas">📝 Notas</button>
+      <button type="button" class="btn fav-btn" id="mt-favs" data-tooltip="Favoritos">♥ Favoritos</button>
+      <button type="button" class="btn" id="mt-help" data-tooltip="Ayuda">❓ Ayuda</button>
+    </div>
+    <div id="selection-bar"><div id="selection-info"></div></div>
+
+    <div id="content-wrap">
+      <div id="reader"></div>
+      <div id="side"></div>
+    </div>
+  </div>
+
+  <div id="mobile-footer">
+    <div id="mobile-footer-themes"></div>
+    <div id="mobile-footer-search"></div>
+  </div>
+
+</div>
+
+<!-- Menú proyectar (bottom sheet) -->
+<div id="project-sheet">
+  <div class="ps-card">
+    <div class="ps-title">🎬 Proyectar</div>
+    <button type="button" class="ps-opt" data-proj="current">📄 Versículo actual</button>
+    <button type="button" class="ps-opt" data-proj="selection">☑️ Selección de versículos</button>
+    <button type="button" class="ps-opt" data-proj="sermon">📖 Sermón preparado</button>
+    <button type="button" class="ps-opt" data-proj="chapter">📚 Capítulo completo</button>
+    <button type="button" class="ps-cancel" id="ps-cancel">Cancelar</button>
+  </div>
+</div>
+
+<div id="stage">
+  <div id="stage-exit">Salir (Esc)</div>
+  <div class="stage-ref" id="stage-ref"></div>
+  <div class="stage-text" id="stage-text"></div>
+  <div id="stage-nav">
+    <button class="stage-btn" id="stage-prev">‹ Versículo anterior</button>
+    <button class="stage-btn" id="stage-next">Siguiente versículo ›</button>
+  </div>
+</div>
+
+<div id="word-popup">
+  <span class="wp-close" title="Cerrar">❌</span>
+  <div class="wp-term"></div>
+  <div class="wp-def"></div>
+  <div class="wp-source"></div>
+  <div class="wp-actions">
+    <button type="button" class="wp-save" id="wp-save-btn" title="Guardar significado">💾 Guardar</button>
+  </div>
+</div>
+
+<div id="word-search-bar">
+  <div class="ws-input-row">
+    <input id="word-search-input" placeholder="Buscar palabra en la Biblia…" autocomplete="off" spellcheck="false">
+  </div>
+  <div id="word-search-results"></div>
+</div>
+
+<div id="info-modal">
+  <div class="im-card" tabindex="-1">
+    <button type="button" class="im-close" title="Cerrar (Esc)">❌</button>
+    <div class="im-title" id="im-title"></div>
+    <div class="im-sub" id="im-sub"></div>
+    <div class="im-scroll" id="im-scroll" tabindex="0">
+      <div id="im-body"></div>
+    </div>
+    <div class="im-nav" id="im-nav" style="display:none;">
+      <button type="button" id="im-prev">‹ Anterior</button>
+      <button type="button" id="im-next">Siguiente ›</button>
+    </div>
+  </div>
+</div>
+
+<script src="bible-data.js"></script>
+<script src="book-info.js"></script>
+<script src="sermones.js"></script>
+<script>
+/* =========================================================
+   DATOS
+   BIBLE_DATA y BOOK_ORDER se cargan desde bible-data.js
+   (debe estar en la misma carpeta que este archivo).
+   ========================================================= */
+const BIBLE = window.BIBLE_DATA || {};
+const BOOK_ORDER = window.BOOK_ORDER || [];
+const BOOK_INFO = window.BOOK_INFO || { introduccion_testamentos: [], libros: [] };
+const BOOK_INFO_MAP = {};
+(BOOK_INFO.libros || []).forEach(b => { BOOK_INFO_MAP[b.libro] = b; });
+const TESTAMENT_INFO = {};
+(BOOK_INFO.introduccion_testamentos || []).forEach(t => {
+  if(t.seccion && t.seccion.indexOf('Antiguo') >= 0) TESTAMENT_INFO.AT = t;
+  if(t.seccion && t.seccion.indexOf('Nuevo') >= 0) TESTAMENT_INFO.NT = t;
+});
+
+/* =========================================================
+   ESTADO
+   ========================================================= */
+let currentBook = (BOOK_ORDER[0] || {}).name || "Génesis";
+let currentChap = "1";
+let detailVerse = null;
+let selectedVerses = [];
+
+const store = {
+  get(key, fallback){
+    try{ const v = JSON.parse(localStorage.getItem(key)); return v===null||v===undefined ? fallback : v; }
+    catch(e){ return fallback; }
+  },
+  set(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+};
+let favorites = store.get('bp_favorites', store.get('bp_highlights', {})); // migra resaltados antiguos
+let notes      = store.get('bp_notes', {});
+// Migrar nombres de temas antiguos
+const THEME_MIGRATE = {
+  original:'arena', frio:'paz', oscuro:'sandalo',
+  playa:'arena', cielo:'paz', noche:'sandalo', mono:'claro'
+};
+let currentTheme = store.get('bp_theme', 'sandalo');
+if(THEME_MIGRATE[currentTheme]) currentTheme = THEME_MIGRATE[currentTheme];
+const VALID_THEMES = ['sandalo','paz','arena','claro','amoled','eden','reino'];
+if(!VALID_THEMES.includes(currentTheme)) currentTheme = 'sandalo';
+let sidePanel = null; // 'notes' | 'favs' | 'trash' | null
+let notesTrash = store.get('bp_notes_trash', []); // [{ref, text, deletedAt}]
+function saveNotesTrash(){ store.set('bp_notes_trash', notesTrash); }
+function moveNoteToTrash(ref){
+  const text = notes[ref];
+  if(text && String(text).trim()){
+    notesTrash.unshift({ref, text, deletedAt: Date.now()});
+    // límite razonable
+    if(notesTrash.length > 200) notesTrash.length = 200;
+    saveNotesTrash();
+  }
+  delete notes[ref];
+  saveNotes();
+}
+let showWelcome = true;
+let verseFontSize = store.get('bp_verse_font', 17);
+const DEFAULT_VERSE_FONT = 17;
+let easyReading = store.get('bp_easy_reading', false);
+
+function vid(book, chap, v){ return `${book} ${chap}:${v}`; }
+function saveFavorites(){
+  store.set('bp_favorites', favorites);
+  // Copia local descargable (carpetas favs/ junto al index, vía exportación)
+  try{ localStorage.setItem('bp_favs_export', JSON.stringify(favorites, null, 2)); }catch(e){}
+}
+function saveNotes(){
+  store.set('bp_notes', notes);
+  try{ localStorage.setItem('bp_notes_export', JSON.stringify(notes, null, 2)); }catch(e){}
+}
+function downloadJSON(filename, data){
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  setTimeout(()=> URL.revokeObjectURL(a.href), 2000);
+}
+function exportNotesFile(){ downloadJSON('notes.json', notes); }
+function exportFavsFile(){ downloadJSON('favorites.json', favorites); }
+/** Intenta cargar notas/favoritos desde archivos locales (si se sirven por HTTP junto al index) */
+async function tryLoadLocalFiles(){
+  try{
+    const rn = await fetch('notes/notes.json', {cache:'no-store'});
+    if(rn.ok){
+      const data = await rn.json();
+      if(data && typeof data === 'object'){ notes = Object.assign({}, data, notes); saveNotes(); }
+    }
+  }catch(e){}
+  try{
+    const rf = await fetch('favs/favorites.json', {cache:'no-store'});
+    if(rf.ok){
+      const data = await rf.json();
+      if(data && typeof data === 'object'){ favorites = Object.assign({}, data, favorites); saveFavorites(); }
+    }
+  }catch(e){}
+}
+
+/* Libros donde se aplican palabras de Jesús (letra roja) */
+const JESUS_BOOKS = new Set(['Mateo','Marcos','Lucas','Juan','Apocalipsis']);
+
+/* Nombres propios (personas) y ciudades/lugares para lectura fácil */
+const EASY_NAMES = new Set([
+  'abraham','abrahán','isaac','jacob','israel','moisés','moisess','aaron','aarón','josué','josue',
+  'david','salomón','salomon','saúl','saul','samuel','elías','elias','eliseo','isaías','isaias',
+  'jeremías','jeremias','ezequiel','daniel','oseas','amós','amos','miqueas','nahúm','nahum',
+  'habacuc','sofonías','sofonias','hageo','zacarías','zacarias','malaquías','malaquias',
+  'job','esdras','nehemías','nehemias','ester','rut','booz','noemí','noemi',
+  'José','josé','jose','maría','maria','pedro','pablo','saulo','juan','andrés','andres',
+  'santiago','felipe','bartolomé','bartolome','mateo','tomás','tomas','simón','simon',
+  'judas','matías','matias','lucas','marcos','timoteo','tito','filemón','filemon',
+  'nicodemo','lázaro','lazaro','marta','magdalena','pilato','herodes','caifás','caifas',
+  'anás','anas','zacarias','zacarías','isabel','isabel','santiago','bernabe','barnabé',
+  'esteban','felipe','cornelius','corneli','cornelió','cornelius','aquila','priscilla','priscilla',
+  'apollo','apolos','Silas','silas','tito','onesimo','filemon','noé','noe','adam','adán','adan',
+  'eva','cain','caín','abel','set','enoc','matusalen','matusalén','sem','cam','jafet',
+  'abrahan','sara','agar','ismael','isai','isaí','jesse','jesé','jese','ruth','boaz',
+  'gideon','gedeón','gedeon','sansón','sanson','delila','delilah','samuel','eli',
+  'natan','natán','urías','urias','betsabé','betsabe','rehoboam','roboam','jeroboam',
+  'ajos','achab','acáb','acab','jezebel','jezabel','nebuchadnezzar','nabucodonosor',
+  'cyrus','ciro','darius','darío','dario','artajerjes','artaxerxes','mardoqueo','amardis',
+  'hannah','ana','samuel','josias','josías','ezequias','hezekiah','manases','manasés',
+  'jesus','jesús','cristo','mesías','mesias','jehová','jehova','yahvé','yahweh','señor',
+  'satanás','satanas','diablo','belial','miguel','gabriel','rafael'
+].map(s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')));
+
+const EASY_CITIES = new Set([
+  'jerusalén','jerusalem','sion','sión','belén','belen','nazaret','galilea','judea','samaria',
+  'canaán','canaan','egipto','babilonia','babel','asiria','ninive','nínive','ninivé',
+  'roma','grecia','corinto','efeso','éfeso','filipos','tesalónica','tesalonica','antioquía','antioquia',
+  'damasco','tiro','sidón','sidon','capernaum','cafarnaúm','cafarnaum','betania','betfagé','betfage',
+  'getsemaní','getsmani','gólgota','golgota','calvario','jordán','jordan','sinaí','sinai','horeb',
+  'edén','eden','sodoma','gomorra','jericó','jerico','hebrón','hebron','betel','siló','silo',
+  'mizpa','gilgal','ai','hai','siquem','siquem','samaria','jezreel','megido','armagedón','armagedon',
+  'patmos','creta','chipre','malta','troas','mileto','pergamino','pérgamo','pergamo','esmirna',
+  'tarsis','nínive','ur','harán','haran','egipto','gosén','gosen','ramses','pithom',
+  'madian','midian','edom','moab','amón','amon','filistea','gaza','asdod','ascalón','ascalon',
+  'gat','hebrón','beerseba','beer-seba','dan','betlehem','bethlehem'
+].map(s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')));
+
+function normEasy(s){
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z]/g,'');
+}
+
+function buildJesusMap(book, chap){
+  const map = {};
+  if(!JESUS_BOOKS.has(book)) return map;
+  const chapData = (BIBLE[book]||{})[chap];
+  if(!chapData) return map;
+  let speaking = false;
+  const startRe = /(?:^|[.¶;]\s*)(?:Y\s+)?(?:entonces\s+)?(?:respondi[oó]|respondi[oó]le|d[ií]jole|d[ií]cele|dijo|dice|clam[oó]|pregunt[oó]|habl[oó]|exclam[oó]|mand[oó]|llam[oó]|ense[nñ]aba[^.]*diciendo)\s+(?:Jes[uú]s|el\s+Se[nñ]or)|(?:Jes[uú]s|el\s+Se[nñ]or)\s+(?:respondi[oó]|respondi[oó]le|d[ií]jole|d[ií]cele|dijo|dice|clam[oó]|pregunt[oó]|habl[oó]|les\s+dijo|le\s+dijo|ense[nñ]aba)/i;
+  const startRe2 = /(?:dicho\s+esto|abriendo\s+[eé]l\s+su\s+boca)[^.]*diciendo/i;
+  const otherRe = /(?:^|[.¶;]\s*)(?:Y\s+)?(?:entonces\s+)?(?:respondi[oó]|dijo|dice|clam[oó]|pregunt[oó])\s+(?:Pedro|Pilato|los\s+disc[ií]pulos|los\s+fariseos|ellos|ella|el\s+centuri[oó]n|un\s+|la\s+mujer|Caif[aá]s|Herodes|Juan|Natanael|Tom[aá]s|Felipe|Andr[eé]s|Judas|la\s+gente|el\s+pueblo|los\s+Jud[ií]os|Nicodemo)/i;
+  sortedVerseNums(book, chap).forEach(v=>{
+    const t = chapData[v] || '';
+    if(otherRe.test(t) && !startRe.test(t)){
+      speaking = false;
+    }
+    if(startRe.test(t) || startRe2.test(t)){
+      speaking = true;
+      map[v] = true;
+      return;
+    }
+    if(speaking) map[v] = true;
+  });
+  return map;
+}
+function stripPilcrow(text){
+  return (text||'').replace(/¶\s*/g,'').replace(/\u00b6\s*/g,'');
+}
+function formatVerseHtml(text, isJesus){
+  // Quitar marca de párrafo de algunas ediciones RV
+  let clean = stripPilcrow(text);
+  const esc = clean.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const body = esc.replace(/([A-Za-záéíóúÁÉÍÓÚñÑüÜ]+)/g, (m)=>{
+    let cls = 'w';
+    if(easyReading){
+      const n = normEasy(m);
+      if(EASY_CITIES.has(n)) cls += ' easy-city';
+      else if(EASY_NAMES.has(n)) cls += ' easy-name';
+    }
+    return `<span class="${cls}">${m}</span>`;
+  });
+  // Color de Jesús solo en modo lectura fácil
+  if(easyReading && isJesus) return `<span class="jesus-words">${body}</span>`;
+  return body;
+}
+function updateEasyBtn(){
+  const btn = document.getElementById('easy-btn');
+  if(!btn) return;
+  btn.classList.toggle('easy-on', easyReading);
+  btn.textContent = easyReading ? '✓ 🔍 Modo Detalle' : '🔍 Modo Detalle';
+}
+
+function scrollVerseIntoView(vnum){
+  requestAnimationFrame(()=>{
+    const rows = reader.querySelectorAll('.verse');
+    let target = null;
+    rows.forEach(row=>{
+      const n = row.querySelector('.vnum');
+      if(n && String(n.textContent) === String(vnum)) target = row;
+    });
+    if(!target){
+      target = reader.querySelector('.verse.active-detail') || reader.querySelector('.verse.selected');
+    }
+    if(target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+}
+
+
+/* =========================================================
+   TEMAS
+   ========================================================= */
+document.body.setAttribute('data-theme', currentTheme);
+document.querySelectorAll('.theme-dot').forEach(dot=>{
+  dot.tabIndex = 0;
+  dot.setAttribute('role','button');
+  dot.classList.toggle('active', dot.dataset.t === currentTheme);
+  const applyTheme = ()=>{
+    currentTheme = dot.dataset.t;
+    document.body.setAttribute('data-theme', currentTheme);
+    document.querySelectorAll('.theme-dot').forEach(d=>d.classList.toggle('active', d===dot));
+    store.set('bp_theme', currentTheme);
+  };
+  dot.onclick = applyTheme;
+  dot.onkeydown = (e)=>{
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); applyTheme(); }
+  };
+});
+
+/* Modo móvil / PC */
+// Si el usuario nunca eligió manualmente, se activa solo en pantallas
+// angostas (celulares), respetando luego cualquier elección manual.
+const MOBILE_DEFAULT = window.matchMedia('(max-width: 820px)').matches;
+let mobileMode = store.get('bp_mobile_mode', MOBILE_DEFAULT);
+
+// Reordena el DOM real (sin clonar nodos) para que el modo móvil quede:
+// 1) logo+botones · 2) bienvenida/lector · 3) testamentos · 4) temas+buscador.
+// Al usar los mismos elementos (no copias), todos los listeners ya
+// asignados (tema, búsqueda, navegación) se conservan intactos.
+function layoutForMobile(){
+  const app = document.getElementById('app');
+  const mobileHeader = document.getElementById('mobile-header');
+  const mobileFooterThemes = document.getElementById('mobile-footer-themes');
+  const mobileFooterSearch = document.getElementById('mobile-footer-search');
+  const mobileFooter = document.getElementById('mobile-footer');
+  const navHeaderRow = document.getElementById('nav-header-row');
+  const themeSwitch = document.getElementById('theme-switch');
+  const refSearchWrap = document.getElementById('ref-search-wrap');
+  const wordWrap = document.getElementById('mobile-word-search-wrap');
+  const nav = document.getElementById('nav');
+  const main = document.getElementById('main');
+  if(!app || !mobileHeader || !navHeaderRow) return;
+
+  mobileHeader.appendChild(navHeaderRow);
+  if(wordWrap){
+    wordWrap.style.display = 'block';
+    mobileHeader.appendChild(wordWrap);
+  }
+  mobileFooterThemes.appendChild(themeSwitch);
+  mobileFooterSearch.appendChild(refSearchWrap);
+  [mobileHeader, main, nav, mobileFooter].forEach(el => app.appendChild(el));
+}
+
+// Restaura el orden original de escritorio (barra lateral #nav a la
+// izquierda con su encabezado completo, #main a la derecha).
+function layoutForDesktop(){
+  const app = document.getElementById('app');
+  const navHeader = document.getElementById('nav-header');
+  const navHeaderRow = document.getElementById('nav-header-row');
+  const themeSwitch = document.getElementById('theme-switch');
+  const refSearchWrap = document.getElementById('ref-search-wrap');
+  const wordWrap = document.getElementById('mobile-word-search-wrap');
+  const nav = document.getElementById('nav');
+  const main = document.getElementById('main');
+  if(!app || !navHeader || !navHeaderRow) return;
+
+  if(wordWrap) wordWrap.style.display = 'none';
+  navHeader.appendChild(navHeaderRow);
+  navHeader.appendChild(themeSwitch);
+  navHeader.appendChild(refSearchWrap);
+  [nav, main].forEach(el => app.appendChild(el));
+}
+
+function applyMobileMode(){
+  document.body.classList.toggle('mobile-mode', mobileMode);
+  if(mobileMode) layoutForMobile(); else layoutForDesktop();
+  const btn = document.getElementById('mobile-toggle');
+  if(btn){
+    btn.classList.toggle('active', mobileMode);
+    btn.textContent = mobileMode ? '💻' : '📱';
+    btn.setAttribute('data-tooltip', mobileMode ? 'Modo PC' : 'Modo móvil');
+    btn.title = mobileMode ? 'Volver a modo horizontal (PC)' : 'Modo vertical para smartphone';
+  }
+  // Re-render welcome if showing, to switch mobile/desktop text
+  if(typeof showWelcome !== 'undefined' && showWelcome && typeof showWelcomeScreen === 'function'){
+    showWelcomeScreen();
+  }
+  store.set('bp_mobile_mode', mobileMode);
+}
+applyMobileMode();
+document.getElementById('mobile-toggle').onclick = ()=>{
+  mobileMode = !mobileMode;
+  applyMobileMode();
+};
+
+/* ← → expandir/contraer testamento o libro enfocado */
+document.addEventListener('keydown', (e)=>{
+  if(e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+  const modal = document.getElementById('info-modal');
+  if(modal && modal.classList.contains('open')) return;
+  if(stage && stage.classList.contains('open')) return;
+  const t = e.target;
+  if(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+
+  // Libro enfocado
+  const bookEl = t && t.closest && t.closest('.book-item');
+  if(bookEl){
+    const name = (bookEl.querySelector('span')?.textContent || '').replace(/[▾▸]/g,'').trim();
+    if(!name || !BIBLE[name]) return;
+    e.preventDefault();
+    if(e.key === 'ArrowRight'){
+      openBooks.add(name);
+      openTestaments.add(BOOK_ORDER.find(x=>x.name===name)?.testament || 'AT');
+      if(name !== currentBook || showWelcome){
+        const chaps = Object.keys(BIBLE[name]).sort((a,b)=>+a-+b);
+        goTo(name, chaps[0]);
+      }
+      saveNavState();
+      renderBookList();
+    } else {
+      openBooks.delete(name);
+      saveNavState();
+      renderBookList();
+    }
+    return;
+  }
+  // Testamento enfocado
+  const testEl = t && t.closest && t.closest('.t-label-text');
+  if(testEl){
+    e.preventDefault();
+    const isAT = /Antiguo/i.test(testEl.textContent);
+    const tid = isAT ? 'AT' : 'NT';
+    if(e.key === 'ArrowRight') openTestaments.add(tid);
+    else openTestaments.delete(tid);
+    saveNavState();
+    renderBookList();
+  }
+});
+
+/* =========================================================
+   NAV — expandir/contraer por clic; botón reiniciar
+   ========================================================= */
+const bookList = document.getElementById('book-list');
+const navToggleBtn = document.getElementById('nav-toggle');
+
+// Testamentos y libros abiertos (persistidos)
+let openTestaments = new Set(store.get('bp_open_testaments', ['AT','NT']));
+let openBooks = new Set(store.get('bp_open_books', []));
+
+function saveNavState(){
+  store.set('bp_open_testaments', [...openTestaments]);
+  store.set('bp_open_books', [...openBooks]);
+}
+
+navToggleBtn.onclick = ()=>{
+  openTestaments.clear();
+  openBooks.clear();
+  saveNavState();
+  renderBookList();
+  // Reiniciar tamaño de texto
+  verseFontSize = DEFAULT_VERSE_FONT;
+  store.set('bp_verse_font', verseFontSize);
+  applyVerseFont();
+  // Limpiar barra de búsqueda de referencias
+  const rs = document.getElementById('ref-search');
+  if(rs){ rs.value = ''; }
+  const ac = document.getElementById('ref-autocomplete');
+  if(ac){ ac.innerHTML = ''; ac.style.display = 'none'; }
+  // Cerrar paneles laterales y búsqueda de palabras
+  closeSidePanel();
+  if(typeof closeWordSearch === 'function') closeWordSearch();
+  showWelcomeScreen();
+};
+
+/** Lista ordenada para navegar ? : AT → libros AT → NT → libros NT */
+let infoNavList = [];
+let infoNavIndex = -1;
+let infoNavEnabled = false; // false en Instrucciones u otros modales sin secuencia
+
+function buildInfoNavList(){
+  infoNavList = [];
+  infoNavList.push({type:'testament', id:'AT'});
+  BOOK_ORDER.filter(e=>e.testament==='AT').forEach(e=> infoNavList.push({type:'book', id:e.name}));
+  infoNavList.push({type:'testament', id:'NT'});
+  BOOK_ORDER.filter(e=>e.testament==='NT').forEach(e=> infoNavList.push({type:'book', id:e.name}));
+}
+buildInfoNavList();
+
+function renderInfoContent(item){
+  if(!item) return;
+  if(item.type === 'testament'){
+    const t = TESTAMENT_INFO[item.id];
+    if(!t){
+      document.getElementById('im-title').textContent = item.id;
+      document.getElementById('im-sub').textContent = '';
+      document.getElementById('im-body').innerHTML = '<div class="im-text">Sin información.</div>';
+      return;
+    }
+    document.getElementById('im-title').textContent = t.seccion;
+    document.getElementById('im-sub').textContent = 'Introducción';
+    document.getElementById('im-body').innerHTML =
+      `<div class="im-block"><div class="im-label">Significado del nombre</div><div class="im-text">${t.significado_nombre||''}</div></div>` +
+      `<div class="im-block"><div class="im-label">Descripción</div><div class="im-text">${t.descripcion||''}</div></div>`;
+  } else {
+    const b = BOOK_INFO_MAP[item.id];
+    if(!b){
+      document.getElementById('im-title').textContent = item.id;
+      document.getElementById('im-sub').textContent = '';
+      document.getElementById('im-body').innerHTML = '<div class="im-text">Sin información para este libro.</div>';
+      return;
+    }
+    const a = b.autor || {};
+    document.getElementById('im-title').textContent = b.libro;
+    document.getElementById('im-sub').textContent = b.testamento || '';
+    document.getElementById('im-body').innerHTML =
+      `<div class="im-block"><div class="im-label">Significado del nombre</div><div class="im-text">${b.significado_nombre||''}</div></div>` +
+      `<div class="im-block"><div class="im-label">Autor</div><div class="im-text"><strong>${a.nombre||'—'}</strong><br>${a.biografia||''}` +
+      (a.nacimiento ? `<br><em>Nacimiento:</em> ${a.nacimiento}` : '') +
+      (a.fallecimiento ? `<br><em>Fallecimiento:</em> ${a.fallecimiento}` : '') +
+      `</div></div>` +
+      `<div class="im-block"><div class="im-label">Fecha de escritura</div><div class="im-text">${b.fecha_escritura||'—'}</div></div>` +
+      `<div class="im-block"><div class="im-label">Resumen</div><div class="im-text">${b.resumen||''}</div></div>`;
+  }
+}
+function updateInfoNavButtons(){
+  const nav = document.getElementById('im-nav');
+  if(!infoNavEnabled){ nav.style.display = 'none'; return; }
+  nav.style.display = 'flex';
+  document.getElementById('im-prev').disabled = infoNavIndex <= 0;
+  document.getElementById('im-next').disabled = infoNavIndex >= infoNavList.length - 1;
+}
+function focusInfoScroll(){
+  const sc = document.getElementById('im-scroll');
+  if(sc){
+    sc.focus({preventScroll:true});
+    sc.scrollTop = 0;
+  }
+}
+function openInfoAt(index){
+  if(index < 0 || index >= infoNavList.length) return;
+  infoNavIndex = index;
+  infoNavEnabled = true;
+  renderInfoContent(infoNavList[infoNavIndex]);
+  updateInfoNavButtons();
+  document.getElementById('info-modal').classList.add('open');
+  focusInfoScroll();
+}
+function showTestamentInfo(testament){
+  const idx = infoNavList.findIndex(x => x.type==='testament' && x.id===testament);
+  openInfoAt(idx >= 0 ? idx : 0);
+}
+function showBookInfo(bookName){
+  const idx = infoNavList.findIndex(x => x.type==='book' && x.id===bookName);
+  if(idx < 0){ alert('No hay información disponible para este libro.'); return; }
+  openInfoAt(idx);
+}
+function infoNavStep(delta){
+  if(!infoNavEnabled) return;
+  const next = infoNavIndex + delta;
+  if(next < 0 || next >= infoNavList.length) return;
+  openInfoAt(next);
+}
+(function initInfoModal(){
+  const modal = document.getElementById('info-modal');
+  if(!modal) return;
+  modal.querySelector('.im-close').onclick = ()=> modal.classList.remove('open');
+  modal.addEventListener('click', (e)=>{ if(e.target === modal) modal.classList.remove('open'); });
+  document.getElementById('im-prev').onclick = ()=> infoNavStep(-1);
+  document.getElementById('im-next').onclick = ()=> infoNavStep(1);
+  document.addEventListener('keydown', (e)=>{
+    if(!modal.classList.contains('open')) return;
+    if(e.key === 'Escape'){ e.preventDefault(); modal.classList.remove('open'); return; }
+    // Scroll del contenido con ↑ ↓ (sin necesitar clic previo)
+    if(e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'PageDown' || e.key === 'PageUp' || e.key === 'Home' || e.key === 'End'){
+      const sc = document.getElementById('im-scroll');
+      if(sc){
+        e.preventDefault();
+        const step = e.key === 'PageDown' || e.key === 'PageUp' ? sc.clientHeight * 0.85 : 48;
+        if(e.key === 'ArrowDown' || e.key === 'PageDown') sc.scrollTop += step;
+        else if(e.key === 'ArrowUp' || e.key === 'PageUp') sc.scrollTop -= step;
+        else if(e.key === 'Home') sc.scrollTop = 0;
+        else if(e.key === 'End') sc.scrollTop = sc.scrollHeight;
+      }
+      return;
+    }
+    if(infoNavEnabled && e.key === 'ArrowLeft'){ e.preventDefault(); infoNavStep(-1); }
+    if(infoNavEnabled && e.key === 'ArrowRight'){ e.preventDefault(); infoNavStep(1); }
+  });
+})();
+
+function renderBookList(){
+  bookList.innerHTML = '';
+  let lastTestament = null;
+
+  BOOK_ORDER.forEach(entry=>{
+    const book = entry.name;
+    const testament = entry.testament;
+
+    if(testament !== lastTestament){
+      const isOpen = openTestaments.has(testament);
+      const label = document.createElement('div');
+      label.className = 'testament-label';
+      const tName = testament === 'AT' ? 'Antiguo Testamento' : 'Nuevo Testamento';
+      label.innerHTML =
+        `<span class="t-label-text" tabindex="0" role="button"><span class="t-chevron">${isOpen ? '▾' : '▸'}</span> ${tName}</span>` +
+        `<button type="button" class="info-btn" title="Información sobre ${tName}">⚠️</button>`;
+      const toggleTest = ()=>{
+        if(openTestaments.has(testament)) openTestaments.delete(testament);
+        else openTestaments.add(testament);
+        saveNavState();
+        renderBookList();
+      };
+      label.querySelector('.t-label-text').onclick = toggleTest;
+      label.querySelector('.t-label-text').onkeydown = (e)=>{
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleTest(); }
+      };
+      label.querySelector('.info-btn').onclick = (e)=>{
+        e.stopPropagation();
+        showTestamentInfo(testament);
+      };
+      bookList.appendChild(label);
+      lastTestament = testament;
+    }
+
+    if(!openTestaments.has(testament)) return;
+
+    const has = !!BIBLE[book];
+    const bookOpen = openBooks.has(book);
+    const item = document.createElement('div');
+    item.className = 'book-item' + (book===currentBook?' active':'');
+    item.tabIndex = 0;
+    item.setAttribute('role','button');
+    item.innerHTML =
+      `<span>${book}${has && bookOpen ? '<span class="b-chevron">▾</span>' : (has ? '<span class="b-chevron">▸</span>' : '')}</span>` +
+      (has?'':'<span style="font-size:10px;opacity:.5;">— sin datos</span>') +
+      `<button type="button" class="info-btn" title="Información sobre ${book}">⚠️</button>`;
+    item.querySelector('.info-btn').onclick = (e)=>{
+      e.stopPropagation();
+      showBookInfo(book);
+    };
+    const activateBook = ()=>{
+      if(!has) return;
+      if(book === currentBook && openBooks.has(book)){
+        openBooks.delete(book);
+        saveNavState();
+        renderBookList();
+        return;
+      }
+      openBooks.add(book);
+      const chaps = Object.keys(BIBLE[book]).sort((a,b)=>+a-+b);
+      const chap = (book === currentBook && chaps.includes(String(currentChap))) ? currentChap : chaps[0];
+      goTo(book, chap);
+      saveNavState();
+      renderBookList();
+    };
+    item.addEventListener('click', (e)=>{
+      if(e.target.closest('.info-btn')) return;
+      activateBook();
+    });
+    item.addEventListener('keydown', (e)=>{
+      if(e.target.closest('.info-btn')) return;
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); activateBook(); }
+    });
+    bookList.appendChild(item);
+
+    if(bookOpen && has){
+      renderChapters(book, item);
+    }
+  });
+}
+function renderChapters(book, afterEl){
+  const strip = document.createElement('div');
+  strip.className = 'chap-strip open';
+  Object.keys(BIBLE[book]).sort((a,b)=>+a-+b).forEach(ch=>{
+    const pill = document.createElement('div');
+    pill.className = 'chap-pill' + (ch===currentChap && book===currentBook ? ' active':'');
+    pill.textContent = ch;
+    pill.tabIndex = 0;
+    pill.setAttribute('role','button');
+    const goChap = (e)=>{
+      if(e) e.stopPropagation();
+      currentChap = ch;
+      goTo(book, ch);
+      openBooks.add(book);
+      saveNavState();
+      renderBookList();
+    };
+    pill.onclick = goChap;
+    pill.onkeydown = (e)=>{
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); goChap(e); }
+    };
+    strip.appendChild(pill);
+  });
+  afterEl.insertAdjacentElement('afterend', strip);
+}
+
+/* =========================================================
+   READER
+   ========================================================= */
+const reader = document.getElementById('reader');
+const currentRef = document.getElementById('current-ref');
+const selectionInfo = document.getElementById('selection-info');
+const clearSelBtn = document.getElementById('clear-selection-btn');
+
+function goTo(book, chap){
+  showWelcome = false;
+  currentBook = book; currentChap = chap; detailVerse = null;
+  selectedVerses = [];
+  updateSelectionUI();
+  document.getElementById('side').classList.remove('open');
+  sidePanel = null;
+  document.getElementById('notes-btn')?.classList.remove('active-panel');
+  document.getElementById('favs-btn')?.classList.remove('active-panel');
+  currentRef.textContent = `${book} ${chap}`;
+  // Mantener el libro visible en la navegación
+  const entry = BOOK_ORDER.find(e=>e.name===book);
+  if(entry) openTestaments.add(entry.testament);
+  openBooks.add(book);
+  renderReader();
+}
+function showWelcomeScreen(){
+  showWelcome = true;
+  detailVerse = null;
+  selectedVerses = [];
+  updateSelectionUI();
+  currentRef.textContent = 'Inicio';
+  renderReader();
+}
+
+function sortedVerseNums(book, chap){
+  return Object.keys((BIBLE[book]||{})[chap] || {}).sort((a,b)=>+a-+b);
+}
+
+function updateSelectionUI(){
+  const bar = document.getElementById('selection-bar');
+  const easyBtn = document.getElementById('easy-btn');
+  if(selectedVerses.length === 0){
+    selectionInfo.textContent = '';
+    clearSelBtn.style.display = 'none';
+    if(bar) bar.classList.remove('has-sel');
+    if(easyBtn) easyBtn.style.display = '';
+  } else {
+    const nums = [...selectedVerses].sort((a,b)=>+a-+b);
+    selectionInfo.textContent = `${nums.length} versículo(s) seleccionado(s): v${nums.join(', v')}`;
+    clearSelBtn.style.display = 'inline-block';
+    if(bar) bar.classList.add('has-sel');
+    if(easyBtn) easyBtn.style.display = 'none';
+  }
+}
+clearSelBtn.onclick = ()=>{ selectedVerses = []; updateSelectionUI(); renderReader(); };
+
+function applyVerseFont(){
+  reader.style.setProperty('--verse-size', verseFontSize + 'px');
+}
+
+function renderReader(){
+  reader.innerHTML = '';
+  applyVerseFont();
+
+  if(showWelcome){
+    const isMob = document.body.classList.contains('mobile-mode');
+    reader.classList.toggle('welcome-fixed', isMob);
+    const w = document.createElement('div');
+    if(isMob){
+      w.className = 'welcome-mobile';
+      w.innerHTML = `
+        <h1>SEFER <span class="welcome-heb">ספר</span></h1>
+        <p><strong>Tu Biblia para estudiar,<br>preparar sermones<br>y proyectar la Palabra.</strong></p>
+        <div class="wm-list">
+          📖 Lee toda la Biblia.<br>
+          🔎 Busca referencias y palabras.<br>
+          📝 Guarda notas por versículo.<br>
+          ♥ Marca favoritos.<br>
+          📚 Consulta significados.<br>
+          🎬 Proyecta versículos o sermones.
+        </div>
+        <p class="welcome-hint">Selecciona un libro para comenzar.</p>
+      `;
+    } else {
+      w.className = 'welcome';
+      w.innerHTML = `
+        <div class="welcome-heb">ספר</div>
+        <h1>SEFER</h1>
+        <p><strong>BY LIFE WORD MISSION</strong></p>
+        <p>Bienvenido a tu herramienta de estudio y proyección bíblica.
+        Elige un libro en el panel izquierdo, busca una referencia o escribe una palabra para comenzar.</p>
+        <p class="welcome-hint">Consejo: usa las flechas en proyección para avanzar versículo a versículo · Tab completa nombres de libros en la búsqueda</p>
+      `;
+    }
+    reader.appendChild(w);
+    return;
+  }
+  reader.classList.remove('welcome-fixed');
+
+  const chapData = (BIBLE[currentBook] || {})[currentChap];
+  const bt = document.createElement('div');
+  bt.className = 'book-title'; bt.textContent = currentBook;
+  const ct = document.createElement('div');
+  ct.className = 'chap-title'; ct.textContent = `Capítulo ${currentChap}`;
+  const hint = document.createElement('div');
+  hint.id = 'select-hint';
+  hint.textContent = 'Enter/clic en versículo → acciones · Palabra con menú abierto → significado · Ctrl o Command (⌘)+clic → multi-selección · Supr → quitar favorito';
+  reader.appendChild(bt); reader.appendChild(ct); reader.appendChild(hint);
+
+  if(!chapData){
+    const p = document.createElement('div');
+    p.className = 'empty-msg';
+    p.textContent = 'No hay datos cargados para este capítulo todavía.';
+    reader.appendChild(p);
+    return;
+  }
+
+  const jesusMap = buildJesusMap(currentBook, currentChap);
+  sortedVerseNums(currentBook, currentChap).forEach(vnum=>{
+    const text = chapData[vnum];
+    const id = vid(currentBook, currentChap, vnum);
+    const isSelected = selectedVerses.includes(vnum);
+    const row = document.createElement('div');
+    row.className = 'verse'
+      + (favorites[id] ? ' highlighted':'')
+      + (isSelected ? ' selected':'')
+      + (detailVerse===vnum ? ' active-detail':'');
+    const flags = (favorites[id] ? '<span class="fav-flag">♥</span>' : '')
+      + (notes[id] ? '<span class="note-flag">✎ nota</span>' : '');
+    row.innerHTML = `<span class="vnum">${vnum}</span>${formatVerseHtml(text, !!jesusMap[vnum])}${flags}`;
+    row.tabIndex = 0;
+    row.setAttribute('role','button');
+    row.dataset.vnum = vnum;
+
+    const activateVerse = (e)=>{
+      if(e && (e.target.closest('.vaction') || e.target.closest('.note-box'))) return;
+      const sel = window.getSelection();
+      if(e && e.type === 'click' && sel && sel.toString().trim().length > 0) return;
+      if(e && (e.ctrlKey || e.metaKey)){
+        toggleSelect(vnum);
+        return;
+      }
+      if(e && e.target && e.target.classList && e.target.classList.contains('w')){
+        if(detailVerse === vnum){
+          e.stopPropagation();
+          showWordPopup(e.target.textContent, e.clientX, e.clientY);
+          return;
+        }
+        detailVerse = vnum;
+        renderReader();
+        return;
+      }
+      detailVerse = (detailVerse===vnum) ? null : vnum;
+      renderReader();
+      requestAnimationFrame(()=>{
+        const el = reader.querySelector(`.verse[data-vnum="${vnum}"]`);
+        if(el) el.focus({preventScroll:true});
+      });
+    };
+    row.onclick = activateVerse;
+    row.onkeydown = (e)=>{
+      if(e.target.closest('.vaction') || e.target.closest('.note-box') || e.target.closest('textarea')) return;
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); activateVerse(e); }
+      if(e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+        e.preventDefault();
+        const rows = [...reader.querySelectorAll('.verse')];
+        const i = rows.indexOf(row);
+        const next = rows[i + (e.key === 'ArrowDown' ? 1 : -1)];
+        if(next){ next.focus(); next.scrollIntoView({block:'nearest'}); }
+      }
+      // Supr / Backspace: quitar favorito del versículo enfocado
+      if((e.key === 'Delete' || e.key === 'Backspace') && favorites[id]){
+        e.preventDefault();
+        delete favorites[id];
+        saveFavorites();
+        renderReader();
+      }
+    };
+
+    if(detailVerse === vnum){
+      const actions = document.createElement('div');
+      actions.className = 'verse-actions';
+
+      const selBtn = document.createElement('div');
+      selBtn.className = 'vaction' + (isSelected ? ' on':'');
+      selBtn.textContent = isSelected ? '✓ En selección' : '+ Añadir a selección';
+      selBtn.onclick = (e)=>{ e.stopPropagation(); toggleSelect(vnum); };
+
+      const favBtn = document.createElement('div');
+      favBtn.className = 'vaction' + (favorites[id] ? ' on':'');
+      favBtn.textContent = favorites[id] ? '♥ Favorito' : '♡ Favorito';
+      favBtn.onclick = (e)=>{
+        e.stopPropagation();
+        if(favorites[id]) delete favorites[id];
+        else favorites[id] = true;
+        saveFavorites();
+        renderReader();
+      };
+
+      const noteBtn = document.createElement('div');
+      noteBtn.className = 'vaction';
+      noteBtn.textContent = notes[id] ? 'Editar nota' : '+ Nota';
+
+      const projBtn = document.createElement('div');
+      projBtn.className = 'vaction';
+      projBtn.textContent = 'Proyectar solo este ▸';
+      projBtn.onclick = (e)=>{ e.stopPropagation(); openStage(currentBook, currentChap, [vnum]); };
+
+      actions.appendChild(selBtn); actions.appendChild(favBtn); actions.appendChild(noteBtn); actions.appendChild(projBtn);
+
+      const noteBox = document.createElement('div');
+      noteBox.className = 'note-box';
+      noteBox.innerHTML = `
+        <div class="note-toolbar">
+          <button type="button" class="note-trash" title="Eliminar nota">🗑</button>
+          <button type="button" class="note-close" title="Cerrar (Esc)">❌</button>
+        </div>
+        <textarea placeholder="Escribe tu nota de exposición aquí…">${notes[id]||''}</textarea>
+        <div class="note-actions-row">
+          <button type="button" class="note-ok" title="Guardar (Ctrl+Enter)">💾</button>
+        </div>`;
+      const ta = noteBox.querySelector('textarea');
+      const closeNote = ()=>{
+        noteBox.classList.remove('open');
+        if(!(notes[id]||'').trim()){ delete notes[id]; saveNotes(); }
+      };
+      const saveAndCollapse = ()=>{
+        const val = ta.value;
+        if(val && val.trim()){
+          notes[id] = val;
+          saveNotes();
+        } else {
+          delete notes[id];
+          saveNotes();
+        }
+        // Contraer menú del versículo
+        detailVerse = null;
+        renderReader();
+      };
+      noteBox.querySelector('.note-close').onclick = (e)=>{ e.stopPropagation(); closeNote(); };
+      noteBox.querySelector('.note-ok').onclick = (e)=>{ e.stopPropagation(); saveAndCollapse(); };
+      noteBox.querySelector('.note-trash').onclick = (e)=>{
+        e.stopPropagation();
+        if(notes[id] && String(notes[id]).trim()){
+          if(!confirm('¿Eliminar esta nota? Se moverá a la papelera.')) return;
+          moveNoteToTrash(id);
+        } else {
+          delete notes[id];
+          saveNotes();
+        }
+        detailVerse = null;
+        renderReader();
+      };
+      // Guardar al escribir, pero no contraer hasta OK
+      ta.oninput = ()=>{ notes[id] = ta.value; saveNotes(); };
+      ta.onkeydown = (e)=>{
+        if(e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); closeNote(); }
+        if(e.key === 'Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); saveAndCollapse(); }
+      };
+      noteBtn.onclick = (e)=>{
+        e.stopPropagation();
+        const willOpen = !noteBox.classList.contains('open');
+        noteBox.classList.toggle('open');
+        if(willOpen) ta.focus();
+      };
+
+      row.appendChild(actions);
+      row.appendChild(noteBox);
+    }
+
+    reader.appendChild(row);
+  });
+}
+
+function toggleSelect(vnum){
+  const i = selectedVerses.indexOf(vnum);
+  if(i === -1) selectedVerses.push(vnum);
+  else selectedVerses.splice(i,1);
+  updateSelectionUI();
+  renderReader();
+}
+
+/* =========================================================
+   BÚSQUEDA POR REFERENCIA (nav) — Génesis 1:1 | 1:1-5 | 1:1,3,6
+   ========================================================= */
+const side = document.getElementById('side');
+const refSearch = document.getElementById('ref-search');
+
+function stripAccentsNav(s){
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+}
+
+function findBookName(query){
+  const q = stripAccentsNav(query.trim());
+  if(!q) return null;
+  // Coincidencia exacta o que empiece igual (sin acentos)
+  let best = null;
+  for(const entry of BOOK_ORDER){
+    const name = entry.name;
+    const n = stripAccentsNav(name);
+    if(n === q) return name;
+    if(n.startsWith(q) && (!best || n.length < stripAccentsNav(best).length)) best = name;
+  }
+  // Alias frecuentes sin número (1 Samuel, etc.)
+  const aliases = {
+    'genesis':'Génesis','exodo':'Éxodo','levitico':'Levítico','numeros':'Números',
+    'deuteronomio':'Deuteronomio','josue':'Josué','jueces':'Jueces','rut':'Rut',
+    '1samuel':'1 Samuel','2samuel':'2 Samuel','1reyes':'1 Reyes','2reyes':'2 Reyes',
+    '1cronicas':'1 Crónicas','2cronicas':'2 Crónicas','esdras':'Esdras','nehemias':'Nehemías',
+    'ester':'Ester','job':'Job','salmos':'Salmos','salmo':'Salmos','proverbios':'Proverbios',
+    'eclesiastes':'Eclesiastés','cantares':'Cantares','isaias':'Isaías','jeremias':'Jeremías',
+    'lamentaciones':'Lamentaciones','ezequiel':'Ezequiel','daniel':'Daniel','oseas':'Oseas',
+    'joel':'Joel','amos':'Amós','abdias':'Abdías','jonas':'Jonás','miqueas':'Miqueas',
+    'nahum':'Nahúm','habacuc':'Habacuc','sofonias':'Sofonías','hageo':'Hageo',
+    'zacarias':'Zacarías','malaquias':'Malaquías','mateo':'Mateo','marcos':'Marcos',
+    'lucas':'Lucas','juan':'Juan','hechos':'Hechos','romanos':'Romanos',
+    '1corintios':'1 Corintios','2corintios':'2 Corintios','galatas':'Gálatas','efesios':'Efesios',
+    'filipenses':'Filipenses','colosenses':'Colosenses','1tesalonicenses':'1 Tesalonicenses',
+    '2tesalonicenses':'2 Tesalonicenses','1timoteo':'1 Timoteo','2timoteo':'2 Timoteo',
+    'tito':'Tito','filemon':'Filemón','hebreos':'Hebreos','santiago':'Santiago',
+    '1pedro':'1 Pedro','2pedro':'2 Pedro','1juan':'1 Juan','2juan':'2 Juan','3juan':'3 Juan',
+    'judas':'Judas','apocalipsis':'Apocalipsis'
+  };
+  const compact = q.replace(/\s+/g,'');
+  if(aliases[compact]) return aliases[compact];
+  if(best) return best;
+  return null;
+}
+
+function parseRefQuery(raw){
+  // Formatos: "Génesis 1:1" | "Génesis 1:1-5" | "Génesis 1:1,3,6,9" | "1:1" (libro actual)
+  const s = raw.trim();
+  if(!s) return null;
+  // Separar libro del resto (último espacio antes de dígito o todo si empieza por dígito)
+  let bookPart = '', rest = s;
+  const m = s.match(/^(.+?)\s+(\d+[:\.,].*)$/);
+  if(m){
+    bookPart = m[1];
+    rest = m[2];
+  } else if(/^\d+[:\.,]/.test(s)){
+    bookPart = currentBook;
+    rest = s;
+  } else {
+    // Solo nombre de libro → cap 1
+    const book = findBookName(s);
+    if(book) return {book, chap:'1', verses:null};
+    return null;
+  }
+  const book = findBookName(bookPart);
+  if(!book) return null;
+
+  const chapMatch = rest.match(/^(\d+)\s*[:\.]?\s*(.*)$/);
+  if(!chapMatch) return null;
+  const chap = chapMatch[1];
+  let versePart = (chapMatch[2]||'').trim();
+  if(versePart.startsWith(':') || versePart.startsWith('.')) versePart = versePart.slice(1).trim();
+
+  if(!versePart) return {book, chap, verses:null};
+
+  // Rango 1-5
+  const range = versePart.match(/^(\d+)\s*[-–—]\s*(\d+)$/);
+  if(range){
+    const a = parseInt(range[1],10), b = parseInt(range[2],10);
+    const lo = Math.min(a,b), hi = Math.max(a,b);
+    const verses = [];
+    for(let i=lo;i<=hi;i++) verses.push(String(i));
+    return {book, chap, verses};
+  }
+  // Lista 1,3,6
+  if(/^\d+(\s*,\s*\d+)+$/.test(versePart)){
+    const verses = versePart.split(/\s*,\s*/).map(x=>String(parseInt(x,10))).filter(Boolean);
+    return {book, chap, verses};
+  }
+  // Versículo único
+  const single = versePart.match(/^(\d+)$/);
+  if(single) return {book, chap, verses:[single[1]]};
+
+  return {book, chap, verses:null};
+}
+
+function goToRef(parsed){
+  if(!parsed) return false;
+  const {book, chap, verses} = parsed;
+  if(!BIBLE[book] || !BIBLE[book][chap]) return false;
+  openTestaments.add(BOOK_ORDER.find(e=>e.name===book)?.testament || 'AT');
+  openBooks.add(book);
+  saveNavState();
+  goTo(book, chap);
+  if(verses && verses.length){
+    const existing = verses.filter(v => BIBLE[book][chap][v]);
+    if(existing.length){
+      selectedVerses = existing;
+      detailVerse = null;
+      updateSelectionUI();
+      renderReader();
+      scrollVerseIntoView(existing[0]);
+    }
+  } else {
+    renderReader();
+  }
+  renderBookList();
+  return true;
+}
+
+const refSuggest = document.getElementById('ref-suggest');
+let refSugItems = [];
+let refSugIndex = -1;
+
+function getBookSuggestions(prefix){
+  const q = stripAccentsNav(prefix.trim());
+  if(!q) return [];
+  const out = [];
+  for(const entry of BOOK_ORDER){
+    const name = entry.name;
+    const n = stripAccentsNav(name);
+    if(n.startsWith(q) || n.includes(q)) out.push(name);
+  }
+  // Prefer startsWith
+  out.sort((a,b)=>{
+    const as = stripAccentsNav(a).startsWith(q) ? 0 : 1;
+    const bs = stripAccentsNav(b).startsWith(q) ? 0 : 1;
+    if(as !== bs) return as - bs;
+    return a.localeCompare(b,'es');
+  });
+  return out.slice(0, 8);
+}
+
+function renderRefSuggest(items, typedBook){
+  refSugItems = items;
+  refSugIndex = items.length ? 0 : -1;
+  if(!items.length){
+    refSuggest.classList.remove('open');
+    refSuggest.innerHTML = '';
+    return;
+  }
+  refSuggest.innerHTML = items.map((name,i)=>
+    `<div class="sug-item${i===0?' active':''}" data-i="${i}">${name}</div>`
+  ).join('') + `<div class="sug-hint">Tab o clic para completar · Enter para ir</div>`;
+  refSuggest.classList.add('open');
+  refSuggest.querySelectorAll('.sug-item').forEach(el=>{
+    el.onmousedown = (e)=>{
+      e.preventDefault();
+      applyRefSuggestion(parseInt(el.dataset.i,10));
+    };
+  });
+}
+
+function applyRefSuggestion(i){
+  if(i < 0 || i >= refSugItems.length) return;
+  const name = refSugItems[i];
+  const val = refSearch.value;
+  // Reemplazar la parte del libro al inicio
+  const m = val.match(/^(\s*)([^\d:]*?)(\s*)(\d.*)?$/);
+  if(m && m[4]){
+    refSearch.value = name + ' ' + m[4].trim();
+  } else {
+    // Solo libro o texto parcial
+    const restMatch = val.match(/(\d.*)$/);
+    refSearch.value = restMatch ? (name + ' ' + restMatch[1]) : (name + ' ');
+  }
+  refSuggest.classList.remove('open');
+  refSugItems = [];
+  refSugIndex = -1;
+  refSearch.focus();
+  // Colocar cursor al final
+  const len = refSearch.value.length;
+  refSearch.setSelectionRange(len, len);
+}
+
+function updateRefAutocomplete(){
+  const val = refSearch.value;
+  // Si ya hay capítulo/versículo, no sugerir libros
+  if(/\d/.test(val) && /:/.test(val)){
+    refSuggest.classList.remove('open');
+    return;
+  }
+  // Extraer posible nombre de libro (todo antes del primer dígito)
+  const m = val.match(/^([^\d]*)/);
+  const bookPart = (m ? m[1] : val).trim();
+  if(bookPart.length < 1){
+    refSuggest.classList.remove('open');
+    return;
+  }
+  // Si coincide exactamente con un libro y hay espacio, cerrar
+  const exact = BOOK_ORDER.find(e => stripAccentsNav(e.name) === stripAccentsNav(bookPart));
+  if(exact && /\s$/.test(val)){
+    refSuggest.classList.remove('open');
+    return;
+  }
+  const items = getBookSuggestions(bookPart);
+  // No mostrar si solo hay una y es coincidencia exacta ya escrita
+  if(items.length === 1 && stripAccentsNav(items[0]) === stripAccentsNav(bookPart)){
+    refSuggest.classList.remove('open');
+    return;
+  }
+  renderRefSuggest(items, bookPart);
+}
+
+refSearch.addEventListener('input', updateRefAutocomplete);
+refSearch.addEventListener('keydown', (e)=>{
+  if(e.key === 'Tab' && refSuggest.classList.contains('open') && refSugItems.length){
+    e.preventDefault();
+    applyRefSuggestion(refSugIndex >= 0 ? refSugIndex : 0);
+    return;
+  }
+  if(e.key === 'ArrowDown' && refSuggest.classList.contains('open')){
+    e.preventDefault();
+    refSugIndex = Math.min(refSugIndex + 1, refSugItems.length - 1);
+    refSuggest.querySelectorAll('.sug-item').forEach((el,i)=> el.classList.toggle('active', i===refSugIndex));
+    return;
+  }
+  if(e.key === 'ArrowUp' && refSuggest.classList.contains('open')){
+    e.preventDefault();
+    refSugIndex = Math.max(refSugIndex - 1, 0);
+    refSuggest.querySelectorAll('.sug-item').forEach((el,i)=> el.classList.toggle('active', i===refSugIndex));
+    return;
+  }
+  if(e.key === 'Escape'){
+    refSuggest.classList.remove('open');
+    return;
+  }
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    if(refSuggest.classList.contains('open') && refSugItems.length && refSugIndex >= 0){
+      // Si el texto aún no tiene capítulo, completar libro y no navegar aún
+      const val = refSearch.value.trim();
+      if(!/\d/.test(val)){
+        applyRefSuggestion(refSugIndex);
+        return;
+      }
+    }
+    refSuggest.classList.remove('open');
+    const parsed = parseRefQuery(refSearch.value);
+    if(goToRef(parsed)){
+      refSearch.blur();
+    }
+  }
+});
+refSearch.addEventListener('blur', ()=>{
+  // Retraso para permitir clic en sugerencia
+  setTimeout(()=> refSuggest.classList.remove('open'), 150);
+});
+
+/* =========================================================
+   BÚSQUEDA POR PALABRA (flotante, al teclear)
+   ========================================================= */
+const wordSearchBar = document.getElementById('word-search-bar');
+const wordSearchInput = document.getElementById('word-search-input');
+const wordSearchResults = document.getElementById('word-search-results');
+let wordSearchOpen = false;
+
+function openWordSearch(initialChar){
+  if(wordSearchOpen) return;
+  wordSearchOpen = true;
+  wordSearchBar.classList.add('open');
+  wordSearchInput.value = initialChar || '';
+  wordSearchResults.innerHTML = '';
+  wordSearchInput.focus();
+  if(initialChar) runWordSearch(initialChar);
+}
+function closeWordSearch(){
+  wordSearchOpen = false;
+  wordSearchBar.classList.remove('open');
+  wordSearchInput.value = '';
+  wordSearchResults.innerHTML = '';
+}
+function runWordSearch(q){
+  q = (q||'').trim().toLowerCase();
+  if(q.length < 2){
+    wordSearchResults.innerHTML = q.length ? '<div class="empty-msg">Escribe al menos 2 letras…</div>' : '';
+    return;
+  }
+  const results = [];
+  outer:
+  for(const entry of BOOK_ORDER){
+    const book = entry.name;
+    const chaps = BIBLE[book];
+    if(!chaps) continue;
+    for(const ch of Object.keys(chaps)){
+      const verses = chaps[ch];
+      for(const v of Object.keys(verses)){
+        const text = verses[v];
+        if(text.toLowerCase().includes(q)){
+          results.push({book, ch, v, text});
+          if(results.length > 120) break outer;
+        }
+      }
+    }
+  }
+  wordSearchResults.innerHTML = '';
+  if(results.length===0){
+    wordSearchResults.innerHTML = '<div class="empty-msg">Sin coincidencias.</div>';
+    return;
+  }
+  const head = document.createElement('div');
+  head.className = 'empty-msg';
+  head.style.padding = '8px 14px 4px';
+  head.textContent = `${results.length}${results.length>120?'+':''} resultados`;
+  wordSearchResults.appendChild(head);
+  results.slice(0,80).forEach(r=>{
+    const item = document.createElement('div');
+    item.className = 'result-item';
+    item.innerHTML = `<div class="result-ref">${r.book} ${r.ch}:${r.v}</div><div class="result-text">${r.text}</div>`;
+    item.onclick = ()=>{
+      openTestaments.add(BOOK_ORDER.find(e=>e.name===r.book)?.testament || 'AT');
+      openBooks.add(r.book);
+      saveNavState();
+      goTo(r.book, r.ch);
+      detailVerse = r.v;
+      selectedVerses = [r.v];
+      updateSelectionUI();
+      renderReader();
+      renderBookList();
+      closeWordSearch();
+      scrollVerseIntoView(r.v);
+    };
+    wordSearchResults.appendChild(item);
+  });
+}
+wordSearchInput.addEventListener('input', ()=> runWordSearch(wordSearchInput.value));
+wordSearchInput.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape'){ e.preventDefault(); closeWordSearch(); return; }
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    const first = wordSearchResults.querySelector('.result-item');
+    if(first) first.click();
+  }
+});
+
+// Abrir búsqueda por palabra al teclear letras (si no estamos en otro input)
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape' && wordSearchOpen){
+    e.preventDefault();
+    closeWordSearch();
+    return;
+  }
+  if(wordSearchOpen) return;
+  if(stage.classList.contains('open')) return;
+  const tag = (e.target && e.target.tagName) || '';
+  if(tag === 'INPUT' || tag === 'TEXTAREA' || e.target.isContentEditable) return;
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  // Solo letras (incluye acentos y ñ)
+  if(e.key.length === 1 && /[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]/.test(e.key)){
+    e.preventDefault();
+    openWordSearch(e.key);
+  }
+});
+document.addEventListener('mousedown', (e)=>{
+  if(wordSearchOpen && !wordSearchBar.contains(e.target)){
+    closeWordSearch();
+  }
+});
+
+/* =========================================================
+   NOTAS y FAVORITOS — panel lateral (segundo clic cierra)
+   ========================================================= */
+function closeSidePanel(){
+  side.classList.remove('open');
+  sidePanel = null;
+  document.getElementById('notes-btn')?.classList.remove('active-panel');
+  document.getElementById('favs-btn')?.classList.remove('active-panel');
+  document.getElementById('sermons-btn')?.classList.remove('active-panel');
+  document.getElementById('meanings-btn')?.classList.remove('active-panel');
+}
+function sidePanelHeader(titleHtml){
+  return `<h3><button type="button" class="side-close-btn" title="Cerrar panel">❌</button>${titleHtml}</h3>`;
+}
+function bindSideClose(){
+  const btn = side.querySelector('.side-close-btn');
+  if(btn) btn.onclick = (e)=>{ e.stopPropagation(); closeSidePanel(); };
+}
+// Agrega HTML al panel lateral SIN destruir nodos/listeners ya existentes
+// (side.innerHTML += ... reconstruye todo el árbol, incluido el botón ❌,
+// y pierde el onclick asignado por bindSideClose()).
+function appendSideMsg(html){
+  const wrap = document.createElement('div');
+  wrap.innerHTML = html;
+  while(wrap.firstChild) side.appendChild(wrap.firstChild);
+}
+function focusSidePanel(){
+  requestAnimationFrame(()=>{
+    const first = side.querySelector('.result-item, button.btn, .sermon-editor input, [tabindex="0"]');
+    if(first) first.focus({preventScroll:true});
+    else side.focus({preventScroll:true});
+  });
+}
+function openNotesPanel(){
+  side.innerHTML = sidePanelHeader('📝 Mis notas');
+  bindSideClose();
+  const entries = Object.entries(notes).filter(([k,v])=>v && v.trim());
+  if(entries.length===0){
+    appendSideMsg(`<div class="empty-msg">Aún no tienes notas guardadas. Selecciona un versículo y añade una.</div>`);
+  }
+  entries.forEach(([ref, text])=>{
+    const item = document.createElement('div');
+    item.className = 'result-item';
+    item.innerHTML = `<div class="result-ref">${ref}</div><div class="result-text">${text}</div><button type="button" class="note-del" title="Eliminar nota">🗑</button>`;
+    item.querySelector('.note-del').onclick = (e)=>{
+      e.stopPropagation();
+      if(!confirm('¿Eliminar esta nota? Se moverá a la papelera.')) return;
+      moveNoteToTrash(ref);
+      openNotesPanel();
+      renderReader();
+    };
+    item.onclick = ()=>{
+      const [book, rest] = ref.split(/ (?=[^ ]+$)/);
+      const [ch, v] = rest.split(':');
+      goTo(book, ch); detailVerse = v; renderReader(); closeSidePanel(); renderBookList();
+    };
+    side.appendChild(item);
+  });
+  const exportN = document.createElement('div');
+  exportN.className = 'trash-link';
+  exportN.style.borderTop = 'none';
+  exportN.innerHTML = '💾 Exportar notes.json (carpeta notes/)';
+  exportN.onclick = ()=> exportNotesFile();
+  side.appendChild(exportN);
+  const trashBtn = document.createElement('div');
+  trashBtn.className = 'trash-link';
+  trashBtn.innerHTML = `🗑 Papelera de notas${notesTrash.length ? ` (${notesTrash.length})` : ''}`;
+  trashBtn.onclick = ()=> openNotesTrashPanel();
+  side.appendChild(trashBtn);
+  side.classList.add('open');
+  side.tabIndex = -1;
+  sidePanel = 'notes';
+  document.getElementById('notes-btn').classList.add('active-panel');
+  document.getElementById('favs-btn')?.classList.remove('active-panel');
+  document.getElementById('sermons-btn')?.classList.remove('active-panel');
+  document.getElementById('meanings-btn')?.classList.remove('active-panel');
+  focusSidePanel();
+}
+function openNotesTrashPanel(){
+  side.innerHTML = sidePanelHeader('🗑 Papelera de notas');
+  bindSideClose();
+  if(notesTrash.length === 0){
+    appendSideMsg(`<div class="empty-msg">La papelera está vacía.</div>`);
+  } else {
+    const actions = document.createElement('div');
+    actions.className = 'trash-actions';
+    const emptyBtn = document.createElement('button');
+    emptyBtn.className = 'btn';
+    emptyBtn.textContent = 'Vaciar papelera';
+    emptyBtn.onclick = ()=>{
+      if(!confirm('¿Vaciar la papelera de forma permanente?')) return;
+      notesTrash = [];
+      saveNotesTrash();
+      openNotesTrashPanel();
+    };
+    actions.appendChild(emptyBtn);
+    side.appendChild(actions);
+    notesTrash.forEach((entry, idx)=>{
+      const item = document.createElement('div');
+      item.className = 'result-item';
+      item.innerHTML = `<div class="result-ref">${entry.ref}</div><div class="result-text">${entry.text}</div>
+        <button type="button" class="note-del" title="Eliminar definitivamente">🗑</button>`;
+      const restore = document.createElement('button');
+      restore.className = 'btn';
+      restore.style.cssText = 'margin-top:6px;font-size:11px;padding:4px 8px;';
+      restore.textContent = 'Restaurar';
+      restore.onclick = (e)=>{
+        e.stopPropagation();
+        notes[entry.ref] = entry.text;
+        saveNotes();
+        notesTrash.splice(idx, 1);
+        saveNotesTrash();
+        openNotesTrashPanel();
+        renderReader();
+      };
+      item.appendChild(restore);
+      item.querySelector('.note-del').onclick = (e)=>{
+        e.stopPropagation();
+        notesTrash.splice(idx, 1);
+        saveNotesTrash();
+        openNotesTrashPanel();
+      };
+      item.onclick = (e)=>{
+        if(e.target.closest('button')) return;
+        const [book, rest] = entry.ref.split(/ (?=[^ ]+$)/);
+        const [ch, v] = rest.split(':');
+        goTo(book, ch); detailVerse = v; renderReader(); closeSidePanel(); renderBookList();
+      };
+      side.appendChild(item);
+    });
+  }
+  const back = document.createElement('div');
+  back.className = 'trash-link';
+  back.innerHTML = '← Volver a mis notas';
+  back.onclick = ()=> openNotesPanel();
+  side.appendChild(back);
+  side.classList.add('open');
+  sidePanel = 'trash';
+  document.getElementById('notes-btn').classList.add('active-panel');
+  document.getElementById('favs-btn').classList.remove('active-panel');
+}
+function openFavsPanel(){
+  side.innerHTML = sidePanelHeader('♥ Mis favoritos');
+  bindSideClose();
+  const entries = Object.entries(favorites).filter(([k,v])=>v);
+  if(entries.length===0){
+    appendSideMsg(`<div class="empty-msg">Aún no tienes favoritos. Abre un versículo y marca ♡ Favorito.</div>`);
+  }
+  entries.forEach(([ref])=>{
+    const item = document.createElement('div');
+    item.className = 'result-item';
+    let preview = '';
+    const m = ref.match(/^(.+) (\d+):(\d+)$/);
+    if(m && BIBLE[m[1]] && BIBLE[m[1]][m[2]] && BIBLE[m[1]][m[2]][m[3]]){
+      preview = BIBLE[m[1]][m[2]][m[3]];
+    }
+    item.innerHTML =
+      `<button type="button" class="fav-del" title="Quitar de favoritos">🗑</button>` +
+      `<div class="result-ref">${ref}</div>` +
+      (preview ? `<div class="result-text">${preview}</div>` : '');
+    item.tabIndex = 0;
+    item.setAttribute('role','button');
+    item.querySelector('.fav-del').onclick = (e)=>{
+      e.stopPropagation();
+      delete favorites[ref];
+      saveFavorites();
+      openFavsPanel();
+      if(!showWelcome) renderReader();
+    };
+    item.onclick = (e)=>{
+      if(e.target.closest('.fav-del')) return;
+      if(!m) return;
+      goTo(m[1], m[2]); detailVerse = m[3]; renderReader(); closeSidePanel(); renderBookList();
+      scrollVerseIntoView(m[3]);
+    };
+    item.onkeydown = (e)=>{
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        if(!m) return;
+        goTo(m[1], m[2]); detailVerse = m[3]; renderReader(); closeSidePanel(); renderBookList();
+        scrollVerseIntoView(m[3]);
+      }
+      if(e.key === 'Delete' || e.key === 'Backspace'){
+        e.preventDefault();
+        delete favorites[ref];
+        saveFavorites();
+        openFavsPanel();
+        if(!showWelcome) renderReader();
+      }
+    };
+    side.appendChild(item);
+  });
+  const exportF = document.createElement('div');
+  exportF.className = 'trash-link';
+  exportF.innerHTML = '💾 Exportar favorites.json (carpeta favs/)';
+  exportF.onclick = ()=> exportFavsFile();
+  side.appendChild(exportF);
+  side.classList.add('open');
+  side.tabIndex = -1;
+  sidePanel = 'favs';
+  document.getElementById('favs-btn').classList.add('active-panel');
+  document.getElementById('notes-btn')?.classList.remove('active-panel');
+  document.getElementById('sermons-btn')?.classList.remove('active-panel');
+  document.getElementById('meanings-btn')?.classList.remove('active-panel');
+  focusSidePanel();
+}
+document.getElementById('notes-btn').onclick = ()=>{
+  if(sidePanel === 'notes' || sidePanel === 'trash'){ closeSidePanel(); return; }
+  openNotesPanel();
+};
+document.getElementById('favs-btn').onclick = ()=>{
+  if(sidePanel === 'favs'){ closeSidePanel(); return; }
+  openFavsPanel();
+};
+
+/* Significados guardados */
+let savedMeanings = store.get('bp_saved_meanings', {});
+function saveMeaningsStore(){ store.set('bp_saved_meanings', savedMeanings); }
+function openMeaningsPanel(){
+  side.innerHTML = sidePanelHeader('📚 Significados guardados');
+  bindSideClose();
+  const entries = Object.entries(savedMeanings);
+  if(!entries.length){
+    appendSideMsg(`<div class="empty-msg">Aún no hay significados guardados. Consulta una palabra y pulsa 💾 Guardar.</div>`);
+  }
+  entries.forEach(([term, data])=>{
+    const item = document.createElement('div');
+    item.className = 'result-item';
+    item.tabIndex = 0;
+    item.innerHTML =
+      `<button type="button" class="fav-del" title="Eliminar">🗑</button>` +
+      `<div class="result-ref">${term}</div>` +
+      `<div class="result-text">${(data.def||'').slice(0,200)}${(data.def||'').length>200?'…':''}</div>` +
+      (data.source ? `<div style="font-size:10.5px;color:var(--ink-soft);margin-top:4px;">${data.source}</div>` : '');
+    item.querySelector('.fav-del').onclick = (e)=>{
+      e.stopPropagation();
+      delete savedMeanings[term];
+      saveMeaningsStore();
+      openMeaningsPanel();
+    };
+    item.onclick = (e)=>{
+      if(e.target.closest('.fav-del')) return;
+      showWordPopup(term, window.innerWidth/2, window.innerHeight/3);
+      const defEl = wordPopup.querySelector('.wp-def');
+      const srcEl = wordPopup.querySelector('.wp-source');
+      defEl.textContent = data.def || '';
+      srcEl.textContent = data.source || 'Guardado localmente';
+    };
+    item.onkeydown = (e)=>{
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); item.click(); }
+      if(e.key === 'Delete' || e.key === 'Backspace'){ e.preventDefault(); item.querySelector('.fav-del').click(); }
+    };
+    side.appendChild(item);
+  });
+  side.classList.add('open');
+  side.tabIndex = -1;
+  sidePanel = 'meanings';
+  document.getElementById('meanings-btn')?.classList.add('active-panel');
+  document.getElementById('notes-btn')?.classList.remove('active-panel');
+  document.getElementById('favs-btn')?.classList.remove('active-panel');
+  document.getElementById('sermons-btn')?.classList.remove('active-panel');
+  focusSidePanel();
+}
+document.getElementById('meanings-btn').onclick = ()=>{
+  if(sidePanel === 'meanings'){ closeSidePanel(); return; }
+  openMeaningsPanel();
+};
+
+/* =========================================================
+   MODO PROYECCIÓN (soporta varios versículos a la vez)
+   ========================================================= */
+const stage = document.getElementById('stage');
+const stageRef = document.getElementById('stage-ref');
+const stageText = document.getElementById('stage-text');
+let stagePassages = [];
+let stageIndex = 0;
+
+function openStage(book, chap, verses){
+  stagePassages = [{book, chap, verses: [...verses].sort((a,b)=>+a-+b)}];
+  stageIndex = 0;
+  renderStage();
+  stage.classList.add('open');
+}
+function renderStage(){
+  const p = stagePassages[stageIndex];
+  if(!p) return;
+  const chapData = (BIBLE[p.book]||{})[p.chap] || {};
+  const verses = p.verses;
+  const first = verses[0], last = verses[verses.length-1];
+  const isFullySequential = verses.length > 1 && (parseInt(last) - parseInt(first) + 1) === verses.length;
+  const jesusMap = buildJesusMap(p.book, p.chap);
+
+  if(verses.length === 1){
+    stageRef.textContent = `${p.book} ${p.chap}:${first}`;
+  } else if(isFullySequential){
+    stageRef.textContent = `${p.book} ${p.chap}:${first}-${last}`;
+  } else {
+    stageRef.textContent = `${p.book} ${p.chap}:${verses.join(', ')}`;
+  }
+
+  let html = '';
+  let prevV = null;
+  const useJumpStyle = !isFullySequential && verses.length > 1;
+  verses.forEach(v=>{
+    const isGap = prevV !== null && (parseInt(v) - parseInt(prevV) !== 1);
+    const isJump = useJumpStyle || isGap;
+    const vnumClass = isJump ? 'stage-vnum jump' : 'stage-vnum';
+    const openTag = isGap ? '<span class="jump-block">' : '<span>';
+    const raw = stripPilcrow(chapData[v]||'');
+    const body = (easyReading && jesusMap[v]) ? `<span class="jesus-words">${raw}</span>` : raw;
+    html += `${openTag}<span class="${vnumClass}">${v}</span>${body} </span>`;
+    prevV = v;
+  });
+  stageText.innerHTML = html;
+
+  // Navegación por versículo dentro del capítulo
+  const allV = sortedVerseNums(p.book, p.chap);
+  const anchor = verses[verses.length-1];
+  const idx = allV.indexOf(String(anchor));
+  document.getElementById('stage-prev').disabled = idx <= 0;
+  document.getElementById('stage-next').disabled = idx < 0 || idx >= allV.length-1;
+}
+function stageStep(dir){
+  const p = stagePassages[stageIndex];
+  if(!p) return;
+  const allV = sortedVerseNums(p.book, p.chap);
+  // Si hay varios versículos proyectados, avanzar desde el último / primero según dirección
+  const anchor = dir > 0 ? p.verses[p.verses.length-1] : p.verses[0];
+  const idx = allV.indexOf(String(anchor));
+  if(idx < 0) return;
+  const next = idx + dir;
+  if(next < 0 || next >= allV.length) return;
+  // Al navegar con flechas, mostrar un solo versículo
+  stagePassages = [{book: p.book, chap: p.chap, verses: [allV[next]]}];
+  stageIndex = 0;
+  renderStage();
+}
+function openProjectSheet(){
+  const sheet = document.getElementById('project-sheet');
+  if(sheet) sheet.classList.add('open');
+}
+function closeProjectSheet(){
+  const sheet = document.getElementById('project-sheet');
+  if(sheet) sheet.classList.remove('open');
+}
+const projectBtn = document.getElementById('project-btn');
+if(projectBtn) projectBtn.onclick = ()=> openProjectSheet();
+const psCancel = document.getElementById('ps-cancel');
+if(psCancel) psCancel.onclick = ()=> closeProjectSheet();
+const projectSheet = document.getElementById('project-sheet');
+if(projectSheet) projectSheet.addEventListener('click', (e)=>{
+  if(e.target.id === 'project-sheet') closeProjectSheet();
+});
+document.querySelectorAll('#project-sheet .ps-opt').forEach(btn=>{
+  btn.onclick = ()=>{
+    const mode = btn.dataset.proj;
+    closeProjectSheet();
+    if(showWelcome){ alert('Abre un capítulo primero.'); return; }
+    if(mode === 'current'){
+      const v = detailVerse || Object.keys((BIBLE[currentBook]||{})[currentChap]||{})[0];
+      if(!v){ alert('No hay versículos en este capítulo.'); return; }
+      openStage(currentBook, currentChap, [v]);
+    } else if(mode === 'selection'){
+      if(!selectedVerses.length){ alert('Selecciona uno o más versículos primero.'); return; }
+      openStage(currentBook, currentChap, selectedVerses);
+    } else if(mode === 'sermon'){
+      if(typeof openSermonsPanel === 'function') openSermonsPanel();
+      else alert('Abre Sermones y proyecta desde allí.');
+    } else if(mode === 'chapter'){
+      const all = sortedVerseNums(currentBook, currentChap);
+      if(!all.length){ alert('Capítulo vacío.'); return; }
+      openStage(currentBook, currentChap, all);
+    }
+  };
+});
+document.getElementById('stage-exit').onclick = ()=> stage.classList.remove('open');
+document.getElementById('stage-next').onclick = ()=> stageStep(1);
+document.getElementById('stage-prev').onclick = ()=> stageStep(-1);
+document.addEventListener('keydown', (e)=>{
+  if(document.getElementById('project-sheet')?.classList.contains('open')){
+    if(e.key === 'Escape'){ closeProjectSheet(); return; }
+  }
+  if(!stage.classList.contains('open')) return;
+  if(e.key === 'Escape') stage.classList.remove('open');
+  if(e.key === 'ArrowRight'){ e.preventDefault(); stageStep(1); }
+  if(e.key === 'ArrowLeft'){ e.preventDefault(); stageStep(-1); }
+});
+
+/* =========================================================
+   DICCIONARIO BÍBLICO DEL PREDICADOR
+   Definiciones orientadas al sentido bíblico/teológico (RV1960),
+   no a un diccionario general de nombres propios.
+   ========================================================= */
+const DICTIONARY = {
+  /* —— pueblos, lugares y nombres clave —— */
+  "israel":"Pueblo descendiente de Jacob (llamado también Israel). Nación elegida por Dios en el Antiguo Testamento, con la cual estableció su pacto. En sentido amplio designa a las doce tribus y, más tarde, al reino del norte; en la profecía y el NT también al pueblo de Dios.",
+  "israelita":"Miembro del pueblo de Israel, descendiente de Jacob. En el NT a menudo se usa para distinguir al judío respecto del gentil.",
+  "israelitas":"Plural de israelita: el pueblo de Israel en su conjunto.",
+  "judá":"Una de las doce tribus de Israel, descendiente de Judá hijo de Jacob. También el reino del sur tras la división, con capital en Jerusalén, del cual desciende la línea de David y el Mesías.",
+  "juda":"Véase Judá: tribu y reino del sur de Israel.",
+  "judío":"En el AT, miembro de la tribu o reino de Judá; en el NT, persona del pueblo de Israel / religión judía, en contraste con los gentiles.",
+  "judíos":"El pueblo judío; en el NT a menudo los líderes o habitantes de Judea que se oponen a Jesús, según el contexto.",
+  "egipto":"País del Nilo; en la Biblia, lugar de esclavitud de Israel y de la gran liberación obrada por Dios (Éxodo). Símbolo de opresión y del mundo del que Dios rescata a su pueblo.",
+  "babilonia":"Imperio que destruyó Jerusalén (586 a.C.) y llevó a Judá al exilio. En Apocalipsis, símbolo de la potencia mundial opuesta a Dios y corrompida.",
+  "babel":"Ciudad y torre donde la humanidad se unió en soberbia y Dios confundió las lenguas (Génesis 11). Origen del nombre Babilonia.",
+  "canáan":"Tierra prometida a Abraham y a su descendencia; territorio que Israel conquistó bajo Josué.",
+  "canaan":"Tierra prometida a Abraham y a su descendencia; territorio que Israel conquistó bajo Josué.",
+  "jerusalén":"Ciudad santa de Israel, capital de David, sede del templo. Centro del culto y, en la profecía, imagen de la ciudad de Dios (Nueva Jerusalén).",
+  "jerusalem":"Forma usada en RV1960 de Jerusalén: ciudad del templo y capital del pueblo de Dios.",
+  "sion":"Colina de Jerusalén asociada al templo y a la presencia de Dios; por extensión, la ciudad misma o el pueblo de Dios.",
+  "sión":"Colina de Jerusalén asociada al templo y a la presencia de Dios; por extensión, la ciudad misma o el pueblo de Dios.",
+  "samaria":"Capital del reino del norte (Israel). En el NT, región cuyos habitantes (samaritanos) eran despreciados por los judíos.",
+  "galilea":"Región del norte de Palestina donde Jesús creció (Nazaret) y realizó gran parte de su ministerio.",
+  "judea":"Región del sur de Palestina, alrededor de Jerusalén, en tiempos del NT.",
+  "nazaret":"Aldea de Galilea donde Jesús fue criado; de ahí el título «nazareno».",
+  "belén":"Ciudad de Judá, lugar de nacimiento de David y de Jesús el Mesías (Miqueas 5:2; Mateo 2).",
+  "edén":"Jardín donde Dios puso al primer hombre; lugar de comunión original con Dios antes de la caída (Génesis 2–3).",
+  "eden":"Jardín donde Dios puso al primer hombre; lugar de comunión original con Dios antes de la caída (Génesis 2–3).",
+  "sinaí":"Monte donde Dios dio la ley a Moisés y estableció el pacto con Israel (Éxodo 19–20).",
+  "sinai":"Monte donde Dios dio la ley a Moisés y estableció el pacto con Israel (Éxodo 19–20).",
+  "jordán":"Río principal de Palestina; Israel lo cruzó para entrar en Canaán; lugar del bautismo de Jesús.",
+  "jordan":"Río principal de Palestina; Israel lo cruzó para entrar en Canaán; lugar del bautismo de Jesús.",
+  "mar rojo":"Mar que Dios abrió para que Israel escapara de Egipto (Éxodo 14).",
+  "asiria":"Imperio que conquistó y deportó al reino del norte (Israel) en 722 a.C.",
+  "persia":"Imperio que permitió el regreso de los judíos del exilio (Ciro; Esdras, Nehemías).",
+  "roma":"Capital del Imperio Romano; potencia dominante en tiempos de Jesús y de la iglesia primitiva.",
+  "gólgota":"«Lugar de la Calavera»; colina fuera de Jerusalén donde Jesús fue crucificado.",
+  "golgota":"«Lugar de la Calavera»; colina fuera de Jerusalén donde Jesús fue crucificado.",
+  "calvario":"Nombre latino del Gólgota; lugar de la crucifixión de Cristo.",
+  "getsemaní":"Huerto en el Monte de los Olivos donde Jesús oró antes de su arresto.",
+  "getsmani":"Huerto en el Monte de los Olivos donde Jesús oró antes de su arresto.",
+
+  /* —— personas / títulos —— */
+  "abraham":"Patriarca llamado por Dios; padre de la fe y de la nación de Israel. Dios le prometió tierra, descendencia y bendición a todas las naciones (Génesis 12).",
+  "abrahán":"Patriarca llamado por Dios; padre de la fe y de la nación de Israel (Génesis 12).",
+  "isaac":"Hijo de la promesa de Abraham y Sara; patriarca intermedio del pacto.",
+  "jacob":"Hijo de Isaac; Dios le cambió el nombre a Israel. Padre de las doce tribus.",
+  "moisés":"Libertador y legislador de Israel; mediador del pacto en el Sinaí; figura del Antiguo Testamento que anticipa a Cristo.",
+  "david":"Rey de Israel según el corazón de Dios; recibió la promesa de un trono eterno cumplida en Cristo, el Hijo de David.",
+  "salomón":"Hijo de David; rey famoso por su sabiduría; edificó el primer templo en Jerusalén.",
+  "elías":"Profeta que confrontó a Baal en Israel; arrebatado al cielo; aparece con Moisés en la transfiguración de Jesús.",
+  "eliseo":"Profeta, sucesor de Elías, conocido por numerosos milagros en Israel.",
+  "isaías":"Profeta mayor; anunció el Siervo sufriente y el Mesías (p. ej. Is. 53).",
+  "isaias":"Profeta mayor; anunció el Siervo sufriente y el Mesías (p. ej. Is. 53).",
+  "jeremías":"Profeta que anunció el juicio sobre Judá y el nuevo pacto (Jer. 31).",
+  "jeremias":"Profeta que anunció el juicio sobre Judá y el nuevo pacto (Jer. 31).",
+  "ezequiel":"Profeta del exilio; visiones del trono de Dios, del valle de huesos secos y del templo futuro.",
+  "daniel":"Profeta en Babilonia; interpretó sueños de reyes y recibió visiones de los tiempos finales.",
+  "juan":"Según el contexto: Juan el Bautista (precursor del Mesías) o el apóstol Juan (discípulo amado, autor del cuarto Evangelio y Apocalipsis).",
+  "pedro":"Apóstol, portavoz de los doce; confesó a Jesús como el Cristo; líder en la iglesia primitiva (Hechos).",
+  "pablo":"Apóstol de los gentiles; autor de gran parte de las epístolas del NT; antes llamado Saulo de Tarso.",
+  "saulo":"Nombre hebreo del apóstol Pablo antes de su conversión en el camino a Damasco.",
+  "pilato":"Gobernador romano de Judea que condenó a Jesús a la crucifixión aunque lo halló sin culpa.",
+  "herodes":"Nombre de varios gobernantes idumeos bajo Roma; el de Mateo 2 intentó matar al niño Jesús; otros aparecen en el ministerio de Juan y de Jesús.",
+  "satanás":"El adversario; el diablo, acusador y tentador; enemigo de Dios y de su pueblo.",
+  "satanas":"El adversario; el diablo, acusador y tentador; enemigo de Dios y de su pueblo.",
+  "diablo":"El enemigo de Dios; tentador y acusador de los hermanos (Ap. 12:10).",
+  "lucifer":"Nombre tradicional asociado a la caída de un ser celestial soberbio (cf. Is. 14 en interpretación clásica); en la Biblia el adversario es Satanás.",
+
+  /* —— nombres de Dios —— */
+  "jehová":"Transcripción tradicional del nombre divino YHWH (el Tetragrámaton); el Dios del pacto que se revela a Israel como «Yo soy».",
+  "yahvé":"Forma académica del nombre divino YHWH; el Señor, Dios de Israel.",
+  "yahweh":"Forma académica del nombre divino YHWH; el Señor, Dios de Israel.",
+  "adonai":"«Mi Señor»; título hebreo de respeto usado en lugar del nombre sagrado YHWH.",
+  "elohim":"Palabra hebrea para Dios (plural de majestad); designa al Dios creador en Génesis 1.",
+  "el shaddai":"«Dios Todopoderoso»; nombre con el que Dios se reveló a los patriarcas.",
+  "señor":"Título de Dios y de Cristo; autoridad y soberanía divinas. En muchas versiones, «SEÑOR» en mayúsculas representa el nombre YHWH.",
+
+  /* —— teología y salvación —— */
+  "gracia":"Favor inmerecido de Dios hacia el pecador; base de la salvación (Efesios 2:8-9).",
+  "misericordia":"Compasión de Dios que no nos da el castigo que merecemos; se compadece del afligido.",
+  "fe":"Confianza y adhesión a Dios y a su Palabra; medio por el cual el hombre es justificado (Romanos 5:1).",
+  "arrepentimiento":"Cambio de mente y de dirección: apartarse del pecado y volverse a Dios.",
+  "perdón":"Cancelación de la deuda del pecado por parte de Dios, fundada en la obra de Cristo.",
+  "salvación":"Liberación del pecado y de la muerte que Dios ofrece en Cristo; incluye justificación, santificación y glorificación.",
+  "justificación":"Acto de Dios por el cual declara justo al que cree en Cristo, imputándole la justicia de Jesús.",
+  "santificación":"Obra de Dios por la cual el creyente es apartado para Él y transformado a la imagen de Cristo.",
+  "redención":"Rescate: Cristo pagó el precio para librarnos de la esclavitud del pecado.",
+  "expiación":"Cubrir o quitar el pecado mediante sacrificio; en el AT con sangre de animales; cumplida en la cruz de Cristo.",
+  "propiciación":"Sacrificio que satisface la justicia de Dios y aparta su ira del pecador (Romanos 3:25; 1 Juan 2:2).",
+  "pacto":"Alianza solemne de Dios con el hombre (con Noé, Abraham, Israel, y el nuevo pacto en Cristo).",
+  "alianza":"Sinónimo de pacto: compromiso vinculante entre Dios y su pueblo.",
+  "ley":"La Torah / mandamientos dados por Dios, especialmente en el Sinaí; revela el pecado y apunta a Cristo.",
+  "evangelio":"«Buenas noticias»: el mensaje de salvación por la muerte y resurrección de Jesucristo.",
+  "reino":"El reinado de Dios; presente en la persona de Jesús y consumado en su venida final.",
+  "gloria":"La majestad, peso y resplandor de la presencia de Dios; el destino del creyente es participar de ella.",
+  "pecado":"Transgresión de la ley de Dios; rebelión que separa al hombre de su Creador.",
+  "iniquidad":"Maldad, injusticia; desviación deliberada del camino de Dios.",
+  "justicia":"Conformidad con el carácter y la norma de Dios; atributo divino y don imputado al creyente.",
+  "santidad":"Separación para Dios; pureza moral y dedicación exclusiva al Señor.",
+  "regeneración":"El nuevo nacimiento espiritual obrado por el Espíritu Santo en quien cree.",
+  "conversión":"El volverse del pecado a Dios; fruto visible del nuevo nacimiento.",
+  "predestinación":"El propósito eterno de Dios respecto a quienes serán conformados a la imagen de su Hijo (Romanos 8:29-30).",
+  "elección":"La elección soberana de Dios de un pueblo para sí, por gracia y no por obras.",
+  "adopción":"Acto por el cual Dios recibe como hijos a los que creen en Cristo (Romanos 8:15).",
+  "reconciliación":"Restauración de la relación entre Dios y el hombre por medio de la cruz (2 Corintios 5:18-19).",
+  "intercesión":"Orar o mediar a favor de otro; Cristo intercede por los suyos a la diestra del Padre.",
+  "resurrección":"Volver a la vida corporal; la de Cristo es garantía de la de los creyentes.",
+  "ascensión":"La subida de Jesús al cielo cuarenta días después de resucitar; desde allí reina e intercede.",
+  "parusía":"La segunda venida / presencia de Cristo al final de los tiempos.",
+  "milenio":"Período de mil años de Apocalipsis 20 asociado al reinado de Cristo.",
+  "anticristo":"El que se opone y se sustituye a Cristo; figura anunciada para el tiempo del fin.",
+  "apocalipsis":"«Revelación»; el último libro del NT y, en general, la revelación de los eventos finales.",
+  "escatología":"Estudio de las últimas cosas: venida de Cristo, juicio, eternidad.",
+  "cielo":"La morada de Dios y el destino eterno de los redimidos.",
+  "infierno":"Estado y lugar de castigo eterno de los impíos; asociado a la gehena en las palabras de Jesús.",
+  "gehena":"Valle de Hinom junto a Jerusalén; Jesús lo usó como imagen del juicio eterno.",
+  "seol":"En el AT, el reino de los muertos; destino de todos sin la claridad del NT sobre cielo e infierno.",
+  "hades":"Equivalente griego de seol; lugar de los muertos en el NT.",
+  "abismo":"Lugar de confinamiento de espíritus malignos; en Apocalipsis, prisión de Satanás por un tiempo.",
+  "abadón":"«Destrucción»; el ángel del abismo (Ap. 9:11); en griego, Apolión.",
+
+  /* —— culto, templo, fiestas —— */
+  "tabernáculo":"Santuario portátil de Israel en el desierto; lugar de la presencia de Dios entre su pueblo (Éxodo 25–40).",
+  "templo":"Casa de Dios en Jerusalén edificada por Salomón (y reconstruida después del exilio); centro del culto sacrificial.",
+  "altar":"Lugar donde se ofrecían sacrificios a Dios; en el NT, la cruz es el altar definitivo.",
+  "sacrificio":"Ofrenda ritual, a menudo de sangre, para expiación o consagración; cumplida de una vez en Cristo.",
+  "holocausto":"Sacrificio quemado por completo en el altar; expresión de dedicación total a Dios.",
+  "ofrenda":"Don presentado a Dios (animales, cereal, dinero); acto de adoración y gratitud.",
+  "incienso":"Perfume quemado en el culto; símbolo de las oraciones de los santos (Ap. 5:8; 8:3-4).",
+  "sacerdote":"Mediador entre Dios y el pueblo en el AT; ofrecía sacrificios. Cristo es el sumo sacerdote definitivo (Hebreos).",
+  "sacerdotes":"Los consagrados de la línea de Aarón para el servicio del tabernáculo y el templo.",
+  "levita":"Descendiente de Leví dedicado al servicio del santuario, ayudando a los sacerdotes.",
+  "levitas":"Tribu apartada para el servicio del tabernáculo y del templo.",
+  "sumo sacerdote":"El único autorizado a entrar al Lugar Santísimo una vez al año (Día de la Expiación); tipo de Cristo.",
+  "propiciatorio":"Cubierta del Arca del Pacto donde se rociaba la sangre en el Día de la Expiación; lugar del perdón.",
+  "efod":"Prenda del sumo sacerdote; sobre ella llevaba el pectoral con las piedras de las doce tribus.",
+  "unción":"Derramar aceite para consagrar a alguien (rey, sacerdote, profeta) o para sanidad; el Espíritu «unge» a Cristo y a los creyentes.",
+  "ungido":"El que ha recibido unción; título del Mesías (el Ungido por excelencia).",
+  "pascua":"Fiesta que conmemora la liberación de Egipto; el cordero pascual anticipa a Cristo, nuestro Cordero (1 Cor. 5:7).",
+  "pentecostés":"Fiesta de las semanas (50 días después de Pascua); en Hechos 2, día del derramamiento del Espíritu Santo.",
+  "tabernáculos":"Fiesta de las enramadas (Sucot); memoria de la peregrinación en el desierto.",
+  "sábado":"Séptimo día, apartado para el descanso y la adoración; recuerdo de la creación y del pacto.",
+  "diezmo":"La décima parte de los productos o ingresos, dedicada a Dios y al sostenimiento del culto.",
+  "primicias":"Los primeros y mejores frutos ofrecidos a Dios en reconocimiento de que todo viene de Él.",
+  "jubileo":"Cada 50 años: libertad de esclavos, perdón de deudas y devolución de tierras (Levítico 25).",
+  "sinagoga":"Lugar de reunión, oración y lectura de la Escritura en las comunidades judías; distinto del templo.",
+  "sanedrín":"Consejo supremo judío (71 miembros) con autoridad religiosa y, en cierta medida, civil en tiempos del NT.",
+
+  /* —— grupos religiosos y roles —— */
+  "fariseo":"Grupo judío celoso de la ley y las tradiciones; Jesús los reprendió por hipocresía, pero algunos creyeron.",
+  "fariseos":"Grupo judío influyente en el NT, estricto en la ley oral y escrita.",
+  "saduceo":"Grupo sacerdotal aristocrático; no creían en resurrección, ángeles ni espíritus.",
+  "saduceos":"Partido ligado al templo; se opusieron a Jesús y a los apóstoles en lo de la resurrección.",
+  "escriba":"Experto en la ley de Moisés; copista e intérprete de las Escrituras.",
+  "escribas":"Maestros de la ley; a menudo asociados a los fariseos en su oposición a Jesús.",
+  "publicano":"Recaudador de impuestos para Roma; considerado traidor e impuro por muchos judíos. Mateo y Zaqueo lo fueron.",
+  "publicanos":"Recaudadores de impuestos al servicio de Roma.",
+  "centurión":"Oficial romano al mando de unos 100 soldados; varios en el NT muestran fe notable.",
+  "gentil":"Toda persona que no es judía; las naciones. El evangelio se abre a los gentiles en Hechos.",
+  "gentiles":"Las naciones no judías; objeto de la misión apostólica.",
+  "prosélito":"Gentil convertido al judaísmo.",
+  "samaritano":"Habitante de Samaria; judíos y samaritanos se rechazaban mutuamente. Jesús los honró (Buen Samaritano; la mujer de Jn 4).",
+  "samaritanos":"Pueblo de Samaria de origen mixto y culto propio en el monte Gerizim.",
+  "nazareno":"Natural de Nazaret; título de Jesús (Hechos 24:5, «secta de los nazarenos»).",
+  "discípulo":"Seguidor y aprendiz de un maestro; en el NT, seguidor de Jesús.",
+  "discípulos":"Los seguidores de Jesús, en especial los Doce y el círculo más amplio de creyentes.",
+  "apóstol":"«Enviado»; testigo ocular de la resurrección comisionado por Cristo para fundar y guiar la iglesia.",
+  "apóstoles":"Los enviados de Cristo; base de la iglesia junto con los profetas (Efesios 2:20).",
+  "profeta":"Portavoz de Dios; anuncia su palabra, a veces el futuro. En el NT también un don para edificar la iglesia.",
+  "profetas":"Los siervos de Dios que hablaron por el Espíritu; la Escritura se cumple en lo que anunciaron de Cristo.",
+  "epístola":"Carta; las cartas del NT dirigidas a iglesias o personas.",
+
+  /* —— términos griegos/hebreos frecuentes —— */
+  "mesías":"Del hebreo mashíaj, «ungido». El rey y salvador prometido a Israel; identificado con Jesús en el NT. En griego: Cristo.",
+  "cristo":"Del griego Christos, «ungido»; equivalente a Mesías. Título de Jesús como el Ungido de Dios.",
+  "jesús":"Forma griega de Yeshúa / Josué («YHWH salva»). Nombre del Hijo de Dios hecho hombre, Salvador del mundo.",
+  "rabí":"«Mi maestro»; título de respeto a un doctor de la ley; los discípulos lo aplicaron a Jesús.",
+  "amén":"«Así es» / «en verdad»; confirma lo dicho. Jesús a menudo dice «de cierto, de cierto» (amén, amén).",
+  "aleluya":"«Alabad a Yah»; exclamación de alabanza (Salmos; Apocalipsis 19).",
+  "hosanna":"«Salva ahora»; clamor de súplica vuelto alabanza en la entrada triunfal (Mateo 21:9).",
+  "maranata":"Arameo: «Ven, Señor» o «El Señor viene» (1 Corintios 16:22).",
+  "shalom":"Paz hebrea: no solo ausencia de conflicto, sino plenitud, bienestar y armonía bajo Dios.",
+  "ágape":"Amor de entrega y benevolencia; el amor de Dios y el que debe reinar entre creyentes.",
+  "agape":"Amor de entrega y benevolencia; el amor de Dios y el que debe reinar entre creyentes.",
+  "logos":"«Palabra»; en Juan 1, Cristo es el Logos eterno por quien todo fue hecho.",
+  "koinonía":"Comunión, participación compartida en Cristo y entre los santos.",
+  "ecclesia":"«Asamblea de los llamados»; la iglesia, el pueblo de Dios en Cristo.",
+  "iglesia":"La asamblea de los redimidos; cuerpo de Cristo; comunidad local o universal de creyentes.",
+  "hesed":"Amor leal / misericordia pactual de Dios; su fidelidad a la alianza.",
+  "kairós":"Tiempo oportuno o decisivo de Dios, distinto del tiempo cronológico (cronos).",
+  "belial":"Indignidad, maldad; a veces personificación del mal o de Satanás.",
+
+  /* —— objetos, medidas, vida cotidiana bíblica —— */
+  "vid":"Planta de la uva; símbolo de Israel (Is. 5) y de Cristo con los discípulos (Juan 15: «Yo soy la vid verdadera»).",
+  "viña":"Campo de vides; a menudo imagen de Israel como plantío de Dios.",
+  "maná":"Pan del cielo con que Dios alimentó a Israel en el desierto (Éxodo 16); tipo de Cristo, el verdadero pan (Juan 6).",
+  "mana":"Pan del cielo con que Dios alimentó a Israel en el desierto (Éxodo 16).",
+  "cordero":"Animal sacrificial; el Cordero de Dios es Jesús, que quita el pecado del mundo (Juan 1:29).",
+  "copero":"Oficial de confianza que servía la copa del rey y velaba por su seguridad (Nehemías fue copero de Artajerjes).",
+  "denario":"Moneda romana de plata; pago típico de un día de trabajo (Mateo 20:2).",
+  "dracma":"Moneda griega de valor similar al denario.",
+  "siclo":"Peso y moneda hebrea (aprox. 11–12 g de plata).",
+  "talento":"Gran unidad de peso/valor; en las parábolas, imagen de lo mucho que Dios confía a sus siervos.",
+  "cuadrante":"La moneda romana de menor valor (Mateo 5:26).",
+  "codo":"Medida de longitud (aprox. 45–52 cm), del codo a la punta de los dedos.",
+  "efa":"Medida de capacidad para granos (unos 22 litros).",
+  "pretorio":"Residencia del gobernador romano; allí Jesús fue juzgado por Pilato.",
+
+  /* —— virtudes y vicios —— */
+  "bienaventurado":"Dichoso por el favor de Dios; las Bienaventuranzas (Mateo 5) describen el carácter del reino.",
+  "manso":"Humilde y dominado en su fuerza; no débil. «Los mansos heredarán la tierra» (Mateo 5:5).",
+  "longanimidad":"Paciencia prolongada ante la ofensa; fruto del Espíritu (Gálatas 5:22).",
+  "concupiscencia":"Deseo desordenado, en especial de la carne; inclinación al pecado.",
+  "idolatría":"Adorar a dioses falsos o poner cualquier cosa en el lugar de Dios.",
+  "ídolo":"Imagen o dios falso; también cualquier cosa que usurpa el lugar de Dios en el corazón.",
+  "idolo":"Imagen o dios falso; también cualquier cosa que usurpa el lugar de Dios en el corazón.",
+  "blasfemia":"Injuriar el nombre de Dios o atribuirse lo que solo a Él pertenece.",
+  "hipocresía":"Fingir piedad por fuera mientras el corazón está lejos de Dios; Jesús la denunció en líderes religiosos.",
+
+  /* —— ángeles y seres —— */
+  "ángel":"Mensajero de Dios; seres espirituales que sirven a los herederos de la salvación.",
+  "angel":"Mensajero de Dios; seres espirituales que sirven a los herederos de la salvación.",
+  "ángeles":"Mensajeros celestiales al servicio de Dios.",
+  "angeles":"Mensajeros celestiales al servicio de Dios.",
+  "querubín":"Ser celestial asociado a la santidad y presencia de Dios; guardaban el Edén y figuraban sobre el arca.",
+  "querubines":"Seres celestiales asociados a la presencia de Dios (Génesis 3; Éxodo 25).",
+  "serafín":"Seres de Isaías 6 que proclaman: «Santo, santo, santo».",
+  "serafines":"Seres de Isaías 6 que proclaman la santidad de Dios.",
+
+  /* —— términos de la vida y el lenguaje bíblico —— */
+  "impío":"Quien vive sin temor de Dios; el malvado que desprecia su ley. En los Salmos y Proverbios se contrapone al justo.",
+  "impio":"Quien vive sin temor de Dios; el malvado que desprecia su ley. En los Salmos y Proverbios se contrapone al justo.",
+  "impíos":"Los que no temen a Dios; a menudo el destino de los impíos se contrasta con el de los justos.",
+  "impios":"Los que no temen a Dios; a menudo el destino de los impíos se contrasta con el de los justos.",
+  "justo":"Quien vive conforme a la voluntad de Dios; en el NT, el declarado justo por la fe en Cristo.",
+  "justos":"Los rectos delante de Dios; herederos de la promesa y del reino.",
+  "siervo":"Servidor; en la Biblia, el que pertenece a un señor. «Siervo de Jehová» designa a líderes y, de modo único, al Siervo de Isaías (Cristo).",
+  "siervos":"Servidores de Dios o de un amo; los creyentes se llaman siervos de Cristo.",
+  "sierva":"Servidora; mujer al servicio de un señor o de Dios (p. ej. María: «he aquí la sierva del Señor»).",
+  "rabbi":"Forma latina/inglesa de «rabí»: maestro. Título de respeto hacia un doctor de la ley; aplicado a Jesús por sus discípulos.",
+  "rabi":"«Mi maestro»; título de respeto a un doctor de la ley; los discípulos lo usaron con Jesús.",
+  "maestro":"Enseñante de la ley o de la doctrina; título dado a Jesús (Rabí / Maestro).",
+  "tesoro":"Bienes guardados; Jesús habla del tesoro en el cielo frente al de la tierra (Mateo 6).",
+  "pan":"Alimento básico; símbolo de la provisión de Dios y, en la Cena, del cuerpo de Cristo. «Pan de vida» (Juan 6).",
+  "vino":"Bebida de la vid; en la Cena representa la sangre del nuevo pacto. También imagen de gozo o de juicio (copa de ira).",
+  "sal":"Conservante y sazonador; los discípulos son «la sal de la tierra» (Mateo 5:13): influencia que preserva y da sabor.",
+  "luz":"Símbolo de la presencia, verdad y santidad de Dios. Jesús: «Yo soy la luz del mundo» (Juan 8:12).",
+  "tinieblas":"Ausencia de luz; imagen del pecado, la ignorancia y el dominio de Satanás.",
+  "tiniebla":"Ausencia de luz; imagen del pecado y de la separación de Dios.",
+  "semilla":"Grano que se siembra; en las parábolas, la Palabra de Dios o el reino que crece (Mateo 13).",
+  "simiente":"Semilla o descendencia; la «simiente de la mujer» (Génesis 3:15) apunta al Mesías; Abraham recibió promesa de simiente.",
+  "pastor":"Quien cuida el rebaño; imagen de Dios y de Cristo (el Buen Pastor, Juan 10) y de los líderes de la iglesia.",
+  "pastores":"Guías del pueblo de Dios; en el NT, líderes que apacientan la grey (Efesios 4:11; 1 Pedro 5).",
+  "oveja":"Animal del rebaño; imagen del creyente bajo el cuidado de Cristo, el Buen Pastor.",
+  "ovejas":"El pueblo de Dios como rebaño; Jesús pone su vida por las ovejas (Juan 10).",
+  "rebano":"Conjunto de ovejas; la iglesia como grey de Dios.",
+  "rebaño":"Conjunto de ovejas; la iglesia como grey de Dios.",
+  "roca":"Símbolo de firmeza y refugio; Dios es la Roca de Israel. Pedro confiesa a Cristo, la roca de la iglesia (Mateo 16).",
+  "piedra":"Material de construcción; Cristo es la piedra angular (Efesios 2:20; 1 Pedro 2:6-8).",
+  "escándalo":"Obstáculo que hace tropezar; Cristo es «piedra de escándalo» para quien lo rechaza (Romanos 9:33).",
+  "tropiezo":"Causa de caer en pecado; no poner tropiezo al hermano (Romanos 14).",
+  "yugo":"Arnés que une a dos animales; imagen de sumisión. El yugo de Cristo es fácil (Mateo 11:30); no unirse en yugo desigual (2 Cor. 6:14).",
+  "cruz":"Instrumento romano de ejecución; centro del evangelio: muerte redentora de Jesús. Tomar la cruz = seguirle con renuncia (Lucas 9:23).",
+  "sangre":"En el culto, medio de expiación (Levítico 17:11). La sangre de Cristo sella el nuevo pacto y limpia de pecado.",
+  "cuerpo":"El cuerpo físico; el de Cristo entregado en la cruz y representado en la Cena. También el cuerpo de Cristo = la iglesia.",
+  "alma":"La vida interior de la persona; en la Biblia a menudo toda la persona viviente. Dios salva el alma.",
+  "espíritu":"Aliento o parte inmaterial del hombre; también el Espíritu Santo, tercera persona de la Trinidad.",
+  "espiritu":"Aliento o parte inmaterial del hombre; también el Espíritu Santo, tercera persona de la Trinidad.",
+  "carne":"Naturaleza humana débil y, a menudo, inclinada al pecado; se opone al caminar «según el Espíritu» (Romanos 8).",
+  "mundo":"La creación ordenada; también el sistema humano opuesto a Dios (1 Juan 2:15-17).",
+  "siglo":"Era o tiempo presente; «este siglo» es el orden actual marcado por el pecado, frente al siglo venidero.",
+  "eternidad":"Lo que no tiene fin; la vida eterna es conocer a Dios y a Jesucristo (Juan 17:3).",
+  "vida":"Don de Dios; la vida eterna es comunión con Él. Jesús: «Yo soy la vida» (Juan 14:6).",
+  "muerte":"Consecuencia del pecado (Romanos 6:23); Cristo la venció. Hay muerte física y la «segunda muerte» (Ap. 20).",
+  "sepulcro":"Tumba; el sepulcro vacío testifica la resurrección de Jesús.",
+  "juicio":"El acto de Dios al evaluar y sentenciar; habrá un juicio final de vivos y muertos.",
+  "ira":"La justa indignación de Dios contra el pecado; la cruz aparta de nosotros la ira venidera.",
+  "paz":"Shalom: no solo ausencia de guerra, sino plenitud y reconciliación con Dios por Cristo (Romanos 5:1).",
+  "gozo":"Alegría profunda en Dios, fruto del Espíritu; no depende solo de las circunstancias.",
+  "esperanza":"Expectativa segura de lo que Dios ha prometido; ancla del alma (Hebreos 6:19).",
+  "amor":"El atributo central de Dios (1 Juan 4:8); en el creyente, el mayor mandamiento y el vínculo de la perfección.",
+  "temor":"En sentido santo, reverencia ante Dios; el «temor de Jehová» es el principio de la sabiduría. No el miedo esclavizante.",
+  "sabiduría":"Habilidad para vivir según Dios; personificada en Proverbios; Cristo es sabiduría de Dios (1 Cor. 1:24).",
+  "necio":"Quien desprecia la instrucción de Dios; «dice el necio en su corazón: No hay Dios» (Salmo 14:1).",
+  "necedad":"Lo opuesto a la sabiduría divina; el camino que conduce a la ruina.",
+  "vanidad":"Vacío, futilidad; en Eclesiastés, lo que no tiene peso eterno bajo el sol.",
+  "abominación":"Algo detestable a Dios; a menudo idolatría o inmoralidad grave.",
+  "maldición":"Consecuencia del quebrantar el pacto; Cristo nos redimió de la maldición de la ley (Gálatas 3:13).",
+  "bendición":"Favor y bien que Dios comunica; Abraham fue bendecido para ser bendición a las naciones.",
+  "promesa":"Palabra de Dios que asegura un bien futuro; todas las promesas encuentran su «sí» en Cristo (2 Cor. 1:20).",
+  "herencia":"Lo que se recibe como hijo; los creyentes son herederos de Dios y coherederos con Cristo (Romanos 8:17).",
+  "primogénito":"El hijo mayor, con derechos especiales; Cristo es el primogénito de toda creación y de entre los muertos (Col. 1).",
+  "primogenito":"El hijo mayor, con derechos especiales; Cristo es el primogénito de toda creación y de entre los muertos (Col. 1).",
+  "viuda":"Mujer cuyo esposo ha muerto; Dios se declara defensor de viudas y huérfanos (Salmo 68:5).",
+  "huérfano":"Niño sin padres; objeto del cuidado especial de Dios y de su pueblo.",
+  "extranjero":"Forastero en la tierra; Israel debía amarlo, recordando que fueron extranjeros en Egipto. El creyente es peregrino en el mundo.",
+  "peregrino":"Viajero de paso; los creyentes son peregrinos y advenedizos en busca de la patria celestial (Hebreos 11).",
+  "advenedizo":"Residente temporal; junto con «peregrino», describe la condición del pueblo de Dios en la tierra.",
+  "testigo":"Quien da testimonio de lo que ha visto u oído; los apóstoles son testigos de la resurrección. El creyente testifica de Cristo.",
+  "testimonio":"Declaración de la verdad de Dios; el testimonio de Jesús es el espíritu de la profecía (Ap. 19:10).",
+  "milagro":"Obra de poder divino que confirma el mensaje; señales del reino en el ministerio de Jesús y los apóstoles.",
+  "señal":"Hecho que apunta a una realidad mayor; los milagros de Jesús son señales de su identidad (Juan).",
+  "parábola":"Relato terreno con significado espiritual; método frecuente de enseñanza de Jesús.",
+  "parabola":"Relato terreno con significado espiritual; método frecuente de enseñanza de Jesús.",
+  "ayuno":"Abstenerse de comida por razones espirituales: humillación, oración y búsqueda de Dios.",
+  "oración":"Comunicación con Dios: petición, alabanza, confesión y acción de gracias.",
+  "alabanza":"Declarar las excelencias de Dios; la iglesia es un pueblo para anunciar sus virtudes (1 Pedro 2:9).",
+  "adoración":"Rendir a Dios el honor que solo Él merece; en espíritu y en verdad (Juan 4:23-24).",
+  "mayordomo":"Administrador de bienes ajenos; el creyente es mayordomo de los dones de Dios (1 Pedro 4:10).",
+  "mayordomía":"Responsabilidad de administrar bien lo que Dios confía (tiempo, bienes, dones).",
+  "fruto":"Resultado visible; el fruto del Espíritu (Gálatas 5:22-23) y el fruto de una vida unida a la vid (Juan 15).",
+  "frutos":"Obras y carácter que nacen de la unión con Cristo.",
+  "sembrar":"Acción de plantar; «todo lo que el hombre sembrare, eso también segará» (Gálatas 6:7).",
+  "segar":"Recoger la cosecha; imagen del juicio y de la misión (la mies es mucha).",
+  "mies":"Cosecha; «la mies es mucha, mas los obreros pocos» (Mateo 9:37).",
+  "obrero":"Trabajador; en el evangelio, quien labora en la mies del Señor.",
+  "obreros":"Trabajadores de la mies; dignos de su salario (1 Timoteo 5:18).",
+  "pescador":"Oficio de varios discípulos; Jesús los hace «pescadores de hombres» (Marcos 1:17).",
+  "red":"Instrumento de pesca; en la parábola, imagen del reino que reúne a toda clase de personas (Mateo 13:47).",
+  "tempestad":"Tormenta; Jesús calma la tempestad, mostrando su autoridad sobre la creación (Marcos 4).",
+  "desierto":"Lugar árido; Israel fue probado allí; Jesús fue tentado en el desierto. También lugar de encuentro con Dios.",
+  "monte":"Lugar elevado; Dios habla en el Sinaí; Jesús predica el Sermón del monte y se transfigura en un monte.",
+  "valle":"Tierra baja; «valle de sombra de muerte» (Salmo 23) expresa peligro extremo bajo el cuidado del Pastor.",
+  "ciudad":"Asentamiento amurallado; la ciudad santa es Jerusalén; la Nueva Jerusalén es la morada final de Dios con su pueblo.",
+  "casa":"Hogar y linaje; la «casa de Israel» es el pueblo; la iglesia es casa de Dios (1 Timoteo 3:15).",
+  "puerta":"Acceso; Jesús es la puerta de las ovejas (Juan 10:7). También la puerta estrecha del reino (Mateo 7:13).",
+  "camino":"Senda de vida; Jesús es «el camino» (Juan 14:6). Hay camino ancho y camino angosto.",
+  "verdad":"Lo que es conforme a Dios; Jesús es la verdad (Juan 14:6). La Palabra es verdad (Juan 17:17).",
+  "mentira":"Lo opuesto a la verdad; el diablo es mentiroso y padre de mentira (Juan 8:44).",
+  "testamento":"Pacto o alianza; Antiguo y Nuevo Testamento designan las dos grandes divisiones de la Escritura y los pactos que representan.",
+  "escritura":"Los escritos sagrados inspirados por Dios; «toda la Escritura es inspirada por Dios» (2 Timoteo 3:16).",
+  "escrituras":"El conjunto de los libros sagrados; Jesús abrió a los discípulos las Escrituras acerca de Él (Lucas 24).",
+  "palabra":"La revelación de Dios; la Palabra hecha carne es Cristo (Juan 1:14). La palabra predicada engendra fe (Romanos 10:17)."
+};
+
+function stripAccents(s){
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+function normalizeKey(s){
+  return stripAccents(s.toLowerCase()).replace(/[^a-z]/g,'');
+}
+const DICT_NORM = {};
+Object.keys(DICTIONARY).forEach(k=>{
+  DICT_NORM[normalizeKey(k)] = { term: k, def: DICTIONARY[k] };
+});
+
+/** Variantes morfológicas simples (plurales, femeninos) → lema del diccionario */
+function dictLookupKeys(word){
+  const k = normalizeKey(word);
+  const keys = [k];
+  // plurales comunes en español
+  if(k.endsWith('es') && k.length > 4) keys.push(k.slice(0,-2));
+  if(k.endsWith('s') && k.length > 3) keys.push(k.slice(0,-1));
+  if(k.endsWith('ces')) keys.push(k.slice(0,-3)+'z'); // jueces → juez (parcial)
+  // israelitas → israelita → ya en dict
+  if(k.endsWith('itas') && k.length > 5) keys.push(k.slice(0,-1)); // israelitas → israelita
+  return [...new Set(keys)];
+}
+
+function lookupBiblical(word){
+  for(const k of dictLookupKeys(word)){
+    if(DICT_NORM[k]) return DICT_NORM[k];
+  }
+  return null;
+}
+
+const wordPopup = document.getElementById('word-popup');
+wordPopup.querySelector('.wp-close').onclick = ()=> wordPopup.classList.remove('open');
+
+/** Busca resumen bíblico en Wikipedia ES (prioriza páginas con sentido religioso) */
+async function fetchBiblicalWiki(word){
+  const base = word.trim();
+  const candidates = [
+    base,
+    base + ' (Biblia)',
+    base + ' (personaje bíblico)',
+    base + ' (pueblo)',
+    'Israelitas', // fallback no usado genérico
+  ];
+  // Solo candidatos derivados de la palabra
+  const titles = [
+    base,
+    `${base} (Biblia)`,
+    `${base} (personaje bíblico)`,
+    `${base} (Antiguo Testamento)`,
+    `${base} (Nuevo Testamento)`,
+  ];
+  for(const title of titles){
+    try{
+      const url = `https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
+      const r = await fetch(url);
+      if(!r.ok) continue;
+      const data = await r.json();
+      if(data.type === 'standard' && data.extract){
+        let text = data.extract.trim();
+        if(text.length > 500) text = text.slice(0,500) + '…';
+        return { text, source: 'Wikipedia (contexto bíblico/histórico)' };
+      }
+    }catch(e){ /* siguiente candidato */ }
+  }
+  return null;
+}
+
+function showWordPopup(word, x, y){
+  const termEl = wordPopup.querySelector('.wp-term');
+  const defEl = wordPopup.querySelector('.wp-def');
+  const srcEl = wordPopup.querySelector('.wp-source');
+  const saveBtn = document.getElementById('wp-save-btn');
+  termEl.textContent = word;
+
+  const left = Math.min(Math.max(x, 10), window.innerWidth - 320);
+  const top = Math.min(Math.max(y + 14, 10), window.innerHeight - 220);
+  wordPopup.style.left = left + 'px';
+  wordPopup.style.top = top + 'px';
+  wordPopup.classList.add('open');
+
+  const key = (word||'').toLowerCase().trim();
+  const markSaved = ()=>{
+    if(!saveBtn) return;
+    if(savedMeanings[key] || savedMeanings[word]){
+      saveBtn.textContent = '✓ Guardado';
+      saveBtn.classList.add('saved');
+    } else {
+      saveBtn.textContent = '💾 Guardar';
+      saveBtn.classList.remove('saved');
+    }
+  };
+  if(saveBtn){
+    saveBtn.onclick = ()=>{
+      const def = defEl.textContent || '';
+      if(!def || def.indexOf('Buscando') === 0) return;
+      savedMeanings[key] = { term: word, def, source: srcEl.textContent || '' };
+      saveMeaningsStore();
+      markSaved();
+    };
+  }
+
+  // Preferir guardado local
+  if(savedMeanings[key] || savedMeanings[word]){
+    const sm = savedMeanings[key] || savedMeanings[word];
+    defEl.textContent = sm.def;
+    srcEl.textContent = sm.source || 'Guardado localmente';
+    markSaved();
+    return;
+  }
+
+  const hit = lookupBiblical(word);
+  if(hit){
+    defEl.textContent = hit.def;
+    srcEl.textContent = 'Diccionario bíblico del predicador';
+    markSaved();
+    return;
+  }
+
+  defEl.innerHTML = '<span class="wp-loading">Buscando en diccionario bíblico…</span>';
+  srcEl.textContent = '';
+  markSaved();
+
+  fetchBiblicalWiki(word).then(res=>{
+    if(res){
+      defEl.textContent = res.text;
+      srcEl.textContent = 'Fuente: ' + res.source;
+    } else {
+      defEl.textContent = 'No hay una entrada bíblica para «' + word + '» en el diccionario local. Prueba otra forma de la palabra o un término más específico del texto.';
+      srcEl.textContent = '';
+    }
+    markSaved();
+  }).catch(()=>{
+    defEl.textContent = 'No se pudo completar la búsqueda en línea. El término no está en el diccionario bíblico local.';
+    markSaved();
+  });
+}
+
+reader.addEventListener('mouseup', (e)=>{
+  // Solo consultar significado si el menú de acciones del versículo está visible
+  if(!detailVerse) return;
+  const sel = window.getSelection();
+  const raw = sel ? sel.toString().trim() : '';
+  if(!raw || /\s/.test(raw)) return;
+  const word = raw.replace(/^[^\wáéíóúñüÁÉÍÓÚÑÜ]+|[^\wáéíóúñüÁÉÍÓÚÑÜ]+$/g,'');
+  if(!word) return;
+  showWordPopup(word, e.clientX, e.clientY);
+});
+document.addEventListener('mousedown', (e)=>{
+  if(wordPopup.classList.contains('open') && !wordPopup.contains(e.target)){
+    wordPopup.classList.remove('open');
+  }
+});
+
+/* =========================================================
+   INSTRUCCIONES
+   ========================================================= */
+document.getElementById('help-btn').onclick = ()=>{
+  infoNavEnabled = false;
+  document.getElementById('im-nav').style.display = 'none';
+  document.getElementById('im-title').textContent = 'Instrucciones de SEFER';
+  document.getElementById('im-sub').textContent = 'BY LIFE WORD MISSION · Reina-Valera 1960';
+  document.getElementById('im-body').innerHTML = `
+    <div class="im-block"><div class="im-label">¿Qué es SEFER?</div>
+    <div class="im-text">Herramienta de estudio y proyección bíblica. Navega por libros, toma notas, marca favoritos, consulta significados, estudia sermones y proyecta versículos. Pensada para usarse también <strong>solo con teclado</strong>.</div></div>
+
+    <div class="im-block"><div class="im-label">Navegación de libros</div>
+    <div class="im-text">• Tab hasta el testamento/libro · <strong>Enter</strong> o <strong>Espacio</strong> expande/abre.<br>
+    • Botón <strong>?</strong> → ficha. Con el modal: <strong>← →</strong> cambia de libro; <strong>↑ ↓</strong> desplaza el texto; <strong>Esc</strong> cierra.<br>
+    • <strong>↺</strong> reinicia navegación, tamaño de texto, búsqueda de referencias, paneles y vuelve al inicio.</div></div>
+
+    <div class="im-block"><div class="im-label">Búsquedas</div>
+    <div class="im-text">• <strong>Referencia</strong> (izquierda): <code>Génesis 1:1</code>, rangos <code>1:1-5</code>, listas <code>1:1,3,6</code>. Tab autocompleta. Enter navega.<br>
+    • <strong>Palabra</strong>: escribe en cualquier momento → barra central. Enter abre el primer resultado centrado. Esc cierra.</div></div>
+
+    <div class="im-block"><div class="im-label">Versículos</div>
+    <div class="im-text">• Tab/↑↓ entre versículos · Enter abre el menú (selección, ♥ favorito, nota, proyectar).<br>
+    • Menú abierto + palabra → diccionario.<br>
+    • Notas: <strong>💾</strong> o <strong>Ctrl+Enter</strong> / <strong>Command (⌘)+Enter</strong> guarda. × o Esc cierra. 🗑 elimina.<br>
+    • Favoritos: 🗑 en el panel · con el versículo abierto y marcado: tecla <strong>Supr</strong> o <strong>Backspace</strong> quita el favorito.</div></div>
+
+    <div class="im-block"><div class="im-label">Sermones 📖</div>
+    <div class="im-text">• Temas incluidos + <strong>➕ Nuevo sermón</strong>.<br>
+    • Referencias con ➕ o 📌 (selección actual).<br>
+    • <strong>💾</strong> o <strong>Ctrl+S</strong> / <strong>Command (⌘)+S</strong> guarda. 🗑 elimina propios.</div></div>
+
+    <div class="im-block"><div class="im-label">Proyección y Modo Detalle</div>
+    <div class="im-text">• 🎬 Proyectar · ← → versículo · Esc sale.<br>
+    • 🔍 Modo Detalle: nombres negrita, ciudades cursiva, palabras de Jesús en color.</div></div>
+
+    <div class="im-block"><div class="im-label">Atajos de teclado</div>
+    <div class="im-text">
+    <strong>Tab / Shift+Tab</strong> — mover el foco<br>
+    <strong>Enter / Espacio</strong> — activar botón o ítem enfocado<br>
+    <strong>Esc</strong> — cerrar modal, proyección, búsqueda, nota o panel<br>
+    <strong>↑ ↓</strong> — scroll en instrucciones/fichas · moverse entre versículos o resultados<br>
+    <strong>← →</strong> — proyección · fichas ? de libros<br>
+    <strong>Supr / Backspace</strong> — quitar favorito (versículo abierto o ítem en panel)<br>
+    <strong>Ctrl+Enter</strong> o <strong>Command (⌘)+Enter</strong> — guardar nota<br>
+    <strong>Ctrl+S</strong> o <strong>Command (⌘)+S</strong> — guardar sermón<br>
+    <strong>Ctrl+clic</strong> o <strong>Command (⌘)+clic</strong> — multi-selección
+    </div></div>
+
+    <div class="im-block"><div class="im-label">Temas</div>
+    <div class="im-text">🕯️ Sándalo · 🕊️ Paz · ⏳ Arena · 📄 Claro · 🌌 Amoled · 🌿 Edén · 👑 Reino</div></div>
+  `;
+  document.getElementById('info-modal').classList.add('open');
+  focusInfoScroll();
+};
+
+/* =========================================================
+   SERMONES POR TEMA (+ creación de sermones propios)
+   ========================================================= */
+const SERMONES_BUILTIN = (window.SERMONES && window.SERMONES.sermones_expositivos) || [];
+let customSermons = store.get('bp_custom_sermons', []);
+function saveCustomSermons(){
+  store.set('bp_custom_sermons', customSermons);
+  try{ localStorage.setItem('bp_sermons_export', JSON.stringify(customSermons, null, 2)); }catch(e){}
+}
+function exportSermonsFile(){ downloadJSON('sermones-custom.json', customSermons); }
+
+function parseRefToParts(ref){
+  const m = (ref||'').match(/^(.+?)\s+(\d+):(.+)$/);
+  if(!m) return null;
+  const book = m[1].trim();
+  const chap = m[2];
+  const versePart = m[3].replace(/\s/g,'');
+  const verses = [];
+  versePart.split(',').forEach(chunk=>{
+    const range = chunk.match(/^(\d+)-(\d+)$/);
+    if(range){ for(let i=+range[1]; i<=+range[2]; i++) verses.push(String(i)); }
+    else if(/^\d+$/.test(chunk)) verses.push(chunk);
+  });
+  return {book, chap, verses};
+}
+function lookupVerseText(ref){
+  const p = parseRefToParts(ref);
+  if(!p || !BIBLE[p.book] || !BIBLE[p.book][p.chap]) return '';
+  return (p.verses.map(v => BIBLE[p.book][p.chap][v]).filter(Boolean)).join(' ');
+}
+
+function allSermonsList(){
+  return [
+    ...SERMONES_BUILTIN.map(s => ({...s, _custom:false})),
+    ...customSermons.map(s => ({...s, _custom:true}))
+  ];
+}
+
+function openSermonsPanel(){
+  side.innerHTML = sidePanelHeader('📖 Sermones') +
+    `<div class="empty-msg" style="margin-bottom:10px;">Temas expositivos y tus sermones. Crea el tuyo con ➕.</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+      <button type="button" class="btn primary" id="sermon-new-btn">➕ Nuevo sermón</button>
+      <button type="button" class="btn" id="sermon-export-btn">💾 Exportar</button>
+    </div>`;
+  bindSideClose();
+  side.querySelector('#sermon-new-btn').onclick = ()=> openSermonEditor(null);
+  side.querySelector('#sermon-export-btn').onclick = ()=> exportSermonsFile();
+
+  const list = allSermonsList();
+  if(!list.length){
+    appendSideMsg(`<div class="empty-msg">No hay sermones cargados.</div>`);
+  }
+  list.forEach(sermon=>{
+    const card = document.createElement('div');
+    card.className = 'result-item';
+    card.tabIndex = 0;
+    card.innerHTML =
+      (sermon._custom ? `<button type="button" class="sermon-del" title="Eliminar sermón">🗑</button>` : '') +
+      `<div class="result-ref">${sermon._custom ? '✏️ ' : ''}${sermon.titulo}</div>
+       <div class="result-text">${sermon.proposito||''}</div>`;
+    if(sermon._custom){
+      card.querySelector('.sermon-del').onclick = (e)=>{
+        e.stopPropagation();
+        if(!confirm('¿Eliminar este sermón?')) return;
+        customSermons = customSermons.filter(s => s.id !== sermon.id);
+        saveCustomSermons();
+        openSermonsPanel();
+      };
+    }
+    card.onclick = (e)=>{
+      if(e.target.closest('.sermon-del')) return;
+      openSermonDetail(sermon);
+    };
+    card.onkeydown = (e)=>{
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openSermonDetail(sermon); }
+    };
+    side.appendChild(card);
+  });
+  side.classList.add('open');
+  side.tabIndex = -1;
+  sidePanel = 'sermons';
+  document.getElementById('sermons-btn')?.classList.add('active-panel');
+  document.getElementById('notes-btn')?.classList.remove('active-panel');
+  document.getElementById('favs-btn')?.classList.remove('active-panel');
+  document.getElementById('meanings-btn')?.classList.remove('active-panel');
+  focusSidePanel();
+}
+
+function openSermonDetail(sermon){
+  side.innerHTML = sidePanelHeader('📖 ' + sermon.titulo);
+  bindSideClose();
+  if(sermon.proposito){
+    appendSideMsg(`<div class="empty-msg" style="text-align:left;margin-bottom:12px;">${sermon.proposito}</div>`);
+  }
+  if(sermon._custom){
+    const editRow = document.createElement('div');
+    editRow.style.marginBottom = '10px';
+    editRow.innerHTML = `<button type="button" class="btn" id="sermon-edit-btn">✏️ Editar</button>
+      <button type="button" class="btn" id="sermon-del-btn">🗑 Eliminar</button>`;
+    side.appendChild(editRow);
+    editRow.querySelector('#sermon-edit-btn').onclick = ()=> openSermonEditor(sermon);
+    editRow.querySelector('#sermon-del-btn').onclick = ()=>{
+      if(!confirm('¿Eliminar este sermón?')) return;
+      customSermons = customSermons.filter(s => s.id !== sermon.id);
+      saveCustomSermons();
+      openSermonsPanel();
+    };
+  }
+  (sermon.bosquejo||[]).forEach(sec=>{
+    const block = document.createElement('div');
+    block.style.marginBottom = '14px';
+    block.innerHTML = `<div class="result-ref" style="margin-bottom:4px;">${sec.seccion}</div>
+      <div class="result-text" style="margin-bottom:8px;">${sec.explicacion||''}</div>`;
+    (sec.versiculos||[]).forEach(v=>{
+      const row = document.createElement('div');
+      row.className = 'result-item';
+      const txt = v.texto || lookupVerseText(v.referencia) || '';
+      row.innerHTML = `<div class="result-ref">${v.referencia}</div><div class="result-text">${txt.slice(0,160)}${txt.length>160?'…':''}</div>
+        <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+          <button type="button" class="btn" style="font-size:11px;padding:4px 8px;">Ir</button>
+          <button type="button" class="btn primary" style="font-size:11px;padding:4px 8px;">🎬 Proyectar</button>
+        </div>`;
+      const btns = row.querySelectorAll('button');
+      const go = ()=>{
+        const p = parseRefToParts(v.referencia);
+        if(!p || !BIBLE[p.book]){ alert('No se pudo abrir: '+v.referencia); return; }
+        openTestaments.add(BOOK_ORDER.find(e=>e.name===p.book)?.testament || 'AT');
+        openBooks.add(p.book);
+        saveNavState();
+        goTo(p.book, p.chap);
+        if(p.verses.length){
+          selectedVerses = p.verses.filter(x => BIBLE[p.book][p.chap][x]);
+          detailVerse = selectedVerses[0] || null;
+          updateSelectionUI();
+        }
+        renderReader();
+        renderBookList();
+        if(detailVerse) scrollVerseIntoView(detailVerse);
+      };
+      btns[0].onclick = (e)=>{ e.stopPropagation(); go(); };
+      btns[1].onclick = (e)=>{
+        e.stopPropagation();
+        const p = parseRefToParts(v.referencia);
+        if(!p || !BIBLE[p.book]) return;
+        const vs = p.verses.filter(x => BIBLE[p.book][p.chap][x]);
+        openStage(p.book, p.chap, vs.length ? vs : ['1']);
+      };
+      block.appendChild(row);
+    });
+    side.appendChild(block);
+  });
+  const back = document.createElement('div');
+  back.className = 'trash-link';
+  back.innerHTML = '← Volver a sermones';
+  back.onclick = ()=> openSermonsPanel();
+  side.appendChild(back);
+  side.classList.add('open');
+  sidePanel = 'sermons';
+}
+
+/** Editor de sermón personalizado */
+function openSermonEditor(existing){
+  const draft = existing ? JSON.parse(JSON.stringify(existing)) : {
+    id: 'custom_' + Date.now(),
+    titulo: '',
+    proposito: '',
+    bosquejo: [{ seccion: 'I. Sección', explicacion: '', versiculos: [] }]
+  };
+  side.innerHTML = sidePanelHeader(existing ? '✏️ Editar sermón' : '➕ Nuevo sermón') +
+    `<div class="sermon-editor" id="sermon-editor"></div>`;
+  bindSideClose();
+  const ed = side.querySelector('#sermon-editor');
+
+  function renderEditor(){
+    ed.innerHTML = `
+      <label class="im-label">Título</label>
+      <input id="se-title" value="${(draft.titulo||'').replace(/"/g,'&quot;')}" placeholder="Título del sermón">
+      <label class="im-label">Propósito</label>
+      <textarea id="se-purpose" placeholder="Objetivo del mensaje…">${draft.proposito||''}</textarea>
+      <div id="se-sections"></div>
+      <div class="se-row">
+        <button type="button" class="btn" id="se-add-sec">➕ Sección</button>
+        <button type="button" class="btn primary" id="se-save" title="Guardar (Ctrl+S)">💾 Guardar</button>
+        <button type="button" class="btn" id="se-cancel">Cancelar</button>
+      </div>
+      <div class="empty-msg" style="text-align:left;margin-top:8px;">Añade referencias como <code>Juan 3:16</code> o <code>Romanos 8:1-4</code>. Usa 📌 para la selección actual del lector.</div>`;
+
+    const secWrap = ed.querySelector('#se-sections');
+    (draft.bosquejo||[]).forEach((sec, si)=>{
+      const box = document.createElement('div');
+      box.className = 'se-section';
+      box.innerHTML = `
+        <div class="se-row" style="justify-content:space-between;">
+          <strong>Sección ${si+1}</strong>
+          <button type="button" class="btn" data-del-sec style="font-size:11px;padding:3px 8px;">🗑</button>
+        </div>
+        <input data-sec-title placeholder="Título de la sección" value="${(sec.seccion||'').replace(/"/g,'&quot;')}">
+        <textarea data-sec-exp placeholder="Explicación…">${sec.explicacion||''}</textarea>
+        <div data-chips></div>
+        <div class="se-row">
+          <input data-ref-input placeholder="Génesis 1:1 o Juan 3:16-18" style="flex:1;margin-bottom:0;">
+          <button type="button" class="btn" data-add-ref>➕</button>
+          <button type="button" class="btn" data-add-sel title="Añadir selección actual">📌</button>
+        </div>`;
+      const chips = box.querySelector('[data-chips]');
+      function renderChips(){
+        chips.innerHTML = '';
+        (sec.versiculos||[]).forEach((v, vi)=>{
+          const chip = document.createElement('span');
+          chip.className = 'se-verse-chip';
+          chip.innerHTML = `${v.referencia} <button type="button" title="Quitar">×</button>`;
+          chip.querySelector('button').onclick = ()=>{
+            sec.versiculos.splice(vi, 1);
+            renderChips();
+          };
+          chips.appendChild(chip);
+        });
+      }
+      renderChips();
+      box.querySelector('[data-del-sec]').onclick = ()=>{
+        if((draft.bosquejo||[]).length <= 1){ alert('Debe quedar al menos una sección.'); return; }
+        draft.bosquejo.splice(si, 1);
+        syncDraftFromDom();
+        renderEditor();
+      };
+      box.querySelector('[data-add-ref]').onclick = ()=>{
+        const inp = box.querySelector('[data-ref-input]');
+        const ref = (inp.value||'').trim();
+        if(!ref) return;
+        const p = parseRefToParts(ref);
+        if(!p || !BIBLE[p.book]){ alert('Referencia no válida o libro no encontrado.'); return; }
+        const texto = lookupVerseText(ref);
+        sec.versiculos = sec.versiculos || [];
+        sec.versiculos.push({ referencia: ref, texto });
+        inp.value = '';
+        renderChips();
+      };
+      box.querySelector('[data-add-sel]').onclick = ()=>{
+        if(!selectedVerses.length){ alert('Selecciona versículos en el lector primero.'); return; }
+        const nums = [...selectedVerses].sort((a,b)=>+a-+b);
+        let ref;
+        if(nums.length === 1) ref = `${currentBook} ${currentChap}:${nums[0]}`;
+        else {
+          const consecutive = nums.every((n,i)=> i===0 || +n === +nums[i-1]+1);
+          ref = consecutive
+            ? `${currentBook} ${currentChap}:${nums[0]}-${nums[nums.length-1]}`
+            : `${currentBook} ${currentChap}:${nums.join(',')}`;
+        }
+        const texto = lookupVerseText(ref);
+        sec.versiculos = sec.versiculos || [];
+        sec.versiculos.push({ referencia: ref, texto });
+        renderChips();
+      };
+      box.querySelector('[data-ref-input]').addEventListener('keydown', (e)=>{
+        if(e.key === 'Enter'){ e.preventDefault(); box.querySelector('[data-add-ref]').click(); }
+      });
+      secWrap.appendChild(box);
+    });
+
+    function syncDraftFromDom(){
+      draft.titulo = ed.querySelector('#se-title')?.value || '';
+      draft.proposito = ed.querySelector('#se-purpose')?.value || '';
+      const boxes = ed.querySelectorAll('.se-section');
+      boxes.forEach((box, i)=>{
+        if(!draft.bosquejo[i]) return;
+        draft.bosquejo[i].seccion = box.querySelector('[data-sec-title]')?.value || '';
+        draft.bosquejo[i].explicacion = box.querySelector('[data-sec-exp]')?.value || '';
+      });
+    }
+
+    ed.querySelector('#se-add-sec').onclick = ()=>{
+      syncDraftFromDom();
+      draft.bosquejo.push({ seccion: `${['I','II','III','IV','V','VI','VII','VIII'][draft.bosquejo.length]||(draft.bosquejo.length+1)}. Nueva sección`, explicacion: '', versiculos: [] });
+      renderEditor();
+    };
+    ed.querySelector('#se-cancel').onclick = ()=> openSermonsPanel();
+    ed.querySelector('#se-save').onclick = ()=>{
+      syncDraftFromDom();
+      if(!(draft.titulo||'').trim()){ alert('Escribe un título.'); return; }
+      draft._custom = true;
+      const idx = customSermons.findIndex(s => s.id === draft.id);
+      const clean = { id: draft.id, titulo: draft.titulo.trim(), proposito: draft.proposito, bosquejo: draft.bosquejo };
+      if(idx >= 0) customSermons[idx] = clean;
+      else customSermons.push(clean);
+      saveCustomSermons();
+      openSermonDetail({...clean, _custom:true});
+    };
+  }
+  renderEditor();
+  side.classList.add('open');
+  sidePanel = 'sermons';
+}
+
+document.getElementById('sermons-btn').onclick = ()=>{
+  if(sidePanel === 'sermons'){ closeSidePanel(); return; }
+  openSermonsPanel();
+};
+
+// Atajo Ctrl/Cmd+S para guardar sermón en editor
+document.addEventListener('keydown', (e)=>{
+  if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's'){
+    const btn = document.getElementById('se-save');
+    if(btn && sidePanel === 'sermons'){ e.preventDefault(); btn.click(); }
+  }
+});
+
+/* =========================================================
+   INIT
+   ========================================================= */
+// Inicio: pantalla de bienvenida (sin capítulo abierto)
+renderBookList();
+showWelcomeScreen();
+tryLoadLocalFiles().then(()=>{ /* notas/favs desde carpetas locales si existen */ });
+
+// Tamaño de fuente de versículos
+document.getElementById('font-inc').onclick = ()=>{
+  verseFontSize = Math.min(32, verseFontSize + 1);
+  store.set('bp_verse_font', verseFontSize);
+  applyVerseFont();
+};
+document.getElementById('font-dec').onclick = ()=>{
+  verseFontSize = Math.max(12, verseFontSize - 1);
+  store.set('bp_verse_font', verseFontSize);
+  applyVerseFont();
+};
+
+// Lectura fácil
+updateEasyBtn();
+document.getElementById('easy-btn').onclick = ()=>{
+  easyReading = !easyReading;
+  store.set('bp_easy_reading', easyReading);
+  updateEasyBtn();
+  if(!showWelcome) renderReader();
+};
+
+/* =========================================================
+   MÓVIL: toolbar, buscador palabra, ayuda, scroll hide
+   ========================================================= */
+(function wireMobileExtras(){
+  // Toolbar buttons → same as desktop counterparts
+  const map = {
+    'mt-easy': 'easy-btn',
+    'mt-sermons': 'sermons-btn',
+    'mt-meanings': 'meanings-btn',
+    'mt-notes': 'notes-btn',
+    'mt-favs': 'favs-btn',
+    'mt-help': 'help-btn'
+  };
+  Object.keys(map).forEach(id=>{
+    const src = document.getElementById(id);
+    const dst = document.getElementById(map[id]);
+    if(src && dst) src.onclick = (e)=>{ e.preventDefault(); dst.click(); };
+  });
+
+  // Word search inline (desktop header) + mobile header input → open central bar
+  function triggerWordSearch(q){
+    if(typeof openWordSearch === 'function'){
+      openWordSearch('');
+      const inp = document.getElementById('word-search-input');
+      if(inp){
+        inp.value = q || '';
+        if(q && typeof runWordSearch === 'function') runWordSearch(q);
+        else if(q) inp.dispatchEvent(new Event('input', {bubbles:true}));
+        inp.focus();
+      }
+      return;
+    }
+    const bar = document.getElementById('word-search-bar');
+    const inp = document.getElementById('word-search-input');
+    if(!bar || !inp) return;
+    bar.classList.add('open');
+    inp.value = q || '';
+    inp.focus();
+    if(q) inp.dispatchEvent(new Event('input', {bubbles:true}));
+  }
+  ['word-search-inline', 'mobile-word-search-input'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter'){
+        e.preventDefault();
+        triggerWordSearch(el.value.trim());
+      }
+    });
+    el.addEventListener('input', ()=>{
+      // mirror typing into the floating bar when it is already open
+      const inp = document.getElementById('word-search-input');
+      if(inp && typeof wordSearchOpen !== 'undefined' && wordSearchOpen){
+        inp.value = el.value;
+        if(typeof runWordSearch === 'function') runWordSearch(el.value);
+      }
+    });
+  });
+
+  // Auto-hide mobile toolbar on scroll down
+  let lastScrollY = 0;
+  const toolbar = document.getElementById('mobile-toolbar');
+  const readerEl = document.getElementById('reader');
+  if(readerEl && toolbar){
+    readerEl.addEventListener('scroll', ()=>{
+      if(!document.body.classList.contains('mobile-mode')) return;
+      const y = readerEl.scrollTop;
+      if(y > lastScrollY + 12 && y > 40){
+        toolbar.classList.add('hidden-scroll');
+      } else if(y < lastScrollY - 8){
+        toolbar.classList.remove('hidden-scroll');
+      }
+      lastScrollY = y;
+    }, {passive:true});
+  }
+})();
+
+// Help: mobile-specific content when in mobile mode
+(function patchHelpForMobile(){
+  const helpBtn = document.getElementById('help-btn');
+  if(!helpBtn) return;
+  const orig = helpBtn.onclick;
+  helpBtn.onclick = function(ev){
+    if(!document.body.classList.contains('mobile-mode')){
+      if(typeof orig === 'function') return orig.call(this, ev);
+      return;
+    }
+    // Mobile instructions
+    if(typeof infoNavEnabled !== 'undefined') infoNavEnabled = false;
+    const nav = document.getElementById('im-nav');
+    if(nav) nav.style.display = 'none';
+    document.getElementById('im-title').textContent = 'Guía rápida (móvil)';
+    document.getElementById('im-sub').textContent = 'SEFER · BY LIFE WORD MISSION';
+    document.getElementById('im-body').innerHTML = `
+      <div class="im-block"><div class="im-label">Lectura</div>
+      <div class="im-text">• Toca un versículo para abrirlo (selección, favorito, nota, proyectar).<br>
+      • Usa <strong>A− / A+</strong> para el tamaño del texto.<br>
+      • La barra de herramientas se oculta al bajar y reaparece al subir.</div></div>
+      <div class="im-block"><div class="im-label">Búsqueda</div>
+      <div class="im-text">• Arriba: busca una <strong>palabra</strong> en toda la Biblia.<br>
+      • Abajo: busca por <strong>referencia</strong> (Génesis 1:1, rangos, listas).</div></div>
+      <div class="im-block"><div class="im-label">Herramientas</div>
+      <div class="im-text">• 🔍 Detalle · 📖 Sermones · 📚 Significados<br>
+      • 📝 Notas · ♥ Favoritos · ❓ Ayuda<br>
+      • 🎬 Proyectar → elige versículo, selección, sermón o capítulo.</div></div>
+      <div class="im-block"><div class="im-label">Temas</div>
+      <div class="im-text">🕯️ Sándalo · 🕊️ Paz · ⏳ Arena · 📄 Claro · 🌌 Amoled · 🌿 Edén · 👑 Reino</div></div>
+    `;
+    document.getElementById('info-modal').classList.add('open');
+    if(typeof focusInfoScroll === 'function') focusInfoScroll();
+  };
+})();
+
+</script>
+</body>
+</html>
