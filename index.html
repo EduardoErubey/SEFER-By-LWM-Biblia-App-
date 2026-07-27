@@ -1835,7 +1835,7 @@ function renderBookList(){
       const tName = testament === 'AT' ? 'Antiguo Testamento' : 'Nuevo Testamento';
       label.innerHTML =
         `<span class="t-label-text" tabindex="0" role="button"><span class="t-chevron">${isOpen ? '▾' : '▸'}</span> ${tName}</span>` +
-        `<button type="button" class="info-btn" title="Información sobre ${tName}">❓</button>`;
+        `<button type="button" class="info-btn" title="Información sobre ${tName}">⚠️</button>`;
       const toggleTest = ()=>{
         if(openTestaments.has(testament)) openTestaments.delete(testament);
         else openTestaments.add(testament);
@@ -1865,7 +1865,7 @@ function renderBookList(){
     item.innerHTML =
       `<span>${book}${has && bookOpen ? '<span class="b-chevron">▾</span>' : (has ? '<span class="b-chevron">▸</span>' : '')}</span>` +
       (has?'':'<span style="font-size:10px;opacity:.5;">— sin datos</span>') +
-      `<button type="button" class="info-btn" title="Información sobre ${book}">❓</button>`;
+      `<button type="button" class="info-btn" title="Información sobre ${book}">⚠️</button>`;
     item.querySelector('.info-btn').onclick = (e)=>{
       e.stopPropagation();
       showBookInfo(book);
