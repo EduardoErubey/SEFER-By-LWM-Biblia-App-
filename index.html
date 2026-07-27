@@ -118,6 +118,59 @@
 [data-theme="amoled"] .verse.highlighted{
   background:rgba(255,82,82,0.28);
 }
+/* ============ TEMA 6: EDÉN ============ */
+[data-theme="eden"]{
+  --parchment:#F3F6EE;
+  --parchment-2:#E8EEDF;
+  --ink:#2C3B2A;
+  --ink-soft:#5A6B55;
+  --rubric:#5B7A4A;
+  --rubric-soft:#7A9A68;
+  --gold:#A68B3C;
+  --gold-soft:#D4C89A;
+  --line:#C9D4B8;
+  --stage-bg:#1A2218;
+  --stage-text:#E8F0E0;
+  --stage-accent:#7A9A68;
+  --stage-jump:#C9A84A;
+  --stage-jump-text:#1A1608;
+  --card-bg:#ffffff;
+  --jesus:#4A6B3A;
+  --fav:#6B8A4A;
+}
+/* ============ TEMA 7: REINO ============ */
+[data-theme="reino"]{
+  --parchment:#0F1A2E;
+  --parchment-2:#16233A;
+  --ink:#E8E4D8;
+  --ink-soft:#9AA3B5;
+  --rubric:#C9A227;
+  --rubric-soft:#D4B84A;
+  --gold:#E0C35A;
+  --gold-soft:#3A3218;
+  --line:#2A3A55;
+  --stage-bg:#0A1220;
+  --stage-text:#F0EAD8;
+  --stage-accent:#C9A227;
+  --stage-jump:#E0C35A;
+  --stage-jump-text:#1A1204;
+  --card-bg:#1A283F;
+  --jesus:#E8C070;
+  --fav:#C9A227;
+}
+[data-theme="reino"] .verse.selected{
+  background:rgba(201,162,39,0.22);
+  box-shadow:inset 3px 0 0 #C9A227;
+}
+[data-theme="reino"] .verse.active-detail{
+  background:rgba(201,162,39,0.15);
+  box-shadow:inset 3px 0 0 #C9A227;
+}
+[data-theme="reino"] .verse.highlighted{
+  background:rgba(201,162,39,0.28);
+}
+[data-theme="reino"] #stage .jesus-words{ color:#E8C070; }
+[data-theme="eden"] #stage .jesus-words{ color:#A8C898; }
 
 :root{
   --font-display:'Fraunces', serif;
@@ -176,8 +229,8 @@ body{
 #mobile-header, #mobile-footer{display:none;}
 
 /* ---- Modo móvil (vertical) ----
-   Orden visual: 1) logo + botones · 2) bienvenida/lector ·
-   3) testamentos/libros · 4) temas + buscador de referencia. */
+   Orden: 1) logo+acciones+buscador palabra · 2) topbar fila1 + toolbar fila2
+   · 3) lector · 4) libros · 5) temas+ref search */
 body.mobile-mode{
   overflow:hidden;
   position:fixed;
@@ -191,14 +244,13 @@ body.mobile-mode #app{
   width:100%;
   overflow:hidden;
 }
-/* 1) Encabezado: logo (izq) + botones modo/reiniciar (der) */
+/* 1) Encabezado móvil */
 body.mobile-mode #mobile-header{
   display:flex;
   flex:0 0 auto;
-  align-items:flex-start;
-  justify-content:space-between;
+  flex-direction:column;
   gap:8px;
-  padding:14px 16px 12px;
+  padding:12px 12px 10px;
   border-bottom:1px solid var(--line);
   background:var(--parchment-2);
 }
@@ -210,12 +262,61 @@ body.mobile-mode #mobile-header #nav-header-row{
   gap:8px;
 }
 body.mobile-mode #nav-header{display:none;}
-/* 2) Bienvenida / área de lectura */
+body.mobile-mode #mobile-word-search-wrap{
+  display:block;
+  width:100%;
+}
+body.mobile-mode #mobile-word-search-wrap input{
+  width:100%;
+  padding:8px 10px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--parchment);
+  font-family:var(--font-ui);
+  font-size:12.5px;
+  color:var(--ink);
+  outline:none;
+}
+body.mobile-mode #mobile-word-search-wrap input:focus{
+  border-color:var(--gold);
+  background:var(--card-bg);
+}
+body.mobile-mode #mobile-word-search-wrap input::placeholder{
+  color:var(--ink-soft);opacity:0.7;font-size:11.5px;
+}
+/* Buscador de palabra inline junto al reiniciar (también en desktop header) */
+#word-search-inline-wrap{
+  display:none;
+}
+body:not(.mobile-mode) #word-search-inline-wrap{
+  display:block;
+  margin-left:6px;
+}
+#word-search-inline-wrap input{
+  width:140px;
+  padding:6px 8px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--parchment);
+  font-family:var(--font-ui);
+  font-size:12px;
+  color:var(--ink);
+  outline:none;
+}
+#word-search-inline-wrap input:focus{
+  border-color:var(--gold);
+  background:var(--card-bg);
+}
+#word-search-inline-wrap input::placeholder{
+  color:var(--ink-soft);opacity:0.7;font-size:11px;
+}
+/* 2) Área de lectura */
 body.mobile-mode #main{
   flex:1.3 1 0;
   min-height:0;
   width:100%;
 }
+/* Fila 1: ref + A- A+ Proyectar */
 body.mobile-mode #topbar{
   flex-direction:row;
   flex-wrap:nowrap;
@@ -223,29 +324,61 @@ body.mobile-mode #topbar{
   gap:6px;
   padding:8px 10px;
   flex:0 0 auto;
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
+  overflow:hidden;
 }
-body.mobile-mode #topbar::-webkit-scrollbar{display:none;}
-body.mobile-mode #topbar-left{
-  flex:0 0 auto;
-}
-body.mobile-mode #current-ref{font-size:14px;}
+body.mobile-mode #topbar-left{flex:1 1 auto; min-width:0;}
+body.mobile-mode #current-ref{font-size:14px; overflow:hidden; text-overflow:ellipsis;}
 body.mobile-mode #topbar-actions{
   margin-left:0;
   flex:0 0 auto;
   flex-wrap:nowrap;
-  width:max-content;
+  gap:4px;
 }
 body.mobile-mode #topbar-actions .btn{
-  font-size:11.5px;
-  padding:7px 10px;
+  font-size:12px;
+  padding:7px 9px;
   flex:0 0 auto;
 }
+/* Ocultar en fila 1 los botones que van a la toolbar */
 body.mobile-mode #easy-btn,
-body.mobile-mode #help-btn{
+body.mobile-mode #sermons-btn,
+body.mobile-mode #meanings-btn,
+body.mobile-mode #notes-btn,
+body.mobile-mode #favs-btn,
+body.mobile-mode #help-btn,
+body.mobile-mode #clear-selection-btn{
+  display:none !important;
+}
+/* Fila 2: toolbar móvil */
+#mobile-toolbar{
   display:none;
+}
+body.mobile-mode #mobile-toolbar{
+  display:flex;
+  flex:0 0 auto;
+  flex-wrap:wrap;
+  gap:5px;
+  padding:6px 10px 8px;
+  border-bottom:1px solid var(--line);
+  background:var(--parchment);
+  transition:max-height .25s ease, opacity .25s ease, padding .25s ease, border .25s ease;
+  max-height:120px;
+  opacity:1;
+  overflow:hidden;
+}
+body.mobile-mode #mobile-toolbar.hidden-scroll{
+  max-height:0;
+  opacity:0;
+  padding-top:0;
+  padding-bottom:0;
+  border-bottom-width:0;
+}
+body.mobile-mode #mobile-toolbar .btn{
+  font-size:11px;
+  padding:6px 8px;
+  flex:1 1 auto;
+  min-width:calc(33% - 6px);
+  text-align:center;
 }
 body.mobile-mode #selection-bar{
   padding:4px 12px 8px;
@@ -260,6 +393,7 @@ body.mobile-mode #reader{
   flex:1 1 auto;
   min-height:0;
   -webkit-overflow-scrolling:touch;
+  padding:14px 14px 40px;
 }
 body.mobile-mode #side{
   width:100%;
@@ -270,11 +404,10 @@ body.mobile-mode #side{
   flex:0 0 auto;
   -webkit-overflow-scrolling:touch;
 }
-body.mobile-mode #reader{padding:14px 14px 40px;}
 body.mobile-mode .book-title{font-size:22px;}
 body.mobile-mode .chap-title{font-size:15px;}
 body.mobile-mode .verse{font-size:calc(var(--verse-size, 17px) * 1.02);}
-/* 3) Testamentos / libros / capítulos */
+/* 3) Libros */
 body.mobile-mode #nav{
   width:100%;
   min-width:0;
@@ -286,7 +419,7 @@ body.mobile-mode #nav{
 }
 body.mobile-mode .book-item{padding:8px 14px; font-size:15px;}
 body.mobile-mode .testament-label{padding:12px 14px 6px;}
-/* 4) Temas (izq) + buscador de referencia (der) */
+/* 4) Footer: temas + ref search */
 body.mobile-mode #mobile-footer{
   display:flex;
   flex:0 0 auto;
@@ -296,24 +429,12 @@ body.mobile-mode #mobile-footer{
   background:var(--parchment-2);
   flex-wrap:wrap;
 }
-body.mobile-mode #mobile-footer-themes{
-  flex:0 0 auto;
-}
-body.mobile-mode #mobile-footer-themes #theme-switch{
-  margin-top:0;
-}
-body.mobile-mode #mobile-footer-search{
-  flex:1 1 150px;
-  min-width:150px;
-}
-body.mobile-mode #mobile-footer-search #ref-search-wrap{
-  margin-top:0;
-}
+body.mobile-mode #mobile-footer-themes{flex:0 0 auto;}
+body.mobile-mode #mobile-footer-themes #theme-switch{margin-top:0; flex-wrap:wrap;}
+body.mobile-mode #mobile-footer-search{flex:1 1 150px; min-width:150px;}
+body.mobile-mode #mobile-footer-search #ref-search-wrap{margin-top:0;}
 body.mobile-mode #ref-suggest{
-  top:auto;
-  bottom:100%;
-  margin-top:0;
-  margin-bottom:4px;
+  top:auto; bottom:100%; margin-top:0; margin-bottom:4px;
 }
 body.mobile-mode #word-search-bar{width:min(96vw, 520px);}
 body.mobile-mode #stage{padding:28px 18px;}
@@ -325,10 +446,117 @@ body.mobile-mode #info-modal .im-card{max-height:80vh;}
 body.mobile-mode .verse-actions{margin-left:0;}
 body.mobile-mode .note-box{margin-left:0;}
 body.mobile-mode .verse .vaction{padding:6px 10px;font-size:11.5px;}
+/* Bienvenida móvil: fija, centrada, sin scroll */
+body.mobile-mode #reader.welcome-fixed{
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+body.mobile-mode .welcome-mobile{
+  max-width:340px;
+  margin:0 auto;
+  text-align:center;
+  padding:16px 12px;
+}
+body.mobile-mode .welcome-mobile h1{
+  font-family:var(--font-display);
+  font-size:24px;
+  font-weight:600;
+  color:var(--rubric);
+  margin:0 0 4px;
+}
+body.mobile-mode .welcome-mobile .welcome-heb{
+  font-size:18px;
+  color:var(--gold);
+  margin-bottom:10px;
+}
+body.mobile-mode .welcome-mobile p{
+  font-family:var(--font-body);
+  font-size:13.5px;
+  line-height:1.55;
+  color:var(--ink-soft);
+  margin:0 0 8px;
+}
+body.mobile-mode .welcome-mobile .wm-list{
+  text-align:left;
+  font-family:var(--font-ui);
+  font-size:12.5px;
+  line-height:1.7;
+  color:var(--ink);
+  margin:12px 0;
+  padding:0 8px;
+}
+body.mobile-mode .welcome-mobile .welcome-hint{
+  font-size:12px;
+  font-style:italic;
+  color:var(--ink-soft);
+  margin-top:12px;
+}
+/* Bottom sheet proyectar */
+#project-sheet{
+  display:none;
+  position:fixed;inset:0;
+  z-index:1250;
+  background:rgba(0,0,0,0.4);
+  align-items:flex-end;
+  justify-content:center;
+}
+#project-sheet.open{display:flex;}
+#project-sheet .ps-card{
+  background:var(--card-bg);
+  color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:14px 14px 0 0;
+  width:100%;
+  max-width:480px;
+  padding:16px 18px 28px;
+  box-shadow:0 -8px 32px rgba(0,0,0,0.2);
+  font-family:var(--font-ui);
+}
+#project-sheet .ps-title{
+  font-family:var(--font-display);
+  font-size:16px;
+  font-weight:700;
+  color:var(--rubric);
+  margin:0 0 12px;
+  text-align:center;
+}
+#project-sheet .ps-opt{
+  display:block;
+  width:100%;
+  text-align:left;
+  font-family:var(--font-ui);
+  font-size:14px;
+  font-weight:600;
+  padding:14px 14px;
+  margin-bottom:8px;
+  border-radius:8px;
+  border:1px solid var(--line);
+  background:var(--parchment-2);
+  color:var(--ink);
+  cursor:pointer;
+}
+#project-sheet .ps-opt:hover,
+#project-sheet .ps-opt:active{
+  border-color:var(--rubric);
+  color:var(--rubric);
+  background:var(--gold-soft);
+}
+#project-sheet .ps-cancel{
+  display:block;
+  width:100%;
+  margin-top:6px;
+  padding:12px;
+  border:none;
+  background:transparent;
+  color:var(--ink-soft);
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+}
 
-/* Salvaguarda general: en pantallas angostas, aunque el modo móvil
-   manual esté apagado, evita que el modal de proyección y otros
-   overlays de tamaño fijo se rompan. */
+/* Salvaguarda general */
 @media (max-width:640px){
   #stage{padding:32px 16px;}
   #stage-text{font-size:clamp(20px, 6vw, 34px);}
@@ -535,12 +763,13 @@ body.mobile-mode .verse .vaction{padding:6px 10px;font-size:11.5px;}
 #info-modal .im-text strong{color:var(--rubric);}
 #theme-switch{
   display:flex;
-  gap:8px;
+  flex-wrap:wrap;
+  gap:6px;
   margin-top:12px;
 }
 .theme-dot{
   position:relative;
-  width:28px;height:28px;
+  width:26px;height:26px;
   border-radius:6px;
   cursor:pointer;
   border:1.5px solid var(--line);
@@ -1385,7 +1614,10 @@ body.mobile-mode .verse .vaction{padding:6px 10px;font-size:11.5px;}
 <div id="app">
 
   <div id="mobile-header">
-    <button type="button" id="mobile-word-search-btn">🔎 Buscar palabra en la Biblia…</button>
+    <!-- nav-header-row se mueve aquí en layoutForMobile -->
+    <div id="mobile-word-search-wrap" style="display:none;">
+      <input id="mobile-word-search-input" placeholder="Buscar palabra…" autocomplete="off" spellcheck="false">
+    </div>
   </div>
 
   <div id="nav">
@@ -1398,6 +1630,9 @@ body.mobile-mode .verse .vaction{padding:6px 10px;font-size:11.5px;}
         <div id="nav-header-actions">
           <button type="button" id="mobile-toggle" class="btn-icon" data-tooltip="Modo móvil" title="Modo móvil / PC">📱</button>
           <button type="button" id="nav-toggle" class="btn-icon" data-tooltip="Reiniciar navegación" title="Reiniciar navegación (contraer todo)">↺</button>
+          <div id="word-search-inline-wrap">
+            <input id="word-search-inline" placeholder="Buscar palabra…" autocomplete="off" spellcheck="false">
+          </div>
         </div>
       </div>
       <div id="theme-switch">
@@ -1406,6 +1641,8 @@ body.mobile-mode .verse .vaction{padding:6px 10px;font-size:11.5px;}
         <div class="theme-dot" data-t="arena" data-tooltip="Arena">⏳</div>
         <div class="theme-dot" data-t="claro" data-tooltip="Claro">📄</div>
         <div class="theme-dot" data-t="amoled" data-tooltip="Amoled">🌌</div>
+        <div class="theme-dot" data-t="eden" data-tooltip="Edén">🌿</div>
+        <div class="theme-dot" data-t="reino" data-tooltip="Reino">👑</div>
       </div>
       <div id="ref-search-wrap">
         <input id="ref-search" placeholder="Génesis 1:1 · 1:1-5 · 1:1,3,6" autocomplete="off" spellcheck="false">
@@ -1433,6 +1670,15 @@ body.mobile-mode .verse .vaction{padding:6px 10px;font-size:11.5px;}
         <button class="btn has-tip" id="help-btn" data-tooltip="Guía de uso y atajos de teclado">❓ Instrucciones</button>
       </div>
     </div>
+    <!-- Segunda fila de herramientas (solo móvil) -->
+    <div id="mobile-toolbar">
+      <button type="button" class="btn" id="mt-easy" data-tooltip="Modo Detalle">🔍 Detalle</button>
+      <button type="button" class="btn" id="mt-sermons" data-tooltip="Sermones">📖 Sermones</button>
+      <button type="button" class="btn" id="mt-meanings" data-tooltip="Significados">📚 Significados</button>
+      <button type="button" class="btn" id="mt-notes" data-tooltip="Notas">📝 Notas</button>
+      <button type="button" class="btn fav-btn" id="mt-favs" data-tooltip="Favoritos">♥ Favoritos</button>
+      <button type="button" class="btn" id="mt-help" data-tooltip="Ayuda">❓ Ayuda</button>
+    </div>
     <div id="selection-bar"><div id="selection-info"></div></div>
 
     <div id="content-wrap">
@@ -1446,6 +1692,18 @@ body.mobile-mode .verse .vaction{padding:6px 10px;font-size:11.5px;}
     <div id="mobile-footer-search"></div>
   </div>
 
+</div>
+
+<!-- Menú proyectar (bottom sheet) -->
+<div id="project-sheet">
+  <div class="ps-card">
+    <div class="ps-title">🎬 Proyectar</div>
+    <button type="button" class="ps-opt" data-proj="current">📄 Versículo actual</button>
+    <button type="button" class="ps-opt" data-proj="selection">☑️ Selección de versículos</button>
+    <button type="button" class="ps-opt" data-proj="sermon">📖 Sermón preparado</button>
+    <button type="button" class="ps-opt" data-proj="chapter">📚 Capítulo completo</button>
+    <button type="button" class="ps-cancel" id="ps-cancel">Cancelar</button>
+  </div>
 </div>
 
 <div id="stage">
@@ -1534,7 +1792,7 @@ const THEME_MIGRATE = {
 };
 let currentTheme = store.get('bp_theme', 'sandalo');
 if(THEME_MIGRATE[currentTheme]) currentTheme = THEME_MIGRATE[currentTheme];
-const VALID_THEMES = ['sandalo','paz','arena','claro','amoled'];
+const VALID_THEMES = ['sandalo','paz','arena','claro','amoled','eden','reino'];
 if(!VALID_THEMES.includes(currentTheme)) currentTheme = 'sandalo';
 let sidePanel = null; // 'notes' | 'favs' | 'trash' | null
 let notesTrash = store.get('bp_notes_trash', []); // [{ref, text, deletedAt}]
@@ -1744,11 +2002,16 @@ function layoutForMobile(){
   const navHeaderRow = document.getElementById('nav-header-row');
   const themeSwitch = document.getElementById('theme-switch');
   const refSearchWrap = document.getElementById('ref-search-wrap');
+  const wordWrap = document.getElementById('mobile-word-search-wrap');
   const nav = document.getElementById('nav');
   const main = document.getElementById('main');
   if(!app || !mobileHeader || !navHeaderRow) return;
 
   mobileHeader.appendChild(navHeaderRow);
+  if(wordWrap){
+    wordWrap.style.display = 'block';
+    mobileHeader.appendChild(wordWrap);
+  }
   mobileFooterThemes.appendChild(themeSwitch);
   mobileFooterSearch.appendChild(refSearchWrap);
   [mobileHeader, main, nav, mobileFooter].forEach(el => app.appendChild(el));
@@ -1762,10 +2025,12 @@ function layoutForDesktop(){
   const navHeaderRow = document.getElementById('nav-header-row');
   const themeSwitch = document.getElementById('theme-switch');
   const refSearchWrap = document.getElementById('ref-search-wrap');
+  const wordWrap = document.getElementById('mobile-word-search-wrap');
   const nav = document.getElementById('nav');
   const main = document.getElementById('main');
   if(!app || !navHeader || !navHeaderRow) return;
 
+  if(wordWrap) wordWrap.style.display = 'none';
   navHeader.appendChild(navHeaderRow);
   navHeader.appendChild(themeSwitch);
   navHeader.appendChild(refSearchWrap);
@@ -1781,6 +2046,10 @@ function applyMobileMode(){
     btn.textContent = mobileMode ? '💻' : '📱';
     btn.setAttribute('data-tooltip', mobileMode ? 'Modo PC' : 'Modo móvil');
     btn.title = mobileMode ? 'Volver a modo horizontal (PC)' : 'Modo vertical para smartphone';
+  }
+  // Re-render welcome if showing, to switch mobile/desktop text
+  if(typeof showWelcome !== 'undefined' && showWelcome && typeof showWelcomeScreen === 'function'){
+    showWelcomeScreen();
   }
   store.set('bp_mobile_mode', mobileMode);
 }
@@ -2155,19 +2424,39 @@ function renderReader(){
   applyVerseFont();
 
   if(showWelcome){
+    const isMob = document.body.classList.contains('mobile-mode');
+    reader.classList.toggle('welcome-fixed', isMob);
     const w = document.createElement('div');
-    w.className = 'welcome';
-    w.innerHTML = `
-      <div class="welcome-heb">ספר</div>
-      <h1>SEFER</h1>
-      <p><strong>BY LIFE WORD MISSION</strong></p>
-      <p>Bienvenido a tu herramienta de estudio y proyección bíblica.
-      Elige un libro en el panel izquierdo, busca una referencia o escribe una palabra para comenzar.</p>
-      <p class="welcome-hint">Consejo: usa las flechas en proyección para avanzar versículo a versículo · Tab completa nombres de libros en la búsqueda</p>
-    `;
+    if(isMob){
+      w.className = 'welcome-mobile';
+      w.innerHTML = `
+        <h1>SEFER <span class="welcome-heb">ספר</span></h1>
+        <p><strong>Tu Biblia para estudiar,<br>preparar sermones<br>y proyectar la Palabra.</strong></p>
+        <div class="wm-list">
+          📖 Lee toda la Biblia.<br>
+          🔎 Busca referencias y palabras.<br>
+          📝 Guarda notas por versículo.<br>
+          ♥ Marca favoritos.<br>
+          📚 Consulta significados.<br>
+          🎬 Proyecta versículos o sermones.
+        </div>
+        <p class="welcome-hint">Selecciona un libro para comenzar.</p>
+      `;
+    } else {
+      w.className = 'welcome';
+      w.innerHTML = `
+        <div class="welcome-heb">ספר</div>
+        <h1>SEFER</h1>
+        <p><strong>BY LIFE WORD MISSION</strong></p>
+        <p>Bienvenido a tu herramienta de estudio y proyección bíblica.
+        Elige un libro en el panel izquierdo, busca una referencia o escribe una palabra para comenzar.</p>
+        <p class="welcome-hint">Consejo: usa las flechas en proyección para avanzar versículo a versículo · Tab completa nombres de libros en la búsqueda</p>
+      `;
+    }
     reader.appendChild(w);
     return;
   }
+  reader.classList.remove('welcome-fixed');
 
   const chapData = (BIBLE[currentBook] || {})[currentChap];
   const bt = document.createElement('div');
@@ -3060,19 +3349,46 @@ function stageStep(dir){
   stageIndex = 0;
   renderStage();
 }
-document.getElementById('project-btn').onclick = ()=>{
-  if(selectedVerses.length > 0){
-    openStage(currentBook, currentChap, selectedVerses);
-    return;
-  }
-  const v = detailVerse || Object.keys((BIBLE[currentBook]||{})[currentChap]||{})[0];
-  if(!v){ alert('No hay versículos cargados en este capítulo.'); return; }
-  openStage(currentBook, currentChap, [v]);
-};
+function openProjectSheet(){
+  document.getElementById('project-sheet').classList.add('open');
+}
+function closeProjectSheet(){
+  document.getElementById('project-sheet').classList.remove('open');
+}
+document.getElementById('project-btn').onclick = ()=> openProjectSheet();
+document.getElementById('ps-cancel').onclick = ()=> closeProjectSheet();
+document.getElementById('project-sheet').addEventListener('click', (e)=>{
+  if(e.target.id === 'project-sheet') closeProjectSheet();
+});
+document.querySelectorAll('#project-sheet .ps-opt').forEach(btn=>{
+  btn.onclick = ()=>{
+    const mode = btn.dataset.proj;
+    closeProjectSheet();
+    if(showWelcome){ alert('Abre un capítulo primero.'); return; }
+    if(mode === 'current'){
+      const v = detailVerse || Object.keys((BIBLE[currentBook]||{})[currentChap]||{})[0];
+      if(!v){ alert('No hay versículos en este capítulo.'); return; }
+      openStage(currentBook, currentChap, [v]);
+    } else if(mode === 'selection'){
+      if(!selectedVerses.length){ alert('Selecciona uno o más versículos primero.'); return; }
+      openStage(currentBook, currentChap, selectedVerses);
+    } else if(mode === 'sermon'){
+      if(typeof openSermonsPanel === 'function') openSermonsPanel();
+      else alert('Abre Sermones y proyecta desde allí.');
+    } else if(mode === 'chapter'){
+      const all = sortedVerseNums(currentBook, currentChap);
+      if(!all.length){ alert('Capítulo vacío.'); return; }
+      openStage(currentBook, currentChap, all);
+    }
+  };
+});
 document.getElementById('stage-exit').onclick = ()=> stage.classList.remove('open');
 document.getElementById('stage-next').onclick = ()=> stageStep(1);
 document.getElementById('stage-prev').onclick = ()=> stageStep(-1);
 document.addEventListener('keydown', (e)=>{
+  if(document.getElementById('project-sheet')?.classList.contains('open')){
+    if(e.key === 'Escape'){ closeProjectSheet(); return; }
+  }
   if(!stage.classList.contains('open')) return;
   if(e.key === 'Escape') stage.classList.remove('open');
   if(e.key === 'ArrowRight'){ e.preventDefault(); stageStep(1); }
@@ -3621,7 +3937,7 @@ document.getElementById('help-btn').onclick = ()=>{
     </div></div>
 
     <div class="im-block"><div class="im-label">Temas</div>
-    <div class="im-text">🕯️ Sándalo · 🕊️ Paz · ⏳ Arena · 📄 Claro · 🌌 Amoled</div></div>
+    <div class="im-text">🕯️ Sándalo · 🕊️ Paz · ⏳ Arena · 📄 Claro · 🌌 Amoled · 🌿 Edén · 👑 Reino</div></div>
   `;
   document.getElementById('info-modal').classList.add('open');
   focusInfoScroll();
@@ -3962,6 +4278,106 @@ document.getElementById('easy-btn').onclick = ()=>{
   updateEasyBtn();
   if(!showWelcome) renderReader();
 };
+
+/* =========================================================
+   MÓVIL: toolbar, buscador palabra, ayuda, scroll hide
+   ========================================================= */
+(function wireMobileExtras(){
+  // Toolbar buttons → same as desktop counterparts
+  const map = {
+    'mt-easy': 'easy-btn',
+    'mt-sermons': 'sermons-btn',
+    'mt-meanings': 'meanings-btn',
+    'mt-notes': 'notes-btn',
+    'mt-favs': 'favs-btn',
+    'mt-help': 'help-btn'
+  };
+  Object.keys(map).forEach(id=>{
+    const src = document.getElementById(id);
+    const dst = document.getElementById(map[id]);
+    if(src && dst) src.onclick = (e)=>{ e.preventDefault(); dst.click(); };
+  });
+
+  // Word search inline (desktop header) + mobile header input → open central bar
+  function triggerWordSearch(q){
+    const bar = document.getElementById('word-search-bar');
+    const inp = document.getElementById('word-search-input');
+    if(!bar || !inp) return;
+    bar.classList.add('open');
+    inp.value = q || '';
+    inp.focus();
+    if(q){
+      inp.dispatchEvent(new Event('input', {bubbles:true}));
+    }
+  }
+  ['word-search-inline', 'mobile-word-search-input'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.addEventListener('focus', ()=>{
+      // On focus, open the full search bar for results
+      triggerWordSearch(el.value);
+    });
+    el.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter'){
+        e.preventDefault();
+        triggerWordSearch(el.value.trim());
+      }
+    });
+  });
+
+  // Auto-hide mobile toolbar on scroll down
+  let lastScrollY = 0;
+  const toolbar = document.getElementById('mobile-toolbar');
+  const readerEl = document.getElementById('reader');
+  if(readerEl && toolbar){
+    readerEl.addEventListener('scroll', ()=>{
+      if(!document.body.classList.contains('mobile-mode')) return;
+      const y = readerEl.scrollTop;
+      if(y > lastScrollY + 12 && y > 40){
+        toolbar.classList.add('hidden-scroll');
+      } else if(y < lastScrollY - 8){
+        toolbar.classList.remove('hidden-scroll');
+      }
+      lastScrollY = y;
+    }, {passive:true});
+  }
+})();
+
+// Help: mobile-specific content when in mobile mode
+(function patchHelpForMobile(){
+  const helpBtn = document.getElementById('help-btn');
+  if(!helpBtn) return;
+  const orig = helpBtn.onclick;
+  helpBtn.onclick = function(ev){
+    if(!document.body.classList.contains('mobile-mode')){
+      if(typeof orig === 'function') return orig.call(this, ev);
+      return;
+    }
+    // Mobile instructions
+    if(typeof infoNavEnabled !== 'undefined') infoNavEnabled = false;
+    const nav = document.getElementById('im-nav');
+    if(nav) nav.style.display = 'none';
+    document.getElementById('im-title').textContent = 'Guía rápida (móvil)';
+    document.getElementById('im-sub').textContent = 'SEFER · BY LIFE WORD MISSION';
+    document.getElementById('im-body').innerHTML = `
+      <div class="im-block"><div class="im-label">Lectura</div>
+      <div class="im-text">• Toca un versículo para abrirlo (selección, favorito, nota, proyectar).<br>
+      • Usa <strong>A− / A+</strong> para el tamaño del texto.<br>
+      • La barra de herramientas se oculta al bajar y reaparece al subir.</div></div>
+      <div class="im-block"><div class="im-label">Búsqueda</div>
+      <div class="im-text">• Arriba: busca una <strong>palabra</strong> en toda la Biblia.<br>
+      • Abajo: busca por <strong>referencia</strong> (Génesis 1:1, rangos, listas).</div></div>
+      <div class="im-block"><div class="im-label">Herramientas</div>
+      <div class="im-text">• 🔍 Detalle · 📖 Sermones · 📚 Significados<br>
+      • 📝 Notas · ♥ Favoritos · ❓ Ayuda<br>
+      • 🎬 Proyectar → elige versículo, selección, sermón o capítulo.</div></div>
+      <div class="im-block"><div class="im-label">Temas</div>
+      <div class="im-text">🕯️ Sándalo · 🕊️ Paz · ⏳ Arena · 📄 Claro · 🌌 Amoled · 🌿 Edén · 👑 Reino</div></div>
+    `;
+    document.getElementById('info-modal').classList.add('open');
+    if(typeof focusInfoScroll === 'function') focusInfoScroll();
+  };
+})();
 
 </script>
 </body>
