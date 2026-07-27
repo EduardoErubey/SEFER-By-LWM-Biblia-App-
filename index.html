@@ -172,7 +172,12 @@ body{
   color:var(--rubric);
   background:var(--gold-soft);
 }
-/* ---- Modo móvil (vertical) ---- */
+/* Contenedores exclusivos del modo móvil (ocultos en escritorio) */
+#mobile-header, #mobile-footer{display:none;}
+
+/* ---- Modo móvil (vertical) ----
+   Orden visual: 1) logo + botones · 2) bienvenida/lector ·
+   3) testamentos/libros · 4) temas + buscador de referencia. */
 body.mobile-mode{
   overflow:hidden;
   position:fixed;
@@ -186,16 +191,28 @@ body.mobile-mode #app{
   width:100%;
   overflow:hidden;
 }
-body.mobile-mode #nav{
-  width:100%;
-  min-width:0;
-  max-height:42vh;
+/* 1) Encabezado: logo (izq) + botones modo/reiniciar (der) */
+body.mobile-mode #mobile-header{
+  display:flex;
   flex:0 0 auto;
-  border-right:none;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:8px;
+  padding:14px 16px 12px;
   border-bottom:1px solid var(--line);
+  background:var(--parchment-2);
 }
+body.mobile-mode #mobile-header #nav-header-row{
+  display:flex;
+  width:100%;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:8px;
+}
+body.mobile-mode #nav-header{display:none;}
+/* 2) Bienvenida / área de lectura */
 body.mobile-mode #main{
-  flex:1 1 auto;
+  flex:1.3 1 0;
   min-height:0;
   width:100%;
 }
@@ -226,6 +243,10 @@ body.mobile-mode #topbar-actions .btn{
   padding:7px 10px;
   flex:0 0 auto;
 }
+body.mobile-mode #easy-btn,
+body.mobile-mode #help-btn{
+  display:none;
+}
 body.mobile-mode #selection-bar{
   padding:4px 12px 8px;
   flex:0 0 auto;
@@ -253,15 +274,53 @@ body.mobile-mode #reader{padding:14px 14px 40px;}
 body.mobile-mode .book-title{font-size:22px;}
 body.mobile-mode .chap-title{font-size:15px;}
 body.mobile-mode .verse{font-size:calc(var(--verse-size, 17px) * 1.02);}
+/* 3) Testamentos / libros / capítulos */
+body.mobile-mode #nav{
+  width:100%;
+  min-width:0;
+  flex:1 1 0;
+  min-height:0;
+  border-right:none;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+body.mobile-mode .book-item{padding:8px 14px; font-size:15px;}
+body.mobile-mode .testament-label{padding:12px 14px 6px;}
+/* 4) Temas (izq) + buscador de referencia (der) */
+body.mobile-mode #mobile-footer{
+  display:flex;
+  flex:0 0 auto;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px;
+  background:var(--parchment-2);
+  flex-wrap:wrap;
+}
+body.mobile-mode #mobile-footer-themes{
+  flex:0 0 auto;
+}
+body.mobile-mode #mobile-footer-themes #theme-switch{
+  margin-top:0;
+}
+body.mobile-mode #mobile-footer-search{
+  flex:1 1 150px;
+  min-width:150px;
+}
+body.mobile-mode #mobile-footer-search #ref-search-wrap{
+  margin-top:0;
+}
+body.mobile-mode #ref-suggest{
+  top:auto;
+  bottom:100%;
+  margin-top:0;
+  margin-bottom:4px;
+}
 body.mobile-mode #word-search-bar{width:min(96vw, 520px);}
 body.mobile-mode #stage{padding:28px 18px;}
 body.mobile-mode #stage-text{font-size:clamp(20px, 6.5vw, 36px); padding:0; max-height:62vh;}
 body.mobile-mode #stage-nav{bottom:16px; gap:8px;}
 body.mobile-mode .stage-btn{font-size:11px; padding:7px 12px;}
 body.mobile-mode #stage-exit{top:14px; right:14px; font-size:11px; padding:5px 10px;}
-body.mobile-mode #nav-header{padding:12px 14px 10px;}
-body.mobile-mode .book-item{padding:8px 14px; font-size:15px;}
-body.mobile-mode .testament-label{padding:12px 14px 6px;}
 body.mobile-mode #info-modal .im-card{max-height:80vh;}
 body.mobile-mode .verse-actions{margin-left:0;}
 body.mobile-mode .note-box{margin-left:0;}
@@ -279,14 +338,14 @@ body.mobile-mode .verse .vaction{padding:6px 10px;font-size:11.5px;}
   padding:18px 16px 12px;
   border-bottom:1px solid var(--line);
 }
-#nav-header .brand{
+#nav-header .brand, #mobile-header .brand{
   font-family:var(--font-display);
   font-weight:600;
   font-size:19px;
   color:var(--rubric);
   letter-spacing:0.2px;
 }
-#nav-header .brand-sub{
+#nav-header .brand-sub, #mobile-header .brand-sub{
   font-size:10px;
   color:var(--ink-soft);
   text-transform:uppercase;
@@ -1325,6 +1384,10 @@ body.mobile-mode .verse .vaction{padding:6px 10px;font-size:11.5px;}
 <body data-theme="sandalo">
 <div id="app">
 
+  <div id="mobile-header">
+    <button type="button" id="mobile-word-search-btn">🔎 Buscar palabra en la Biblia…</button>
+  </div>
+
   <div id="nav">
     <div id="nav-header">
       <div id="nav-header-row">
@@ -1376,6 +1439,11 @@ body.mobile-mode .verse .vaction{padding:6px 10px;font-size:11.5px;}
       <div id="reader"></div>
       <div id="side"></div>
     </div>
+  </div>
+
+  <div id="mobile-footer">
+    <div id="mobile-footer-themes"></div>
+    <div id="mobile-footer-search"></div>
   </div>
 
 </div>
@@ -1662,8 +1730,51 @@ document.querySelectorAll('.theme-dot').forEach(dot=>{
 // angostas (celulares), respetando luego cualquier elección manual.
 const MOBILE_DEFAULT = window.matchMedia('(max-width: 820px)').matches;
 let mobileMode = store.get('bp_mobile_mode', MOBILE_DEFAULT);
+
+// Reordena el DOM real (sin clonar nodos) para que el modo móvil quede:
+// 1) logo+botones · 2) bienvenida/lector · 3) testamentos · 4) temas+buscador.
+// Al usar los mismos elementos (no copias), todos los listeners ya
+// asignados (tema, búsqueda, navegación) se conservan intactos.
+function layoutForMobile(){
+  const app = document.getElementById('app');
+  const mobileHeader = document.getElementById('mobile-header');
+  const mobileFooterThemes = document.getElementById('mobile-footer-themes');
+  const mobileFooterSearch = document.getElementById('mobile-footer-search');
+  const mobileFooter = document.getElementById('mobile-footer');
+  const navHeaderRow = document.getElementById('nav-header-row');
+  const themeSwitch = document.getElementById('theme-switch');
+  const refSearchWrap = document.getElementById('ref-search-wrap');
+  const nav = document.getElementById('nav');
+  const main = document.getElementById('main');
+  if(!app || !mobileHeader || !navHeaderRow) return;
+
+  mobileHeader.appendChild(navHeaderRow);
+  mobileFooterThemes.appendChild(themeSwitch);
+  mobileFooterSearch.appendChild(refSearchWrap);
+  [mobileHeader, main, nav, mobileFooter].forEach(el => app.appendChild(el));
+}
+
+// Restaura el orden original de escritorio (barra lateral #nav a la
+// izquierda con su encabezado completo, #main a la derecha).
+function layoutForDesktop(){
+  const app = document.getElementById('app');
+  const navHeader = document.getElementById('nav-header');
+  const navHeaderRow = document.getElementById('nav-header-row');
+  const themeSwitch = document.getElementById('theme-switch');
+  const refSearchWrap = document.getElementById('ref-search-wrap');
+  const nav = document.getElementById('nav');
+  const main = document.getElementById('main');
+  if(!app || !navHeader || !navHeaderRow) return;
+
+  navHeader.appendChild(navHeaderRow);
+  navHeader.appendChild(themeSwitch);
+  navHeader.appendChild(refSearchWrap);
+  [nav, main].forEach(el => app.appendChild(el));
+}
+
 function applyMobileMode(){
   document.body.classList.toggle('mobile-mode', mobileMode);
+  if(mobileMode) layoutForMobile(); else layoutForDesktop();
   const btn = document.getElementById('mobile-toggle');
   if(btn){
     btn.classList.toggle('active', mobileMode);
@@ -2630,6 +2741,14 @@ function bindSideClose(){
   const btn = side.querySelector('.side-close-btn');
   if(btn) btn.onclick = (e)=>{ e.stopPropagation(); closeSidePanel(); };
 }
+// Agrega HTML al panel lateral SIN destruir nodos/listeners ya existentes
+// (side.innerHTML += ... reconstruye todo el árbol, incluido el botón ❌,
+// y pierde el onclick asignado por bindSideClose()).
+function appendSideMsg(html){
+  const wrap = document.createElement('div');
+  wrap.innerHTML = html;
+  while(wrap.firstChild) side.appendChild(wrap.firstChild);
+}
 function focusSidePanel(){
   requestAnimationFrame(()=>{
     const first = side.querySelector('.result-item, button.btn, .sermon-editor input, [tabindex="0"]');
@@ -2642,7 +2761,7 @@ function openNotesPanel(){
   bindSideClose();
   const entries = Object.entries(notes).filter(([k,v])=>v && v.trim());
   if(entries.length===0){
-    side.innerHTML += `<div class="empty-msg">Aún no tienes notas guardadas. Selecciona un versículo y añade una.</div>`;
+    appendSideMsg(`<div class="empty-msg">Aún no tienes notas guardadas. Selecciona un versículo y añade una.</div>`);
   }
   entries.forEach(([ref, text])=>{
     const item = document.createElement('div');
@@ -2686,7 +2805,7 @@ function openNotesTrashPanel(){
   side.innerHTML = sidePanelHeader('🗑 Papelera de notas');
   bindSideClose();
   if(notesTrash.length === 0){
-    side.innerHTML += `<div class="empty-msg">La papelera está vacía.</div>`;
+    appendSideMsg(`<div class="empty-msg">La papelera está vacía.</div>`);
   } else {
     const actions = document.createElement('div');
     actions.className = 'trash-actions';
@@ -2750,7 +2869,7 @@ function openFavsPanel(){
   bindSideClose();
   const entries = Object.entries(favorites).filter(([k,v])=>v);
   if(entries.length===0){
-    side.innerHTML += `<div class="empty-msg">Aún no tienes favoritos. Abre un versículo y marca ♡ Favorito.</div>`;
+    appendSideMsg(`<div class="empty-msg">Aún no tienes favoritos. Abre un versículo y marca ♡ Favorito.</div>`);
   }
   entries.forEach(([ref])=>{
     const item = document.createElement('div');
@@ -2827,7 +2946,7 @@ function openMeaningsPanel(){
   bindSideClose();
   const entries = Object.entries(savedMeanings);
   if(!entries.length){
-    side.innerHTML += `<div class="empty-msg">Aún no hay significados guardados. Consulta una palabra y pulsa 💾 Guardar.</div>`;
+    appendSideMsg(`<div class="empty-msg">Aún no hay significados guardados. Consulta una palabra y pulsa 💾 Guardar.</div>`);
   }
   entries.forEach(([term, data])=>{
     const item = document.createElement('div');
@@ -3559,7 +3678,7 @@ function openSermonsPanel(){
 
   const list = allSermonsList();
   if(!list.length){
-    side.innerHTML += `<div class="empty-msg">No hay sermones cargados.</div>`;
+    appendSideMsg(`<div class="empty-msg">No hay sermones cargados.</div>`);
   }
   list.forEach(sermon=>{
     const card = document.createElement('div');
@@ -3601,7 +3720,7 @@ function openSermonDetail(sermon){
   side.innerHTML = sidePanelHeader('📖 ' + sermon.titulo);
   bindSideClose();
   if(sermon.proposito){
-    side.innerHTML += `<div class="empty-msg" style="text-align:left;margin-bottom:12px;">${sermon.proposito}</div>`;
+    appendSideMsg(`<div class="empty-msg" style="text-align:left;margin-bottom:12px;">${sermon.proposito}</div>`);
   }
   if(sermon._custom){
     const editRow = document.createElement('div');
