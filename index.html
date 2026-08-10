@@ -322,8 +322,9 @@ body{
 #nav-header-actions{
   display:flex;
   align-items:center;
+  justify-content:flex-end;
   gap:6px;
-  margin-top:2px;
+  margin-top:0;
 }
 #mobile-toggle{
   display:flex;
@@ -719,25 +720,35 @@ body.mobile-mode .welcome-mobile .welcome-hint{
   margin-left:4px;
   font-weight:400;
 }
-#nav-toggle{
-  display:flex;
+#nav-header-actions #fullscreen-btn,
+#nav-header-actions #nav-toggle{
+  display:inline-flex;
   align-items:center;
   justify-content:center;
+  box-sizing:border-box;
   border:1px solid var(--line);
   background:var(--parchment);
   color:var(--ink-soft);
   border-radius:6px;
   width:30px;
   height:30px;
+  min-width:30px;
+  min-height:30px;
   padding:0;
+  margin:0;
   font-family:var(--font-ui);
-  font-size:16px;
+  font-size:15px;
   font-weight:600;
-  cursor:pointer;
-  margin-top:2px;
   line-height:1;
+  cursor:pointer;
+  flex-shrink:0;
 }
-#nav-toggle:hover{border-color:var(--gold);color:var(--rubric);}
+#nav-header-actions #fullscreen-btn:hover,
+#nav-header-actions #nav-toggle:hover{
+  border-color:var(--gold);
+  color:var(--rubric);
+  background:var(--parchment);
+}
 #ref-search-wrap{
   margin-top:12px;
   position:relative;
@@ -1889,7 +1900,8 @@ body.mobile-mode { /* neutralize if residual class */ }
           <div class="brand-sub">BY LWM PDC</div>
         </div>
         <div id="nav-header-actions">
-<button type="button" id="nav-toggle" class="btn-icon" data-tooltip="Reiniciar navegación" title="Reiniciar navegación (contraer todo)">↺</button>
+          <button type="button" id="fullscreen-btn" class="nav-action-btn" data-tooltip="Pantalla completa (como F11)" title="Pantalla completa">⛶</button>
+          <button type="button" id="nav-toggle" class="nav-action-btn" data-tooltip="Reiniciar navegación" title="Reiniciar navegación (contraer todo)">↺</button>
         </div>
       </div>
       <div id="theme-switch">
@@ -1919,6 +1931,7 @@ body.mobile-mode { /* neutralize if residual class */ }
         <button class="btn fav-btn has-tip" id="favs-btn" data-tooltip="Versículos marcados como favoritos">❤️ Favoritos</button>
         <button class="btn has-tip" id="plan-btn" data-tooltip="Plan de lectura de la Biblia en un año">📅 Plan 1 año</button>
         <button class="btn has-tip" id="glossary-btn" data-tooltip="Glosario de términos bíblicos">📖 Glosario</button>
+        <button class="btn has-tip" id="btn-user-profile" data-tooltip="Perfil, logros e insignias">🏆 Perfil</button>
         <button class="btn has-tip" id="btn-login-google" data-tooltip="Sincronizar favoritos, notas y progreso con Google Drive">☁️ Sincronizar</button>
         <span id="estado-nube" style="display:none;" aria-hidden="true"></span>
         <button class="btn primary has-tip" id="project-btn" data-tooltip="Proyectar selección o versículo en pantalla completa">🎬 Proyectar</button>
@@ -1992,6 +2005,29 @@ body.mobile-mode { /* neutralize if residual class */ }
     </div>
   </div>
 </div>
+
+
+<!-- Perfil y logros -->
+<div id="modal-perfil" style="display:none;position:fixed;inset:0;z-index:1300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:20px;">
+  <div class="im-card" style="max-width:560px;width:100%;max-height:88vh;display:flex;flex-direction:column;background:var(--card-bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:0;position:relative;overflow:hidden;">
+    <button type="button" id="cerrar-perfil" style="position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-soft);z-index:2;">❌</button>
+    <div id="perfil-header" style="flex:0 0 auto;padding:20px 22px 14px;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:center;">
+      <img id="perfil-foto" alt="" style="width:56px;height:56px;border-radius:50%;object-fit:cover;background:var(--parchment-2);border:2px solid var(--line);display:none;">
+      <div id="perfil-foto-placeholder" style="width:56px;height:56px;border-radius:50%;background:var(--parchment-2);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:24px;">👤</div>
+      <div style="min-width:0;flex:1;">
+        <div id="perfil-nombre" style="font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--rubric);">Invitado</div>
+        <div id="perfil-email" style="font-size:12px;color:var(--ink-soft);word-break:break-all;">Conecta con ☁️ Sincronizar para ver tu cuenta</div>
+        <div id="perfil-stats" style="font-size:12px;margin-top:6px;color:var(--ink-soft);"></div>
+      </div>
+    </div>
+    <div style="flex:0 0 auto;padding:10px 22px 6px;font-family:var(--font-display);font-weight:700;font-size:15px;color:var(--rubric);">🏆 Logros e insignias</div>
+    <div id="lista-logros" style="flex:1 1 auto;overflow-y:auto;padding:8px 18px 16px;"></div>
+    <div style="flex:0 0 auto;padding:10px 22px 14px;border-top:1px solid var(--line);">
+      <button type="button" class="btn primary" id="cerrar-perfil-2">Cerrar</button>
+    </div>
+  </div>
+</div>
+<div id="toast-logro" style="display:none;position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:1400;background:var(--card-bg);color:var(--ink);border:1px solid var(--gold);border-radius:10px;padding:12px 18px;box-shadow:0 12px 40px rgba(0,0,0,0.25);font-family:var(--font-ui);font-size:13px;max-width:min(92vw,380px);text-align:center;"></div>
 
 <!-- Glosario -->
 <div id="modal-glosario" style="display:none;position:fixed;inset:0;z-index:1300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:20px;">
@@ -2126,10 +2162,12 @@ function vid(book, chap, v){ return `${book} ${chap}:${v}`; }
 function saveFavorites(){
   store.set('bp_favorites', favorites);
   if(typeof scheduleDriveSave==='function') scheduleDriveSave();
+  try{ if(typeof trackFavsCount==='function') trackFavsCount(); }catch(e){}
 }
 function saveNotes(){
   store.set('bp_notes', notes);
   if(typeof scheduleDriveSave==='function') scheduleDriveSave();
+  try{ if(typeof trackNotesCount==='function') trackNotesCount(); }catch(e){}
 }
 function downloadJSON(filename, data){
   const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
@@ -2663,6 +2701,7 @@ function renderChapters(book, afterEl){
 /* dom ref hoisted */
 
 function goTo(book, chap){
+  try{ if(typeof trackBookRead==='function') trackBookRead(book); }catch(e){}
   showWelcome = false;
   currentBook = book; currentChap = chap; detailVerse = null;
   selectedVerses = [];
@@ -3579,6 +3618,7 @@ function openStage(book, chap, verses){
   stageIndex = 0;
   renderStage();
   stage.classList.add('open');
+  try{ if(typeof setAchProgress==='function') setAchProgress('project_1', 1); }catch(e){}
 }
 function renderStage(){
   const p = stagePassages[stageIndex];
@@ -4249,11 +4289,53 @@ document.addEventListener('mousedown', (e)=>{
 /* =========================================================
    INSTRUCCIONES
    ========================================================= */
+
+/* Pantalla completa (Fullscreen API ≈ F11) */
+(function wireFullscreen(){
+  const btn = document.getElementById('fullscreen-btn');
+  if(!btn) return;
+  function isFs(){
+    return !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+  }
+  function updateBtn(){
+    if(isFs()){
+      btn.textContent = '⛶';
+      btn.setAttribute('data-tooltip', 'Salir de pantalla completa (Esc o F11)');
+      btn.title = 'Salir de pantalla completa';
+    } else {
+      btn.textContent = '⛶';
+      btn.setAttribute('data-tooltip', 'Pantalla completa (como F11)');
+      btn.title = 'Pantalla completa';
+    }
+  }
+  async function toggle(){
+    try{
+      if(isFs()){
+        const exit = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+        if(exit) await exit.call(document);
+      } else {
+        const el = document.documentElement;
+        const req = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+        if(req) await req.call(el);
+        else alert('Tu navegador no permite pantalla completa desde la página. Usa F11.');
+      }
+    }catch(e){
+      console.warn('Fullscreen', e);
+      alert('No se pudo activar pantalla completa. Prueba F11.');
+    }
+    updateBtn();
+  }
+  btn.addEventListener('click', toggle);
+  document.addEventListener('fullscreenchange', ()=>{ updateBtn(); if(isFs()){ try{ setAchProgress('fullscreen_1',1); }catch(e){} } });
+  document.addEventListener('webkitfullscreenchange', ()=>{ updateBtn(); if(isFs()){ try{ setAchProgress('fullscreen_1',1); }catch(e){} } });
+  updateBtn();
+})();
+
 document.getElementById('help-btn').onclick = ()=>{
   infoNavEnabled = false;
   document.getElementById('im-nav').style.display = 'none';
   document.getElementById('im-title').textContent = 'Instrucciones de SEFER';
-  document.getElementById('im-sub').textContent = 'BY LWM PDC · Reina-Valera 1960';
+  document.getElementById('im-sub').textContent = 'BY LIFE WORD MISSION · Reina-Valera 1960';
   document.getElementById('im-body').innerHTML = `
     <div class="im-block"><div class="im-label">¿Qué es SEFER?</div>
     <div class="im-text">Herramienta de estudio y proyección bíblica. Navega por libros, toma notas, marca favoritos, consulta significados y proyecta versículos. Pensada para usarse también <strong>solo con teclado</strong>.</div></div>
@@ -4298,7 +4380,8 @@ document.getElementById('help-btn').onclick = ()=>{
     <strong>Supr / Backspace</strong> — quitar favorito (versículo abierto o ítem en panel)<br>
     <strong>Ctrl+Enter</strong> o <strong>Command (⌘)+Enter</strong> — guardar nota<br>
     <strong>Ctrl+S</strong> o <strong>Command (⌘)+S</strong> — guardar nota (cuando el editor está abierto)<br>
-    <strong>Ctrl+clic</strong> o <strong>Command (⌘)+clic</strong> — multi-selección
+    <strong>Ctrl+clic</strong> o <strong>Command (⌘)+clic</strong> — multi-selección<br>
+    <strong>F11</strong> o botón ⛶ — pantalla completa
     </div></div>
 
     <div class="im-block"><div class="im-label">Temas</div>
@@ -4344,7 +4427,7 @@ document.getElementById('font-dec').onclick = ()=>{
 // Lectura fácil
 updateEasyBtn();
 document.getElementById('easy-btn').onclick = ()=>{
-  easyReading = !easyReading;
+  easyReading = !easyReading; try{ if(easyReading && typeof setAchProgress==='function') setAchProgress('detail_1',1); }catch(e){};
   store.set('bp_easy_reading', easyReading);
   updateEasyBtn();
   if(!showWelcome) renderReader();
@@ -4504,6 +4587,7 @@ document.getElementById('easy-btn').onclick = ()=>{
         batchEl.querySelectorAll('.theme-dot').forEach(d=> d.classList.toggle('active', d.dataset.t===currentTheme));
         store.set('bp_theme', currentTheme);
         if(typeof scheduleDriveSave==='function') scheduleDriveSave();
+        try{ if(typeof trackThemeTried==='function') trackThemeTried(currentTheme); }catch(e){}
       };
       dot.onclick = applyTheme;
       dot.onkeydown = (e)=>{
@@ -4652,6 +4736,7 @@ function cargarPlanLectura(dia){
     div.querySelector('input').onchange = (e)=>{
       localStorage.setItem(key, e.target.checked);
       if(typeof scheduleDriveSave === 'function') scheduleDriveSave();
+      try{ if(typeof trackPlanProgress==='function') trackPlanProgress(); }catch(e){}
     };
     div.querySelector('[data-plan-go]').onclick = ()=>{
       const p = parsePlanRef(lectura);
@@ -4780,11 +4865,295 @@ document.getElementById('modal-glosario')?.addEventListener('click', (e)=>{
 });
 
 /* =========================================================
+
+/* =========================================================
+   LOGROS / INSIGNIAS + PERFIL GOOGLE
+   ========================================================= */
+const BOOK_BADGE_TITLES = {
+  'Génesis':'Entendedor del Génesis','Éxodo':'Líder del Éxodo','Levítico':'Sacerdote de Levítico',
+  'Números':'Contador de Números','Deuteronomio':'Guardián de la Ley','Josué':'Conquistador como Josué',
+  'Jueces':'Juez de Israel','Rut':'Leal como Rut','1 Samuel':'Ungidor de Reyes','2 Samuel':'Heredero de David',
+  '1 Reyes':'Sabio como Salomón','2 Reyes':'Vigilante del Reino','1 Crónicas':'Cronista del Pueblo',
+  '2 Crónicas':'Historiador del Templo','Esdras':'Restaurador como Esdras','Nehemías':'Constructor de Muros',
+  'Ester':'Valiente como Ester','Job':'Perseverante como Job','Salmos':'Cantor de Salmos',
+  'Proverbios':'Sabio en Proverbios','Eclesiastés':'Predicador de Eclesiastés','Cantares':'Poeta del Cantar',
+  'Isaías':'Profeta de Isaías','Jeremías':'Lamentador de Jeremías','Lamentaciones':'Consolador de Lamentaciones',
+  'Ezequiel':'Vidente de Ezequiel','Daniel':'Fiel como Daniel','Oseas':'Restaurado como Oseas',
+  'Joel':'Atalaya de Joel','Amós':'Justicia de Amós','Abdías':'Mensajero de Abdías','Jonás':'Enviado como Jonás',
+  'Miqueas':'Profeta de Miqueas','Nahúm':'Voz de Nahúm','Habacuc':'Vigía de Habacuc','Sofonías':'Heraldo de Sofonías',
+  'Hageo':'Edificador de Hageo','Zacarías':'Visionario de Zacarías','Malaquías':'Mensajero de Malaquías',
+  'Mateo':'Discípulo de Mateo','Marcos':'Evangelista de Marcos','Lucas':'Historiador de Lucas',
+  'Juan':'Amado como Juan','Hechos':'Testigo de los Hechos','Romanos':'Justificado en Romanos',
+  '1 Corintios':'Edificador de Corinto','2 Corintios':'Consolado en Corinto','Gálatas':'Libre en Gálatas',
+  'Efesios':'Celestial en Efesios','Filipenses':'Gozoso en Filipenses','Colosenses':'Completo en Colosenses',
+  '1 Tesalonicenses':'Esperanzado en Tesalónica','2 Tesalonicenses':'Firme en Tesalónica',
+  '1 Timoteo':'Pastor como Timoteo','2 Timoteo':'Soldado de la Fe','Tito':'Ordenador como Tito',
+  'Filemón':'Intercesor como Filemón','Hebreos':'Sacerdote eterno','Santiago':'Hacedor de la Palabra',
+  '1 Pedro':'Peregrino como Pedro','2 Pedro':'Creciente en gracia','1 Juan':'Morador en luz',
+  '2 Juan':'Caminante en verdad','3 Juan':'Hospitalario como Gayo','Judas':'Defensor de la fe',
+  'Apocalipsis':'Vencedor del Apocalipsis'
+};
+
+function buildAchievementDefs(){
+  const defs = [
+    {id:'first_chapter', icon:'📖', title:'Primer paso', desc:'Abre tu primer capítulo', goal:1},
+    {id:'notes_1', icon:'📝', title:'Anotador', desc:'Guarda 1 nota', goal:1},
+    {id:'notes_10', icon:'📓', title:'Escriba', desc:'Guarda 10 notas', goal:10},
+    {id:'notes_50', icon:'🗂️', title:'Archivero', desc:'Guarda 50 notas', goal:50},
+    {id:'favs_1', icon:'❤️', title:'Corazón', desc:'Marca 1 favorito', goal:1},
+    {id:'favs_25', icon:'💖', title:'Coleccionista', desc:'Marca 25 favoritos', goal:25},
+    {id:'favs_100', icon:'💎', title:'Tesorero', desc:'Marca 100 favoritos', goal:100},
+    {id:'meanings_1', icon:'📚', title:'Léxico', desc:'Guarda 1 significado', goal:1},
+    {id:'meanings_20', icon:'🧠', title:'Erudito', desc:'Guarda 20 significados', goal:20},
+    {id:'project_1', icon:'🎬', title:'Proyector', desc:'Proyecta un versículo', goal:1},
+    {id:'plan_day_1', icon:'📅', title:'Discípulo del día', desc:'Completa 1 día del plan', goal:1},
+    {id:'plan_day_7', icon:'🔥', title:'Constante', desc:'Completa 7 días del plan', goal:7},
+    {id:'plan_day_30', icon:'🏆', title:'Bereano', desc:'Completa 30 días del plan', goal:30},
+    {id:'cloud_1', icon:'☁️', title:'En la nube', desc:'Sincroniza con Google Drive', goal:1},
+    {id:'themes_5', icon:'🎨', title:'Estilo', desc:'Prueba 5 temas distintos', goal:5},
+    {id:'themes_10', icon:'🌈', title:'Arcoíris', desc:'Prueba los 10 temas', goal:10},
+    {id:'detail_1', icon:'🔍', title:'Detallista', desc:'Activa Modo Detalle', goal:1},
+    {id:'books_10', icon:'🗺️', title:'Explorador', desc:'Abre 10 libros distintos', goal:10},
+    {id:'books_39', icon:'📜', title:'Estudiante del AT', desc:'Abre los 39 libros del AT', goal:39},
+    {id:'books_27', icon:'✝️', title:'Estudiante del NT', desc:'Abre los 27 libros del NT', goal:27},
+    {id:'books_66', icon:'👑', title:'Conocedor de la Escritura', desc:'Abre los 66 libros', goal:66},
+    {id:'fullscreen_1', icon:'⛶', title:'Inmersión', desc:'Usa pantalla completa', goal:1}
+  ];
+  (window.BOOK_ORDER || []).forEach(entry=>{
+    const name = entry.name;
+    const title = BOOK_BADGE_TITLES[name] || ('Lector de ' + name);
+    defs.push({
+      id: 'book_' + name,
+      icon: entry.testament === 'NT' ? '✝️' : '📖',
+      title: title,
+      desc: 'Lee al menos un capítulo de ' + name,
+      goal: 1,
+      book: name
+    });
+  });
+  return defs;
+}
+let ACH_DEFS = [];
+let achState = store.get('bp_achievements', {
+  unlocked: {}, // id -> timestamp
+  progress: {}, // id -> number
+  booksRead: {}, // book -> true
+  themesTried: {},
+  planDaysDone: {}
+});
+let googleProfile = store.get('bp_google_profile', null);
+
+function saveAchievements(){
+  store.set('bp_achievements', achState);
+  if(typeof scheduleDriveSave === 'function') scheduleDriveSave();
+}
+function saveGoogleProfile(){
+  store.set('bp_google_profile', googleProfile);
+}
+
+function unlockAchievement(id){
+  if(!id || achState.unlocked[id]) return false;
+  achState.unlocked[id] = Date.now();
+  saveAchievements();
+  const def = ACH_DEFS.find(d=>d.id===id);
+  showAchievementToast(def || {icon:'🏆', title:id});
+  const lista = document.getElementById('lista-logros');
+  if(lista && document.getElementById('modal-perfil')?.style.display === 'flex'){
+    renderAchievementsList();
+    updateProfileStats();
+  }
+  return true;
+}
+
+function setAchProgress(id, value){
+  const def = ACH_DEFS.find(d=>d.id===id);
+  if(!def) return;
+  const v = Math.max(0, value|0);
+  const prev = achState.progress[id] || 0;
+  if(v === prev && (v < def.goal || achState.unlocked[id])) return;
+  achState.progress[id] = v;
+  if(v >= def.goal) unlockAchievement(id);
+  else saveAchievements();
+}
+
+function bumpAchProgress(id, by=1){
+  setAchProgress(id, (achState.progress[id]||0) + by);
+}
+
+function showAchievementToast(def){
+  const el = document.getElementById('toast-logro');
+  if(!el) return;
+  el.innerHTML = '<div style="font-size:22px;margin-bottom:4px;">'+(def.icon||'🏆')+'</div><strong>Logro desbloqueado</strong><br>'+ (def.title||'');
+  el.style.display = 'block';
+  clearTimeout(showAchievementToast._t);
+  showAchievementToast._t = setTimeout(()=>{ el.style.display = 'none'; }, 4200);
+}
+
+function trackBookRead(book){
+  if(!book) return;
+  if(!achState.booksRead) achState.booksRead = {};
+  if(!achState.booksRead[book]){
+    achState.booksRead[book] = true;
+    saveAchievements();
+  }
+  const books = Object.keys(achState.booksRead);
+  setAchProgress('first_chapter', 1);
+  setAchProgress('book_' + book, 1);
+  setAchProgress('books_10', books.length);
+  setAchProgress('books_66', books.length);
+  const at = (window.BOOK_ORDER||[]).filter(e=>e.testament==='AT').map(e=>e.name);
+  const nt = (window.BOOK_ORDER||[]).filter(e=>e.testament==='NT').map(e=>e.name);
+  setAchProgress('books_39', at.filter(b=>achState.booksRead[b]).length);
+  setAchProgress('books_27', nt.filter(b=>achState.booksRead[b]).length);
+}
+
+function trackThemeTried(theme){
+  if(!theme) return;
+  if(!achState.themesTried) achState.themesTried = {};
+  achState.themesTried[theme] = true;
+  const n = Object.keys(achState.themesTried).length;
+  setAchProgress('themes_5', n);
+  setAchProgress('themes_10', n);
+}
+
+function trackNotesCount(){
+  const n = Object.values(notes||{}).filter(t=>t && String(t).trim()).length;
+  setAchProgress('notes_1', n);
+  setAchProgress('notes_10', n);
+  setAchProgress('notes_50', n);
+}
+function trackFavsCount(){
+  const n = Object.keys(favorites||{}).filter(k=>favorites[k]).length;
+  setAchProgress('favs_1', n);
+  setAchProgress('favs_25', n);
+  setAchProgress('favs_100', n);
+}
+function trackMeaningsCount(){
+  const n = Object.keys(typeof savedMeanings!=='undefined'?savedMeanings:{}).length;
+  setAchProgress('meanings_1', n);
+  setAchProgress('meanings_20', n);
+}
+function trackPlanProgress(){
+  if(!achState.planDaysDone) achState.planDaysDone = {};
+  // count days with any completed checkbox from localStorage keys plan_dia_*
+  const days = new Set();
+  for(let i=0;i<localStorage.length;i++){
+    const k = localStorage.key(i);
+    if(k && k.startsWith('plan_dia_') && localStorage.getItem(k)==='true'){
+      const m = k.match(/^plan_dia_(\d+)_/);
+      if(m) days.add(m[1]);
+    }
+  }
+  days.forEach(d=> achState.planDaysDone[d]=true);
+  const n = Object.keys(achState.planDaysDone).length;
+  setAchProgress('plan_day_1', n);
+  setAchProgress('plan_day_7', n);
+  setAchProgress('plan_day_30', n);
+}
+
+function updateProfileStats(){
+  const el = document.getElementById('perfil-stats');
+  if(!el) return;
+  const total = ACH_DEFS.length || 1;
+  const done = Object.keys(achState.unlocked||{}).length;
+  el.textContent = done + ' / ' + total + ' logros · ' + Object.keys(achState.booksRead||{}).length + ' libros leídos';
+}
+
+function renderAchievementsList(){
+  const lista = document.getElementById('lista-logros');
+  if(!lista) return;
+  if(!ACH_DEFS.length) ACH_DEFS = buildAchievementDefs();
+  const unlocked = [];
+  const locked = [];
+  ACH_DEFS.forEach(def=>{
+    const has = !!achState.unlocked[def.id];
+    const prog = achState.progress[def.id] || 0;
+    (has ? unlocked : locked).push({def, prog, has});
+  });
+  const row = (item)=>{
+    const {def, prog, has} = item;
+    const pct = Math.min(100, Math.round((prog/def.goal)*100));
+    return '<div style="display:flex;gap:10px;align-items:flex-start;padding:10px;margin-bottom:8px;border:1px solid var(--line);border-radius:8px;background:'+(has?'color-mix(in srgb, var(--gold) 12%, var(--card-bg))':'var(--parchment)')+';opacity:'+(has?'1':'0.72')+';">'+
+      '<div style="font-size:26px;line-height:1;width:36px;text-align:center;filter:'+(has?'none':'grayscale(1)')+';">'+def.icon+'</div>'+
+      '<div style="flex:1;min-width:0;">'+
+        '<div style="font-weight:600;font-size:13.5px;">'+def.title+(has?' ✓':'')+'</div>'+
+        '<div style="font-size:12px;color:var(--ink-soft);margin-top:2px;">'+def.desc+'</div>'+
+        (!has ? '<div style="margin-top:6px;height:5px;background:var(--line);border-radius:3px;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:var(--rubric);"></div></div><div style="font-size:10.5px;color:var(--ink-soft);margin-top:3px;">'+Math.min(prog,def.goal)+' / '+def.goal+'</div>' : '<div style="font-size:10.5px;color:var(--ink-soft);margin-top:4px;">Desbloqueado</div>')+
+      '</div></div>';
+  };
+  lista.innerHTML =
+    (unlocked.length ? '<div style="font-size:12px;font-weight:600;color:var(--rubric);margin:4px 0 8px;">Desbloqueados ('+unlocked.length+')</div>'+unlocked.map(row).join('') : '')+
+    (locked.length ? '<div style="font-size:12px;font-weight:600;color:var(--ink-soft);margin:12px 0 8px;">En progreso / bloqueados ('+locked.length+')</div>'+locked.map(row).join('') : '');
+}
+
+function refreshProfileHeader(){
+  const nameEl = document.getElementById('perfil-nombre');
+  const emailEl = document.getElementById('perfil-email');
+  const img = document.getElementById('perfil-foto');
+  const ph = document.getElementById('perfil-foto-placeholder');
+  if(googleProfile && googleProfile.email){
+    if(nameEl) nameEl.textContent = googleProfile.name || 'Usuario';
+    if(emailEl) emailEl.textContent = googleProfile.email;
+    if(img && googleProfile.picture){
+      img.src = googleProfile.picture;
+      img.style.display = 'block';
+      if(ph) ph.style.display = 'none';
+    }
+  } else {
+    if(nameEl) nameEl.textContent = 'Invitado';
+    if(emailEl) emailEl.textContent = 'Conecta con ☁️ Sincronizar para ver tu cuenta de Google';
+    if(img){ img.style.display = 'none'; img.removeAttribute('src'); }
+    if(ph) ph.style.display = 'flex';
+  }
+  updateProfileStats();
+}
+
+function openPerfilModal(){
+  if(!ACH_DEFS.length) ACH_DEFS = buildAchievementDefs();
+  const m = document.getElementById('modal-perfil');
+  if(!m) return;
+  m.style.display = 'flex';
+  refreshProfileHeader();
+  renderAchievementsList();
+}
+function closePerfilModal(){
+  const m = document.getElementById('modal-perfil');
+  if(m) m.style.display = 'none';
+}
+document.getElementById('btn-user-profile')?.addEventListener('click', openPerfilModal);
+document.getElementById('cerrar-perfil')?.addEventListener('click', closePerfilModal);
+document.getElementById('cerrar-perfil-2')?.addEventListener('click', closePerfilModal);
+document.getElementById('modal-perfil')?.addEventListener('click', (e)=>{ if(e.target.id==='modal-perfil') closePerfilModal(); });
+
+async function fetchGoogleProfile(){
+  try{
+    const token = gapi?.client?.getToken()?.access_token;
+    if(!token) return;
+    const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      headers: { Authorization: 'Bearer ' + token }
+    });
+    if(!res.ok) return;
+    const data = await res.json();
+    googleProfile = {
+      name: data.name || data.given_name || '',
+      email: data.email || '',
+      picture: data.picture || ''
+    };
+    saveGoogleProfile();
+    refreshProfileHeader();
+  }catch(e){ console.warn('userinfo', e); }
+}
+
+// init defs after BOOK_ORDER available
+setTimeout(()=>{ ACH_DEFS = buildAchievementDefs(); }, 0);
+
+
+/* =========================================================
    GOOGLE DRIVE — appDataFolder (solo CLIENT_ID en frontend)
    NUNCA pongas el client_secret en código del navegador.
    ========================================================= */
 const GDRIVE_CLIENT_ID = '393493986978-kfkbq0k64uhjed43q9tbg8ivpn6sv2n1.apps.googleusercontent.com';
-const GDRIVE_SCOPES = 'https://www.googleapis.com/auth/drive.appdata';
+const GDRIVE_SCOPES = 'https://www.googleapis.com/auth/drive.appdata openid email profile';
 const GDRIVE_DISCOVERY = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
 const GDRIVE_FILE_NAME = 'sefer_datos_biblia.json';
 
@@ -4846,6 +5215,8 @@ function collectLocalData(){
     theme: store.get('bp_theme', 'mexico'),
     planMode: store.get('bp_plan_mode', 'calendar'),
     planStart: store.get('bp_plan_start', null),
+    achievements: achState,
+    googleProfile: googleProfile,
     plan
   };
 }
@@ -4872,6 +5243,11 @@ function applyCloudData(data){
   }
   if(data.planMode){ store.set('bp_plan_mode', data.planMode); planMode = data.planMode; }
   if(data.planStart){ store.set('bp_plan_start', data.planStart); planStartDate = data.planStart; }
+  if(data.achievements && typeof data.achievements === 'object'){
+    achState = data.achievements;
+    store.set('bp_achievements', achState);
+  }
+  if(data.googleProfile){ googleProfile = data.googleProfile; saveGoogleProfile(); }
   if(data.plan && typeof data.plan === 'object'){
     Object.keys(data.plan).forEach(k=> localStorage.setItem(k, data.plan[k]));
   }
@@ -4926,6 +5302,8 @@ async function loadFromDrive(){
   if(data && data.version){
     applyCloudData(data);
     setNubeStatus('✅ Sincronizado');
+    try{ if(typeof setAchProgress==='function') setAchProgress('cloud_1', 1); }catch(e){}
+    try{ if(typeof fetchGoogleProfile==='function') fetchGoogleProfile(); }catch(e){}
   } else {
     // archivo vacío o nuevo: subir local
     await saveToDrive();
@@ -4946,6 +5324,7 @@ async function saveToDrive(){
       body: content
     });
     setNubeStatus('✅ Guardado en Drive');
+    try{ if(typeof setAchProgress==='function') setAchProgress('cloud_1', 1); }catch(e){}
   }catch(e){
     console.error('saveToDrive', e);
     setNubeStatus('Error al guardar');
@@ -4974,14 +5353,16 @@ function handleGoogleLogin(){
     const btn = document.getElementById('btn-login-google');
     if(btn){ btn.title = 'Conectado a Google Drive — clic para sincronizar'; btn.setAttribute('data-tooltip', 'Conectado · clic para sincronizar'); }
     try{
+      if(typeof fetchGoogleProfile==='function') await fetchGoogleProfile();
+      if(typeof setAchProgress==='function') setAchProgress('cloud_1', 1);
       await loadFromDrive();
     }catch(e){
       console.error(e);
       setNubeStatus('Error Drive');
     }
   };
-  const token = gapi.client.getToken();
-  gdriveTokenClient.requestAccessToken({ prompt: token ? '' : 'consent' });
+  // consent para pedir también perfil/email si aún no están
+  gdriveTokenClient.requestAccessToken({ prompt: 'consent' });
 }
 
 document.getElementById('btn-login-google')?.addEventListener('click', handleGoogleLogin);
