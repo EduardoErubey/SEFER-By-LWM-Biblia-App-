@@ -1851,6 +1851,7 @@ body.mobile-mode { /* neutralize if residual class */ }
 
 
 /* Plan mode buttons */
+.plan-order-btn.active,
 .plan-mode-btn.active{
   background:var(--rubric);
   border-color:var(--rubric);
@@ -2007,9 +2008,17 @@ body.mobile-mode { /* neutralize if residual class */ }
   <div class="im-card" style="max-width:520px;width:100%;max-height:85vh;overflow-y:auto;background:var(--card-bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:20px 22px 18px;position:relative;">
     <button type="button" id="cerrar-plan" style="position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-soft);">❌</button>
     <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--rubric);margin:0 28px 8px 0;">📅 Plan de Lectura en 1 Año</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px;">
+    <div style="font-size:12px;font-weight:600;color:var(--ink-soft);margin:0 0 6px;">Orden de lectura</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px;">
+      <button type="button" class="btn plan-order-btn active" data-order="canonical">Canónico (AT→NT)</button>
+      <button type="button" class="btn plan-order-btn" data-order="inverse">Inverso (NT→AT)</button>
+      <button type="button" class="btn plan-order-btn" data-order="parallel">Paralelo</button>
+      <button type="button" class="btn plan-order-btn" data-order="chrono">Cronológico</button>
+    </div>
+    <div style="font-size:12px;font-weight:600;color:var(--ink-soft);margin:0 0 6px;">Inicio del plan</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px;">
       <button type="button" class="btn plan-mode-btn active" id="plan-mode-calendar" data-mode="calendar">1 ene – 31 dic</button>
-      <button type="button" class="btn plan-mode-btn" id="plan-mode-today" data-mode="today">Desde hoy</button>
+      <button type="button" class="btn plan-mode-btn" id="plan-mode-today" data-mode="today">Desde hoy (365 días)</button>
     </div>
     <p style="font-size:13px;color:var(--ink-soft);margin:0 0 12px;">Día <strong id="dia-actual-plan">—</strong> <span id="plan-mode-label" style="opacity:0.8;"></span></p>
     <div id="lectura-de-hoy"></div>
@@ -2722,10 +2731,16 @@ function getBookMeta(book){
   const num = list.findIndex(e=>e.name===book) + 1;
   return {testament, num: num > 0 ? num : 0};
 }
-function formatBookHeading(book, chap){
+function formatBookHeading(book, chap, verse){
   const {testament, num} = getBookMeta(book);
-  const prefix = num ? `${testament} #${num}` : testament;
-  return chap != null && chap !== '' ? `${prefix} ${book} ${chap}` : `${prefix} ${book}`;
+  const t = `[${testament}]`;
+  const n = num ? `(#${num})` : '';
+  let ref = book;
+  if(chap != null && chap !== ''){
+    ref += ' ' + chap;
+    if(verse != null && verse !== '') ref += ':' + verse;
+  }
+  return `${t} ${n} [${ref}]`.replace(/\s+/g,' ').trim();
 }
 function goTo(book, chap){
   try{ if(typeof trackBookRead==='function') trackBookRead(book); }catch(e){}
@@ -2822,9 +2837,10 @@ function renderReader(){
   const meta = getBookMeta(currentBook);
   const bt = document.createElement('div');
   bt.className = 'book-title';
-  bt.textContent = `${meta.testament} #${meta.num} ${currentBook}`;
+  bt.textContent = formatBookHeading(currentBook, currentChap);
   const ct = document.createElement('div');
-  ct.className = 'chap-title'; ct.textContent = `Capítulo ${currentChap}`;
+  ct.className = 'chap-title';
+  ct.textContent = detailVerse ? `Versículo ${detailVerse}` : `Capítulo ${currentChap}`;
   const hint = document.createElement('div');
   hint.id = 'select-hint';
   hint.textContent = 'Enter/clic en versículo → acciones · Palabra con menú abierto → significado · Ctrl o Command (⌘)+clic → multi-selección · Supr → quitar favorito';
@@ -4677,49 +4693,84 @@ document.getElementById('easy-btn').onclick = ()=>{
 /* =========================================================
    PLAN DE LECTURA ANUAL (muestra lecturas del día + progreso)
    ========================================================= */
-const PLAN_ANUAL = (function buildPlan(){
-  // Plan clásico AT+NT paralelo, simplificado por rangos de días
+const AT_BOOKS_CANON = ['Génesis','Éxodo','Levítico','Números','Deuteronomio','Josué','Jueces','Rut',
+  '1 Samuel','2 Samuel','1 Reyes','2 Reyes','1 Crónicas','2 Crónicas','Esdras','Nehemías','Ester',
+  'Job','Salmos','Proverbios','Eclesiastés','Cantares','Isaías','Jeremías','Lamentaciones',
+  'Ezequiel','Daniel','Oseas','Joel','Amós','Abdías','Jonás','Miqueas','Nahúm','Habacuc',
+  'Sofonías','Hageo','Zacarías','Malaquías'];
+const NT_BOOKS_CANON = ['Mateo','Marcos','Lucas','Juan','Hechos','Romanos','1 Corintios','2 Corintios',
+  'Gálatas','Efesios','Filipenses','Colosenses','1 Tesalonicenses','2 Tesalonicenses',
+  '1 Timoteo','2 Timoteo','Tito','Filemón','Hebreos','Santiago','1 Pedro','2 Pedro',
+  '1 Juan','2 Juan','3 Juan','Judas','Apocalipsis'];
+/* Orden cronológico aproximado (lectura devocional, no académico estricto) */
+const CHRONO_BOOKS = [
+  'Génesis','Job','Éxodo','Levítico','Números','Deuteronomio','Josué','Jueces','Rut',
+  '1 Samuel','2 Samuel','1 Crónicas','Salmos','1 Reyes','2 Crónicas','2 Reyes',
+  'Proverbios','Eclesiastés','Cantares','Isaías','Oseas','Joel','Amós','Abdías','Jonás',
+  'Miqueas','Nahúm','Habacuc','Sofonías','Jeremías','Lamentaciones','Ezequiel','Daniel',
+  'Esdras','Hageo','Zacarías','Ester','Nehemías','Malaquías',
+  'Mateo','Marcos','Lucas','Juan','Hechos','Santiago','Gálatas','1 Tesalonicenses','2 Tesalonicenses',
+  '1 Corintios','2 Corintios','Romanos','Efesios','Filipenses','Colosenses','Filemón',
+  '1 Timoteo','Tito','1 Pedro','2 Timoteo','2 Pedro','Hebreos','Judas','1 Juan','2 Juan','3 Juan',
+  'Apocalipsis'
+];
+
+function chaptersOfBook(book){
+  if(!BIBLE[book]) return [];
+  return Object.keys(BIBLE[book]).map(Number).sort((a,b)=>a-b);
+}
+function queueFromBooks(books){
+  const q = [];
+  books.forEach(b=>{
+    chaptersOfBook(b).forEach(c=> q.push(b + ' ' + c));
+  });
+  return q;
+}
+function distributeQueue(queue, days){
   const plan = {};
-  const atBooks = ['Génesis','Éxodo','Levítico','Números','Deuteronomio','Josué','Jueces','Rut',
-    '1 Samuel','2 Samuel','1 Reyes','2 Reyes','1 Crónicas','2 Crónicas','Esdras','Nehemías','Ester',
-    'Job','Salmos','Proverbios','Eclesiastés','Cantares','Isaías','Jeremías','Lamentaciones',
-    'Ezequiel','Daniel','Oseas','Joel','Amós','Abdías','Jonás','Miqueas','Nahúm','Habacuc',
-    'Sofonías','Hageo','Zacarías','Malaquías'];
-  const ntBooks = ['Mateo','Marcos','Lucas','Juan','Hechos','Romanos','1 Corintios','2 Corintios',
-    'Gálatas','Efesios','Filipenses','Colosenses','1 Tesalonicenses','2 Tesalonicenses',
-    '1 Timoteo','2 Timoteo','Tito','Filemón','Hebreos','Santiago','1 Pedro','2 Pedro',
-    '1 Juan','2 Juan','3 Juan','Judas','Apocalipsis'];
-  // Distribución aproximada: ~3 caps AT + ~1 cap NT por día
-  let day = 1;
-  // Generar plan usando capítulos reales de BIBLE si está disponible
-  function chaptersOf(book){
-    if(!BIBLE[book]) return [];
-    return Object.keys(BIBLE[book]).map(Number).sort((a,b)=>a-b);
-  }
-  const atQueue = [];
-  atBooks.forEach(b=>{
-    const chs = chaptersOf(b);
-    chs.forEach(c=> atQueue.push(`${b} ${c}`));
-  });
-  const ntQueue = [];
-  ntBooks.forEach(b=>{
-    const chs = chaptersOf(b);
-    chs.forEach(c=> ntQueue.push(`${b} ${c}`));
-  });
-  let ai = 0, ni = 0;
-  for(let d=1; d<=365; d++){
-    const lecturas = [];
-    // 3 capítulos AT
-    for(let k=0;k<3 && ai<atQueue.length;k++,ai++) lecturas.push(atQueue[ai]);
-    // 1 capítulo NT (cicla si se acaba antes)
-    if(ntQueue.length){
-      lecturas.push(ntQueue[ni % ntQueue.length]);
-      ni++;
-    }
-    plan[d] = lecturas.length ? lecturas : ['Salmos 1'];
+  const total = queue.length || 1;
+  // repartir capítulos de forma equilibrada en `days`
+  for(let d=1; d<=days; d++){
+    const start = Math.floor((d-1)*total/days);
+    const end = Math.floor(d*total/days);
+    const slice = queue.slice(start, end);
+    plan[d] = slice.length ? slice : [(queue[0]||'Salmos 1')];
   }
   return plan;
-})();
+}
+function buildPlanByOrder(order){
+  const days = 365;
+  if(order === 'parallel'){
+    const atQ = queueFromBooks(AT_BOOKS_CANON);
+    const ntQ = queueFromBooks(NT_BOOKS_CANON);
+    const plan = {};
+    let ai = 0, ni = 0;
+    for(let d=1; d<=days; d++){
+      const lecturas = [];
+      for(let k=0;k<3 && ai<atQ.length;k++,ai++) lecturas.push(atQ[ai]);
+      if(ntQ.length){ lecturas.push(ntQ[ni % ntQ.length]); ni++; }
+      // si se acabó el AT, seguir con lo que quede del NT
+      if(!lecturas.length && ni < ntQ.length){
+        for(let k=0;k<4 && ni<ntQ.length;k++,ni++) lecturas.push(ntQ[ni]);
+      }
+      plan[d] = lecturas.length ? lecturas : ['Salmos 1'];
+    }
+    return plan;
+  }
+  if(order === 'canonical'){
+    return distributeQueue(queueFromBooks(AT_BOOKS_CANON.concat(NT_BOOKS_CANON)), days);
+  }
+  if(order === 'inverse'){
+    return distributeQueue(queueFromBooks(NT_BOOKS_CANON.concat(AT_BOOKS_CANON)), days);
+  }
+  // chrono
+  const chrono = CHRONO_BOOKS.filter(b=>BIBLE[b]);
+  const fallback = AT_BOOKS_CANON.concat(NT_BOOKS_CANON);
+  return distributeQueue(queueFromBooks(chrono.length ? chrono : fallback), days);
+}
+
+let planOrder = store.get('bp_plan_order', 'canonical'); // canonical | inverse | parallel | chrono
+let PLAN_ANUAL = buildPlanByOrder(planOrder);
 
 let planViewDay = null;
 let planMode = store.get('bp_plan_mode', 'calendar'); // 'calendar' | 'today'
@@ -4754,10 +4805,15 @@ function setPlanMode(mode){
   });
   const label = document.getElementById('plan-mode-label');
   if(label){
+    const orderNames = {canonical:'AT→NT', inverse:'NT→AT', parallel:'Paralelo', chrono:'Cronológico'};
+    const o = orderNames[planOrder] || planOrder;
     label.textContent = mode === 'today'
-      ? '(iniciado ' + (planStartDate||'') + ')'
-      : '(año calendario)';
+      ? `(${o} · desde ${planStartDate||''})`
+      : `(${o} · año calendario)`;
   }
+  document.querySelectorAll('.plan-order-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.order === planOrder);
+  });
   planViewDay = obtenerDiaPlan();
   cargarPlanLectura(planViewDay);
 }
@@ -4774,19 +4830,24 @@ function cargarPlanLectura(dia){
   if(elDia) elDia.textContent = diaActual + ' / 365';
   const label = document.getElementById('plan-mode-label');
   if(label){
+    const orderNames = {canonical:'AT→NT', inverse:'NT→AT', parallel:'Paralelo', chrono:'Cronológico'};
+    const o = orderNames[planOrder] || planOrder;
     label.textContent = planMode === 'today'
-      ? '(iniciado ' + (planStartDate||'') + ')'
-      : '(año calendario)';
+      ? `(${o} · desde ${planStartDate||''})`
+      : `(${o} · año calendario)`;
   }
   document.querySelectorAll('.plan-mode-btn').forEach(b=>{
     b.classList.toggle('active', b.dataset.mode === planMode);
+  });
+  document.querySelectorAll('.plan-order-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.order === planOrder);
   });
   const lecturas = PLAN_ANUAL[diaActual] || ['Lectura no definida'];
   const contenedor = document.getElementById('lectura-de-hoy');
   if(!contenedor) return;
   contenedor.innerHTML = '';
   lecturas.forEach((lectura, index)=>{
-    const key = `plan_dia_${diaActual}_lec_${index}`;
+    const key = `plan_${planOrder}_dia_${diaActual}_lec_${index}`;
     const completado = localStorage.getItem(key) === 'true';
     const div = document.createElement('div');
     div.style.cssText = 'display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);';
@@ -4828,6 +4889,21 @@ document.getElementById('plan-mode-today')?.addEventListener('click', ()=>{
   planStartDate = d.toISOString().slice(0,10);
   store.set('bp_plan_start', planStartDate);
   setPlanMode('today');
+});
+function setPlanOrder(order){
+  if(!order || order === planOrder) {
+    document.querySelectorAll('.plan-order-btn').forEach(b=> b.classList.toggle('active', b.dataset.order===planOrder));
+    return;
+  }
+  planOrder = order;
+  store.set('bp_plan_order', planOrder);
+  PLAN_ANUAL = buildPlanByOrder(planOrder);
+  planViewDay = obtenerDiaPlan();
+  cargarPlanLectura(planViewDay);
+  if(typeof scheduleDriveSave === 'function') scheduleDriveSave();
+}
+document.querySelectorAll('.plan-order-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=> setPlanOrder(btn.dataset.order));
 });
 function closePlanModal(){
   const m = document.getElementById('modal-plan-lectura');
@@ -5146,8 +5222,8 @@ function trackPlanProgress(){
   const days = new Set();
   for(let i=0;i<localStorage.length;i++){
     const k = localStorage.key(i);
-    if(k && k.startsWith('plan_dia_') && localStorage.getItem(k)==='true'){
-      const m = k.match(/^plan_dia_(\d+)_/);
+    if(k && k.startsWith('plan_') && localStorage.getItem(k)==='true'){
+      const m = k.match(/plan_(?:canonical|inverse|parallel|chrono)_dia_(\d+)_/) || k.match(/plan_dia_(\d+)_/);
       if(m) days.add(m[1]);
     }
   }
@@ -5310,7 +5386,7 @@ function collectLocalData(){
   const plan = {};
   for(let i=0;i<localStorage.length;i++){
     const k = localStorage.key(i);
-    if(k && k.startsWith('plan_dia_')) plan[k] = localStorage.getItem(k);
+    if(k && k.startsWith('plan_')) plan[k] = localStorage.getItem(k);
   }
   return {
     version: 1,
@@ -5322,6 +5398,7 @@ function collectLocalData(){
     theme: store.get('bp_theme', 'mexico'),
     planMode: store.get('bp_plan_mode', 'calendar'),
     planStart: store.get('bp_plan_start', null),
+    planOrder: store.get('bp_plan_order', 'canonical'),
     achievements: achState,
     googleProfile: googleProfile,
     plan
@@ -5350,6 +5427,11 @@ function applyCloudData(data){
   }
   if(data.planMode){ store.set('bp_plan_mode', data.planMode); planMode = data.planMode; }
   if(data.planStart){ store.set('bp_plan_start', data.planStart); planStartDate = data.planStart; }
+  if(data.planOrder){
+    planOrder = data.planOrder;
+    store.set('bp_plan_order', planOrder);
+    PLAN_ANUAL = buildPlanByOrder(planOrder);
+  }
   if(data.achievements && typeof data.achievements === 'object'){
     achState = data.achievements;
     store.set('bp_achievements', achState);
