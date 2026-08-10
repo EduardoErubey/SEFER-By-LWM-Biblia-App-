@@ -1926,7 +1926,7 @@ body.mobile-mode { /* neutralize if residual class */ }
         <button type="button" id="theme-more-btn" class="theme-more-btn" title="Más temas" data-tooltip="Cambiar lote de temas">＋</button>
       </div>
       <div id="ref-search-wrap">
-        <input id="ref-search" placeholder="Génesis 1:1 · 1:1-5 · 1:1,3,6" autocomplete="off" spellcheck="false">
+        <input id="ref-search" placeholder="Génesis 1:1 · Génesis 1:1-5 · Génesis 1:1,3,6" autocomplete="off" spellcheck="false">
         <div id="ref-suggest"></div>
       </div>
     </div>
@@ -2715,6 +2715,18 @@ function renderChapters(book, afterEl){
 /* dom ref hoisted */
 /* dom ref hoisted */
 
+function getBookMeta(book){
+  const entry = BOOK_ORDER.find(e=>e.name===book);
+  const testament = entry?.testament || 'AT';
+  const list = BOOK_ORDER.filter(e=>e.testament===testament);
+  const num = list.findIndex(e=>e.name===book) + 1;
+  return {testament, num: num > 0 ? num : 0};
+}
+function formatBookHeading(book, chap){
+  const {testament, num} = getBookMeta(book);
+  const prefix = num ? `${testament} #${num}` : testament;
+  return chap != null && chap !== '' ? `${prefix} ${book} ${chap}` : `${prefix} ${book}`;
+}
 function goTo(book, chap){
   try{ if(typeof trackBookRead==='function') trackBookRead(book); }catch(e){}
   showWelcome = false;
@@ -2725,7 +2737,7 @@ function goTo(book, chap){
   sidePanel = null;
   document.getElementById('notes-btn')?.classList.remove('active-panel');
   document.getElementById('favs-btn')?.classList.remove('active-panel');
-  currentRef.textContent = `${book} ${chap}`;
+  currentRef.textContent = formatBookHeading(book, chap);
   // Mantener el libro visible en la navegación
   const entry = BOOK_ORDER.find(e=>e.name===book);
   if(entry) openTestaments.add(entry.testament);
@@ -2807,8 +2819,10 @@ function renderReader(){
   reader.classList.remove('welcome-fixed');
 
   const chapData = (BIBLE[currentBook] || {})[currentChap];
+  const meta = getBookMeta(currentBook);
   const bt = document.createElement('div');
-  bt.className = 'book-title'; bt.textContent = currentBook;
+  bt.className = 'book-title';
+  bt.textContent = `${meta.testament} #${meta.num} ${currentBook}`;
   const ct = document.createElement('div');
   ct.className = 'chap-title'; ct.textContent = `Capítulo ${currentChap}`;
   const hint = document.createElement('div');
@@ -3036,38 +3050,12 @@ function findBookName(query){
   return null;
 }
 
-function parseRefQuery(raw){
-  // Formatos: "Génesis 1:1" | "Génesis 1:1-5" | "Génesis 1:1,3,6,9" | "1:1" (libro actual)
-  const s = raw.trim();
-  if(!s) return null;
-  // Separar libro del resto (último espacio antes de dígito o todo si empieza por dígito)
-  let bookPart = '', rest = s;
-  const m = s.match(/^(.+?)\s+(\d+[:\.,].*)$/);
-  if(m){
-    bookPart = m[1];
-    rest = m[2];
-  } else if(/^\d+[:\.,]/.test(s)){
-    bookPart = currentBook;
-    rest = s;
-  } else {
-    // Solo nombre de libro → cap 1
-    const book = findBookName(s);
-    if(book) return {book, chap:'1', verses:null};
-    return null;
-  }
-  const book = findBookName(bookPart);
-  if(!book) return null;
-
-  const chapMatch = rest.match(/^(\d+)\s*[:\.]?\s*(.*)$/);
-  if(!chapMatch) return null;
-  const chap = chapMatch[1];
-  let versePart = (chapMatch[2]||'').trim();
-  if(versePart.startsWith(':') || versePart.startsWith('.')) versePart = versePart.slice(1).trim();
-
+function parseVersesPart(book, chap, versePart){
+  versePart = (versePart || '').trim();
   if(!versePart) return {book, chap, verses:null};
 
-  // Rango 1-5
-  const range = versePart.match(/^(\d+)\s*[-–—]\s*(\d+)$/);
+  // Rango: 1-5 · 1–5 · 1—5
+  const range = versePart.match(/^(\d+)\s*[-–—]\s*(\d+)\s*$/);
   if(range){
     const a = parseInt(range[1],10), b = parseInt(range[2],10);
     const lo = Math.min(a,b), hi = Math.max(a,b);
@@ -3075,37 +3063,74 @@ function parseRefQuery(raw){
     for(let i=lo;i<=hi;i++) verses.push(String(i));
     return {book, chap, verses};
   }
-  // Lista 1,3,6
-  if(/^\d+(\s*,\s*\d+)+$/.test(versePart)){
-    const verses = versePart.split(/\s*,\s*/).map(x=>String(parseInt(x,10))).filter(Boolean);
+  // Lista: 1,3,6 · 1, 3, 6
+  if(/^\d+(\s*,\s*\d+)+\s*$/.test(versePart)){
+    const verses = versePart.split(/\s*,\s*/).map(x=>String(parseInt(x,10))).filter(v=>v && v!=='NaN');
     return {book, chap, verses};
   }
-  // Versículo único
-  const single = versePart.match(/^(\d+)$/);
+  // Único: 16
+  const single = versePart.match(/^(\d+)\s*$/);
   if(single) return {book, chap, verses:[single[1]]};
 
   return {book, chap, verses:null};
 }
 
+function parseRefQuery(raw){
+  // Formatos soportados:
+  //   Libro capítulo:versículo          → Génesis 1:1
+  //   Libro capítulo:inicio-fin         → Génesis 1:1-5
+  //   Libro capítulo:a, b, c            → Génesis 1:1,3,6
+  //   Libro capítulo                    → Génesis 1
+  //   capítulo:versículo (libro actual) → 1:1
+  //   Solo libro                        → Génesis
+  let s = (raw || '').trim().replace(/\s+/g, ' ');
+  if(!s) return null;
+
+  // Solo capítulo/versículo del libro actual
+  if(/^\d+([:.,].*)?$/.test(s)){
+    const cm = s.match(/^(\d+)(?:\s*[:.]\s*(.*))?$/);
+    if(!cm) return null;
+    return parseVersesPart(currentBook, cm[1], cm[2] || '');
+  }
+
+  // Libro + capítulo + versículos opcionales
+  // El capítulo es el ÚLTIMO número "suelto" antes de :versos
+  const m = s.match(/^(.*?)\s+(\d+)(?:\s*[:.]\s*(.*))?$/);
+  if(!m){
+    const bookOnly = findBookName(s);
+    if(bookOnly) return {book: bookOnly, chap:'1', verses:null};
+    return null;
+  }
+  const book = findBookName(m[1].trim());
+  if(!book) return null;
+  const chap = m[2];
+  if(!BIBLE[book] || !BIBLE[book][chap]){
+    // capítulo inválido: aún devolver para feedback
+    return {book, chap, verses:null, invalidChap:true};
+  }
+  return parseVersesPart(book, chap, m[3] || '');
+}
+
 function goToRef(parsed){
   if(!parsed) return false;
   const {book, chap, verses} = parsed;
-  if(!BIBLE[book] || !BIBLE[book][chap]) return false;
+  if(!BIBLE[book]) return false;
+  // Si el capítulo no existe, ir al 1
+  const useChap = (BIBLE[book][chap] ? chap : Object.keys(BIBLE[book]).sort((a,b)=>+a-+b)[0]);
+  if(!useChap) return false;
   openTestaments.add(BOOK_ORDER.find(e=>e.name===book)?.testament || 'AT');
   openBooks.add(book);
   saveNavState();
-  goTo(book, chap);
-  if(verses && verses.length){
-    const existing = verses.filter(v => BIBLE[book][chap][v]);
+  goTo(book, useChap);
+  if(verses && verses.length && BIBLE[book][useChap]){
+    const existing = verses.map(String).filter(v => BIBLE[book][useChap][v]);
     if(existing.length){
       selectedVerses = existing;
-      detailVerse = null;
+      detailVerse = existing.length === 1 ? existing[0] : null;
       updateSelectionUI();
       renderReader();
       scrollVerseIntoView(existing[0]);
     }
-  } else {
-    renderReader();
   }
   renderBookList();
   return true;
@@ -3207,9 +3232,24 @@ function updateRefAutocomplete(){
 
 refSearch.addEventListener('input', updateRefAutocomplete);
 refSearch.addEventListener('keydown', (e)=>{
-  if(e.key === 'Tab' && refSuggest.classList.contains('open') && refSugItems.length){
-    e.preventDefault();
-    applyRefSuggestion(refSugIndex >= 0 ? refSugIndex : 0);
+  if(e.key === 'Tab'){
+    // Autocompletar libro con Tab
+    if(refSuggest.classList.contains('open') && refSugItems.length){
+      e.preventDefault();
+      applyRefSuggestion(refSugIndex >= 0 ? refSugIndex : 0);
+      return;
+    }
+    // Sin lista visible: intentar completar prefijo del libro
+    const val = refSearch.value.trim();
+    const bookPart = val.replace(/\s+\d.*$/, '').trim();
+    if(bookPart && !/^\d/.test(bookPart)){
+      const items = getBookSuggestions(bookPart);
+      if(items.length){
+        e.preventDefault();
+        refSugItems = items;
+        applyRefSuggestion(0);
+      }
+    }
     return;
   }
   if(e.key === 'ArrowDown' && refSuggest.classList.contains('open')){
@@ -3230,17 +3270,23 @@ refSearch.addEventListener('keydown', (e)=>{
   }
   if(e.key === 'Enter'){
     e.preventDefault();
-    if(refSuggest.classList.contains('open') && refSugItems.length && refSugIndex >= 0){
-      // Si el texto aún no tiene capítulo, completar libro y no navegar aún
+    // Si hay sugerencia abierta y aún no hay número de capítulo, completar libro
+    if(refSuggest.classList.contains('open') && refSugItems.length){
       const val = refSearch.value.trim();
       if(!/\d/.test(val)){
-        applyRefSuggestion(refSugIndex);
+        applyRefSuggestion(refSugIndex >= 0 ? refSugIndex : 0);
         return;
       }
+      // Hay capítulo: aplicar libro de la sugerencia y luego ir
+      applyRefSuggestion(refSugIndex >= 0 ? refSugIndex : 0);
     }
     refSuggest.classList.remove('open');
     const parsed = parseRefQuery(refSearch.value);
-    if(goToRef(parsed)){
+    if(parsed && goToRef(parsed)){
+      refSearch.blur();
+    } else if(parsed && parsed.book){
+      // Intentar ir aunque el parse sea parcial
+      goToRef({book: parsed.book, chap: parsed.chap || '1', verses: parsed.verses});
       refSearch.blur();
     }
   }
