@@ -720,8 +720,7 @@ body.mobile-mode .welcome-mobile .welcome-hint{
   margin-left:4px;
   font-weight:400;
 }
-#nav-header-actions #fullscreen-btn,
-#nav-header-actions #nav-toggle{
+#nav-header-actions .nav-action-btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
@@ -737,17 +736,17 @@ body.mobile-mode .welcome-mobile .welcome-hint{
   padding:0;
   margin:0;
   font-family:var(--font-ui);
-  font-size:15px;
+  font-size:14px;
   font-weight:600;
   line-height:1;
   cursor:pointer;
   flex-shrink:0;
+  transition:border-color .15s, color .15s, background .15s;
 }
-#nav-header-actions #fullscreen-btn:hover,
-#nav-header-actions #nav-toggle:hover{
+#nav-header-actions .nav-action-btn:hover{
   border-color:var(--gold);
   color:var(--rubric);
-  background:var(--parchment);
+  background:var(--parchment-2);
 }
 #ref-search-wrap{
   margin-top:12px;
@@ -1798,19 +1797,35 @@ body.mobile-mode { /* neutralize if residual class */ }
 .theme-more-btn{
   width:28px;height:28px;
   border-radius:50%;
-  border:1px solid var(--line);
-  background:var(--parchment-2);
-  color:var(--ink);
+  border:1.5px solid #c62828;
+  background:color-mix(in srgb, #c62828 14%, var(--parchment));
+  color:#c62828;
   font-size:16px;
+  font-weight:700;
   line-height:1;
   cursor:pointer;
   display:inline-flex;
   align-items:center;
   justify-content:center;
   padding:0;
+  transition:background .15s, color .15s, border-color .15s;
 }
-.theme-more-btn:hover{border-color:var(--gold);color:var(--rubric);}
-.theme-more-btn.open{background:var(--rubric);color:#fff;border-color:var(--rubric);}
+.theme-more-btn:hover{
+  background:color-mix(in srgb, #c62828 22%, var(--parchment));
+  border-color:#b71c1c;
+  color:#b71c1c;
+}
+/* Estado − (segundo lote): verde */
+.theme-more-btn.open{
+  border-color:#2e7d32;
+  background:color-mix(in srgb, #2e7d32 16%, var(--parchment));
+  color:#2e7d32;
+}
+.theme-more-btn.open:hover{
+  background:color-mix(in srgb, #2e7d32 26%, var(--parchment));
+  border-color:#1b5e20;
+  color:#1b5e20;
+}
 .theme-extra-row{
   display:flex;
   flex-wrap:wrap;
@@ -1900,6 +1915,8 @@ body.mobile-mode { /* neutralize if residual class */ }
           <div class="brand-sub">BY LWM PDC</div>
         </div>
         <div id="nav-header-actions">
+          <button type="button" id="btn-user-profile" class="nav-action-btn" data-tooltip="Perfil, logros e insignias" title="Perfil">🏆</button>
+          <button type="button" id="btn-login-google" class="nav-action-btn" data-tooltip="Sincronizar con Google Drive" title="Sincronizar">☁️</button>
           <button type="button" id="fullscreen-btn" class="nav-action-btn" data-tooltip="Pantalla completa (como F11)" title="Pantalla completa">⛶</button>
           <button type="button" id="nav-toggle" class="nav-action-btn" data-tooltip="Reiniciar navegación" title="Reiniciar navegación (contraer todo)">↺</button>
         </div>
@@ -1931,8 +1948,6 @@ body.mobile-mode { /* neutralize if residual class */ }
         <button class="btn fav-btn has-tip" id="favs-btn" data-tooltip="Versículos marcados como favoritos">❤️ Favoritos</button>
         <button class="btn has-tip" id="plan-btn" data-tooltip="Plan de lectura de la Biblia en un año">📅 Plan 1 año</button>
         <button class="btn has-tip" id="glossary-btn" data-tooltip="Glosario de términos bíblicos">📖 Glosario</button>
-        <button class="btn has-tip" id="btn-user-profile" data-tooltip="Perfil, logros e insignias">🏆 Perfil</button>
-        <button class="btn has-tip" id="btn-login-google" data-tooltip="Sincronizar favoritos, notas y progreso con Google Drive">☁️ Sincronizar</button>
         <span id="estado-nube" style="display:none;" aria-hidden="true"></span>
         <button class="btn primary has-tip" id="project-btn" data-tooltip="Proyectar selección o versículo en pantalla completa">🎬 Proyectar</button>
         <button class="btn has-tip" id="help-btn" data-tooltip="Guía de uso y atajos de teclado">❓ Ayuda</button>
@@ -4385,8 +4400,8 @@ document.getElementById('help-btn').onclick = ()=>{
     </div></div>
 
     <div class="im-block"><div class="im-label">Temas</div>
-    <div class="im-text"><svg class="flag-svg help-flag" viewBox="0 0 36 24" width="18" height="12" aria-hidden="true"><rect width="12" height="24" x="0" fill="#006847"/><rect width="12" height="24" x="12" fill="#fff"/><rect width="12" height="24" x="24" fill="#CE1126"/><circle cx="18" cy="12" r="3.2" fill="#006847"/></svg> México · <svg class="flag-svg help-flag" viewBox="0 0 36 24" width="18" height="12" aria-hidden="true"><rect width="36" height="24" fill="#fff" stroke="#ddd" stroke-width="0.5"/><circle cx="18" cy="12" r="5" fill="#CD2E3A"/><path d="M18 12a5 5 0 0 1 0-0.01 2.5 2.5 0 1 0 0 0.01z" fill="#0047A0"/><g fill="#000"><rect x="6" y="4" width="5" height="1.2"/><rect x="6" y="6" width="2" height="1.2"/><rect x="9" y="6" width="2" height="1.2"/><rect x="6" y="8" width="5" height="1.2"/><rect x="25" y="4" width="5" height="1.2"/><rect x="25" y="6.6" width="5" height="1.2"/><rect x="25" y="9.2" width="5" height="1.2"/><rect x="6" y="14.5" width="5" height="1.2"/><rect x="6" y="17.1" width="2" height="1.2"/><rect x="9" y="17.1" width="2" height="1.2"/><rect x="6" y="19.7" width="5" height="1.2"/><rect x="25" y="14.5" width="2" height="1.2"/><rect x="28" y="14.5" width="2" height="1.2"/><rect x="25" y="17.1" width="5" height="1.2"/><rect x="25" y="19.7" width="2" height="1.2"/><rect x="28" y="19.7" width="2" height="1.2"/></g></svg> Corea · <svg class="flag-svg help-flag" viewBox="0 0 36 24" width="18" height="12" aria-hidden="true"><rect width="36" height="12" y="0" fill="#0057B7"/><rect width="36" height="12" y="12" fill="#FFD700"/></svg> Ucrania · ☀️ Day · 🌙 Night<br>
-    Con <strong>＋</strong>: 👑 Reino · 🌿 Edén · ⏳ Arena · 🕯️ Sándalo · 🌌 Amoled</div></div>
+    <div class="im-text"><svg class="flag-svg help-flag" viewBox="0 0 36 24" width="18" height="12" aria-hidden="true"><rect width="12" height="24" x="0" fill="#006847"/><rect width="12" height="24" x="12" fill="#fff"/><rect width="12" height="24" x="24" fill="#CE1126"/><circle cx="18" cy="12" r="3.2" fill="#006847"/></svg> México · <svg class="flag-svg help-flag" viewBox="0 0 36 24" width="18" height="12" aria-hidden="true"><rect width="36" height="24" fill="#fff" stroke="#ddd" stroke-width="0.5"/><circle cx="18" cy="12" r="5" fill="#CD2E3A"/><path d="M18 12a5 5 0 0 1 0-0.01 2.5 2.5 0 1 0 0 0.01z" fill="#0047A0"/><g fill="#000"><rect x="6" y="4" width="5" height="1.2"/><rect x="6" y="6" width="2" height="1.2"/><rect x="9" y="6" width="2" height="1.2"/><rect x="6" y="8" width="5" height="1.2"/><rect x="25" y="4" width="5" height="1.2"/><rect x="25" y="6.6" width="5" height="1.2"/><rect x="25" y="9.2" width="5" height="1.2"/><rect x="6" y="14.5" width="5" height="1.2"/><rect x="6" y="17.1" width="2" height="1.2"/><rect x="9" y="17.1" width="2" height="1.2"/><rect x="6" y="19.7" width="5" height="1.2"/><rect x="25" y="14.5" width="2" height="1.2"/><rect x="28" y="14.5" width="2" height="1.2"/><rect x="25" y="17.1" width="5" height="1.2"/><rect x="25" y="19.7" width="2" height="1.2"/><rect x="28" y="19.7" width="2" height="1.2"/></g></svg> Corea · <svg class="flag-svg help-flag" viewBox="0 0 36 24" width="18" height="12" aria-hidden="true"><rect width="36" height="12" y="0" fill="#0057B7"/><rect width="36" height="12" y="12" fill="#FFD700"/></svg> Ucrania · 👑 Reino · 🌿 Edén<br>
+    Con <strong>＋</strong>: ☀️ Day · 🌙 Night · ⏳ Arena · 🕯️ Sándalo · 🌌 Amoled</div></div>
   `;
   document.getElementById('info-modal').classList.add('open');
   focusInfoScroll();
@@ -4538,8 +4553,8 @@ document.getElementById('easy-btn').onclick = ()=>{
       • 📅 Plan 1 año (calendario o desde hoy) · 📖 Glosario<br>
       • ☁️ Sincronizar (Google Drive) · 🎬 Proyectar · ❓ Ayuda</div></div>
       <div class="im-block"><div class="im-label">Temas</div>
-      <div class="im-text"><svg class="flag-svg help-flag" viewBox="0 0 36 24" width="18" height="12" aria-hidden="true"><rect width="12" height="24" x="0" fill="#006847"/><rect width="12" height="24" x="12" fill="#fff"/><rect width="12" height="24" x="24" fill="#CE1126"/><circle cx="18" cy="12" r="3.2" fill="#006847"/></svg> México · <svg class="flag-svg help-flag" viewBox="0 0 36 24" width="18" height="12" aria-hidden="true"><rect width="36" height="24" fill="#fff" stroke="#ddd" stroke-width="0.5"/><circle cx="18" cy="12" r="5" fill="#CD2E3A"/><path d="M18 12a5 5 0 0 1 0-0.01 2.5 2.5 0 1 0 0 0.01z" fill="#0047A0"/><g fill="#000"><rect x="6" y="4" width="5" height="1.2"/><rect x="6" y="6" width="2" height="1.2"/><rect x="9" y="6" width="2" height="1.2"/><rect x="6" y="8" width="5" height="1.2"/><rect x="25" y="4" width="5" height="1.2"/><rect x="25" y="6.6" width="5" height="1.2"/><rect x="25" y="9.2" width="5" height="1.2"/><rect x="6" y="14.5" width="5" height="1.2"/><rect x="6" y="17.1" width="2" height="1.2"/><rect x="9" y="17.1" width="2" height="1.2"/><rect x="6" y="19.7" width="5" height="1.2"/><rect x="25" y="14.5" width="2" height="1.2"/><rect x="28" y="14.5" width="2" height="1.2"/><rect x="25" y="17.1" width="5" height="1.2"/><rect x="25" y="19.7" width="2" height="1.2"/><rect x="28" y="19.7" width="2" height="1.2"/></g></svg> Corea · <svg class="flag-svg help-flag" viewBox="0 0 36 24" width="18" height="12" aria-hidden="true"><rect width="36" height="12" y="0" fill="#0057B7"/><rect width="36" height="12" y="12" fill="#FFD700"/></svg> Ucrania · ☀️ Day · 🌙 Night<br>
-      Con <strong>＋</strong>: 👑 Reino · 🌿 Edén · ⏳ Arena · 🕯️ Sándalo · 🌌 Amoled</div></div>
+      <div class="im-text"><svg class="flag-svg help-flag" viewBox="0 0 36 24" width="18" height="12" aria-hidden="true"><rect width="12" height="24" x="0" fill="#006847"/><rect width="12" height="24" x="12" fill="#fff"/><rect width="12" height="24" x="24" fill="#CE1126"/><circle cx="18" cy="12" r="3.2" fill="#006847"/></svg> México · <svg class="flag-svg help-flag" viewBox="0 0 36 24" width="18" height="12" aria-hidden="true"><rect width="36" height="24" fill="#fff" stroke="#ddd" stroke-width="0.5"/><circle cx="18" cy="12" r="5" fill="#CD2E3A"/><path d="M18 12a5 5 0 0 1 0-0.01 2.5 2.5 0 1 0 0 0.01z" fill="#0047A0"/><g fill="#000"><rect x="6" y="4" width="5" height="1.2"/><rect x="6" y="6" width="2" height="1.2"/><rect x="9" y="6" width="2" height="1.2"/><rect x="6" y="8" width="5" height="1.2"/><rect x="25" y="4" width="5" height="1.2"/><rect x="25" y="6.6" width="5" height="1.2"/><rect x="25" y="9.2" width="5" height="1.2"/><rect x="6" y="14.5" width="5" height="1.2"/><rect x="6" y="17.1" width="2" height="1.2"/><rect x="9" y="17.1" width="2" height="1.2"/><rect x="6" y="19.7" width="5" height="1.2"/><rect x="25" y="14.5" width="2" height="1.2"/><rect x="28" y="14.5" width="2" height="1.2"/><rect x="25" y="17.1" width="5" height="1.2"/><rect x="25" y="19.7" width="2" height="1.2"/><rect x="28" y="19.7" width="2" height="1.2"/></g></svg> Corea · <svg class="flag-svg help-flag" viewBox="0 0 36 24" width="18" height="12" aria-hidden="true"><rect width="36" height="12" y="0" fill="#0057B7"/><rect width="36" height="12" y="12" fill="#FFD700"/></svg> Ucrania · 👑 Reino · 🌿 Edén<br>
+      Con <strong>＋</strong>: ☀️ Day · 🌙 Night · ⏳ Arena · 🕯️ Sándalo · 🌌 Amoled</div></div>
       <div class="im-block"><div class="im-label">Nube</div>
       <div class="im-text">Favoritos, notas, significados y progreso del plan se sincronizan con Google Drive (appDataFolder) al pulsar ☁️ Sincronizar.</div></div>
     `;
@@ -4558,12 +4573,12 @@ document.getElementById('easy-btn').onclick = ()=>{
     {t:'mexico', tip:'México', html:flagMX},
     {t:'corea', tip:'Corea', html:flagKR},
     {t:'ucrania', tip:'Ucrania', html:flagUA},
-    {t:'lwm-day', tip:'LWM-Day', html:'☀️'},
-    {t:'lwm-night', tip:'LWM-Night', html:'🌙'}
+    {t:'reino', tip:'Reino', html:'👑'},
+    {t:'eden', tip:'Edén', html:'🌿'}
   ];
   const BATCH_B = [
-    {t:'reino', tip:'Reino', html:'👑'},
-    {t:'eden', tip:'Edén', html:'🌿'},
+    {t:'lwm-day', tip:'LWM-Day', html:'☀️'},
+    {t:'lwm-night', tip:'LWM-Night', html:'🌙'},
     {t:'arena', tip:'Arena', html:'⏳'},
     {t:'sandalo', tip:'Sándalo', html:'🕯️'},
     {t:'amoled', tip:'Amoled', html:'🌌'}
@@ -4870,28 +4885,74 @@ document.getElementById('modal-glosario')?.addEventListener('click', (e)=>{
    LOGROS / INSIGNIAS + PERFIL GOOGLE
    ========================================================= */
 const BOOK_BADGE_TITLES = {
-  'Génesis':'Entendedor del Génesis','Éxodo':'Líder del Éxodo','Levítico':'Sacerdote de Levítico',
-  'Números':'Contador de Números','Deuteronomio':'Guardián de la Ley','Josué':'Conquistador como Josué',
-  'Jueces':'Juez de Israel','Rut':'Leal como Rut','1 Samuel':'Ungidor de Reyes','2 Samuel':'Heredero de David',
-  '1 Reyes':'Sabio como Salomón','2 Reyes':'Vigilante del Reino','1 Crónicas':'Cronista del Pueblo',
-  '2 Crónicas':'Historiador del Templo','Esdras':'Restaurador como Esdras','Nehemías':'Constructor de Muros',
-  'Ester':'Valiente como Ester','Job':'Perseverante como Job','Salmos':'Cantor de Salmos',
-  'Proverbios':'Sabio en Proverbios','Eclesiastés':'Predicador de Eclesiastés','Cantares':'Poeta del Cantar',
-  'Isaías':'Profeta de Isaías','Jeremías':'Lamentador de Jeremías','Lamentaciones':'Consolador de Lamentaciones',
-  'Ezequiel':'Vidente de Ezequiel','Daniel':'Fiel como Daniel','Oseas':'Restaurado como Oseas',
-  'Joel':'Atalaya de Joel','Amós':'Justicia de Amós','Abdías':'Mensajero de Abdías','Jonás':'Enviado como Jonás',
-  'Miqueas':'Profeta de Miqueas','Nahúm':'Voz de Nahúm','Habacuc':'Vigía de Habacuc','Sofonías':'Heraldo de Sofonías',
-  'Hageo':'Edificador de Hageo','Zacarías':'Visionario de Zacarías','Malaquías':'Mensajero de Malaquías',
-  'Mateo':'Discípulo de Mateo','Marcos':'Evangelista de Marcos','Lucas':'Historiador de Lucas',
-  'Juan':'Amado como Juan','Hechos':'Testigo de los Hechos','Romanos':'Justificado en Romanos',
-  '1 Corintios':'Edificador de Corinto','2 Corintios':'Consolado en Corinto','Gálatas':'Libre en Gálatas',
-  'Efesios':'Celestial en Efesios','Filipenses':'Gozoso en Filipenses','Colosenses':'Completo en Colosenses',
-  '1 Tesalonicenses':'Esperanzado en Tesalónica','2 Tesalonicenses':'Firme en Tesalónica',
-  '1 Timoteo':'Pastor como Timoteo','2 Timoteo':'Soldado de la Fe','Tito':'Ordenador como Tito',
-  'Filemón':'Intercesor como Filemón','Hebreos':'Sacerdote eterno','Santiago':'Hacedor de la Palabra',
-  '1 Pedro':'Peregrino como Pedro','2 Pedro':'Creciente en gracia','1 Juan':'Morador en luz',
-  '2 Juan':'Caminante en verdad','3 Juan':'Hospitalario como Gayo','Judas':'Defensor de la fe',
-  'Apocalipsis':'Vencedor del Apocalipsis'
+  /* —— Antiguo Testamento —— */
+  'Génesis':'En el principio…',
+  'Éxodo':'Libertador del pueblo',
+  'Levítico':'Santo como Él es santo',
+  'Números':'En el desierto',
+  'Deuteronomio':'Escucha, Israel',
+  'Josué':'La tierra prometida',
+  'Jueces':'Cada uno hacía lo que bien le parecía',
+  'Rut':'Tu pueblo será mi pueblo',
+  '1 Samuel':'Un rey según el pueblo',
+  '2 Samuel':'El trono de David',
+  '1 Reyes':'La gloria de Salomón',
+  '2 Reyes':'El reino dividido',
+  '1 Crónicas':'Linaje y alabanza',
+  '2 Crónicas':'El templo y los reyes',
+  'Esdras':'Volvieron a Jerusalén',
+  'Nehemías':'Levantemos el muro',
+  'Ester':'Para un tiempo como este',
+  'Job':'Aunque Él me mate…',
+  'Salmos':'Alabad al Señor',
+  'Proverbios':'El principio de la sabiduría',
+  'Eclesiastés':'Todo tiene su tiempo',
+  'Cantares':'Cantar de los cantares',
+  'Isaías':'El siervo sufriente',
+  'Jeremías':'Profeta de lágrimas',
+  'Lamentaciones':'Grandes son tus misericordias',
+  'Ezequiel':'Ruedas dentro de ruedas',
+  'Daniel':'En el foso de los leones',
+  'Oseas':'Amor que restaura',
+  'Joel':'Derramaré mi Espíritu',
+  'Amós':'Que fluya la justicia',
+  'Abdías':'El día de Edom',
+  'Jonás':'Tres días en el pez',
+  'Miqueas':'Oh hombre, Él te ha declarado',
+  'Nahúm':'Ruina de Nínive',
+  'Habacuc':'El justo por la fe vivirá',
+  'Sofonías':'El día del Señor',
+  'Hageo':'Reedifica la casa',
+  'Zacarías':'No con ejército, sino con mi Espíritu',
+  'Malaquías':'El sol de justicia',
+  /* —— Nuevo Testamento —— */
+  'Mateo':'El Reino de los cielos',
+  'Marcos':'El Hijo del Hombre',
+  'Lucas':'El Salvador de todos',
+  'Juan':'La Palabra se hizo carne',
+  'Hechos':'Hasta lo último de la tierra',
+  'Romanos':'Justificados por la fe',
+  '1 Corintios':'El cuerpo de Cristo',
+  '2 Corintios':'Poder en la debilidad',
+  'Gálatas':'Libres en Cristo',
+  'Efesios':'Sentados en lugares celestiales',
+  'Filipenses':'Gozo en toda circunstancia',
+  'Colosenses':'Cristo en vosotros, la esperanza',
+  '1 Tesalonicenses':'La venida del Señor',
+  '2 Tesalonicenses':'Firmeza hasta el fin',
+  '1 Timoteo':'Combate la buena batalla',
+  '2 Timoteo':'Predica la palabra',
+  'Tito':'Enseñanza sana',
+  'Filemón':'Ya no como esclavo',
+  'Hebreos':'Mejor pacto, mejor sacrificio',
+  'Santiago':'Sed hacedores de la palabra',
+  '1 Pedro':'Piedras vivas',
+  '2 Pedro':'Participantes de la naturaleza divina',
+  '1 Juan':'Dios es amor',
+  '2 Juan':'Andar en la verdad',
+  '3 Juan':'Copartícipe de la verdad',
+  'Judas':'Contender por la fe',
+  'Apocalipsis':'Cielos nuevos y tierra nueva'
 };
 
 function buildAchievementDefs(){
