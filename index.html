@@ -1896,7 +1896,7 @@ body.mobile-mode { /* neutralize if residual class */ }
         <button class="btn has-tip" id="plan-btn" data-tooltip="Plan de lectura de la Biblia en un año">📅 Plan 1 año</button>
         <button class="btn has-tip" id="glossary-btn" data-tooltip="Glosario de términos bíblicos">📖 Glosario</button>
         <button class="btn has-tip" id="btn-login-google" data-tooltip="Sincronizar favoritos, notas y progreso con Google Drive">☁️ Sincronizar</button>
-        <span id="estado-nube" style="font-size:11px;color:var(--ink-soft);align-self:center;max-width:120px;white-space:nowrap;"></span>
+        <span id="estado-nube" style="display:none;" aria-hidden="true"></span>
         <button class="btn primary has-tip" id="project-btn" data-tooltip="Proyectar selección o versículo en pantalla completa">🎬 Proyectar</button>
         <button class="btn has-tip" id="help-btn" data-tooltip="Guía de uso y atajos de teclado">❓ Ayuda</button>
       </div>
@@ -4735,8 +4735,14 @@ let gdriveFileId = null;
 let driveSaveTimer = null;
 
 function setNubeStatus(msg){
+  // feedback solo en tooltip del botón (sin texto visible al lado)
+  const btn = document.getElementById('btn-login-google');
+  if(btn && msg){
+    btn.title = msg;
+    btn.setAttribute('data-tooltip', msg);
+  }
   const el = document.getElementById('estado-nube');
-  if(el) el.textContent = msg || '';
+  if(el) el.textContent = '';
 }
 
 function gapiLoaded(){
@@ -4906,7 +4912,7 @@ function handleGoogleLogin(){
       return;
     }
     const btn = document.getElementById('btn-login-google');
-    if(btn) btn.textContent = '☁️ Conectado';
+    if(btn){ btn.title = 'Conectado a Google Drive — clic para sincronizar'; btn.setAttribute('data-tooltip', 'Conectado · clic para sincronizar'); }
     try{
       await loadFromDrive();
     }catch(e){
