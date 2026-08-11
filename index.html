@@ -1149,10 +1149,11 @@ body.mobile-mode .welcome-mobile .welcome-hint{
 #word-search-results .empty-msg{padding:14px;}
 #current-ref{
   font-family:var(--font-display);
-  font-size:17px;
+  font-size:15px;
   font-weight:600;
   color:var(--ink);
-  white-space:nowrap;
+  white-space:normal;
+  line-height:1.35;
 }
 #selection-info{
   font-family:var(--font-ui);
@@ -1784,7 +1785,21 @@ body.mobile-mode { /* neutralize if residual class */ }
   flex-shrink:0;
 }
 #estado-nube{font-size:10px !important;max-width:70px !important;overflow:hidden;text-overflow:ellipsis;}
-#topbar-left #current-ref{font-size:13px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#topbar-left{
+  flex:1 1 auto;
+  min-width:0;
+  max-width:min(520px, 42vw);
+}
+#topbar-left #current-ref{
+  font-size:12.5px;
+  font-weight:600;
+  max-width:100%;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:unset;
+  line-height:1.35;
+  word-break:break-word;
+}
 
 /* Theme more button + second row */
 .theme-batch{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px;}
@@ -2761,7 +2776,9 @@ function goTo(book, chap){
   sidePanel = null;
   document.getElementById('notes-btn')?.classList.remove('active-panel');
   document.getElementById('favs-btn')?.classList.remove('active-panel');
-  currentRef.textContent = formatBookHeading(book, chap);
+  const _heading = formatBookHeading(book, chap);
+  currentRef.textContent = _heading;
+  currentRef.title = _heading;
   // Mantener el libro visible en la navegación
   const entry = BOOK_ORDER.find(e=>e.name===book);
   if(entry) openTestaments.add(entry.testament);
@@ -2774,6 +2791,7 @@ function showWelcomeScreen(){
   selectedVerses = [];
   updateSelectionUI();
   currentRef.textContent = 'Inicio';
+  currentRef.title = 'Inicio';
   renderReader();
 }
 
