@@ -2005,10 +2005,8 @@ body.mobile-mode { /* neutralize if residual class */ }
   <div class="stage-text" id="stage-text"></div>
   <div id="stage-nav">
     <button class="stage-btn" id="stage-prev">‹ Anterior</button>
-    <button class="stage-btn" id="stage-auto" title="Desplazamiento automático" style="display:none;">▶ Auto</button>
-    <button class="stage-btn stage-speed" data-speed="0.03" style="display:none;">0.03×</button>
-    <button class="stage-btn stage-speed" data-speed="0.06" style="display:none;">0.06×</button>
-    <button class="stage-btn stage-speed" data-speed="0.09" style="display:none;">0.09×</button>
+    <button class="stage-btn" id="stage-auto" title="Desplazamiento automático (10 s de espera)" style="display:none;">▶ Auto</button>
+    <button class="stage-btn stage-speed" id="stage-speed-btn" title="Velocidad (clic para cambiar)" style="display:none;">0.03×</button>
     <button class="stage-btn" id="stage-next">Siguiente ›</button>
   </div>
 </div>
@@ -2744,14 +2742,14 @@ function getBookMeta(book){
 }
 function formatBookHeading(book, chap, verse){
   const {testament, num} = getBookMeta(book);
-  const t = `[${testament}]`;
-  const n = num ? `(#${num})` : '';
+  const tName = testament === 'NT' ? 'Nuevo Testamento' : 'Antiguo Testamento';
   let ref = book;
   if(chap != null && chap !== ''){
-    ref += ' ' + chap;
+    ref += ':' + chap;
     if(verse != null && verse !== '') ref += ':' + verse;
   }
-  return `${t} ${n} [${ref}]`.replace(/\s+/g,' ').trim();
+  const libro = num ? `Libro ${num}` : 'Libro';
+  return `${tName}: ${libro} [${ref}]`;
 }
 function goTo(book, chap){
   try{ if(typeof trackBookRead==='function') trackBookRead(book); }catch(e){}
@@ -3808,9 +3806,12 @@ document.getElementById('stage-prev').onclick = ()=> stageStep(-1);
 /* Auto-desplazamiento del texto en proyección (solo si hay overflow) */
 let stageAutoTimer = null;
 let stageAutoDelayTimer = null;
-let stageAutoSpeed = 0.03; // velocidad predeterminada
+let stageAutoCountdownTimer = null;
+let stageAutoSpeed = 0.03; // predeterminada
+const STAGE_SPEEDS = [0.03, 0.05, 0.07, 0.09];
+let stageSpeedIndex = 0;
 const STAGE_SCROLL_BASE = 40; // px por tick a 1×
-const STAGE_AUTO_DELAY_MS = 8000; // espera 8 s antes de iniciar
+const STAGE_AUTO_DELAY_MS = 10000; // 10 s con conteo regresivo
 
 function stageTextOverflows(){
   const el = document.getElementById('stage-text');
@@ -3820,18 +3821,26 @@ function stageTextOverflows(){
 function updateStageScrollControls(){
   const show = stageTextOverflows();
   const autoBtn = document.getElementById('stage-auto');
-  document.querySelectorAll('#stage-nav .stage-speed').forEach(b=>{
-    b.style.display = show ? '' : 'none';
-  });
+  const speedBtn = document.getElementById('stage-speed-btn');
   if(autoBtn) autoBtn.style.display = show ? '' : 'none';
+  if(speedBtn) speedBtn.style.display = show ? '' : 'none';
   if(!show) stopStageAuto();
 }
 function isStageAutoRunning(){
-  return !!(stageAutoTimer || stageAutoDelayTimer);
+  return !!(stageAutoTimer || stageAutoDelayTimer || stageAutoCountdownTimer);
+}
+function updateSpeedBtnLabel(){
+  const speedBtn = document.getElementById('stage-speed-btn');
+  if(speedBtn){
+    speedBtn.textContent = stageAutoSpeed.toFixed(2).replace(/0+$/,'').replace(/\.$/,'') + '×';
+    // normalize 0.03 style
+    speedBtn.textContent = String(stageAutoSpeed) + '×';
+  }
 }
 function stopStageAuto(){
   if(stageAutoTimer){ clearInterval(stageAutoTimer); stageAutoTimer = null; }
   if(stageAutoDelayTimer){ clearTimeout(stageAutoDelayTimer); stageAutoDelayTimer = null; }
+  if(stageAutoCountdownTimer){ clearInterval(stageAutoCountdownTimer); stageAutoCountdownTimer = null; }
   const autoBtn = document.getElementById('stage-auto');
   if(autoBtn){ autoBtn.classList.remove('active'); autoBtn.textContent = '▶ Auto'; }
 }
@@ -3840,9 +3849,8 @@ function beginStageScrollLoop(){
   if(!el || !stageTextOverflows()){ stopStageAuto(); return; }
   const autoBtn = document.getElementById('stage-auto');
   if(autoBtn){ autoBtn.classList.add('active'); autoBtn.textContent = '⏸ Auto'; }
-  // acumulación fraccional para velocidades muy bajas (0.03× etc.)
   let acc = 0;
-  const pxPerTick = STAGE_SCROLL_BASE * stageAutoSpeed / 4; // puede ser < 1
+  const pxPerTick = STAGE_SCROLL_BASE * stageAutoSpeed / 4;
   if(stageAutoTimer){ clearInterval(stageAutoTimer); stageAutoTimer = null; }
   stageAutoTimer = setInterval(()=>{
     if(!el){ stopStageAuto(); return; }
@@ -3865,10 +3873,23 @@ function startStageAuto(){
   const el = document.getElementById('stage-text');
   if(!el || !stageTextOverflows()) return;
   const autoBtn = document.getElementById('stage-auto');
-  if(autoBtn){ autoBtn.classList.add('active'); autoBtn.textContent = '⏳ 8s…'; }
-  // Esperar 8 segundos antes de iniciar el desplazamiento
+  let remaining = Math.ceil(STAGE_AUTO_DELAY_MS / 1000); // 10
+  if(autoBtn){
+    autoBtn.classList.add('active');
+    autoBtn.textContent = '⏳ ' + remaining + 's';
+  }
+  stageAutoCountdownTimer = setInterval(()=>{
+    remaining -= 1;
+    if(remaining > 0){
+      if(autoBtn) autoBtn.textContent = '⏳ ' + remaining + 's';
+    } else {
+      clearInterval(stageAutoCountdownTimer);
+      stageAutoCountdownTimer = null;
+    }
+  }, 1000);
   stageAutoDelayTimer = setTimeout(()=>{
     stageAutoDelayTimer = null;
+    if(stageAutoCountdownTimer){ clearInterval(stageAutoCountdownTimer); stageAutoCountdownTimer = null; }
     beginStageScrollLoop();
   }, STAGE_AUTO_DELAY_MS);
 }
@@ -3876,27 +3897,44 @@ document.getElementById('stage-auto')?.addEventListener('click', ()=>{
   if(isStageAutoRunning()) stopStageAuto();
   else startStageAuto();
 });
-document.querySelectorAll('#stage-nav .stage-speed').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    stageAutoSpeed = parseFloat(btn.dataset.speed) || 0.03;
-    document.querySelectorAll('#stage-nav .stage-speed').forEach(b=> b.classList.toggle('active', b===btn));
-    // Si ya está activo (en espera o desplazando), reiniciar con la nueva velocidad
-    if(isStageAutoRunning()) startStageAuto();
-  });
+document.getElementById('stage-speed-btn')?.addEventListener('click', ()=>{
+  stageSpeedIndex = (stageSpeedIndex + 1) % STAGE_SPEEDS.length;
+  stageAutoSpeed = STAGE_SPEEDS[stageSpeedIndex];
+  updateSpeedBtnLabel();
+  // Si está desplazando (no solo en cuenta atrás), reiniciar loop con nueva velocidad
+  if(stageAutoTimer) beginStageScrollLoop();
 });
-document.querySelector('#stage-nav .stage-speed[data-speed="0.03"]')?.classList.add('active');
-stageAutoSpeed = 0.03;
-document.getElementById('stage-exit')?.addEventListener('click', stopStageAuto);
-document.addEventListener('keydown', (e)=>{
-  if(e.key === 'Escape') stopStageAuto();
-});
+updateSpeedBtnLabel();
+function closeStageProjection(){
+  stopStageAuto();
+  if(stage) stage.classList.remove('open');
+  // Si está en fullscreen del documento, salir también
+  try{
+    if(document.fullscreenElement || document.webkitFullscreenElement){
+      const exit = document.exitFullscreen || document.webkitExitFullscreen;
+      if(exit) exit.call(document);
+    }
+  }catch(err){}
+}
+document.getElementById('stage-exit')?.addEventListener('click', closeStageProjection);
 
 document.addEventListener('keydown', (e)=>{
-  if(document.getElementById('project-sheet')?.classList.contains('open')){
-    if(e.key === 'Escape'){ closeProjectSheet(); return; }
+  if(e.key !== 'Escape') return;
+  // Cerrar proyección con Esc (fase captura = prioridad alta)
+  if(stage && stage.classList.contains('open')){
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    closeStageProjection();
+    return;
   }
-  if(!stage.classList.contains('open')) return;
-  if(e.key === 'Escape') stage.classList.remove('open');
+  if(document.getElementById('project-sheet')?.classList.contains('open')){
+    e.preventDefault();
+    closeProjectSheet();
+    return;
+  }
+}, true);
+document.addEventListener('keydown', (e)=>{
+  if(!stage || !stage.classList.contains('open')) return;
   if(e.key === 'ArrowRight'){ e.preventDefault(); stageStep(1); }
   if(e.key === 'ArrowLeft'){ e.preventDefault(); stageStep(-1); }
 });
@@ -4472,7 +4510,7 @@ document.getElementById('help-btn').onclick = ()=>{
 
     <div class="im-block"><div class="im-label">Proyección y Modo Detalle</div>
     <div class="im-text">• 🎬 Proyectar · ← → versículo · Esc sale.<br>
-    • Si el texto no cabe en pantalla: <strong>▶ Auto</strong> (espera 8 s y luego desplaza) y velocidades 0.03× · 0.06× · 0.09× (predeterminada 0.03×).<br>
+    • Si el texto no cabe en pantalla: <strong>▶ Auto</strong> muestra cuenta regresiva de 10 s y luego desplaza. Un solo botón de velocidad cicla 0.03× → 0.05× → 0.07× → 0.09× (predeterminada 0.03×). <strong>Esc</strong> cierra la proyección.<br>
     • 🔍 Modo Detalle: nombres en negrita, ciudades en cursiva, palabras de Jesús en color.</div></div>
 
 
