@@ -3807,8 +3807,10 @@ document.getElementById('stage-prev').onclick = ()=> stageStep(-1);
 
 /* Auto-desplazamiento del texto en proyección (solo si hay overflow) */
 let stageAutoTimer = null;
-let stageAutoSpeed = 0.06;
+let stageAutoDelayTimer = null;
+let stageAutoSpeed = 0.03; // velocidad predeterminada
 const STAGE_SCROLL_BASE = 40; // px por tick a 1×
+const STAGE_AUTO_DELAY_MS = 8000; // espera 8 s antes de iniciar
 
 function stageTextOverflows(){
   const el = document.getElementById('stage-text');
@@ -3824,20 +3826,24 @@ function updateStageScrollControls(){
   if(autoBtn) autoBtn.style.display = show ? '' : 'none';
   if(!show) stopStageAuto();
 }
+function isStageAutoRunning(){
+  return !!(stageAutoTimer || stageAutoDelayTimer);
+}
 function stopStageAuto(){
   if(stageAutoTimer){ clearInterval(stageAutoTimer); stageAutoTimer = null; }
+  if(stageAutoDelayTimer){ clearTimeout(stageAutoDelayTimer); stageAutoDelayTimer = null; }
   const autoBtn = document.getElementById('stage-auto');
   if(autoBtn){ autoBtn.classList.remove('active'); autoBtn.textContent = '▶ Auto'; }
 }
-function startStageAuto(){
-  stopStageAuto();
+function beginStageScrollLoop(){
   const el = document.getElementById('stage-text');
-  if(!el || !stageTextOverflows()) return;
+  if(!el || !stageTextOverflows()){ stopStageAuto(); return; }
   const autoBtn = document.getElementById('stage-auto');
   if(autoBtn){ autoBtn.classList.add('active'); autoBtn.textContent = '⏸ Auto'; }
   // acumulación fraccional para velocidades muy bajas (0.03× etc.)
   let acc = 0;
   const pxPerTick = STAGE_SCROLL_BASE * stageAutoSpeed / 4; // puede ser < 1
+  if(stageAutoTimer){ clearInterval(stageAutoTimer); stageAutoTimer = null; }
   stageAutoTimer = setInterval(()=>{
     if(!el){ stopStageAuto(); return; }
     const max = el.scrollHeight - el.clientHeight;
@@ -3854,19 +3860,32 @@ function startStageAuto(){
     }
   }, 50);
 }
+function startStageAuto(){
+  stopStageAuto();
+  const el = document.getElementById('stage-text');
+  if(!el || !stageTextOverflows()) return;
+  const autoBtn = document.getElementById('stage-auto');
+  if(autoBtn){ autoBtn.classList.add('active'); autoBtn.textContent = '⏳ 8s…'; }
+  // Esperar 8 segundos antes de iniciar el desplazamiento
+  stageAutoDelayTimer = setTimeout(()=>{
+    stageAutoDelayTimer = null;
+    beginStageScrollLoop();
+  }, STAGE_AUTO_DELAY_MS);
+}
 document.getElementById('stage-auto')?.addEventListener('click', ()=>{
-  if(stageAutoTimer) stopStageAuto();
+  if(isStageAutoRunning()) stopStageAuto();
   else startStageAuto();
 });
 document.querySelectorAll('#stage-nav .stage-speed').forEach(btn=>{
   btn.addEventListener('click', ()=>{
-    stageAutoSpeed = parseFloat(btn.dataset.speed) || 1;
+    stageAutoSpeed = parseFloat(btn.dataset.speed) || 0.03;
     document.querySelectorAll('#stage-nav .stage-speed').forEach(b=> b.classList.toggle('active', b===btn));
-    if(stageAutoTimer) startStageAuto();
+    // Si ya está activo (en espera o desplazando), reiniciar con la nueva velocidad
+    if(isStageAutoRunning()) startStageAuto();
   });
 });
-document.querySelector('#stage-nav .stage-speed[data-speed="0.06"]')?.classList.add('active');
-stageAutoSpeed = 0.06;
+document.querySelector('#stage-nav .stage-speed[data-speed="0.03"]')?.classList.add('active');
+stageAutoSpeed = 0.03;
 document.getElementById('stage-exit')?.addEventListener('click', stopStageAuto);
 document.addEventListener('keydown', (e)=>{
   if(e.key === 'Escape') stopStageAuto();
@@ -4453,7 +4472,7 @@ document.getElementById('help-btn').onclick = ()=>{
 
     <div class="im-block"><div class="im-label">Proyección y Modo Detalle</div>
     <div class="im-text">• 🎬 Proyectar · ← → versículo · Esc sale.<br>
-    • Si el texto no cabe en pantalla: <strong>▶ Auto</strong> y velocidades 0.03× · 0.06× · 0.09× desplazan el texto automáticamente.<br>
+    • Si el texto no cabe en pantalla: <strong>▶ Auto</strong> (espera 8 s y luego desplaza) y velocidades 0.03× · 0.06× · 0.09× (predeterminada 0.03×).<br>
     • 🔍 Modo Detalle: nombres en negrita, ciudades en cursiva, palabras de Jesús en color.</div></div>
 
 
