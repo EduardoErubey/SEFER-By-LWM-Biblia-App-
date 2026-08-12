@@ -1981,9 +1981,51 @@ body.mobile-mode { /* neutralize if residual class */ }
 .random-verse-btn:hover{
   background:color-mix(in srgb, var(--gold) 28%, var(--parchment));
   border-color:var(--rubric);
-  transform:rotate(15deg);
+  transform:rotate(15deg) scale(1.06);
 }
 .random-verse-btn:active{transform:rotate(45deg) scale(0.95);}
+/* botón hover suave global (misma idea que el dado) */
+.btn,
+.nav-action-btn,
+.theme-more-btn,
+.stage-btn,
+.ps-opt,
+.ps-cancel,
+.yt-bar-btn,
+.gd-ref,
+.chap-pill,
+.info-btn,
+.vaction,
+.side-close-btn{
+  transition: transform .15s ease, background .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease;
+}
+.btn:hover,
+.nav-action-btn:hover,
+.theme-more-btn:hover,
+.stage-btn:hover,
+.ps-opt:hover,
+.ps-cancel:hover,
+.yt-bar-btn:hover,
+.gd-ref:hover,
+.chap-pill:hover,
+.info-btn:hover,
+.vaction:hover{
+  transform: scale(1.06);
+}
+.btn:active,
+.nav-action-btn:active,
+.theme-more-btn:active,
+.stage-btn:active,
+.ps-opt:active,
+.chap-pill:active,
+.vaction:active{
+  transform: scale(0.96);
+}
+.theme-dot{
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.theme-dot:hover{ transform: scale(1.12); }
+
 
 .theme-more-btn:hover{
   background:color-mix(in srgb, #c62828 22%, var(--parchment));
@@ -2316,34 +2358,18 @@ body.yt-active-br #topbar-actions{
 }
 
 
-#gene-tree .gene-node{
-  padding:4px 8px;
-  border-radius:6px;
-  cursor:pointer;
-  line-height:1.35;
-  border-left:3px solid transparent;
-}
-#gene-tree .gene-node:hover{background:color-mix(in srgb, var(--gold) 12%, transparent);}
-#gene-tree .gene-node.active{
-  background:color-mix(in srgb, var(--rubric) 12%, transparent);
-  border-left-color:var(--rubric);
-  font-weight:600;
-}
-#gene-tree .gene-children{margin-left:14px;border-left:1px dashed var(--line);padding-left:6px;}
-#gene-tree .gene-sparse{opacity:0.72;font-size:12.5px;}
 #gene-detail .gd-name{
   font-family:var(--font-display);
-  font-size:22px;
+  font-size:24px;
   font-weight:700;
   color:var(--rubric);
-  margin:0 0 6px;
+  margin:0 0 8px;
 }
-#gene-detail .gd-meta{font-size:12.5px;color:var(--ink-soft);margin:0 0 12px;line-height:1.5;}
-#gene-detail .gd-bio{font-size:14px;line-height:1.6;margin:0 0 12px;}
-#gene-detail .gd-refs{display:flex;flex-wrap:wrap;gap:6px;}
+#gene-detail .gd-bio{font-size:15px;line-height:1.65;margin:0 0 14px;}
+#gene-detail .gd-refs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
 #gene-detail .gd-ref{
-  font-size:12px;
-  padding:4px 8px;
+  font-size:13px;
+  padding:6px 10px;
   border:1px solid var(--line);
   border-radius:999px;
   background:var(--parchment);
@@ -2352,17 +2378,47 @@ body.yt-active-br #topbar-actions{
 }
 #gene-detail .gd-ref:hover{border-color:var(--rubric);color:var(--rubric);}
 #gene-detail .gd-empty{
-  font-size:14px;
+  font-size:14.5px;
   line-height:1.55;
   color:var(--ink-soft);
   font-style:italic;
-  padding:12px 0;
+  padding:8px 0 12px;
 }
-@media (max-width:720px){
-  #modal-genealogia .im-card{max-height:94vh;}
-  #modal-genealogia [style*="display:flex"][style*="min-height"]{flex-direction:column !important;}
-  #gene-tree{max-height:34vh;border-right:none !important;border-bottom:1px solid var(--line);}
+#gene-detail .gd-section{
+  font-size:13px;
+  font-weight:700;
+  color:var(--rubric);
+  margin:14px 0 8px;
 }
+#gene-detail .gd-chips{display:flex;flex-wrap:wrap;gap:8px;}
+#gene-detail .gd-chip{
+  border:1px solid var(--line);
+  background:var(--parchment);
+  color:var(--ink);
+  border-radius:10px;
+  padding:10px 12px;
+  font-size:14px;
+  cursor:pointer;
+  font-family:var(--font-ui);
+}
+#gene-detail .gd-chip:hover{
+  border-color:var(--rubric);
+  color:var(--rubric);
+  background:color-mix(in srgb, var(--gold) 12%, var(--parchment));
+}
+#gene-detail .gd-chip.big{
+  font-size:15px;
+  font-weight:600;
+  min-width:120px;
+  text-align:center;
+}
+#gene-detail .gd-hint{
+  font-size:12.5px;
+  color:var(--ink-soft);
+  margin:0 0 10px;
+  line-height:1.4;
+}
+
 
 </style>
 </head>
@@ -2492,7 +2548,7 @@ body.yt-active-br #topbar-actions{
 <div id="modal-youtube" style="display:none;position:fixed;inset:0;z-index:1350;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:20px;">
   <div class="im-card" style="max-width:420px;width:100%;background:var(--card-bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:20px 22px;position:relative;">
     <button type="button" id="cerrar-youtube-modal" style="position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-soft);">❌</button>
-    <div style="font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--rubric);margin:0 28px 10px 0;">📺 Sermón de YouTube</div>
+    <div style="font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--rubric);margin:0 28px 10px 0;">Sermón de YouTube</div>
     <p style="font-size:13px;color:var(--ink-soft);margin:0 0 12px;line-height:1.5;">Pega el enlace del vídeo. Se mostrará <strong>solo el reproductor</strong> en una esquina (sin comentarios ni lista de sugerencias de la página de YouTube).</p>
     <input id="yt-url-input" type="url" placeholder="https://www.youtube.com/watch?v=… o https://youtu.be/…" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--parchment);color:var(--ink);font-family:var(--font-ui);font-size:13px;margin-bottom:12px;">
     <div class="yt-modal-actions">
@@ -2555,17 +2611,14 @@ body.yt-active-br #topbar-actions{
 
 <!-- Genealogía bíblica -->
 <div id="modal-genealogia" style="display:none;position:fixed;inset:0;z-index:1300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:16px;">
-  <div class="im-card" style="max-width:920px;width:100%;max-height:90vh;display:flex;flex-direction:column;background:var(--card-bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:0;position:relative;overflow:hidden;">
+  <div class="im-card" style="max-width:640px;width:100%;max-height:90vh;display:flex;flex-direction:column;background:var(--card-bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:0;position:relative;overflow:hidden;">
     <button type="button" id="cerrar-genealogia" style="position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-soft);z-index:2;">❌</button>
-    <div style="flex:0 0 auto;padding:16px 44px 10px 18px;border-bottom:1px solid var(--line);">
-      <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--rubric);">🌳 Genealogía bíblica</div>
-      <p style="margin:6px 0 0;font-size:12.5px;color:var(--ink-soft);line-height:1.45;">Explora personas y linajes mencionados en la Biblia. Haz clic en un nombre para ver su ficha. Si hay poca información, se indicará con claridad.</p>
-      <input type="text" id="gene-search" placeholder="Buscar persona (ej. Abraham, Rut, David)…" style="width:100%;margin-top:10px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--parchment);color:var(--ink);font-family:var(--font-ui);font-size:13px;outline:none;box-sizing:border-box;">
+    <div style="flex:0 0 auto;padding:16px 44px 12px 18px;border-bottom:1px solid var(--line);">
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--rubric);">🌳 Personas de la Biblia</div>
+      <p style="margin:6px 0 0;font-size:13px;color:var(--ink-soft);line-height:1.45;">1) Elige una persona &nbsp;·&nbsp; 2) Lee su historia &nbsp;·&nbsp; 3) Toca Padre o Hijos para seguir</p>
+      <input type="text" id="gene-search" placeholder="Escribe un nombre (ejemplo: David)" style="width:100%;margin-top:10px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--parchment);color:var(--ink);font-family:var(--font-ui);font-size:14px;outline:none;box-sizing:border-box;">
     </div>
-    <div style="flex:1 1 auto;display:flex;min-height:0;overflow:hidden;">
-      <div id="gene-tree" style="flex:1 1 48%;overflow-y:auto;padding:12px 10px 16px 14px;border-right:1px solid var(--line);font-size:13px;"></div>
-      <div id="gene-detail" style="flex:1 1 52%;overflow-y:auto;padding:14px 16px 18px;"></div>
-    </div>
+    <div id="gene-detail" style="flex:1 1 auto;overflow-y:auto;padding:14px 16px 18px;"></div>
   </div>
 </div>
 
@@ -5255,54 +5308,31 @@ function geneSearchNorm(s){
 }
 
 let geneSelected = null;
+const GENE_FEATURED = ['adam','noe','abraham','sara','isaac','jacob','jose','moises','rut','david','salomon','elias','isaias','daniel','maria','jesus','pedro','pablo'];
 
-function renderGeneTree(filter){
-  const box = document.getElementById('gene-tree');
-  if(!box) return;
+function geneChip(id, label){
+  return '<button type="button" class="gd-chip big" data-gene-go="'+id+'">'+label+'</button>';
+}
+
+function renderGeneHome(filter){
+  const det = document.getElementById('gene-detail');
+  if(!det) return;
   const q = geneSearchNorm(filter||'');
-  const matchIds = new Set();
+  let ids;
   if(q){
-    Object.keys(GENEALOGY_PEOPLE).forEach(id=>{
-      if(geneSearchNorm(GENEALOGY_PEOPLE[id].name).includes(q)) matchIds.add(id);
-    });
+    ids = Object.keys(GENEALOGY_PEOPLE).filter(id=> geneSearchNorm(GENEALOGY_PEOPLE[id].name).includes(q));
+    ids.sort((a,b)=> GENEALOGY_PEOPLE[a].name.localeCompare(GENEALOGY_PEOPLE[b].name,'es'));
+  } else {
+    ids = GENE_FEATURED.filter(id=> GENEALOGY_PEOPLE[id]);
   }
-  function nodeHtml(id, depth){
-    const p = GENEALOGY_PEOPLE[id];
-    if(!p) return '';
-    if(q){
-      // mostrar si coincide o tiene descendiente que coincide
-      const kids = geneChildren(id);
-      const self = matchIds.has(id);
-      const childHit = kids.some(function hit(c){
-        if(matchIds.has(c)) return true;
-        return geneChildren(c).some(hit);
-      });
-      if(!self && !childHit) return '';
-    }
-    const sparse = !geneHasRichBio(p);
-    const kids = geneChildren(id);
-    let html = '<div class="gene-node'+(sparse?' gene-sparse':'')+(geneSelected===id?' active':'')+'" data-gene-id="'+id+'" style="margin-left:'+(depth>0?0:0)+'px">'+p.name+(sparse?' ·':'')+'</div>';
-    if(kids.length){
-      html += '<div class="gene-children">';
-      kids.forEach(c=>{ html += nodeHtml(c, depth+1); });
-      html += '</div>';
-    }
-    return html;
-  }
-  // Preferir raíces principales primero
-  const preferred = ['adam','eva','noe','abraham','isaac','jacob','david','maria','jesus'];
-  const roots = geneRoots().sort((a,b)=>{
-    const ia = preferred.indexOf(a), ib = preferred.indexOf(b);
-    if(ia>=0 || ib>=0) return (ia<0?999:ia) - (ib<0?999:ib);
-    return GENEALOGY_PEOPLE[a].name.localeCompare(GENEALOGY_PEOPLE[b].name,'es');
-  });
-  // Eva y otras sin padre: listar cerca de Adán
-  let html = '';
-  roots.forEach(r=>{ html += nodeHtml(r, 0); });
-  if(!html) html = '<div class="empty-msg">No se encontraron personas.</div>';
-  box.innerHTML = html;
-  box.querySelectorAll('[data-gene-id]').forEach(el=>{
-    el.onclick = ()=> selectGenePerson(el.getAttribute('data-gene-id'));
+  let chips = ids.map(id=> geneChip(id, GENEALOGY_PEOPLE[id].name)).join('');
+  if(!chips) chips = '<p class="gd-empty">No encontré ese nombre. Prueba con otro, por ejemplo «David».</p>';
+  det.innerHTML =
+    '<p class="gd-hint">'+(q ? 'Resultados de tu búsqueda. Toca un nombre:' : 'Empieza por alguien conocido. Toca un nombre:')+'</p>'+
+    '<div class="gd-chips">'+chips+'</div>'+
+    (!q ? '<div class="gd-section">¿Buscas a otra persona?</div><p class="gd-hint">Escríbelo arriba. Si aparece poco en la Biblia, te lo diremos.</p>' : '');
+  det.querySelectorAll('[data-gene-go]').forEach(btn=>{
+    btn.onclick = ()=> selectGenePerson(btn.getAttribute('data-gene-go'));
   });
 }
 
@@ -5311,25 +5341,46 @@ function selectGenePerson(id){
   const p = GENEALOGY_PEOPLE[id];
   const det = document.getElementById('gene-detail');
   if(!det || !p) return;
-  renderGeneTree(document.getElementById('gene-search')?.value || '');
   const parent = p.parent ? GENEALOGY_PEOPLE[p.parent] : null;
-  const kids = geneChildren(id).map(k=>GENEALOGY_PEOPLE[k]?.name).filter(Boolean);
-  let meta = [];
-  if(parent) meta.push('Padre/madre en el árbol: <strong>'+parent.name+'</strong>');
-  if(kids.length) meta.push('Hijos en el árbol: <strong>'+kids.join(', ')+'</strong>');
+  const kids = geneChildren(id);
   const rich = geneHasRichBio(p);
+
   let bioHtml = rich
     ? '<p class="gd-bio">'+p.bio+'</p>'
     : '<p class="gd-empty">'+GENE_SPARSE_MSG+'</p>';
   if(!rich && p.bio && p.bio.trim()){
     bioHtml = '<p class="gd-bio">'+p.bio+'</p><p class="gd-empty">'+GENE_SPARSE_MSG+'</p>';
   }
-  const refs = (p.refs||[]).map(r=>'<button type="button" class="gd-ref" data-ref="'+r.replace(/"/g,'')+'">'+r+'</button>').join('');
+
+  let family = '';
+  if(parent){
+    family += '<div class="gd-section">⬆️ Padre / madre en este árbol</div><div class="gd-chips">'+geneChip(parent ? p.parent : '', parent.name)+'</div>';
+  }
+  if(kids.length){
+    family += '<div class="gd-section">⬇️ Hijos</div><div class="gd-chips">'+
+      kids.map(k=> geneChip(k, GENEALOGY_PEOPLE[k].name)).join('')+
+      '</div>';
+  }
+  if(!parent && !kids.length){
+    family += '<p class="gd-hint">Esta persona no tiene padre ni hijos enlazados en este árbol. Puedes volver y elegir a otra.</p>';
+  }
+
+  const refs = (p.refs||[]).map(r=>'<button type="button" class="gd-ref" data-ref="'+String(r).replace(/"/g,'')+'">'+r+'</button>').join('');
+
   det.innerHTML =
+    '<button type="button" class="btn" id="gene-back-home" style="margin-bottom:12px;">← Todos los nombres</button>'+
     '<div class="gd-name">'+p.name+'</div>'+
-    (meta.length?'<div class="gd-meta">'+meta.join('<br>')+'</div>':'')+
     bioHtml+
-    (refs? '<div style="font-size:12px;font-weight:600;color:var(--rubric);margin:8px 0 6px;">Pasajes</div><div class="gd-refs">'+refs+'</div>':'');
+    (refs ? '<div class="gd-section">📖 Leer en la Biblia</div><div class="gd-refs">'+refs+'</div>' : '')+
+    family;
+
+  document.getElementById('gene-back-home')?.addEventListener('click', ()=>{
+    geneSelected = null;
+    renderGeneHome(document.getElementById('gene-search')?.value || '');
+  });
+  det.querySelectorAll('[data-gene-go]').forEach(btn=>{
+    btn.onclick = ()=> selectGenePerson(btn.getAttribute('data-gene-go'));
+  });
   det.querySelectorAll('.gd-ref').forEach(btn=>{
     btn.onclick = ()=>{
       const ref = btn.getAttribute('data-ref')||'';
@@ -5352,9 +5403,8 @@ function openGenealogia(){
   m.style.display = 'flex';
   const search = document.getElementById('gene-search');
   if(search) search.value = '';
-  geneSelected = geneSelected || 'abraham';
-  renderGeneTree('');
-  selectGenePerson(geneSelected);
+  geneSelected = null;
+  renderGeneHome('');
   search?.focus();
 }
 function closeGenealogia(){
@@ -5367,9 +5417,11 @@ document.getElementById('modal-genealogia')?.addEventListener('click', (e)=>{
   if(e.target.id === 'modal-genealogia') closeGenealogia();
 });
 document.getElementById('gene-search')?.addEventListener('input', (e)=>{
-  renderGeneTree(e.target.value);
+  const q = e.target.value || '';
+  if(geneSelected && !q) return; // si estás viendo ficha y borras búsqueda, no forzar
+  geneSelected = null;
+  renderGeneHome(q);
 });
-
 
 /* =========================================================
    TOUR INTERACTIVO + AYUDA ACTUALIZADA
@@ -5418,12 +5470,12 @@ const SEFER_TOUR_STEPS = [
   {
     sel: '#genealogy-btn',
     title: 'Familias de la Biblia',
-    text: 'El botón del árbol muestra padres, hijos y personajes bíblicos. Si alguien aparece poco en la Biblia, SEFER te lo dice con sinceridad.'
+    text: 'Aquí ves personas de la Biblia. Toca un nombre, lee su historia y usa los botones de Padre o Hijos para seguir. Es muy sencillo.'
   },
   {
     sel: '#youtube-btn',
-    title: 'Ver un sermón',
-    text: 'Puedes pegar el enlace de un video de YouTube. El video se ve en una esquina mientras lees la Biblia. No tapa el texto.'
+    title: 'Ver un video de YouTube',
+    text: 'El botón de YouTube (rectángulo rojo) sirve para pegar el enlace de un sermón. El video se ve en una esquina mientras lees. No tapa el texto.'
   },
   {
     sel: '#project-btn',
@@ -5568,10 +5620,10 @@ function openSeferHelp(){
 
     <div class="im-block"><div class="im-label">Plan, Glosario, Notas y Favoritos</div>
     <div class="im-text">• 📅 <strong>Plan 1 año</strong>: órdenes Canónico / Inverso / Paralelo / Cronológico; inicio 1 ene–31 dic o desde hoy (365 días).<br>
-    • 📖 <strong>Glosario</strong>, 🌳 <strong>Genealogía</strong> (árbol de personajes; si hay poca información se indica), 📝 <strong>Notas</strong>, ❤️ <strong>Favoritos</strong> y 📚 <strong>Significados</strong> son ventanas flotantes (cierra con X).</div></div>
+    • 📖 <strong>Glosario</strong>, 🌳 <strong>Personas de la Biblia</strong> (elige un nombre; Padre/Hijos para navegar; si hay poca información se indica), 📝 <strong>Notas</strong>, ❤️ <strong>Favoritos</strong> y 📚 <strong>Significados</strong> son ventanas flotantes (cierra con X).</div></div>
 
     <div class="im-block"><div class="im-label">YouTube y Proyección</div>
-    <div class="im-text">• 📺 <strong>YouTube</strong>: pega enlace de sermón; solo el vídeo. Posición arriba/abajo derecha. Borrar / Pegar / Cargar. Título = título del vídeo − canal.<br>
+    <div class="im-text">• <strong>YouTube</strong> (botón con logo rojo): pega enlace de sermón; solo el vídeo. Posición arriba/abajo derecha. Borrar / Pegar / Cargar. Título = título del vídeo − canal.<br>
     • 🎬 <strong>Proyectar</strong>: no se muestra en la bienvenida; al leer un capítulo proyecta selección o capítulo. Auto: cuenta 10 s; velocidad 0.03×→0.09×. <strong>Esc</strong> cierra.</div></div>
 
     <div class="im-block"><div class="im-label">Nube, perfil y logros</div>
