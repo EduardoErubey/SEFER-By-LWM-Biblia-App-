@@ -2723,6 +2723,7 @@ function renderInfoContent(item){
       (a.fallecimiento ? `<br><em>Fallecimiento:</em> ${a.fallecimiento}` : '') +
       `</div></div>` +
       `<div class="im-block"><div class="im-label">Fecha de escritura</div><div class="im-text">${b.fecha_escritura||'—'}</div></div>` +
+      `<div class="im-block"><div class="im-label">Idioma original</div><div class="im-text">${b.idioma_original||'—'}</div></div>` +
       `<div class="im-block"><div class="im-label">Resumen</div><div class="im-text">${b.resumen||''}</div></div>`;
   }
 }
@@ -4670,7 +4671,7 @@ document.getElementById('help-btn').onclick = ()=>{
 
     <div class="im-block"><div class="im-label">Navegación de libros</div>
     <div class="im-text">• Tab hasta el testamento/libro · <strong>Enter</strong> o <strong>Espacio</strong> expande/abre.<br>
-    • Botón <strong>?</strong> → ficha. Con el modal: <strong>← →</strong> cambia de libro; <strong>↑ ↓</strong> desplaza el texto; <strong>Esc</strong> cierra.<br>
+    • Botón <strong>?</strong> → ficha del libro (significado, autor, fecha, <strong>idioma original</strong>, resumen). Con el modal: <strong>← →</strong> cambia de libro; <strong>↑ ↓</strong> desplaza el texto; <strong>Esc</strong> cierra.<br>
     • <strong>↺</strong> reinicia navegación, tamaño de texto, búsqueda de referencias, paneles y vuelve al inicio.</div></div>
 
     <div class="im-block"><div class="im-label">Búsquedas</div>
