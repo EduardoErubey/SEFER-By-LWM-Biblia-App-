@@ -231,7 +231,7 @@
   --parchment:#F5F8FC;
   --parchment-2:#E8F0FA;
   --ink:#0A1F3D;
-  --ink-soft:#3D5A80;
+  --ink-soft:#2C4A6E;
   --rubric:#0057B7;
   --rubric-soft:#2E75C8;
   --gold:#FFD700;
@@ -245,6 +245,29 @@
   --card-bg:#ffffff;
   --jesus:#0057B7;
   --fav:#0057B7;
+}
+/* Texto legible: el amarillo no se usa en párrafos; sí en botones y acentos */
+[data-theme="ucrania"] .testament-label,
+[data-theme="ucrania"] #reader .book-title,
+[data-theme="ucrania"] .verse .vnum,
+[data-theme="ucrania"] .result-ref,
+[data-theme="ucrania"] .welcome-brand .brand-heb,
+[data-theme="ucrania"] .welcome .welcome-heb,
+[data-theme="ucrania"] .brand-heb,
+[data-theme="ucrania"] #selection-info,
+[data-theme="ucrania"] .note-flag{
+  color:var(--rubric) !important;
+}
+[data-theme="ucrania"] .btn.primary,
+[data-theme="ucrania"] .plan-mode-btn.active,
+[data-theme="ucrania"] .plan-order-btn.active{
+  background:var(--gold);
+  border-color:#E6C200;
+  color:#0A1F3D;
+}
+[data-theme="ucrania"] .btn.primary:hover{
+  background:#FFE44D;
+  color:#0A1F3D;
 }
 [data-theme="ucrania"] #stage .jesus-words{ color:#FFD700; }
 
@@ -766,9 +789,20 @@ body.mobile-mode .welcome-mobile .welcome-hint{
   margin-top:12px;
   position:relative;
 }
+#ref-search-wrap .ref-search-icon{
+  position:absolute;
+  left:10px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:13px;
+  opacity:0.45;
+  pointer-events:none;
+  z-index:1;
+  line-height:1;
+}
 #ref-search{
   width:100%;
-  padding:8px 10px;
+  padding:8px 10px 8px 30px;
   border:1px solid var(--line);
   border-radius:6px;
   background:var(--parchment);
@@ -778,7 +812,26 @@ body.mobile-mode .welcome-mobile .welcome-hint{
   outline:none;
 }
 #ref-search:focus{border-color:var(--gold);background:var(--card-bg);}
-#ref-search::placeholder{color:var(--ink-soft);opacity:0.7;font-size:11.5px;}
+#ref-search::placeholder{color:transparent;}
+#ref-ph-anim{
+  position:absolute;
+  left:30px;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  font-family:var(--font-ui);
+  font-size:11.5px;
+  color:var(--ink-soft);
+  opacity:0.55;
+  pointer-events:none;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  transition:opacity 0.45s ease;
+}
+#ref-ph-anim.fade{opacity:0;}
+#ref-search-wrap.has-value #ref-ph-anim,
+#ref-search-wrap.focused #ref-ph-anim{opacity:0;visibility:hidden;}
 #ref-suggest{
   display:none;
   position:absolute;
@@ -1499,9 +1552,24 @@ body.mobile-mode .welcome-mobile .welcome-hint{
 .welcome{
   max-width:560px;
   margin:48px auto;
-  text-align:center;
+  text-align:center !important;
   padding:24px;
 }
+#reader:has(.welcome),
+#reader:has(.welcome-mobile){
+  text-align:center;
+}
+#reader .welcome,
+#reader .welcome-mobile{
+  text-align:center !important;
+  margin-left:auto;
+  margin-right:auto;
+}
+#reader .welcome * ,
+#reader .welcome-mobile *{
+  text-align:center;
+}
+
 .welcome h1{
   font-family:var(--font-display);
   font-size:28px;
@@ -1887,7 +1955,8 @@ body.mobile-mode { /* neutralize if residual class */ }
   align-items:center;
   gap:6px;
 }
-.theme-more-btn{
+.theme-more-btn,
+.random-verse-btn{
   width:28px;height:28px;
   border-radius:50%;
   border:1.5px solid #c62828;
@@ -1901,8 +1970,21 @@ body.mobile-mode { /* neutralize if residual class */ }
   align-items:center;
   justify-content:center;
   padding:0;
-  transition:background .15s, color .15s, border-color .15s;
+  transition:background .15s, color .15s, border-color .15s, transform .15s;
 }
+.random-verse-btn{
+  border-color:var(--gold);
+  background:color-mix(in srgb, var(--gold) 18%, var(--parchment));
+  color:var(--rubric);
+  font-size:14px;
+}
+.random-verse-btn:hover{
+  background:color-mix(in srgb, var(--gold) 28%, var(--parchment));
+  border-color:var(--rubric);
+  transform:rotate(15deg);
+}
+.random-verse-btn:active{transform:rotate(45deg) scale(0.95);}
+
 .theme-more-btn:hover{
   background:color-mix(in srgb, #c62828 22%, var(--parchment));
   border-color:#b71c1c;
@@ -2171,6 +2253,68 @@ body.yt-active-br #topbar-actions{
   width:100%;
   margin-bottom:12px;
 }
+
+/* Notificación de logro — tira bajo Ayuda, entra/sale horizontal */
+.toast-logro{
+  display:none;
+  position:fixed;
+  top:58px;
+  right:12px;
+  z-index:1450;
+  width:min(320px, calc(100vw - 24px));
+  background:var(--card-bg);
+  color:var(--ink);
+  border:1px solid var(--gold);
+  border-radius:10px;
+  padding:10px 12px;
+  box-shadow:0 10px 28px rgba(0,0,0,0.22);
+  font-family:var(--font-ui);
+  transform:translateX(120%);
+  opacity:0;
+  pointer-events:none;
+}
+.toast-logro.show{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  pointer-events:auto;
+  animation: toastIn 0.45s ease-out forwards;
+}
+.toast-logro.hide{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  animation: toastOut 0.45s ease-in forwards;
+}
+.toast-logro .tl-icon{
+  font-size:28px;
+  line-height:1;
+  flex-shrink:0;
+  width:36px;
+  text-align:center;
+}
+.toast-logro .tl-body{min-width:0;flex:1;}
+.toast-logro .tl-title{
+  font-weight:700;
+  font-size:13.5px;
+  color:var(--rubric);
+  margin:0 0 2px;
+}
+.toast-logro .tl-desc{
+  font-size:12px;
+  color:var(--ink-soft);
+  line-height:1.4;
+  margin:0;
+}
+@keyframes toastIn{
+  from{ transform:translateX(120%); opacity:0; }
+  to{ transform:translateX(0); opacity:1; }
+}
+@keyframes toastOut{
+  from{ transform:translateX(0); opacity:1; }
+  to{ transform:translateX(120%); opacity:0; }
+}
+
 </style>
 </head>
 <body data-theme="mexico">
@@ -2200,9 +2344,12 @@ body.yt-active-br #topbar-actions{
       <div id="theme-switch">
         <div id="theme-batch" class="theme-batch"></div>
         <button type="button" id="theme-more-btn" class="theme-more-btn" title="Más temas" data-tooltip="Cambiar lote de temas">＋</button>
+        <button type="button" id="random-verse-btn" class="random-verse-btn" title="Versículo aleatorio" data-tooltip="Ir a un versículo al azar">🎲</button>
       </div>
       <div id="ref-search-wrap">
-        <input id="ref-search" placeholder="Génesis 1:1 · Génesis 1:1-5 · Génesis 1:1,3,6" autocomplete="off" spellcheck="false">
+        <span class="ref-search-icon" aria-hidden="true">🔍</span>
+        <input id="ref-search" placeholder="" autocomplete="off" spellcheck="false" aria-label="Buscador de versículos">
+        <span id="ref-ph-anim">Buscador de versículos</span>
         <div id="ref-suggest"></div>
       </div>
     </div>
@@ -2353,7 +2500,7 @@ body.yt-active-br #topbar-actions{
     </div>
   </div>
 </div>
-<div id="toast-logro" style="display:none;position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:1400;background:var(--card-bg);color:var(--ink);border:1px solid var(--gold);border-radius:10px;padding:12px 18px;box-shadow:0 12px 40px rgba(0,0,0,0.25);font-family:var(--font-ui);font-size:13px;max-width:min(92vw,380px);text-align:center;"></div>
+<div id="toast-logro" class="toast-logro" aria-live="polite"></div>
 
 <!-- Glosario -->
 <div id="modal-glosario" style="display:none;position:fixed;inset:0;z-index:1300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:20px;">
@@ -3083,8 +3230,9 @@ function goTo(book, chap){
 function updateProjectBtnVisibility(){
   const btn = document.getElementById('project-btn');
   if(!btn) return;
-  // No visible en bienvenida
-  btn.style.display = showWelcome ? 'none' : '';
+  // Visible al leer, o en bienvenida solo durante el tour
+  const tourOn = typeof seferTourActive !== 'undefined' && seferTourActive;
+  btn.style.display = (showWelcome && !tourOn) ? 'none' : '';
 }
 function showWelcomeScreen(){
   showWelcome = true;
@@ -3375,6 +3523,84 @@ function toggleSelect(vnum){
    ========================================================= */
 /* dom ref hoisted */
 const refSearch = document.getElementById('ref-search');
+const refSearchWrap = document.getElementById('ref-search-wrap');
+const refPhAnim = document.getElementById('ref-ph-anim');
+
+/* Placeholder animado del buscador */
+const REF_PH_EXAMPLES = [
+  'Buscador de versículos',
+  'Génesis 1:1',
+  'Juan 3:16',
+  'Salmos 23:1',
+  'Proverbios 3:5',
+  'Romanos 8:28',
+  'Filipenses 4:13',
+  'Jeremías 29:11',
+  'Mateo 6:33',
+  'Isaías 41:10',
+  '1 Corintios 13:4',
+  'Josué 1:9'
+];
+let refPhIndex = 0;
+let refPhTimer = null;
+function updateRefPhVisibility(){
+  if(!refSearchWrap || !refSearch) return;
+  const has = !!(refSearch.value && refSearch.value.trim());
+  refSearchWrap.classList.toggle('has-value', has);
+}
+function cycleRefPlaceholder(){
+  if(!refPhAnim || !refSearch) return;
+  if(document.activeElement === refSearch || (refSearch.value||'').trim()) return;
+  refPhAnim.classList.add('fade');
+  setTimeout(()=>{
+    refPhIndex = (refPhIndex + 1) % REF_PH_EXAMPLES.length;
+    refPhAnim.textContent = REF_PH_EXAMPLES[refPhIndex];
+    refPhAnim.classList.remove('fade');
+  }, 450);
+}
+function startRefPhCycle(){
+  if(refPhTimer) clearInterval(refPhTimer);
+  refPhTimer = setInterval(cycleRefPlaceholder, 2800);
+}
+if(refSearch){
+  refSearch.addEventListener('focus', ()=>{
+    refSearchWrap?.classList.add('focused');
+  });
+  refSearch.addEventListener('blur', ()=>{
+    refSearchWrap?.classList.remove('focused');
+    updateRefPhVisibility();
+  });
+  refSearch.addEventListener('input', updateRefPhVisibility);
+  updateRefPhVisibility();
+  startRefPhCycle();
+}
+
+function goToRandomVerse(){
+  const books = (BOOK_ORDER||[]).map(e=>e.name).filter(n=>BIBLE[n] && Object.keys(BIBLE[n]).length);
+  if(!books.length){ alert('No hay libros cargados todavía.'); return; }
+  const book = books[Math.floor(Math.random()*books.length)];
+  const chaps = Object.keys(BIBLE[book]).filter(c=>BIBLE[book][c] && Object.keys(BIBLE[book][c]).length);
+  if(!chaps.length) return;
+  const chap = chaps[Math.floor(Math.random()*chaps.length)];
+  const verses = Object.keys(BIBLE[book][chap]);
+  const v = verses[Math.floor(Math.random()*verses.length)];
+  openTestaments.add(BOOK_ORDER.find(e=>e.name===book)?.testament || 'AT');
+  openBooks.add(book);
+  saveNavState();
+  goTo(book, chap);
+  detailVerse = String(v);
+  selectionUIActive = false;
+  selectedVerses = [];
+  updateSelectionUI();
+  renderReader();
+  renderBookList();
+  requestAnimationFrame(()=>{
+    const el = document.querySelector('.verse[data-vnum="'+String(v)+'"]');
+    if(el) el.scrollIntoView({block:'center', behavior:'smooth'});
+  });
+  try{ if(typeof bumpAchProgress==='function') bumpAchProgress('random_1',1); }catch(e){}
+}
+document.getElementById('random-verse-btn')?.addEventListener('click', goToRandomVerse);
 
 function stripAccentsNav(s){
   return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
@@ -4858,12 +5084,12 @@ const SEFER_TOUR_STEPS = [
   {
     sel: '#theme-switch, #theme-batch',
     title: 'Colores de la pantalla',
-    text: 'Estos circulitos cambian los colores de SEFER. Prueba uno. Si no te gusta, elige otro. Los botones + y − muestran más opciones de color.'
+    text: 'Estos circulitos cambian los colores de SEFER. El botón + muestra más colores. El dado 🎲 abre un versículo al azar para sorprenderte.'
   },
   {
     sel: '#ref-search, #ref-search-wrap',
     title: 'Ir a un versículo',
-    text: 'Escribe aquí el lugar que quieres leer, por ejemplo: Juan 3:16 y luego pulsa Enter. SEFER te lleva ahí.'
+    text: 'Aquí dice «Buscador de versículos». Escribe por ejemplo Juan 3:16 y pulsa Enter. El botón 🎲 (dado) te lleva a un versículo al azar.'
   },
   {
     sel: '#topbar-actions, #topbar',
@@ -4974,12 +5200,14 @@ function startSeferTour(){
   document.getElementById('info-modal')?.classList.remove('open');
   seferTourActive = true;
   seferTourIndex = 0;
+  updateProjectBtnVisibility();
   document.getElementById('sefer-tour-overlay')?.classList.add('open');
   document.getElementById('sefer-tour-card').style.display = 'block';
   seferTourShowStep();
 }
 function endSeferTour(){
   seferTourActive = false;
+  updateProjectBtnVisibility();
   document.getElementById('sefer-tour-overlay')?.classList.remove('open');
   const spot = document.getElementById('sefer-tour-spot');
   const card = document.getElementById('sefer-tour-card');
@@ -5022,7 +5250,8 @@ function openSeferHelp(){
     • <strong>↺</strong> reinicia navegación y vuelve al inicio. <strong>⛶</strong> pantalla completa.</div></div>
 
     <div class="im-block"><div class="im-label">Búsquedas</div>
-    <div class="im-text">• <strong>Referencia</strong>: <code>Génesis 1:1</code>, <code>1:1-5</code>, <code>1:1,3,6</code>. <strong>Tab</strong> autocompleta el libro. Enter navega.<br>
+    <div class="im-text">• <strong>Buscador de versículos</strong> (con lupa): ejemplos animados; escribe <code>Génesis 1:1</code>, rangos o listas. <strong>Tab</strong> autocompleta. Enter navega.<br>
+    • 🎲 <strong>Dado</strong> (junto a + de temas): versículo aleatorio.<br>
     • <strong>Palabra</strong>: escribe en cualquier momento → barra central. Esc cierra.</div></div>
 
     <div class="im-block"><div class="im-label">Versículos y selección</div>
@@ -5932,10 +6161,27 @@ function bumpAchProgress(id, by=1){
 function showAchievementToast(def){
   const el = document.getElementById('toast-logro');
   if(!el) return;
-  el.innerHTML = '<div style="font-size:22px;margin-bottom:4px;">'+(def.icon||'🏆')+'</div><strong>Logro desbloqueado</strong><br>'+ (def.title||'');
-  el.style.display = 'block';
   clearTimeout(showAchievementToast._t);
-  showAchievementToast._t = setTimeout(()=>{ el.style.display = 'none'; }, 4200);
+  clearTimeout(showAchievementToast._t2);
+  el.classList.remove('hide');
+  el.innerHTML =
+    '<div class="tl-icon">'+(def.icon||'🏆')+'</div>'+
+    '<div class="tl-body">'+
+      '<div class="tl-title">'+(def.title||'Logro desbloqueado')+'</div>'+
+      '<p class="tl-desc">'+(def.desc||'Logro desbloqueado')+'</p>'+
+    '</div>';
+  el.style.display = 'flex';
+  el.classList.remove('show','hide');
+  void el.offsetWidth;
+  el.classList.add('show');
+  showAchievementToast._t = setTimeout(()=>{
+    el.classList.remove('show');
+    el.classList.add('hide');
+    showAchievementToast._t2 = setTimeout(()=>{
+      el.classList.remove('hide');
+      el.style.display = 'none';
+    }, 450);
+  }, 4200);
 }
 
 function trackBookRead(book){
