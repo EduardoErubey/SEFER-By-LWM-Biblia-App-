@@ -573,7 +573,27 @@ body.mobile-mode #stage-exit{top:14px; right:14px; font-size:11px; padding:5px 1
 body.mobile-mode #info-modal .im-card{max-height:80vh;}
 body.mobile-mode .verse-actions{margin-left:0;}
 body.mobile-mode .note-box{margin-left:0;}
-body.mobile-mode .verse .vaction{padding:6px 10px;font-size:11.5px;}
+body.mobile-mode .verse .verse-check{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-right:8px;
+  vertical-align:top;
+  flex-shrink:0;
+}
+.verse-check input[type="checkbox"]{
+  width:16px;
+  height:16px;
+  cursor:pointer;
+  accent-color:var(--rubric);
+}
+.verse-row-inner{
+  display:flex;
+  align-items:flex-start;
+  gap:2px;
+}
+.verse-row-inner .verse-body{flex:1;min-width:0;}
+.vaction{padding:6px 10px;font-size:11.5px;}
 /* Bienvenida móvil: fija, centrada, sin scroll */
 body.mobile-mode #reader.welcome-fixed{
   overflow:hidden;
@@ -1176,7 +1196,27 @@ body.mobile-mode .welcome-mobile .welcome-hint{
   overflow-y:auto;
   outline:none;
 }
-.book-item, .testament-label, .chap-pill, .verse, .result-item, .theme-dot, .vaction{
+.book-item, .testament-label, .chap-pill, .verse, .result-item, .theme-dot, .verse-check{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-right:8px;
+  vertical-align:top;
+  flex-shrink:0;
+}
+.verse-check input[type="checkbox"]{
+  width:16px;
+  height:16px;
+  cursor:pointer;
+  accent-color:var(--rubric);
+}
+.verse-row-inner{
+  display:flex;
+  align-items:flex-start;
+  gap:2px;
+}
+.verse-row-inner .verse-body{flex:1;min-width:0;}
+.vaction{
   /* accesibles con teclado */
 }
 .book-item:focus, .testament-label:focus, .chap-pill:focus, .verse:focus, .result-item:focus, .theme-dot:focus, .vaction:focus, .btn:focus, .info-btn:focus{
@@ -1338,6 +1378,26 @@ body.mobile-mode .welcome-mobile .welcome-hint{
   flex-wrap:wrap;
 }
 .verse.active-detail .verse-actions{display:flex;}
+.verse-check{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-right:8px;
+  vertical-align:top;
+  flex-shrink:0;
+}
+.verse-check input[type="checkbox"]{
+  width:16px;
+  height:16px;
+  cursor:pointer;
+  accent-color:var(--rubric);
+}
+.verse-row-inner{
+  display:flex;
+  align-items:flex-start;
+  gap:2px;
+}
+.verse-row-inner .verse-body{flex:1;min-width:0;}
 .vaction{
   font-family:var(--font-ui);
   font-size:11px;
@@ -2325,6 +2385,7 @@ let currentBook = (BOOK_ORDER[0] || {}).name || "Génesis";
 let currentChap = "1";
 let detailVerse = null;
 let selectedVerses = [];
+let selectionUIActive = false; // casillas visibles (tras clic en versículo o con selección)
 
 const store = {
   get(key, fallback){
@@ -2590,6 +2651,7 @@ function applyMobileMode(){
   // Re-render welcome if showing, to switch mobile/desktop text
   if(typeof showWelcome !== 'undefined' && showWelcome && typeof showWelcomeScreen === 'function'){
     showWelcomeScreen();
+updateProjectBtnVisibility();
   }
   store.set('bp_mobile_mode', mobileMode);
 }
@@ -2930,7 +2992,9 @@ function goTo(book, chap){
   showWelcome = false;
   currentBook = book; currentChap = chap; detailVerse = null;
   selectedVerses = [];
+  selectionUIActive = false;
   updateSelectionUI();
+  updateProjectBtnVisibility();
   document.getElementById('side').classList.remove('open');
   document.getElementById('side-backdrop')?.classList.remove('open');
   sidePanel = null;
@@ -2945,11 +3009,19 @@ function goTo(book, chap){
   openBooks.add(book);
   renderReader();
 }
+function updateProjectBtnVisibility(){
+  const btn = document.getElementById('project-btn');
+  if(!btn) return;
+  // No visible en bienvenida
+  btn.style.display = showWelcome ? 'none' : '';
+}
 function showWelcomeScreen(){
   showWelcome = true;
   detailVerse = null;
   selectedVerses = [];
+  selectionUIActive = false;
   updateSelectionUI();
+  updateProjectBtnVisibility();
   currentRef.textContent = 'Inicio';
   currentRef.title = 'Inicio';
   renderReader();
@@ -2967,15 +3039,18 @@ function updateSelectionUI(){
     clearSelBtn.style.display = 'none';
     if(bar) bar.classList.remove('has-sel');
     if(easyBtn) easyBtn.style.display = '';
+    selectionUIActive = false;
   } else {
     const nums = [...selectedVerses].sort((a,b)=>+a-+b);
     selectionInfo.textContent = `${nums.length} versículo(s) seleccionado(s): v${nums.join(', v')}`;
     clearSelBtn.style.display = 'inline-block';
     if(bar) bar.classList.add('has-sel');
     if(easyBtn) easyBtn.style.display = 'none';
+    selectionUIActive = true;
   }
+  updateProjectBtnVisibility();
 }
-clearSelBtn.onclick = ()=>{ selectedVerses = []; updateSelectionUI(); renderReader(); };
+clearSelBtn.onclick = ()=>{ selectedVerses = []; selectionUIActive = false; updateSelectionUI(); renderReader(); };
 
 function applyVerseFont(){
   reader.style.setProperty('--verse-size', verseFontSize + 'px');
@@ -3030,7 +3105,7 @@ function renderReader(){
   ct.textContent = detailVerse ? `Versículo ${detailVerse}` : `Capítulo ${currentChap}`;
   const hint = document.createElement('div');
   hint.id = 'select-hint';
-  hint.textContent = 'Enter/clic en versículo → acciones · Palabra con menú abierto → significado · Ctrl o Command (⌘)+clic → multi-selección · Supr → quitar favorito';
+  hint.textContent = 'Clic en versículo → acciones y casilla · Marca la casilla para seleccionar (aparecen en todos) · Desmarca todas para ocultar casillas · Supr → quitar favorito';
   reader.appendChild(bt); reader.appendChild(ct); reader.appendChild(hint);
 
   if(!chapData){
@@ -3046,6 +3121,7 @@ function renderReader(){
     const text = chapData[vnum];
     const id = vid(currentBook, currentChap, vnum);
     const isSelected = selectedVerses.includes(vnum);
+    const showCheck = selectionUIActive && (selectedVerses.length > 0 || detailVerse === vnum);
     const row = document.createElement('div');
     row.className = 'verse'
       + (favorites[id] ? ' highlighted':'')
@@ -3053,19 +3129,32 @@ function renderReader(){
       + (detailVerse===vnum ? ' active-detail':'');
     const flags = (favorites[id] ? '<span class="fav-flag">♥</span>' : '')
       + (notes[id] ? '<span class="note-flag">✎ nota</span>' : '');
-    row.innerHTML = `<span class="vnum">${vnum}</span>${formatVerseHtml(text, !!jesusMap[vnum])}${flags}`;
+    const bodyHtml = `<span class="vnum">${vnum}</span>${formatVerseHtml(text, !!jesusMap[vnum])}${flags}`;
+    if(showCheck){
+      row.innerHTML = `<label class="verse-check" title="Seleccionar versículo"><input type="checkbox" data-vcheck="${vnum}" ${isSelected?'checked':''}></label><div class="verse-body">${bodyHtml}</div>`;
+      row.style.display = 'flex';
+      row.style.alignItems = 'flex-start';
+      row.style.gap = '6px';
+    } else {
+      row.innerHTML = bodyHtml;
+    }
     row.tabIndex = 0;
     row.setAttribute('role','button');
     row.dataset.vnum = vnum;
 
+    const checkEl = row.querySelector('input[data-vcheck]');
+    if(checkEl){
+      checkEl.addEventListener('click', (e)=> e.stopPropagation());
+      checkEl.addEventListener('change', (e)=>{
+        e.stopPropagation();
+        setVerseSelected(vnum, checkEl.checked);
+      });
+    }
+
     const activateVerse = (e)=>{
-      if(e && (e.target.closest('.vaction') || e.target.closest('.note-box'))) return;
+      if(e && (e.target.closest('.vaction') || e.target.closest('.note-box') || e.target.closest('.verse-check'))) return;
       const sel = window.getSelection();
       if(e && e.type === 'click' && sel && sel.toString().trim().length > 0) return;
-      if(e && (e.ctrlKey || e.metaKey)){
-        toggleSelect(vnum);
-        return;
-      }
       if(e && e.target && e.target.classList && e.target.classList.contains('w')){
         if(detailVerse === vnum){
           e.stopPropagation();
@@ -3073,10 +3162,18 @@ function renderReader(){
           return;
         }
         detailVerse = vnum;
+        selectionUIActive = true;
         renderReader();
         return;
       }
-      detailVerse = (detailVerse===vnum) ? null : vnum;
+      // Clic en versículo: abre acciones y muestra casilla de ese versículo
+      if(detailVerse === vnum){
+        detailVerse = null;
+        if(selectedVerses.length === 0) selectionUIActive = false;
+      } else {
+        detailVerse = vnum;
+        selectionUIActive = true;
+      }
       renderReader();
       requestAnimationFrame(()=>{
         const el = reader.querySelector(`.verse[data-vnum="${vnum}"]`);
@@ -3107,11 +3204,6 @@ function renderReader(){
       const actions = document.createElement('div');
       actions.className = 'verse-actions';
 
-      const selBtn = document.createElement('div');
-      selBtn.className = 'vaction' + (isSelected ? ' on':'');
-      selBtn.textContent = isSelected ? '✓ En selección' : '+ Añadir a selección';
-      selBtn.onclick = (e)=>{ e.stopPropagation(); toggleSelect(vnum); };
-
       const favBtn = document.createElement('div');
       favBtn.className = 'vaction' + (favorites[id] ? ' on':'');
       favBtn.textContent = favorites[id] ? '♥ Favorito' : '♡ Favorito';
@@ -3127,12 +3219,7 @@ function renderReader(){
       noteBtn.className = 'vaction';
       noteBtn.textContent = notes[id] ? 'Editar nota' : '+ Nota';
 
-      const projBtn = document.createElement('div');
-      projBtn.className = 'vaction';
-      projBtn.textContent = 'Proyectar solo este ▸';
-      projBtn.onclick = (e)=>{ e.stopPropagation(); openStage(currentBook, currentChap, [vnum]); };
-
-      actions.appendChild(selBtn); actions.appendChild(favBtn); actions.appendChild(noteBtn); actions.appendChild(projBtn);
+      actions.appendChild(favBtn); actions.appendChild(noteBtn);
 
       const noteBox = document.createElement('div');
       noteBox.className = 'note-box';
@@ -3198,12 +3285,20 @@ function renderReader(){
   });
 }
 
-function toggleSelect(vnum){
+function setVerseSelected(vnum, on){
   const i = selectedVerses.indexOf(vnum);
-  if(i === -1) selectedVerses.push(vnum);
-  else selectedVerses.splice(i,1);
+  if(on && i === -1) selectedVerses.push(vnum);
+  if(!on && i !== -1) selectedVerses.splice(i,1);
+  if(selectedVerses.length === 0){
+    selectionUIActive = false;
+  } else {
+    selectionUIActive = true;
+  }
   updateSelectionUI();
   renderReader();
+}
+function toggleSelect(vnum){
+  setVerseSelected(vnum, selectedVerses.indexOf(vnum) === -1);
 }
 
 /* =========================================================
@@ -4709,7 +4804,7 @@ document.getElementById('help-btn').onclick = ()=>{
     <strong>Supr / Backspace</strong> — quitar favorito (versículo abierto o ítem en panel)<br>
     <strong>Ctrl+Enter</strong> o <strong>Command (⌘)+Enter</strong> — guardar nota<br>
     <strong>Ctrl+S</strong> o <strong>Command (⌘)+S</strong> — guardar nota (cuando el editor está abierto)<br>
-    <strong>Ctrl+clic</strong> o <strong>Command (⌘)+clic</strong> — multi-selección<br>
+    Clic en un versículo → casilla · Marcar casillas para multi-selección<br>
     <strong>F11</strong> o botón ⛶ — pantalla completa
     </div></div>
 
