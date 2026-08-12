@@ -2259,8 +2259,8 @@ body.yt-active-br #topbar-actions{
   <div class="ps-card">
     <div class="ps-title">🎬 Proyectar</div>
     <button type="button" class="ps-opt" data-proj="current">📄 Versículo actual</button>
-    <button type="button" class="ps-opt" data-proj="selection">☑️ Selección de versículos</button>
-        <button type="button" class="ps-opt" data-proj="chapter">📚 Capítulo completo</button>
+    <button type="button" class="ps-opt" data-proj="selection" id="ps-opt-selection">☑️ Selección de versículos</button>
+    <button type="button" class="ps-opt" data-proj="chapter">📚 Capítulo completo</button>
     <button type="button" class="ps-cancel" id="ps-cancel">Cancelar</button>
   </div>
 </div>
@@ -4047,8 +4047,10 @@ const stageText = document.getElementById('stage-text');
 let stagePassages = [];
 let stageIndex = 0;
 
-function openStage(book, chap, verses){
-  stagePassages = [{book, chap, verses: [...verses].sort((a,b)=>+a-+b)}];
+let stageMode = 'single'; // 'single' | 'selection' | 'chapter'
+function openStage(book, chap, verses, mode){
+  stageMode = mode || (verses && verses.length > 1 ? 'selection' : 'single');
+  stagePassages = [{book, chap, verses: [...verses].map(String).sort((a,b)=>+a-+b)}];
   stageIndex = 0;
   renderStage();
   stage.classList.add('open');
@@ -4086,13 +4088,25 @@ function renderStage(){
   });
   stageText.innerHTML = html;
 
-  // Navegación por versículo dentro del capítulo
-  const allV = sortedVerseNums(p.book, p.chap);
-  const anchor = verses[verses.length-1];
-  const idx = allV.indexOf(String(anchor));
-  document.getElementById('stage-prev').disabled = idx <= 0;
-  document.getElementById('stage-next').disabled = idx < 0 || idx >= allV.length-1;
-  // mostrar controles de auto-scroll solo si el texto desborda
+  // Anterior/Siguiente: ocultos en capítulo completo
+  const prevBtn = document.getElementById('stage-prev');
+  const nextBtn = document.getElementById('stage-next');
+  if(stageMode === 'chapter'){
+    if(prevBtn) prevBtn.style.display = 'none';
+    if(nextBtn) nextBtn.style.display = 'none';
+  } else {
+    const allV = sortedVerseNums(p.book, p.chap);
+    const anchor = verses[verses.length-1];
+    const idx = allV.indexOf(String(anchor));
+    if(prevBtn){
+      prevBtn.style.display = '';
+      prevBtn.disabled = idx <= 0;
+    }
+    if(nextBtn){
+      nextBtn.style.display = '';
+      nextBtn.disabled = idx < 0 || idx >= allV.length-1;
+    }
+  }
   requestAnimationFrame(()=> updateStageScrollControls());
 }
 function stageStep(dir){
@@ -4112,6 +4126,8 @@ function stageStep(dir){
 }
 function openProjectSheet(){
   const sheet = document.getElementById('project-sheet');
+  const selOpt = document.getElementById('ps-opt-selection');
+  if(selOpt) selOpt.style.display = (selectedVerses && selectedVerses.length) ? '' : 'none';
   if(sheet) sheet.classList.add('open');
 }
 function closeProjectSheet(){
@@ -4134,16 +4150,16 @@ document.querySelectorAll('#project-sheet .ps-opt').forEach(btn=>{
     if(mode === 'current'){
       const v = detailVerse || Object.keys((BIBLE[currentBook]||{})[currentChap]||{})[0];
       if(!v){ alert('No hay versículos en este capítulo.'); return; }
-      openStage(currentBook, currentChap, [v]);
+      openStage(currentBook, currentChap, [v], 'single');
     } else if(mode === 'selection'){
-      if(!selectedVerses.length){ alert('Selecciona uno o más versículos primero.'); return; }
-      openStage(currentBook, currentChap, selectedVerses);
+      if(!selectedVerses.length){ alert('Marca uno o más versículos con las casillas primero.'); return; }
+      openStage(currentBook, currentChap, selectedVerses, 'selection');
     } else if(mode === 'sermon'){
       alert('La función de Sermones ha sido deshabilitada temporalmente.');
     } else if(mode === 'chapter'){
       const all = sortedVerseNums(currentBook, currentChap);
       if(!all.length){ alert('Capítulo vacío.'); return; }
-      openStage(currentBook, currentChap, all);
+      openStage(currentBook, currentChap, all, 'chapter');
     }
   };
 });
@@ -4831,63 +4847,63 @@ document.addEventListener('mousedown', (e)=>{
 const SEFER_TOUR_STEPS = [
   {
     sel: '#nav-header .brand, #nav-header',
-    title: 'Bienvenido a SEFER',
-    text: 'SEFER (ספר) es tu Biblia de estudio y proyección (Reina-Valera 1960), de Life Word Mission Playa del Carmen.'
+    title: '¡Hola! Esto es SEFER',
+    text: 'SEFER es una Biblia en la computadora. Sirve para leer, estudiar y mostrar versículos en pantalla grande. Es de Life Word Mission Playa del Carmen.'
   },
   {
     sel: '#book-list, #nav',
-    title: 'Libros y testamentos',
-    text: 'Explora el Antiguo y el Nuevo Testamento. Expande un libro y elige un capítulo. El botón ? abre la ficha (autor, fecha, idioma original, resumen).'
+    title: 'Elige un libro',
+    text: 'A la izquierda están todos los libros de la Biblia. Haz clic en un nombre (por ejemplo Génesis). Luego elige un número de capítulo. ¡Así empiezas a leer!'
   },
   {
     sel: '#theme-switch, #theme-batch',
-    title: 'Temas visuales',
-    text: 'Hay dos lotes de 5 temas. Usa ＋ (rojo) y − (verde) para cambiar de lote. El tema se guarda en la nube al sincronizar.'
+    title: 'Colores de la pantalla',
+    text: 'Estos circulitos cambian los colores de SEFER. Prueba uno. Si no te gusta, elige otro. Los botones + y − muestran más opciones de color.'
   },
   {
     sel: '#ref-search, #ref-search-wrap',
-    title: 'Buscar referencia',
-    text: 'Escribe por ejemplo Génesis 1:1, rangos 1:1-5 o listas 1:1,3,6. Tab autocompleta el libro. Enter navega.'
+    title: 'Ir a un versículo',
+    text: 'Escribe aquí el lugar que quieres leer, por ejemplo: Juan 3:16 y luego pulsa Enter. SEFER te lleva ahí.'
   },
   {
     sel: '#topbar-actions, #topbar',
-    title: 'Barra de herramientas',
-    text: 'Desde aquí controlas tamaño de texto, Modo Detalle, significados, notas, favoritos, plan, glosario, YouTube, proyectar y ayuda.'
+    title: 'Los botones de arriba',
+    text: 'Aquí puedes hacer la letra más grande o más chica (A+ y A−), guardar notas, marcar favoritos, ver el plan de lectura y más. No hace falta usarlos todos.'
   },
   {
     sel: '#reader, #main',
-    title: 'Lectura y selección',
-    text: 'Clic en un versículo abre favorito/nota y una casilla. Al marcarla aparecen casillas en todos; si desmarcas todas, desaparecen. Luego puedes proyectar la selección.'
+    title: 'Leer y marcar versículos',
+    text: 'Haz clic en un versículo. Verás un cuadrito (casilla) a la izquierda. Si lo marcas, puedes marcar más versículos. Así eliges cuáles proyectar después.'
   },
   {
     sel: '#plan-btn',
-    title: 'Plan de lectura en 1 año',
-    text: 'Elige orden (canónico, inverso, paralelo o cronológico) e inicio (1 ene–31 dic o desde hoy). Marca el progreso; se sincroniza con la nube.'
+    title: 'Leer la Biblia en un año',
+    text: 'Este botón abre un plan día por día. Puedes seguir el orden normal de la Biblia u otros órdenes. Marca lo que ya leíste.'
   },
   {
     sel: '#glossary-btn',
-    title: 'Glosario',
-    text: 'Consulta términos bíblicos. La búsqueda permanece fija al desplazarte. Cierra con la X.'
+    title: 'Palabras difíciles',
+    text: 'Si no entiendes una palabra de la Biblia, ábrela aquí y búscala. Te explica qué significa de forma sencilla.'
   },
   {
     sel: '#youtube-btn',
-    title: 'YouTube (sermón)',
-    text: 'Pega un enlace de YouTube para ver solo el vídeo en esquina (arriba o abajo). No tapa los versículos. Puedes borrar o cambiar el enlace.'
+    title: 'Ver un sermón',
+    text: 'Puedes pegar el enlace de un video de YouTube. El video se ve en una esquina mientras lees la Biblia. No tapa el texto.'
   },
   {
     sel: '#project-btn',
-    title: 'Proyectar',
-    text: 'Visible al leer un capítulo. Proyecta la selección o el capítulo. En proyección: Auto con cuenta de 10 s y velocidad 0.03×–0.09×. Esc cierra.'
+    title: 'Pantalla grande (proyectar)',
+    text: 'Sirve para mostrar el texto grande, como en un culto. Puedes proyectar un versículo o todo el capítulo. Si marcaste casillas, también puedes proyectar solo esas. Para salir, pulsa Esc.'
   },
   {
     sel: '#btn-user-profile, #btn-login-google, #nav-header-actions',
-    title: 'Perfil, logros y nube',
-    text: '🏆 Perfil muestra logros e insignias. ☁️ Sincronizar guarda favoritos, notas, significados, plan y logros en Google Drive.'
+    title: 'Tu progreso y la nube',
+    text: 'Con el botón de la nube puedes guardar tus notas y favoritos en tu cuenta de Google. Así no se pierden. El perfil muestra tus logros por leer.'
   },
   {
     sel: '#help-btn',
-    title: 'Ayuda y tour',
-    text: 'Aquí tienes la guía completa. Puedes repetir este tour cuando quieras desde el botón «Iniciar tour».'
+    title: '¿Necesitas ayuda?',
+    text: 'Este botón (❓) abre las instrucciones. También puedes volver a hacer este recorrido cuando quieras. ¡Listo para usar SEFER!'
   }
 ];
 
@@ -4998,7 +5014,7 @@ function openSeferHelp(){
     <div class="im-text">Biblia de estudio y proyección (RV1960) para Life Word Mission Playa del Carmen. Notas, favoritos, significados, plan anual, glosario, YouTube, proyección y logros. También usable con teclado.</div></div>
 
     <div class="im-block"><div class="im-label">Tour</div>
-    <div class="im-text">El <strong>tour interactivo</strong> recorre la interfaz paso a paso (resalta cada zona). Puedes salir con <strong>Esc</strong> o el botón Salir.</div></div>
+    <div class="im-text">El <strong>tour</strong> te enseña SEFER paso a paso, con palabras sencillas. Resalta cada parte de la pantalla. Puedes salir con <strong>Esc</strong> o el botón Salir. Ideal si es tu primera vez.</div></div>
 
     <div class="im-block"><div class="im-label">Navegación de libros</div>
     <div class="im-text">• Expande AT/NT y libros; elige un capítulo para leer.<br>
