@@ -5324,13 +5324,14 @@ async function fetchBiblicalWiki(word){
   return null;
 }
 
-function showWordPopup(word, x, y){
+function openWordPopupAt(word, x, y, def, source){
   const termEl = wordPopup.querySelector('.wp-term');
   const defEl = wordPopup.querySelector('.wp-def');
   const srcEl = wordPopup.querySelector('.wp-source');
   const saveBtn = document.getElementById('wp-save-btn');
   termEl.textContent = word;
-
+  defEl.textContent = def || '';
+  srcEl.textContent = source || '';
   const left = Math.min(Math.max(x, 10), window.innerWidth - 320);
   const top = Math.min(Math.max(y + 14, 10), window.innerHeight - 220);
   wordPopup.style.left = left + 'px';
@@ -5350,60 +5351,53 @@ function showWordPopup(word, x, y){
   };
   if(saveBtn){
     saveBtn.onclick = ()=>{
-      const def = defEl.textContent || '';
-      if(!def || def.indexOf('Buscando') === 0) return;
-      savedMeanings[key] = { term: word, def, source: srcEl.textContent || '' };
+      const d = defEl.textContent || '';
+      if(!d) return;
+      savedMeanings[key] = { term: word, def: d, source: srcEl.textContent || '' };
       saveMeaningsStore();
       markSaved();
     };
   }
+  markSaved();
+}
 
-  // Preferir guardado local
+function showWordPopup(word, x, y){
+  if(!word || !String(word).trim()) return;
+  const key = (word||'').toLowerCase().trim();
+
+  // Guardado local → mostrar
   if(savedMeanings[key] || savedMeanings[word]){
     const sm = savedMeanings[key] || savedMeanings[word];
-    defEl.textContent = sm.def;
-    srcEl.textContent = sm.source || 'Guardado localmente';
-    markSaved();
+    openWordPopupAt(word, x, y, sm.def, sm.source || 'Guardado localmente');
     return;
   }
 
+  // Diccionario local → mostrar
   const hit = lookupBiblical(word);
   if(hit){
-    defEl.textContent = hit.def;
-    srcEl.textContent = hit.source || 'Diccionario bíblico de SEFER';
-    markSaved();
+    openWordPopupAt(word, x, y, hit.def, hit.source || 'Diccionario bíblico de SEFER');
     return;
   }
 
-  defEl.innerHTML = '<span class="wp-loading">Buscando significado…</span>';
-  srcEl.textContent = '';
-  markSaved();
-
+  // Sin entrada local: buscar en silencio; solo abrir ventana si hay resultado
+  const reqId = (showWordPopup._req = (showWordPopup._req||0) + 1);
   (async ()=>{
     try{
-      // 1) Diccionario general español
       const dict = await fetchSpanishDictionary(word);
+      if(reqId !== showWordPopup._req) return;
       if(dict){
-        defEl.textContent = dict.text;
-        srcEl.textContent = 'Fuente: ' + dict.source;
-        markSaved();
+        openWordPopupAt(word, x, y, dict.text, 'Fuente: ' + dict.source);
         return;
       }
-      // 2) Wikipedia (términos bíblicos / nombres)
       const res = await fetchBiblicalWiki(word);
+      if(reqId !== showWordPopup._req) return;
       if(res){
-        defEl.textContent = res.text;
-        srcEl.textContent = 'Fuente: ' + res.source;
-        markSaved();
+        openWordPopupAt(word, x, y, res.text, 'Fuente: ' + res.source);
         return;
       }
-      defEl.textContent = 'No se encontró un significado claro para «' + word + '». Prueba la forma base del verbo (ej. acaeció → acaecer) o otra palabra del versículo.';
-      srcEl.textContent = '';
-      markSaved();
+      // Sin significado: no mostrar ventana
     }catch(e){
-      defEl.textContent = 'No se pudo completar la búsqueda. Revisa tu conexión o prueba otra forma de la palabra.';
-      srcEl.textContent = '';
-      markSaved();
+      // Sin significado usable: no mostrar ventana
     }
   })();
 }
