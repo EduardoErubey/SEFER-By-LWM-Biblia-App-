@@ -2604,6 +2604,8 @@ let currentChap = "1";
 let detailVerse = null;
 let selectedVerses = [];
 let selectionUIActive = false; // casillas visibles (tras clic en versículo o con selección)
+let seferTourActive = false; // hoisted (tour) — evitar TDZ en updateProjectBtnVisibility
+let seferTourIndex = 0;
 
 const store = {
   get(key, fallback){
@@ -3231,8 +3233,7 @@ function updateProjectBtnVisibility(){
   const btn = document.getElementById('project-btn');
   if(!btn) return;
   // Visible al leer, o en bienvenida solo durante el tour
-  const tourOn = typeof seferTourActive !== 'undefined' && seferTourActive;
-  btn.style.display = (showWelcome && !tourOn) ? 'none' : '';
+  btn.style.display = (showWelcome && !seferTourActive) ? 'none' : '';
 }
 function showWelcomeScreen(){
   showWelcome = true;
@@ -5132,9 +5133,6 @@ const SEFER_TOUR_STEPS = [
     text: 'Este botón (❓) abre las instrucciones. También puedes volver a hacer este recorrido cuando quieras. ¡Listo para usar SEFER!'
   }
 ];
-
-let seferTourIndex = 0;
-let seferTourActive = false;
 
 function seferTourFindEl(sel){
   if(!sel) return null;
