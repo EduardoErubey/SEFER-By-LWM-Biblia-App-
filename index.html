@@ -1946,21 +1946,26 @@ body.mobile-mode { /* neutralize if residual class */ }
   bottom:16px;
   top:auto;
 }
-/* Posición: debajo del área de Ayuda (superior derecha) */
+/* Posición: superior derecha (flotante; no mueve topbar ni botones) */
 #yt-player-wrap.yt-pos-tr{
   right:16px;
-  top:64px;
+  top:72px;
   bottom:auto;
 }
-/* Reserva espacio en el lector para que el vídeo no tape versículos */
+/* Reserva espacio SOLO en el lector (versículos), nunca en la barra de botones */
 body.yt-active-br #reader{
   padding-bottom: min(280px, 42vw) !important;
 }
 body.yt-active-tr #reader{
-  padding-top: 8px;
+  padding-right: min(380px, 44vw) !important;
 }
-body.yt-active-tr #main{
-  padding-right: min(380px, 44vw);
+/* Asegurar que topbar y botones no se desplacen */
+body.yt-active-tr #topbar,
+body.yt-active-tr #topbar-actions,
+body.yt-active-br #topbar,
+body.yt-active-br #topbar-actions{
+  margin-right: 0 !important;
+  padding-right: inherit;
 }
 #yt-player-bar{
   display:flex;
@@ -2012,8 +2017,8 @@ body.yt-active-tr #main{
 @media (max-width:720px){
   #yt-player-wrap{ width:min(calc(100% - 24px), 320px); }
   #yt-player-wrap.yt-pos-br{ right:12px; bottom:12px; }
-  #yt-player-wrap.yt-pos-tr{ right:12px; top:56px; }
-  body.yt-active-tr #main{ padding-right:0; }
+  #yt-player-wrap.yt-pos-tr{ right:12px; top:64px; }
+  body.yt-active-tr #reader{ padding-right: 0 !important; padding-bottom: min(240px, 50vw) !important; }
   body.yt-active-br #reader{ padding-bottom: min(240px, 50vw) !important; }
 }
 
