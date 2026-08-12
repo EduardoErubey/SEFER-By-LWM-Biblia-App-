@@ -573,14 +573,7 @@ body.mobile-mode #stage-exit{top:14px; right:14px; font-size:11px; padding:5px 1
 body.mobile-mode #info-modal .im-card{max-height:80vh;}
 body.mobile-mode .verse-actions{margin-left:0;}
 body.mobile-mode .note-box{margin-left:0;}
-body.mobile-mode .verse .verse-check{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  margin-right:8px;
-  vertical-align:top;
-  flex-shrink:0;
-}
+body.mobile-mode .verse-check{width:22px;min-width:22px;}
 .verse-check input[type="checkbox"]{
   width:16px;
   height:16px;
@@ -997,6 +990,13 @@ body.mobile-mode .welcome-mobile .welcome-hint{
   flex:1;
   overflow-y:auto;
   padding:6px 0 20px;
+  text-align:left;
+}
+#nav, #nav-header, .book-item, .testament-label, .chap-pill{
+  text-align:left;
+}
+#reader, #reader .book-title, #reader .chap-title, #select-hint{
+  text-align:left;
 }
 .testament-label{
   font-family:var(--font-ui);
@@ -1196,27 +1196,7 @@ body.mobile-mode .welcome-mobile .welcome-hint{
   overflow-y:auto;
   outline:none;
 }
-.book-item, .testament-label, .chap-pill, .verse, .result-item, .theme-dot, .verse-check{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  margin-right:8px;
-  vertical-align:top;
-  flex-shrink:0;
-}
-.verse-check input[type="checkbox"]{
-  width:16px;
-  height:16px;
-  cursor:pointer;
-  accent-color:var(--rubric);
-}
-.verse-row-inner{
-  display:flex;
-  align-items:flex-start;
-  gap:2px;
-}
-.verse-row-inner .verse-body{flex:1;min-width:0;}
-.vaction{
+.book-item, .testament-label, .chap-pill, .verse, .result-item, .theme-dot, .vaction{
   /* accesibles con teclado */
 }
 .book-item:focus, .testament-label:focus, .chap-pill:focus, .verse:focus, .result-item:focus, .theme-dot:focus, .vaction:focus, .btn:focus, .info-btn:focus{
@@ -1374,30 +1354,47 @@ body.mobile-mode .welcome-mobile .welcome-hint{
   display:none;
   gap:6px;
   margin-top:4px;
-  margin-left:22px;
+  margin-left:0;
   flex-wrap:wrap;
 }
 .verse.active-detail .verse-actions{display:flex;}
+/* Sangría fija para casillas: el texto no se mueve al mostrar/ocultar */
+.verse{
+  display:flex !important;
+  align-items:flex-start;
+  text-align:left !important;
+  gap:0;
+}
 .verse-check{
   display:inline-flex;
-  align-items:center;
+  align-items:flex-start;
   justify-content:center;
-  margin-right:8px;
-  vertical-align:top;
+  width:22px;
+  min-width:22px;
+  max-width:22px;
+  margin:4px 6px 0 0;
+  padding:0;
   flex-shrink:0;
+  visibility:hidden; /* invisible pero ocupa espacio */
+  pointer-events:none;
+}
+.verse-check.is-visible{
+  visibility:visible;
+  pointer-events:auto;
 }
 .verse-check input[type="checkbox"]{
-  width:16px;
-  height:16px;
+  width:15px;
+  height:15px;
   cursor:pointer;
   accent-color:var(--rubric);
+  margin:0;
 }
-.verse-row-inner{
-  display:flex;
-  align-items:flex-start;
-  gap:2px;
+.verse-body{
+  flex:1;
+  min-width:0;
+  text-align:left;
+  display:block;
 }
-.verse-row-inner .verse-body{flex:1;min-width:0;}
 .vaction{
   font-family:var(--font-ui);
   font-size:11px;
@@ -2114,6 +2111,66 @@ body.yt-active-br #topbar-actions{
   body.yt-active-br #reader{ padding-bottom: min(240px, 50vw) !important; }
 }
 
+
+/* Tour interactivo */
+#sefer-tour-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:2000;
+  background:rgba(0,0,0,0.55);
+  pointer-events:auto;
+}
+#sefer-tour-overlay.open{display:block;}
+#sefer-tour-spot{
+  position:fixed;
+  z-index:2001;
+  border:2px solid var(--gold, #c9a227);
+  border-radius:10px;
+  box-shadow:0 0 0 9999px rgba(0,0,0,0.55), 0 0 0 4px rgba(201,162,39,0.35);
+  pointer-events:none;
+  transition: top .2s, left .2s, width .2s, height .2s;
+}
+#sefer-tour-card{
+  position:fixed;
+  z-index:2002;
+  width:min(340px, calc(100vw - 24px));
+  background:var(--card-bg, #fff);
+  color:var(--ink, #222);
+  border:1px solid var(--line, #ccc);
+  border-radius:12px;
+  padding:14px 16px 12px;
+  box-shadow:0 16px 40px rgba(0,0,0,0.3);
+  font-family:var(--font-ui, system-ui);
+}
+#sefer-tour-card h4{
+  margin:0 0 6px;
+  font-family:var(--font-display, system-ui);
+  font-size:16px;
+  color:var(--rubric, #8b1e1e);
+}
+#sefer-tour-card p{
+  margin:0 0 12px;
+  font-size:13px;
+  line-height:1.5;
+  color:var(--ink-soft, #555);
+}
+#sefer-tour-actions{
+  display:flex;
+  gap:8px;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+}
+#sefer-tour-actions .tour-nav{display:flex;gap:6px;}
+#sefer-tour-step{
+  font-size:11px;
+  color:var(--ink-soft,#888);
+}
+.tour-start-btn{
+  width:100%;
+  margin-bottom:12px;
+}
 </style>
 </head>
 <body data-theme="mexico">
@@ -2310,6 +2367,20 @@ body.yt-active-br #topbar-actions{
   </div>
 </div>
 
+<div id="sefer-tour-overlay" aria-hidden="true"></div>
+<div id="sefer-tour-spot" style="display:none;"></div>
+<div id="sefer-tour-card" style="display:none;" role="dialog" aria-modal="true">
+  <h4 id="sefer-tour-title"></h4>
+  <p id="sefer-tour-text"></p>
+  <div id="sefer-tour-actions">
+    <span id="sefer-tour-step"></span>
+    <div class="tour-nav">
+      <button type="button" class="btn" id="sefer-tour-skip">Salir</button>
+      <button type="button" class="btn" id="sefer-tour-prev">Anterior</button>
+      <button type="button" class="btn primary" id="sefer-tour-next">Siguiente</button>
+    </div>
+  </div>
+</div>
 <div id="word-popup">
   <span class="wp-close" title="Cerrar">❌</span>
   <div class="wp-term"></div>
@@ -3130,14 +3201,11 @@ function renderReader(){
     const flags = (favorites[id] ? '<span class="fav-flag">♥</span>' : '')
       + (notes[id] ? '<span class="note-flag">✎ nota</span>' : '');
     const bodyHtml = `<span class="vnum">${vnum}</span>${formatVerseHtml(text, !!jesusMap[vnum])}${flags}`;
-    if(showCheck){
-      row.innerHTML = `<label class="verse-check" title="Seleccionar versículo"><input type="checkbox" data-vcheck="${vnum}" ${isSelected?'checked':''}></label><div class="verse-body">${bodyHtml}</div>`;
-      row.style.display = 'flex';
-      row.style.alignItems = 'flex-start';
-      row.style.gap = '6px';
-    } else {
-      row.innerHTML = bodyHtml;
-    }
+    // Casilla siempre en el DOM (sangría fija); solo cambia visibility
+    row.innerHTML =
+      `<label class="verse-check${showCheck?' is-visible':''}" title="Seleccionar versículo">` +
+      `<input type="checkbox" data-vcheck="${vnum}" ${isSelected?'checked':''} ${showCheck?'':'tabindex="-1'}"></label>` +
+      `<div class="verse-body">${bodyHtml}</div>`;
     row.tabIndex = 0;
     row.setAttribute('role','button');
     row.dataset.vnum = vnum;
@@ -3277,8 +3345,9 @@ function renderReader(){
         if(willOpen) ta.focus();
       };
 
-      row.appendChild(actions);
-      row.appendChild(noteBox);
+      const bodyEl = row.querySelector('.verse-body') || row;
+      bodyEl.appendChild(actions);
+      bodyEl.appendChild(noteBox);
     }
 
     reader.appendChild(row);
@@ -4755,66 +4824,228 @@ document.addEventListener('mousedown', (e)=>{
   updateBtn();
 })();
 
-document.getElementById('help-btn').onclick = ()=>{
+
+/* =========================================================
+   TOUR INTERACTIVO + AYUDA ACTUALIZADA
+   ========================================================= */
+const SEFER_TOUR_STEPS = [
+  {
+    sel: '#nav-header .brand, #nav-header',
+    title: 'Bienvenido a SEFER',
+    text: 'SEFER (ספר) es tu Biblia de estudio y proyección (Reina-Valera 1960), de Life Word Mission Playa del Carmen.'
+  },
+  {
+    sel: '#book-list, #nav',
+    title: 'Libros y testamentos',
+    text: 'Explora el Antiguo y el Nuevo Testamento. Expande un libro y elige un capítulo. El botón ? abre la ficha (autor, fecha, idioma original, resumen).'
+  },
+  {
+    sel: '#theme-switch, #theme-batch',
+    title: 'Temas visuales',
+    text: 'Hay dos lotes de 5 temas. Usa ＋ (rojo) y − (verde) para cambiar de lote. El tema se guarda en la nube al sincronizar.'
+  },
+  {
+    sel: '#ref-search, #ref-search-wrap',
+    title: 'Buscar referencia',
+    text: 'Escribe por ejemplo Génesis 1:1, rangos 1:1-5 o listas 1:1,3,6. Tab autocompleta el libro. Enter navega.'
+  },
+  {
+    sel: '#topbar-actions, #topbar',
+    title: 'Barra de herramientas',
+    text: 'Desde aquí controlas tamaño de texto, Modo Detalle, significados, notas, favoritos, plan, glosario, YouTube, proyectar y ayuda.'
+  },
+  {
+    sel: '#reader, #main',
+    title: 'Lectura y selección',
+    text: 'Clic en un versículo abre favorito/nota y una casilla. Al marcarla aparecen casillas en todos; si desmarcas todas, desaparecen. Luego puedes proyectar la selección.'
+  },
+  {
+    sel: '#plan-btn',
+    title: 'Plan de lectura en 1 año',
+    text: 'Elige orden (canónico, inverso, paralelo o cronológico) e inicio (1 ene–31 dic o desde hoy). Marca el progreso; se sincroniza con la nube.'
+  },
+  {
+    sel: '#glossary-btn',
+    title: 'Glosario',
+    text: 'Consulta términos bíblicos. La búsqueda permanece fija al desplazarte. Cierra con la X.'
+  },
+  {
+    sel: '#youtube-btn',
+    title: 'YouTube (sermón)',
+    text: 'Pega un enlace de YouTube para ver solo el vídeo en esquina (arriba o abajo). No tapa los versículos. Puedes borrar o cambiar el enlace.'
+  },
+  {
+    sel: '#project-btn',
+    title: 'Proyectar',
+    text: 'Visible al leer un capítulo. Proyecta la selección o el capítulo. En proyección: Auto con cuenta de 10 s y velocidad 0.03×–0.09×. Esc cierra.'
+  },
+  {
+    sel: '#btn-user-profile, #btn-login-google, #nav-header-actions',
+    title: 'Perfil, logros y nube',
+    text: '🏆 Perfil muestra logros e insignias. ☁️ Sincronizar guarda favoritos, notas, significados, plan y logros en Google Drive.'
+  },
+  {
+    sel: '#help-btn',
+    title: 'Ayuda y tour',
+    text: 'Aquí tienes la guía completa. Puedes repetir este tour cuando quieras desde el botón «Iniciar tour».'
+  }
+];
+
+let seferTourIndex = 0;
+let seferTourActive = false;
+
+function seferTourFindEl(sel){
+  if(!sel) return null;
+  for(const part of sel.split(',')){
+    const el = document.querySelector(part.trim());
+    if(el && (el.offsetParent !== null || el.getClientRects().length > 0)) return el;
+  }
+  return document.querySelector(sel.split(',')[0].trim());
+}
+
+function seferTourPlaceCard(target){
+  const card = document.getElementById('sefer-tour-card');
+  const spot = document.getElementById('sefer-tour-spot');
+  if(!card) return;
+  const margin = 12;
+  const cw = card.offsetWidth || 320;
+  const ch = card.offsetHeight || 160;
+  let top, left;
+  if(target){
+    const r = target.getBoundingClientRect();
+    spot.style.display = 'block';
+    spot.style.top = Math.max(8, r.top - 6) + 'px';
+    spot.style.left = Math.max(8, r.left - 6) + 'px';
+    spot.style.width = Math.min(window.innerWidth - 16, r.width + 12) + 'px';
+    spot.style.height = Math.min(window.innerHeight - 16, r.height + 12) + 'px';
+    // Prefer below target
+    top = r.bottom + 14;
+    left = Math.min(Math.max(margin, r.left), window.innerWidth - cw - margin);
+    if(top + ch > window.innerHeight - margin){
+      top = Math.max(margin, r.top - ch - 14);
+    }
+  } else {
+    spot.style.display = 'none';
+    top = window.innerHeight / 2 - ch / 2;
+    left = window.innerWidth / 2 - cw / 2;
+  }
+  card.style.top = Math.max(margin, Math.min(top, window.innerHeight - ch - margin)) + 'px';
+  card.style.left = Math.max(margin, Math.min(left, window.innerWidth - cw - margin)) + 'px';
+}
+
+function seferTourShowStep(){
+  const step = SEFER_TOUR_STEPS[seferTourIndex];
+  if(!step){ endSeferTour(); return; }
+  const title = document.getElementById('sefer-tour-title');
+  const text = document.getElementById('sefer-tour-text');
+  const num = document.getElementById('sefer-tour-step');
+  const next = document.getElementById('sefer-tour-next');
+  const prev = document.getElementById('sefer-tour-prev');
+  if(title) title.textContent = step.title;
+  if(text) text.textContent = step.text;
+  if(num) num.textContent = (seferTourIndex + 1) + ' / ' + SEFER_TOUR_STEPS.length;
+  if(next) next.textContent = seferTourIndex >= SEFER_TOUR_STEPS.length - 1 ? 'Finalizar' : 'Siguiente';
+  if(prev) prev.disabled = seferTourIndex <= 0;
+  const el = seferTourFindEl(step.sel);
+  if(el && el.scrollIntoView){
+    try{ el.scrollIntoView({block:'nearest', behavior:'smooth'}); }catch(e){}
+  }
+  requestAnimationFrame(()=> seferTourPlaceCard(el));
+}
+
+function startSeferTour(){
+  // Cerrar ayuda si está abierta
+  document.getElementById('info-modal')?.classList.remove('open');
+  seferTourActive = true;
+  seferTourIndex = 0;
+  document.getElementById('sefer-tour-overlay')?.classList.add('open');
+  document.getElementById('sefer-tour-card').style.display = 'block';
+  seferTourShowStep();
+}
+function endSeferTour(){
+  seferTourActive = false;
+  document.getElementById('sefer-tour-overlay')?.classList.remove('open');
+  const spot = document.getElementById('sefer-tour-spot');
+  const card = document.getElementById('sefer-tour-card');
+  if(spot) spot.style.display = 'none';
+  if(card) card.style.display = 'none';
+}
+document.getElementById('sefer-tour-next')?.addEventListener('click', ()=>{
+  if(seferTourIndex >= SEFER_TOUR_STEPS.length - 1) endSeferTour();
+  else { seferTourIndex++; seferTourShowStep(); }
+});
+document.getElementById('sefer-tour-prev')?.addEventListener('click', ()=>{
+  if(seferTourIndex > 0){ seferTourIndex--; seferTourShowStep(); }
+});
+document.getElementById('sefer-tour-skip')?.addEventListener('click', endSeferTour);
+window.addEventListener('resize', ()=>{ if(seferTourActive) seferTourShowStep(); });
+document.addEventListener('keydown', (e)=>{
+  if(!seferTourActive) return;
+  if(e.key === 'Escape'){ e.preventDefault(); endSeferTour(); }
+  if(e.key === 'ArrowRight' || e.key === 'Enter'){ e.preventDefault(); document.getElementById('sefer-tour-next')?.click(); }
+  if(e.key === 'ArrowLeft'){ e.preventDefault(); document.getElementById('sefer-tour-prev')?.click(); }
+}, true);
+
+function openSeferHelp(){
   infoNavEnabled = false;
   document.getElementById('im-nav').style.display = 'none';
   document.getElementById('im-title').textContent = 'Instrucciones de SEFER';
   document.getElementById('im-sub').textContent = 'BY LIFE WORD MISSION · Reina-Valera 1960';
   document.getElementById('im-body').innerHTML = `
+    <button type="button" class="btn primary tour-start-btn" id="start-sefer-tour-btn">🎯 Iniciar tour interactivo</button>
+
     <div class="im-block"><div class="im-label">¿Qué es SEFER?</div>
-    <div class="im-text">Herramienta de estudio y proyección bíblica. Navega por libros, toma notas, marca favoritos, consulta significados y proyecta versículos. Pensada para usarse también <strong>solo con teclado</strong>.</div></div>
+    <div class="im-text">Biblia de estudio y proyección (RV1960) para Life Word Mission Playa del Carmen. Notas, favoritos, significados, plan anual, glosario, YouTube, proyección y logros. También usable con teclado.</div></div>
+
+    <div class="im-block"><div class="im-label">Tour</div>
+    <div class="im-text">El <strong>tour interactivo</strong> recorre la interfaz paso a paso (resalta cada zona). Puedes salir con <strong>Esc</strong> o el botón Salir.</div></div>
 
     <div class="im-block"><div class="im-label">Navegación de libros</div>
-    <div class="im-text">• Tab hasta el testamento/libro · <strong>Enter</strong> o <strong>Espacio</strong> expande/abre.<br>
-    • Botón <strong>?</strong> → ficha del libro (significado, autor, fecha, <strong>idioma original</strong>, resumen). Con el modal: <strong>← →</strong> cambia de libro; <strong>↑ ↓</strong> desplaza el texto; <strong>Esc</strong> cierra.<br>
-    • <strong>↺</strong> reinicia navegación, tamaño de texto, búsqueda de referencias, paneles y vuelve al inicio.</div></div>
+    <div class="im-text">• Expande AT/NT y libros; elige un capítulo para leer.<br>
+    • Botón <strong>?</strong> → ficha (significado, autor, fecha, <strong>idioma original</strong>, resumen).<br>
+    • <strong>↺</strong> reinicia navegación y vuelve al inicio. <strong>⛶</strong> pantalla completa.</div></div>
 
     <div class="im-block"><div class="im-label">Búsquedas</div>
-    <div class="im-text">• <strong>Referencia</strong> (izquierda): <code>Génesis 1:1</code>, rangos <code>1:1-5</code>, listas <code>1:1,3,6</code>. Tab autocompleta. Enter navega.<br>
-    • <strong>Palabra</strong>: escribe en cualquier momento → barra central. Enter abre el primer resultado centrado. Esc cierra.</div></div>
+    <div class="im-text">• <strong>Referencia</strong>: <code>Génesis 1:1</code>, <code>1:1-5</code>, <code>1:1,3,6</code>. <strong>Tab</strong> autocompleta el libro. Enter navega.<br>
+    • <strong>Palabra</strong>: escribe en cualquier momento → barra central. Esc cierra.</div></div>
 
-    <div class="im-block"><div class="im-label">Versículos</div>
-    <div class="im-text">• Tab/↑↓ entre versículos · Enter abre el menú (selección, ❤️ favorito, nota, proyectar).<br>
-    • Menú abierto + palabra → diccionario.<br>
-    • Notas: <strong>💾</strong> o <strong>Ctrl+Enter</strong> / <strong>Command (⌘)+Enter</strong> guarda. × o Esc cierra. 🗑 elimina.<br>
-    • Favoritos: 🗑 en el panel · con el versículo abierto y marcado: tecla <strong>Supr</strong> o <strong>Backspace</strong> quita el favorito.</div></div>
+    <div class="im-block"><div class="im-label">Versículos y selección</div>
+    <div class="im-text">• Clic en un versículo → menú (favorito, nota) y <strong>casilla</strong> de ese versículo.<br>
+    • Al <strong>marcar</strong> la casilla aparecen casillas en todos; si desmarcas todas, desaparecen.<br>
+    • Encabezado: <code>Antiguo Testamento: Libro 2 [Éxodo:1]</code>.<br>
+    • Supr/Backspace en un favorito abierto lo quita.</div></div>
 
-    <div class="im-block"><div class="im-label">Plan de Lectura y Glosario</div>
-    <div class="im-text">• 📅 <strong>Plan 1 año</strong>: elige orden de lectura (Canónico AT→NT, Inverso NT→AT, Paralelo o Cronológico) y el inicio (1 ene–31 dic o desde hoy en 365 días). Marca el progreso; se sincroniza con la Nube.<br>
-    • 📖 <strong>Glosario</strong>: busca términos bíblicos; la barra de búsqueda permanece fija al desplazarte.</div></div>
+    <div class="im-block"><div class="im-label">Plan, Glosario, Notas y Favoritos</div>
+    <div class="im-text">• 📅 <strong>Plan 1 año</strong>: órdenes Canónico / Inverso / Paralelo / Cronológico; inicio 1 ene–31 dic o desde hoy (365 días).<br>
+    • 📖 <strong>Glosario</strong>, 📝 <strong>Notas</strong>, ❤️ <strong>Favoritos</strong> y 📚 <strong>Significados</strong> son ventanas flotantes (cierra con X).</div></div>
 
-    <div class="im-block"><div class="im-label">Nube (Google Drive)</div>
-    <div class="im-text">• ☁️ <strong>Sincronizar</strong>: guarda favoritos, notas, significados y progreso del plan en tu Drive (carpeta oculta de la app).<br>
-    • Requiere inicio de sesión con Google. No se exportan archivos JSON.</div></div>
+    <div class="im-block"><div class="im-label">YouTube y Proyección</div>
+    <div class="im-text">• 📺 <strong>YouTube</strong>: pega enlace de sermón; solo el vídeo. Posición arriba/abajo derecha. Borrar / Pegar / Cargar. Título = título del vídeo − canal.<br>
+    • 🎬 <strong>Proyectar</strong>: no se muestra en la bienvenida; al leer un capítulo proyecta selección o capítulo. Auto: cuenta 10 s; velocidad 0.03×→0.09×. <strong>Esc</strong> cierra.</div></div>
 
-    <div class="im-block"><div class="im-label">Proyección y Modo Detalle</div>
-    <div class="im-text">• 🎬 Proyectar · ← → versículo · Esc sale.<br>
-    • Si el texto no cabe en pantalla: <strong>▶ Auto</strong> muestra cuenta regresiva de 10 s y luego desplaza. Un solo botón de velocidad cicla 0.03× → 0.05× → 0.07× → 0.09× (predeterminada 0.03×). <strong>Esc</strong> cierra la proyección.<br>
-    • 🔍 Modo Detalle: nombres en negrita, ciudades en cursiva, palabras de Jesús en color.</div></div>
-
-
-
-    <div class="im-block"><div class="im-label">Atajos de teclado</div>
-    <div class="im-text">
-    <strong>Tab / Shift+Tab</strong> — mover el foco<br>
-    <strong>Enter / Espacio</strong> — activar botón o ítem enfocado<br>
-    <strong>Esc</strong> — cerrar modal, proyección, búsqueda, nota o panel<br>
-    <strong>↑ ↓</strong> — scroll en instrucciones/fichas · moverse entre versículos o resultados<br>
-    <strong>← →</strong> — proyección · fichas ? de libros<br>
-    <strong>Supr / Backspace</strong> — quitar favorito (versículo abierto o ítem en panel)<br>
-    <strong>Ctrl+Enter</strong> o <strong>Command (⌘)+Enter</strong> — guardar nota<br>
-    <strong>Ctrl+S</strong> o <strong>Command (⌘)+S</strong> — guardar nota (cuando el editor está abierto)<br>
-    Clic en un versículo → casilla · Marcar casillas para multi-selección<br>
-    <strong>F11</strong> o botón ⛶ — pantalla completa
-    </div></div>
+    <div class="im-block"><div class="im-label">Nube, perfil y logros</div>
+    <div class="im-text">• ☁️ <strong>Sincronizar</strong> y 🏆 <strong>Perfil</strong> (esquina del panel de libros): Drive guarda favoritos, notas, significados, plan, tema y logros.<br>
+    • Logros por uso y por cada libro leído (nombres ligados al contenido).</div></div>
 
     <div class="im-block"><div class="im-label">Temas</div>
-    <div class="im-text"><svg class="flag-svg help-flag" viewBox="0 0 36 24" width="18" height="12" aria-hidden="true"><rect width="12" height="24" x="0" fill="#006847"/><rect width="12" height="24" x="12" fill="#fff"/><rect width="12" height="24" x="24" fill="#CE1126"/><circle cx="18" cy="12" r="3.2" fill="#006847"/></svg> México · <svg class="flag-svg help-flag" viewBox="0 0 36 24" width="18" height="12" aria-hidden="true"><rect width="36" height="24" fill="#fff" stroke="#ddd" stroke-width="0.5"/><circle cx="18" cy="12" r="5" fill="#CD2E3A"/><path d="M18 12a5 5 0 0 1 0-0.01 2.5 2.5 0 1 0 0 0.01z" fill="#0047A0"/><g fill="#000"><rect x="6" y="4" width="5" height="1.2"/><rect x="6" y="6" width="2" height="1.2"/><rect x="9" y="6" width="2" height="1.2"/><rect x="6" y="8" width="5" height="1.2"/><rect x="25" y="4" width="5" height="1.2"/><rect x="25" y="6.6" width="5" height="1.2"/><rect x="25" y="9.2" width="5" height="1.2"/><rect x="6" y="14.5" width="5" height="1.2"/><rect x="6" y="17.1" width="2" height="1.2"/><rect x="9" y="17.1" width="2" height="1.2"/><rect x="6" y="19.7" width="5" height="1.2"/><rect x="25" y="14.5" width="2" height="1.2"/><rect x="28" y="14.5" width="2" height="1.2"/><rect x="25" y="17.1" width="5" height="1.2"/><rect x="25" y="19.7" width="2" height="1.2"/><rect x="28" y="19.7" width="2" height="1.2"/></g></svg> Corea · <svg class="flag-svg help-flag" viewBox="0 0 36 24" width="18" height="12" aria-hidden="true"><rect width="36" height="12" y="0" fill="#0057B7"/><rect width="36" height="12" y="12" fill="#FFD700"/></svg> Ucrania · 👑 Reino · 🌿 Edén<br>
-    Con <strong>＋</strong>: ☀️ Day · 🌙 Night · ⏳ Arena · 🕯️ Sándalo · 🌌 Amoled</div></div>
+    <div class="im-text">Lote ＋: México · Corea · Ucrania · 👑 Reino · 🌿 Edén<br>
+    Lote −: ☀️ Day · 🌙 Night · ⏳ Arena · 🕯️ Sándalo · 🌌 Amoled<br>
+    Predeterminado: México.</div></div>
+
+    <div class="im-block"><div class="im-label">Atajos</div>
+    <div class="im-text">• <strong>Esc</strong> — cierra modales, proyección o tour<br>
+    • <strong>Tab</strong> — completa nombre de libro en búsqueda<br>
+    • <strong>← →</strong> — en proyección, versículo anterior/siguiente<br>
+    • <strong>F11</strong> o ⛶ — pantalla completa</div></div>
   `;
   document.getElementById('info-modal').classList.add('open');
   focusInfoScroll();
-};
+  document.getElementById('start-sefer-tour-btn')?.addEventListener('click', ()=>{
+    startSeferTour();
+  });
+}
+document.getElementById('help-btn').onclick = openSeferHelp;
+
 
 /* =========================================================
    SERMONES — DESHABILITADOS (funcionalidad eliminada temporalmente)
