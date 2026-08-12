@@ -2315,6 +2315,55 @@ body.yt-active-br #topbar-actions{
   to{ transform:translateX(120%); opacity:0; }
 }
 
+
+#gene-tree .gene-node{
+  padding:4px 8px;
+  border-radius:6px;
+  cursor:pointer;
+  line-height:1.35;
+  border-left:3px solid transparent;
+}
+#gene-tree .gene-node:hover{background:color-mix(in srgb, var(--gold) 12%, transparent);}
+#gene-tree .gene-node.active{
+  background:color-mix(in srgb, var(--rubric) 12%, transparent);
+  border-left-color:var(--rubric);
+  font-weight:600;
+}
+#gene-tree .gene-children{margin-left:14px;border-left:1px dashed var(--line);padding-left:6px;}
+#gene-tree .gene-sparse{opacity:0.72;font-size:12.5px;}
+#gene-detail .gd-name{
+  font-family:var(--font-display);
+  font-size:22px;
+  font-weight:700;
+  color:var(--rubric);
+  margin:0 0 6px;
+}
+#gene-detail .gd-meta{font-size:12.5px;color:var(--ink-soft);margin:0 0 12px;line-height:1.5;}
+#gene-detail .gd-bio{font-size:14px;line-height:1.6;margin:0 0 12px;}
+#gene-detail .gd-refs{display:flex;flex-wrap:wrap;gap:6px;}
+#gene-detail .gd-ref{
+  font-size:12px;
+  padding:4px 8px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--parchment);
+  cursor:pointer;
+  color:var(--ink);
+}
+#gene-detail .gd-ref:hover{border-color:var(--rubric);color:var(--rubric);}
+#gene-detail .gd-empty{
+  font-size:14px;
+  line-height:1.55;
+  color:var(--ink-soft);
+  font-style:italic;
+  padding:12px 0;
+}
+@media (max-width:720px){
+  #modal-genealogia .im-card{max-height:94vh;}
+  #modal-genealogia [style*="display:flex"][style*="min-height"]{flex-direction:column !important;}
+  #gene-tree{max-height:34vh;border-right:none !important;border-bottom:1px solid var(--line);}
+}
+
 </style>
 </head>
 <body data-theme="mexico">
@@ -2371,6 +2420,7 @@ body.yt-active-br #topbar-actions{
         <button class="btn fav-btn has-tip" id="favs-btn" data-tooltip="Versículos marcados como favoritos">❤️ Favoritos</button>
         <button class="btn has-tip" id="plan-btn" data-tooltip="Plan de lectura de la Biblia en un año">📅 Plan 1 año</button>
         <button class="btn has-tip" id="glossary-btn" data-tooltip="Glosario de términos bíblicos">📖 Glosario</button>
+        <button class="btn has-tip" id="genealogy-btn" data-tooltip="Árbol genealógico bíblico interactivo">🌳 Genealogía</button>
         <span id="estado-nube" style="display:none;" aria-hidden="true"></span>
         <button class="btn has-tip" id="youtube-btn" data-tooltip="Ver un sermón de YouTube mientras lees (solo el vídeo)"><svg class="yt-logo" viewBox="0 0 28 20" width="18" height="13" aria-hidden="true"><rect width="28" height="20" rx="4" fill="#FF0000"/><path d="M11 5.5v9l7.5-4.5L11 5.5z" fill="#fff"/></svg> YouTube</button>
         <button class="btn primary has-tip" id="project-btn" data-tooltip="Proyectar selección o versículo en pantalla completa">🎬 Proyectar</button>
@@ -2501,6 +2551,23 @@ body.yt-active-br #topbar-actions{
   </div>
 </div>
 <div id="toast-logro" class="toast-logro" aria-live="polite"></div>
+
+
+<!-- Genealogía bíblica -->
+<div id="modal-genealogia" style="display:none;position:fixed;inset:0;z-index:1300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:16px;">
+  <div class="im-card" style="max-width:920px;width:100%;max-height:90vh;display:flex;flex-direction:column;background:var(--card-bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:0;position:relative;overflow:hidden;">
+    <button type="button" id="cerrar-genealogia" style="position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-soft);z-index:2;">❌</button>
+    <div style="flex:0 0 auto;padding:16px 44px 10px 18px;border-bottom:1px solid var(--line);">
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--rubric);">🌳 Genealogía bíblica</div>
+      <p style="margin:6px 0 0;font-size:12.5px;color:var(--ink-soft);line-height:1.45;">Explora personas y linajes mencionados en la Biblia. Haz clic en un nombre para ver su ficha. Si hay poca información, se indicará con claridad.</p>
+      <input type="text" id="gene-search" placeholder="Buscar persona (ej. Abraham, Rut, David)…" style="width:100%;margin-top:10px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--parchment);color:var(--ink);font-family:var(--font-ui);font-size:13px;outline:none;box-sizing:border-box;">
+    </div>
+    <div style="flex:1 1 auto;display:flex;min-height:0;overflow:hidden;">
+      <div id="gene-tree" style="flex:1 1 48%;overflow-y:auto;padding:12px 10px 16px 14px;border-right:1px solid var(--line);font-size:13px;"></div>
+      <div id="gene-detail" style="flex:1 1 52%;overflow-y:auto;padding:14px 16px 18px;"></div>
+    </div>
+  </div>
+</div>
 
 <!-- Glosario -->
 <div id="modal-glosario" style="display:none;position:fixed;inset:0;z-index:1300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:20px;">
@@ -5068,6 +5135,242 @@ document.addEventListener('mousedown', (e)=>{
 })();
 
 
+const GENEALOGY_PEOPLE = {
+  "adam":{name:"Adán",parent:null,bio:"Primer hombre creado por Dios. Vivió en Edén, desobedeció junto con Eva y fue expulsado. Padre de Caín, Abel y Set.",refs:["Génesis 1:26-27", "Génesis 2", "Génesis 3", "Génesis 5:1-5"]},
+  "eva":{name:"Eva",parent:null,bio:"Primera mujer, compañera de Adán. Tentada por la serpiente; con Adán desobedeció el mandato de Dios.",refs:["Génesis 2:18-25", "Génesis 3"]},
+  "cain":{name:"Caín",parent:"adam",bio:"Primogénito de Adán y Eva. Labrador; mató a su hermano Abel por envidia.",refs:["Génesis 4:1-17"]},
+  "abel":{name:"Abel",parent:"adam",bio:"Pastor de ovejas; ofrenda agradable a Dios. Fue asesinado por Caín.",refs:["Génesis 4:2-10"]},
+  "set":{name:"Set",parent:"adam",bio:"Hijo de Adán y Eva nacido después de Abel. De su línea desciende Noé.",refs:["Génesis 4:25-26", "Génesis 5:3-8"]},
+  "enos":{name:"Enós",parent:"set",bio:"Hijo de Set. En su tiempo se comenzó a invocar el nombre de Jehová.",refs:["Génesis 4:26", "Génesis 5:6-11"]},
+  "cainan":{name:"Cainán",parent:"enos",bio:"",refs:["Génesis 5:9-14"]},
+  "mahalaleel":{name:"Mahalaleel",parent:"cainan",bio:"",refs:["Génesis 5:12-17"]},
+  "jared":{name:"Jared",parent:"mahalaleel",bio:"",refs:["Génesis 5:15-20"]},
+  "enoc":{name:"Enoc",parent:"jared",bio:"Anduvo con Dios y fue llevado sin ver muerte. Ejemplo de comunión fiel.",refs:["Génesis 5:21-24", "Hebreos 11:5"]},
+  "metuselen":{name:"Matusalén",parent:"enoc",bio:"Conocido por su larga vida en la genealogía de Génesis 5.",refs:["Génesis 5:25-27"]},
+  "lamec_s":{name:"Lamec (padre de Noé)",parent:"metuselen",bio:"Padre de Noé; expresó esperanza al nombrarlo.",refs:["Génesis 5:28-31"]},
+  "noe":{name:"Noé",parent:"lamec_s",bio:"Justo en su generación. Construyó el arca y se salvó del diluvio con su familia.",refs:["Génesis 6", "Génesis 7", "Génesis 8", "Génesis 9"]},
+  "sem":{name:"Sem",parent:"noe",bio:"Hijo de Noé. De su linaje descienden los hebreos y, según la Escritura, el pueblo de la promesa.",refs:["Génesis 9:18-27", "Génesis 10:21-31", "Génesis 11"]},
+  "cam":{name:"Cam",parent:"noe",bio:"Hijo de Noé; padre de Cus, Mizraim, Fut y Canaán.",refs:["Génesis 9:18-27", "Génesis 10:6-20"]},
+  "jafet":{name:"Jafet",parent:"noe",bio:"Hijo de Noé; progenitor de varios pueblos según Génesis 10.",refs:["Génesis 9:18-27", "Génesis 10:2-5"]},
+  "arpacsad":{name:"Arfaxad",parent:"sem",bio:"",refs:["Génesis 10:22", "Génesis 11:10-13"]},
+  "sala":{name:"Sala",parent:"arpacsad",bio:"",refs:["Génesis 11:12-15"]},
+  "heber":{name:"Heber",parent:"sala",bio:"Ancestro asociado al nombre «hebreo».",refs:["Génesis 10:24-25", "Génesis 11:14-17"]},
+  "peleg":{name:"Peleg",parent:"heber",bio:"En sus días se dividió la tierra, según Génesis.",refs:["Génesis 10:25", "Génesis 11:16-19"]},
+  "reu":{name:"Reu",parent:"peleg",bio:"",refs:["Génesis 11:18-21"]},
+  "serug":{name:"Serug",parent:"reu",bio:"",refs:["Génesis 11:20-23"]},
+  "nahor_p":{name:"Nahor (padre de Taré)",parent:"serug",bio:"",refs:["Génesis 11:22-25"]},
+  "tare":{name:"Taré",parent:"nahor_p",bio:"Padre de Abram, Nahor y Harán. Salió de Ur hacia Canaán y se detuvo en Harán.",refs:["Génesis 11:24-32"]},
+  "abraham":{name:"Abraham (Abram)",parent:"tare",bio:"Llamado por Dios a dejar su tierra. Padre de la fe; recibió el pacto y la promesa de bendición a todas las naciones.",refs:["Génesis 12", "Génesis 15", "Génesis 17", "Génesis 22", "Romanos 4"]},
+  "sara":{name:"Sara (Sarai)",parent:null,bio:"Esposa de Abraham. Madre de Isaac en su vejez, conforme a la promesa de Dios.",refs:["Génesis 17", "Génesis 18", "Génesis 21"]},
+  "agar":{name:"Agar",parent:null,bio:"Sierva egipcia de Sara; madre de Ismael.",refs:["Génesis 16", "Génesis 21"]},
+  "ismael":{name:"Ismael",parent:"abraham",bio:"Hijo de Abraham y Agar. Dios prometió hacer de él una gran nación.",refs:["Génesis 16", "Génesis 17:20", "Génesis 21", "Génesis 25:12-18"]},
+  "isaac":{name:"Isaac",parent:"abraham",bio:"Hijo de la promesa. Dios detuvo el sacrificio en Moriah. Padre de Esaú y Jacob.",refs:["Génesis 21", "Génesis 22", "Génesis 24", "Génesis 26", "Génesis 27"]},
+  "rebeca":{name:"Rebeca",parent:null,bio:"Esposa de Isaac; madre de Esaú y Jacob.",refs:["Génesis 24", "Génesis 25", "Génesis 27"]},
+  "esau":{name:"Esaú",parent:"isaac",bio:"Primogénito de Isaac; vendió su primogenitura. También llamado Edom.",refs:["Génesis 25:19-34", "Génesis 27", "Génesis 33", "Génesis 36"]},
+  "jacob":{name:"Jacob (Israel)",parent:"isaac",bio:"Recibió la primogenitura y el nombre Israel. Padre de las doce tribus.",refs:["Génesis 25", "Génesis 27", "Génesis 28", "Génesis 32", "Génesis 35", "Génesis 49"]},
+  "lea":{name:"Lea",parent:null,bio:"Primera esposa de Jacob; madre de varios hijos, entre ellos Judá y Leví.",refs:["Génesis 29", "Génesis 30"]},
+  "raquel":{name:"Raquel",parent:null,bio:"Esposa amada de Jacob; madre de José y Benjamín.",refs:["Génesis 29", "Génesis 30", "Génesis 35"]},
+  "ruben":{name:"Rubén",parent:"jacob",bio:"Primogénito de Jacob y Lea. Perdió privilegios por su pecado.",refs:["Génesis 29:32", "Génesis 35:22", "Génesis 49:3-4"]},
+  "simeon":{name:"Simeón",parent:"jacob",bio:"",refs:["Génesis 29:33", "Génesis 34", "Génesis 49:5-7"]},
+  "levi":{name:"Leví",parent:"jacob",bio:"Ancestro de la tribu sacerdotal.",refs:["Génesis 29:34", "Éxodo 2", "Éxodo 6", "Génesis 49:5-7"]},
+  "juda":{name:"Judá",parent:"jacob",bio:"Tribu de la que desciende David y, según el NT, el Mesías.",refs:["Génesis 29:35", "Génesis 38", "Génesis 49:8-12", "Mateo 1"]},
+  "dan":{name:"Dan",parent:"jacob",bio:"",refs:["Génesis 30:5-6", "Génesis 49:16-17"]},
+  "neftali":{name:"Neftalí",parent:"jacob",bio:"",refs:["Génesis 30:7-8", "Génesis 49:21"]},
+  "gad":{name:"Gad",parent:"jacob",bio:"",refs:["Génesis 30:10-11", "Génesis 49:19"]},
+  "aser":{name:"Aser",parent:"jacob",bio:"",refs:["Génesis 30:12-13", "Génesis 49:20"]},
+  "isacar":{name:"Isacar",parent:"jacob",bio:"",refs:["Génesis 30:17-18", "Génesis 49:14-15"]},
+  "zabulon":{name:"Zabulón",parent:"jacob",bio:"",refs:["Génesis 30:19-20", "Génesis 49:13"]},
+  "jose":{name:"José",parent:"jacob",bio:"Vendido por sus hermanos; Dios lo elevó en Egipto para salvar vidas.",refs:["Génesis 37", "Génesis 39", "Génesis 41", "Génesis 45", "Génesis 50"]},
+  "benjamin":{name:"Benjamín",parent:"jacob",bio:"Hijo menor de Jacob y Raquel.",refs:["Génesis 35:16-18", "Génesis 42", "Génesis 44"]},
+  "efrain":{name:"Efraín",parent:"jose",bio:"Hijo de José; bendecido por Jacob como tribu destacada.",refs:["Génesis 41:50-52", "Génesis 48"]},
+  "manases":{name:"Manasés",parent:"jose",bio:"Hijo de José; una de las tribus de Israel.",refs:["Génesis 41:50-52", "Génesis 48"]},
+  "amram":{name:"Amram",parent:"levi",bio:"Padre de Moisés, Aarón y María.",refs:["Éxodo 6:18-20"]},
+  "jocabed":{name:"Jocabed",parent:null,bio:"Madre de Moisés; lo escondió y salvó de la muerte.",refs:["Éxodo 2:1-10", "Éxodo 6:20"]},
+  "moises":{name:"Moisés",parent:"amram",bio:"Libertador de Israel, legislador y profeta. Guió el Éxodo y recibió la Ley en Sinaí.",refs:["Éxodo 2", "Éxodo 3", "Éxodo 14", "Éxodo 20", "Deuteronomio 34"]},
+  "aaron":{name:"Aarón",parent:"amram",bio:"Hermano de Moisés; primer sumo sacerdote.",refs:["Éxodo 4", "Éxodo 28", "Levítico 8", "Números 20"]},
+  "maria_m":{name:"María (hermana de Moisés)",parent:"amram",bio:"Profetisa; cantó la victoria tras el Mar Rojo.",refs:["Éxodo 15:20-21", "Números 12"]},
+  "josue":{name:"Josué",parent:null,bio:"Sucesor de Moisés; lideró la entrada a Canaán.",refs:["Éxodo 17", "Números 13", "Josué 1", "Josué 24"]},
+  "rut":{name:"Rut",parent:null,bio:"Moabita fiel; bisabuela de David. Modelo de lealtad y redención.",refs:["Rut 1", "Rut 2", "Rut 3", "Rut 4"]},
+  "booz":{name:"Booz",parent:null,bio:"Redentor de Rut; ancestro de David.",refs:["Rut 2", "Rut 3", "Rut 4", "Mateo 1:5"]},
+  "obed":{name:"Obed",parent:"booz",bio:"Hijo de Booz y Rut; abuelo de David.",refs:["Rut 4:13-22"]},
+  "isai":{name:"Isaí",parent:"obed",bio:"Padre del rey David.",refs:["1 Samuel 16", "Rut 4:22"]},
+  "samuel":{name:"Samuel",parent:null,bio:"Profeta y juez; ungió a Saúl y a David.",refs:["1 Samuel 1", "1 Samuel 3", "1 Samuel 8", "1 Samuel 16"]},
+  "saul":{name:"Saúl",parent:null,bio:"Primer rey de Israel. Desobedeció a Dios y perdió el reino.",refs:["1 Samuel 9", "1 Samuel 15", "1 Samuel 31"]},
+  "david":{name:"David",parent:"isai",bio:"Pastor, salmista y rey. Hombre conforme al corazón de Dios; recibió el pacto del trono eterno.",refs:["1 Samuel 16", "1 Samuel 17", "2 Samuel 5", "2 Samuel 7", "Salmos"]},
+  "mical":{name:"Mical",parent:null,bio:"Hija de Saúl y esposa de David.",refs:["1 Samuel 18", "1 Samuel 19", "2 Samuel 6"]},
+  "betsabe":{name:"Betsabé",parent:null,bio:"Esposa de Urías y luego de David; madre de Salomón.",refs:["2 Samuel 11", "2 Samuel 12", "1 Reyes 1"]},
+  "absalon":{name:"Absalón",parent:"david",bio:"Hijo de David; se rebeló contra su padre.",refs:["2 Samuel 13", "2 Samuel 15", "2 Samuel 18"]},
+  "salomon":{name:"Salomón",parent:"david",bio:"Rey sabio; construyó el templo. En su vejez su corazón se desvió.",refs:["1 Reyes 1", "1 Reyes 3", "1 Reyes 6", "1 Reyes 11"]},
+  "roboam":{name:"Roboam",parent:"salomon",bio:"Hijo de Salomón; bajo su reinado se dividió el reino.",refs:["1 Reyes 12"]},
+  "jeroboam":{name:"Jeroboam",parent:null,bio:"Primer rey del reino del norte (Israel); instituyó idolatría.",refs:["1 Reyes 11:26-40", "1 Reyes 12"]},
+  "elias":{name:"Elías",parent:null,bio:"Profeta que confrontó a Acab y a los profetas de Baal. Arrebatado al cielo.",refs:["1 Reyes 17", "1 Reyes 18", "1 Reyes 19", "2 Reyes 2"]},
+  "eliseo":{name:"Eliseo",parent:null,bio:"Sucesor de Elías; realizó muchas señales en Israel.",refs:["1 Reyes 19:19-21", "2 Reyes 2", "2 Reyes 4", "2 Reyes 5"]},
+  "isaias":{name:"Isaías",parent:null,bio:"Profeta mayor; anunció al Siervo sufriente y al Mesías.",refs:["Isaías 1", "Isaías 6", "Isaías 53"]},
+  "jeremias":{name:"Jeremías",parent:null,bio:"Profeta de la caída de Jerusalén; anunció el nuevo pacto.",refs:["Jeremías 1", "Jeremías 31", "Lamentaciones"]},
+  "daniel":{name:"Daniel",parent:null,bio:"Profeta en el exilio; fiel en Babilonia y visionario de reinos y tiempos finales.",refs:["Daniel 1", "Daniel 2", "Daniel 6", "Daniel 9"]},
+  "oseas":{name:"Oseas",parent:null,bio:"Profeta del amor fiel de Dios hacia un pueblo infiel.",refs:["Oseas 1", "Oseas 3", "Oseas 14"]},
+  "jonas":{name:"Jonás",parent:null,bio:"Enviado a Nínive; la gran caldera y la misericordia de Dios.",refs:["Jonás 1", "Jonás 2", "Jonás 3", "Jonás 4"]},
+  "zacarias_p":{name:"Zacarías (padre de Juan)",parent:null,bio:"Sacerdote; padre de Juan el Bautista. El ángel le anunció el nacimiento de su hijo.",refs:["Lucas 1"]},
+  "elisabet":{name:"Elisabet",parent:null,bio:"Madre de Juan el Bautista; parienta de María.",refs:["Lucas 1"]},
+  "juan_b":{name:"Juan el Bautista",parent:"zacarias_p",bio:"Precursor del Mesías; predicó arrepentimiento y bautizó a Jesús.",refs:["Mateo 3", "Juan 1", "Lucas 3"]},
+  "jose_m":{name:"José (esposo de María)",parent:null,bio:"Varón justo; esposo de María y padre legal de Jesús.",refs:["Mateo 1", "Mateo 2", "Lucas 2"]},
+  "maria":{name:"María (madre de Jesús)",parent:null,bio:"Madre de Jesús. Recibió el anuncio del ángel y creyó la promesa de Dios.",refs:["Lucas 1", "Lucas 2", "Juan 2", "Juan 19"]},
+  "jesus":{name:"Jesús",parent:"jose_m",bio:"El Cristo, Hijo de Dios. Murió y resucitó para salvación. Centro de toda la Escritura.",refs:["Mateo 1", "Lucas 1", "Juan 1", "Juan 3:16", "1 Corintios 15"]},
+  "pedro":{name:"Simón Pedro",parent:null,bio:"Apóstol; confesó a Jesús como el Cristo. Líder en la iglesia primitiva.",refs:["Mateo 16", "Lucas 22", "Juan 21", "Hechos 2"]},
+  "juan_a":{name:"Juan (apóstol)",parent:null,bio:"Discípulo amado; autor del Evangelio, cartas y Apocalipsis (tradición).",refs:["Juan 1", "Juan 19", "Juan 21", "1 Juan", "Apocalipsis"]},
+  "santiago":{name:"Santiago (hermano del Señor)",parent:null,bio:"Líder en Jerusalén; autor de la carta de Santiago.",refs:["Hechos 15", "Gálatas 1:19", "Santiago 1"]},
+  "pablo":{name:"Pablo (Saulo)",parent:null,bio:"Apóstol de los gentiles; misionero y autor de muchas epístolas.",refs:["Hechos 9", "Hechos 13", "Romanos 1", "2 Timoteo 4"]},
+  "barnabas":{name:"Bernabé",parent:null,bio:"Compañero misionero de Pablo; hijo de consolación.",refs:["Hechos 4:36-37", "Hechos 9", "Hechos 13"]},
+  "timoteo":{name:"Timoteo",parent:null,bio:"Discípulo y colaborador de Pablo; destinatario de dos cartas pastorales.",refs:["Hechos 16", "1 Timoteo 1", "2 Timoteo 1"]},
+  "tito":{name:"Tito",parent:null,bio:"Colaborador de Pablo; destinatario de la carta a Tito.",refs:["Tito 1", "2 Corintios 7"]},
+  "filemon":{name:"Filemón",parent:null,bio:"Creyente a quien Pablo escribe por Onésimo.",refs:["Filemón 1"]},
+  "onesimo":{name:"Onésimo",parent:null,bio:"Siervo de Filemón; Pablo intercede por él.",refs:["Filemón 1"]},
+  "esteban":{name:"Esteban",parent:null,bio:"Primer mártir cristiano; predicó ante el Sanedrín.",refs:["Hechos 6", "Hechos 7"]},
+  "felipe_e":{name:"Felipe (evangelista)",parent:null,bio:"Anunció el evangelio en Samaria y al etíope.",refs:["Hechos 6", "Hechos 8"]},
+  "lidia":{name:"Lidia",parent:null,bio:"Vendedora de púrpura en Filipos; una de las primeras convertidas en Europa.",refs:["Hechos 16:11-15"]},
+  "prisca":{name:"Priscila",parent:null,bio:"Junto a Aquila, enseñó el camino de Dios con mayor exactitud.",refs:["Hechos 18", "Romanos 16:3"]},
+  "aquila":{name:"Aquila",parent:null,bio:"Esposo de Priscila; colaborador de Pablo.",refs:["Hechos 18", "Romanos 16:3"]},
+  "nicodemo":{name:"Nicodemo",parent:null,bio:"Fariseo que visitó a Jesús de noche; oyó del nuevo nacimiento.",refs:["Juan 3", "Juan 7", "Juan 19"]},
+  "lazaro":{name:"Lázaro",parent:null,bio:"Amigo de Jesús; resucitado en Betania.",refs:["Juan 11", "Juan 12"]},
+  "marta":{name:"Marta",parent:null,bio:"Hermana de María y Lázaro; sirvió a Jesús en Betania.",refs:["Lucas 10", "Juan 11"]},
+  "maria_betania":{name:"María de Betania",parent:null,bio:"Unió a los pies de Jesús; ungió al Señor.",refs:["Lucas 10", "Juan 12"]},
+  "maria_magdalena":{name:"María Magdalena",parent:null,bio:"Seguidora de Jesús; testigo de la resurrección.",refs:["Lucas 8:2", "Juan 20"]},
+  "mateo":{name:"Mateo (Leví)",parent:null,bio:"Publicano llamado por Jesús; apóstol y evangelista.",refs:["Mateo 9:9", "Mateo 10:3"]},
+  "tomas":{name:"Tomás",parent:null,bio:"Apóstol; dudó y luego confesó a Jesús como Señor y Dios.",refs:["Juan 11:16", "Juan 20:24-29"]}
+};
+
+const GENE_SPARSE_MSG = 'No hay demasiada información al respecto en las Escrituras sobre esta persona. Aparece en la genealogía o en menciones breves, pero la Biblia no desarrolla una biografía amplia.';
+
+function geneHasRichBio(p){
+  return !!(p && p.bio && String(p.bio).trim().length >= 40);
+}
+function geneChildren(id){
+  return Object.keys(GENEALOGY_PEOPLE).filter(k=>GENEALOGY_PEOPLE[k].parent===id);
+}
+function geneRoots(){
+  return Object.keys(GENEALOGY_PEOPLE).filter(k=>!GENEALOGY_PEOPLE[k].parent);
+}
+function geneSearchNorm(s){
+  return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+}
+
+let geneSelected = null;
+
+function renderGeneTree(filter){
+  const box = document.getElementById('gene-tree');
+  if(!box) return;
+  const q = geneSearchNorm(filter||'');
+  const matchIds = new Set();
+  if(q){
+    Object.keys(GENEALOGY_PEOPLE).forEach(id=>{
+      if(geneSearchNorm(GENEALOGY_PEOPLE[id].name).includes(q)) matchIds.add(id);
+    });
+  }
+  function nodeHtml(id, depth){
+    const p = GENEALOGY_PEOPLE[id];
+    if(!p) return '';
+    if(q){
+      // mostrar si coincide o tiene descendiente que coincide
+      const kids = geneChildren(id);
+      const self = matchIds.has(id);
+      const childHit = kids.some(function hit(c){
+        if(matchIds.has(c)) return true;
+        return geneChildren(c).some(hit);
+      });
+      if(!self && !childHit) return '';
+    }
+    const sparse = !geneHasRichBio(p);
+    const kids = geneChildren(id);
+    let html = '<div class="gene-node'+(sparse?' gene-sparse':'')+(geneSelected===id?' active':'')+'" data-gene-id="'+id+'" style="margin-left:'+(depth>0?0:0)+'px">'+p.name+(sparse?' ·':'')+'</div>';
+    if(kids.length){
+      html += '<div class="gene-children">';
+      kids.forEach(c=>{ html += nodeHtml(c, depth+1); });
+      html += '</div>';
+    }
+    return html;
+  }
+  // Preferir raíces principales primero
+  const preferred = ['adam','eva','noe','abraham','isaac','jacob','david','maria','jesus'];
+  const roots = geneRoots().sort((a,b)=>{
+    const ia = preferred.indexOf(a), ib = preferred.indexOf(b);
+    if(ia>=0 || ib>=0) return (ia<0?999:ia) - (ib<0?999:ib);
+    return GENEALOGY_PEOPLE[a].name.localeCompare(GENEALOGY_PEOPLE[b].name,'es');
+  });
+  // Eva y otras sin padre: listar cerca de Adán
+  let html = '';
+  roots.forEach(r=>{ html += nodeHtml(r, 0); });
+  if(!html) html = '<div class="empty-msg">No se encontraron personas.</div>';
+  box.innerHTML = html;
+  box.querySelectorAll('[data-gene-id]').forEach(el=>{
+    el.onclick = ()=> selectGenePerson(el.getAttribute('data-gene-id'));
+  });
+}
+
+function selectGenePerson(id){
+  geneSelected = id;
+  const p = GENEALOGY_PEOPLE[id];
+  const det = document.getElementById('gene-detail');
+  if(!det || !p) return;
+  renderGeneTree(document.getElementById('gene-search')?.value || '');
+  const parent = p.parent ? GENEALOGY_PEOPLE[p.parent] : null;
+  const kids = geneChildren(id).map(k=>GENEALOGY_PEOPLE[k]?.name).filter(Boolean);
+  let meta = [];
+  if(parent) meta.push('Padre/madre en el árbol: <strong>'+parent.name+'</strong>');
+  if(kids.length) meta.push('Hijos en el árbol: <strong>'+kids.join(', ')+'</strong>');
+  const rich = geneHasRichBio(p);
+  let bioHtml = rich
+    ? '<p class="gd-bio">'+p.bio+'</p>'
+    : '<p class="gd-empty">'+GENE_SPARSE_MSG+'</p>';
+  if(!rich && p.bio && p.bio.trim()){
+    bioHtml = '<p class="gd-bio">'+p.bio+'</p><p class="gd-empty">'+GENE_SPARSE_MSG+'</p>';
+  }
+  const refs = (p.refs||[]).map(r=>'<button type="button" class="gd-ref" data-ref="'+r.replace(/"/g,'')+'">'+r+'</button>').join('');
+  det.innerHTML =
+    '<div class="gd-name">'+p.name+'</div>'+
+    (meta.length?'<div class="gd-meta">'+meta.join('<br>')+'</div>':'')+
+    bioHtml+
+    (refs? '<div style="font-size:12px;font-weight:600;color:var(--rubric);margin:8px 0 6px;">Pasajes</div><div class="gd-refs">'+refs+'</div>':'');
+  det.querySelectorAll('.gd-ref').forEach(btn=>{
+    btn.onclick = ()=>{
+      const ref = btn.getAttribute('data-ref')||'';
+      const parsed = typeof parseRefQuery === 'function' ? parseRefQuery(ref) : null;
+      if(parsed && typeof goToRef === 'function' && goToRef(parsed)){
+        closeGenealogia();
+      } else if(parsed && parsed.book){
+        goTo(parsed.book, parsed.chap||'1');
+        closeGenealogia();
+      } else {
+        alert('No se pudo abrir: '+ref);
+      }
+    };
+  });
+}
+
+function openGenealogia(){
+  const m = document.getElementById('modal-genealogia');
+  if(!m) return;
+  m.style.display = 'flex';
+  const search = document.getElementById('gene-search');
+  if(search) search.value = '';
+  geneSelected = geneSelected || 'abraham';
+  renderGeneTree('');
+  selectGenePerson(geneSelected);
+  search?.focus();
+}
+function closeGenealogia(){
+  const m = document.getElementById('modal-genealogia');
+  if(m) m.style.display = 'none';
+}
+document.getElementById('genealogy-btn')?.addEventListener('click', openGenealogia);
+document.getElementById('cerrar-genealogia')?.addEventListener('click', closeGenealogia);
+document.getElementById('modal-genealogia')?.addEventListener('click', (e)=>{
+  if(e.target.id === 'modal-genealogia') closeGenealogia();
+});
+document.getElementById('gene-search')?.addEventListener('input', (e)=>{
+  renderGeneTree(e.target.value);
+});
+
+
 /* =========================================================
    TOUR INTERACTIVO + AYUDA ACTUALIZADA
    ========================================================= */
@@ -5111,6 +5414,11 @@ const SEFER_TOUR_STEPS = [
     sel: '#glossary-btn',
     title: 'Palabras difíciles',
     text: 'Si no entiendes una palabra de la Biblia, ábrela aquí y búscala. Te explica qué significa de forma sencilla.'
+  },
+  {
+    sel: '#genealogy-btn',
+    title: 'Familias de la Biblia',
+    text: 'El botón del árbol muestra padres, hijos y personajes bíblicos. Si alguien aparece poco en la Biblia, SEFER te lo dice con sinceridad.'
   },
   {
     sel: '#youtube-btn',
@@ -5260,7 +5568,7 @@ function openSeferHelp(){
 
     <div class="im-block"><div class="im-label">Plan, Glosario, Notas y Favoritos</div>
     <div class="im-text">• 📅 <strong>Plan 1 año</strong>: órdenes Canónico / Inverso / Paralelo / Cronológico; inicio 1 ene–31 dic o desde hoy (365 días).<br>
-    • 📖 <strong>Glosario</strong>, 📝 <strong>Notas</strong>, ❤️ <strong>Favoritos</strong> y 📚 <strong>Significados</strong> son ventanas flotantes (cierra con X).</div></div>
+    • 📖 <strong>Glosario</strong>, 🌳 <strong>Genealogía</strong> (árbol de personajes; si hay poca información se indica), 📝 <strong>Notas</strong>, ❤️ <strong>Favoritos</strong> y 📚 <strong>Significados</strong> son ventanas flotantes (cierra con X).</div></div>
 
     <div class="im-block"><div class="im-label">YouTube y Proyección</div>
     <div class="im-text">• 📺 <strong>YouTube</strong>: pega enlace de sermón; solo el vídeo. Posición arriba/abajo derecha. Borrar / Pegar / Cargar. Título = título del vídeo − canal.<br>
