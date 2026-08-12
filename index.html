@@ -1152,7 +1152,7 @@ body.mobile-mode .welcome-mobile .welcome-hint{
   font-size:15px;
   font-weight:600;
   color:var(--ink);
-  white-space:normal;
+  white-space:nowrap;
   line-height:1.35;
 }
 #selection-info{
@@ -1787,18 +1787,20 @@ body.mobile-mode { /* neutralize if residual class */ }
 #estado-nube{font-size:10px !important;max-width:70px !important;overflow:hidden;text-overflow:ellipsis;}
 #topbar-left{
   flex:1 1 auto;
-  min-width:0;
-  max-width:min(520px, 42vw);
+  min-width:12rem;
+  max-width:min(560px, 48vw);
+  overflow:hidden;
 }
 #topbar-left #current-ref{
   font-size:12.5px;
   font-weight:600;
   max-width:100%;
-  white-space:normal;
-  overflow:visible;
-  text-overflow:unset;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
   line-height:1.35;
-  word-break:break-word;
+  word-break:normal;
+  overflow-wrap:normal;
 }
 
 /* Theme more button + second row */
@@ -1922,6 +1924,67 @@ body.mobile-mode { /* neutralize if residual class */ }
   margin:0 0 18px;
 }
 
+
+#yt-player-wrap{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  z-index:1200;
+  width:min(360px, 42vw);
+  background:#111;
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 12px 40px rgba(0,0,0,0.35);
+}
+#yt-player-bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:6px 8px 6px 10px;
+  background:color-mix(in srgb, var(--card-bg) 92%, #000);
+  border-bottom:1px solid var(--line);
+  color:var(--ink);
+  font-family:var(--font-ui);
+  font-size:12px;
+}
+#yt-player-title{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  min-width:0;
+  flex:1;
+}
+.yt-bar-btn{
+  border:1px solid var(--line);
+  background:var(--parchment);
+  color:var(--ink-soft);
+  border-radius:5px;
+  width:28px;
+  height:26px;
+  cursor:pointer;
+  font-size:12px;
+  line-height:1;
+}
+.yt-bar-btn:hover{border-color:var(--gold);color:var(--rubric);}
+#yt-iframe-box{
+  position:relative;
+  width:100%;
+  padding-top:56.25%; /* 16:9 */
+  background:#000;
+}
+#yt-iframe-box iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+@media (max-width:720px){
+  #yt-player-wrap{ width:min(100% - 24px, 320px); right:12px; bottom:12px; }
+}
+
 </style>
 </head>
 <body data-theme="mexico">
@@ -1976,6 +2039,7 @@ body.mobile-mode { /* neutralize if residual class */ }
         <button class="btn has-tip" id="plan-btn" data-tooltip="Plan de lectura de la Biblia en un año">📅 Plan 1 año</button>
         <button class="btn has-tip" id="glossary-btn" data-tooltip="Glosario de términos bíblicos">📖 Glosario</button>
         <span id="estado-nube" style="display:none;" aria-hidden="true"></span>
+        <button class="btn has-tip" id="youtube-btn" data-tooltip="Ver un sermón de YouTube en esquina (solo el vídeo)">📺 YouTube</button>
         <button class="btn primary has-tip" id="project-btn" data-tooltip="Proyectar selección o versículo en pantalla completa">🎬 Proyectar</button>
         <button class="btn has-tip" id="help-btn" data-tooltip="Guía de uso y atajos de teclado">❓ Ayuda</button>
       </div>
@@ -2026,6 +2090,31 @@ body.mobile-mode { /* neutralize if residual class */ }
   </div>
 </div>
 
+
+
+<!-- Reproductor YouTube en esquina (solo vídeo) -->
+<div id="yt-player-wrap" style="display:none;">
+  <div id="yt-player-bar">
+    <span id="yt-player-title">Sermón</span>
+    <div style="display:flex;gap:4px;align-items:center;">
+      <button type="button" id="yt-change-btn" class="yt-bar-btn" title="Cambiar enlace">🔗</button>
+      <button type="button" id="yt-close-btn" class="yt-bar-btn" title="Cerrar">✕</button>
+    </div>
+  </div>
+  <div id="yt-iframe-box"></div>
+</div>
+<div id="modal-youtube" style="display:none;position:fixed;inset:0;z-index:1350;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:20px;">
+  <div class="im-card" style="max-width:420px;width:100%;background:var(--card-bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:20px 22px;position:relative;">
+    <button type="button" id="cerrar-youtube-modal" style="position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-soft);">❌</button>
+    <div style="font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--rubric);margin:0 28px 10px 0;">📺 Sermón de YouTube</div>
+    <p style="font-size:13px;color:var(--ink-soft);margin:0 0 12px;line-height:1.5;">Pega el enlace del vídeo. Se mostrará <strong>solo el reproductor</strong> en una esquina (sin comentarios ni lista de sugerencias de la página de YouTube).</p>
+    <input id="yt-url-input" type="url" placeholder="https://www.youtube.com/watch?v=… o https://youtu.be/…" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--parchment);color:var(--ink);font-family:var(--font-ui);font-size:13px;margin-bottom:12px;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button type="button" class="btn primary" id="yt-load-btn">Cargar vídeo</button>
+      <button type="button" class="btn" id="yt-cancel-btn">Cancelar</button>
+    </div>
+  </div>
+</div>
 
 <!-- Plan de lectura anual -->
 <div id="modal-plan-lectura" style="display:none;position:fixed;inset:0;z-index:1300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:20px;">
@@ -5088,6 +5177,104 @@ document.getElementById('modal-glosario')?.addEventListener('click', (e)=>{
 });
 
 /* =========================================================
+
+
+/* =========================================================
+   YOUTUBE — sermón en esquina (solo iframe embed)
+   ========================================================= */
+function extractYouTubeId(url){
+  if(!url) return null;
+  const s = String(url).trim();
+  // youtu.be/ID
+  let m = s.match(/youtu\.be\/([A-Za-z0-9_-]{6,})/);
+  if(m) return m[1];
+  // watch?v=ID
+  m = s.match(/[?&]v=([A-Za-z0-9_-]{6,})/);
+  if(m) return m[1];
+  // embed/ID or shorts/ID or live/ID
+  m = s.match(/youtube\.com\/(?:embed|shorts|live)\/([A-Za-z0-9_-]{6,})/);
+  if(m) return m[1];
+  // bare id
+  if(/^[A-Za-z0-9_-]{11}$/.test(s)) return s;
+  return null;
+}
+function buildYouTubeEmbedSrc(id){
+  // Solo el reproductor: sin página de comentarios/sugerencias de youtube.com
+  const params = [
+    'rel=0',
+    'modestbranding=1',
+    'controls=1',
+    'fs=1',
+    'iv_load_policy=3',
+    'playsinline=1',
+    'autoplay=1'
+  ].join('&');
+  return 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?' + params;
+}
+function openYoutubeModal(prefill){
+  const m = document.getElementById('modal-youtube');
+  const input = document.getElementById('yt-url-input');
+  if(!m) return;
+  m.style.display = 'flex';
+  if(input){
+    input.value = prefill || store.get('bp_yt_url', '') || '';
+    setTimeout(()=> input.focus(), 50);
+  }
+}
+function closeYoutubeModal(){
+  const m = document.getElementById('modal-youtube');
+  if(m) m.style.display = 'none';
+}
+function closeYoutubePlayer(){
+  const wrap = document.getElementById('yt-player-wrap');
+  const box = document.getElementById('yt-iframe-box');
+  if(box) box.innerHTML = '';
+  if(wrap) wrap.style.display = 'none';
+}
+function loadYoutubeFromUrl(raw){
+  const id = extractYouTubeId(raw);
+  if(!id){
+    alert('No se reconoció un enlace de YouTube válido.\nEjemplos:\nhttps://www.youtube.com/watch?v=XXXXXXXXXXX\nhttps://youtu.be/XXXXXXXXXXX');
+    return false;
+  }
+  store.set('bp_yt_url', String(raw).trim());
+  const wrap = document.getElementById('yt-player-wrap');
+  const box = document.getElementById('yt-iframe-box');
+  const title = document.getElementById('yt-player-title');
+  if(!wrap || !box) return false;
+  box.innerHTML = '';
+  const iframe = document.createElement('iframe');
+  iframe.src = buildYouTubeEmbedSrc(id);
+  iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  iframe.allowFullscreen = true;
+  iframe.title = 'Sermón de YouTube';
+  iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+  box.appendChild(iframe);
+  if(title) title.textContent = 'YouTube · ' + id;
+  wrap.style.display = 'block';
+  closeYoutubeModal();
+  return true;
+}
+document.getElementById('youtube-btn')?.addEventListener('click', ()=> openYoutubeModal());
+document.getElementById('cerrar-youtube-modal')?.addEventListener('click', closeYoutubeModal);
+document.getElementById('yt-cancel-btn')?.addEventListener('click', closeYoutubeModal);
+document.getElementById('modal-youtube')?.addEventListener('click', (e)=>{
+  if(e.target.id === 'modal-youtube') closeYoutubeModal();
+});
+document.getElementById('yt-load-btn')?.addEventListener('click', ()=>{
+  const v = document.getElementById('yt-url-input')?.value || '';
+  loadYoutubeFromUrl(v);
+});
+document.getElementById('yt-url-input')?.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    loadYoutubeFromUrl(e.target.value || '');
+  }
+});
+document.getElementById('yt-close-btn')?.addEventListener('click', closeYoutubePlayer);
+document.getElementById('yt-change-btn')?.addEventListener('click', ()=>{
+  openYoutubeModal(store.get('bp_yt_url', '') || '');
+});
 
 /* =========================================================
    LOGROS / INSIGNIAS + PERFIL GOOGLE
