@@ -1347,8 +1347,10 @@ body.mobile-mode .welcome-mobile .welcome-hint{
 #content-wrap{flex:1;display:flex;overflow:hidden;}
 #reader{
   flex:1;
-  overflow-y:auto;
-  padding:30px 48px 60px;
+  overflow:hidden;
+  padding:0 48px 0;
+  display:flex;
+  flex-direction:column;
 }
 #reader .book-title{
   font-family:var(--font-display);
@@ -1554,6 +1556,12 @@ body.mobile-mode .welcome-mobile .welcome-hint{
   margin:48px auto;
   text-align:center !important;
   padding:24px;
+}
+#reader:has(.welcome),
+#reader:has(.welcome-mobile){
+  overflow-y:auto;
+  padding:30px 48px 60px;
+  display:block;
 }
 #reader:has(.welcome),
 #reader:has(.welcome-mobile){
@@ -2420,6 +2428,73 @@ body.yt-active-br #topbar-actions{
 }
 
 
+
+/* —— Resolución adaptativa —— */
+body.vp-narrow #nav{ width:220px; min-width:220px; }
+body.vp-narrow #reader{ padding:18px 18px 40px; }
+body.vp-narrow #topbar{ padding:8px 12px; gap:8px; }
+body.vp-narrow #topbar-actions .btn{ padding:5px 8px; font-size:11.5px; }
+body.vp-medium #reader{ padding:24px 28px 50px; }
+body.vp-narrow #theme-switch{ gap:4px; }
+body.vp-narrow .theme-dot{ width:18px; height:18px; }
+/* Ocultar referencia en topbar (va fija en el lector) */
+#topbar-left #current-ref,
+#current-ref{ display:none !important; }
+/* Encabezado fijo del capítulo al hacer scroll */
+#reader{
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  padding-top:0;
+}
+#reader.welcome-fixed,
+#reader:has(.welcome),
+#reader:has(.welcome-mobile){
+  overflow-y:auto;
+}
+#reader-sticky-head{
+  flex:0 0 auto;
+  position:sticky;
+  top:0;
+  z-index:6;
+  background:var(--parchment);
+  padding:18px 0 10px;
+  margin:0;
+  border-bottom:1px solid var(--line);
+}
+#reader-verses{
+  flex:1 1 auto;
+  overflow-y:auto;
+  padding:12px 0 40px;
+  min-height:0;
+}
+#reader-sel-status{
+  font-family:var(--font-ui);
+  font-size:12.5px;
+  color:var(--rubric);
+  font-weight:600;
+  margin:6px 0 0;
+  min-height:1.2em;
+}
+#reader-sel-status:empty{ display:none; }
+#select-hint{
+  font-size:12.5px !important;
+  line-height:1.45 !important;
+  margin-bottom:4px !important;
+}
+/* Temas: mismo efecto que el dado (escala + giro leve) */
+.theme-dot{
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease !important;
+}
+.theme-dot:hover{
+  transform: scale(1.08) rotate(5deg) !important;
+}
+.theme-dot:active{
+  transform: scale(0.96) rotate(-3deg) !important;
+}
+/* Selection bar global oculta: el aviso vive en el encabezado del lector */
+#selection-bar{ display:none !important; }
+
 </style>
 </head>
 <body data-theme="mexico">
@@ -2476,7 +2551,7 @@ body.yt-active-br #topbar-actions{
         <button class="btn fav-btn has-tip" id="favs-btn" data-tooltip="Versículos marcados como favoritos">❤️ Favoritos</button>
         <button class="btn has-tip" id="plan-btn" data-tooltip="Plan de lectura de la Biblia en un año">📅 Plan 1 año</button>
         <button class="btn has-tip" id="glossary-btn" data-tooltip="Glosario de términos bíblicos">📖 Glosario</button>
-        <button class="btn has-tip" id="genealogy-btn" data-tooltip="Árbol genealógico bíblico interactivo">🌳 Genealogía</button>
+        <button class="btn has-tip" id="biography-btn" data-tooltip="Biografías de personas de la Biblia">👤 Biografía</button>
         <span id="estado-nube" style="display:none;" aria-hidden="true"></span>
         <button class="btn has-tip" id="youtube-btn" data-tooltip="Ver un sermón de YouTube mientras lees (solo el vídeo)"><svg class="yt-logo" viewBox="0 0 28 20" width="18" height="13" aria-hidden="true"><rect width="28" height="20" rx="4" fill="#FF0000"/><path d="M11 5.5v9l7.5-4.5L11 5.5z" fill="#fff"/></svg> YouTube</button>
         <button class="btn primary has-tip" id="project-btn" data-tooltip="Proyectar selección o versículo en pantalla completa">🎬 Proyectar</button>
@@ -2609,13 +2684,13 @@ body.yt-active-br #topbar-actions{
 <div id="toast-logro" class="toast-logro" aria-live="polite"></div>
 
 
-<!-- Genealogía bíblica -->
+<!-- Biografías bíblicas -->
 <div id="modal-genealogia" style="display:none;position:fixed;inset:0;z-index:1300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:16px;">
   <div class="im-card" style="max-width:640px;width:100%;max-height:90vh;display:flex;flex-direction:column;background:var(--card-bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:0;position:relative;overflow:hidden;">
     <button type="button" id="cerrar-genealogia" style="position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-soft);z-index:2;">❌</button>
     <div style="flex:0 0 auto;padding:16px 44px 12px 18px;border-bottom:1px solid var(--line);">
-      <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--rubric);">🌳 Personas de la Biblia</div>
-      <p style="margin:6px 0 0;font-size:13px;color:var(--ink-soft);line-height:1.45;">1) Elige una persona &nbsp;·&nbsp; 2) Lee su historia &nbsp;·&nbsp; 3) Toca Padre o Hijos para seguir</p>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--rubric);">👤 Biografías de la Biblia</div>
+      <p style="margin:6px 0 0;font-size:13px;color:var(--ink-soft);line-height:1.45;">Solo personas con información bíblica. Elige un nombre, lee su historia y sigue por familia si quieres.</p>
       <input type="text" id="gene-search" placeholder="Escribe un nombre (ejemplo: David)" style="width:100%;margin-top:10px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--parchment);color:var(--ink);font-family:var(--font-ui);font-size:14px;outline:none;box-sizing:border-box;">
     </div>
     <div id="gene-detail" style="flex:1 1 auto;overflow-y:auto;padding:14px 16px 18px;"></div>
@@ -2977,6 +3052,29 @@ function layoutForDesktop(){
   [nav, main].forEach(el => app.appendChild(el));
 }
 
+
+/* —— Detección de resolución al cargar y al redimensionar —— */
+function applyViewportLayout(){
+  const w = window.innerWidth || document.documentElement.clientWidth || 1200;
+  const h = window.innerHeight || document.documentElement.clientHeight || 800;
+  document.body.classList.remove('vp-narrow', 'vp-medium', 'vp-wide');
+  if(w < 920) document.body.classList.add('vp-narrow');
+  else if(w < 1280) document.body.classList.add('vp-medium');
+  else document.body.classList.add('vp-wide');
+  document.documentElement.style.setProperty('--vp-w', w + 'px');
+  document.documentElement.style.setProperty('--vp-h', h + 'px');
+  // Evitar desbordes horizontales
+  document.documentElement.style.overflowX = 'hidden';
+  document.body.style.overflowX = 'hidden';
+}
+applyViewportLayout();
+let _vpTimer = null;
+window.addEventListener('resize', ()=>{
+  clearTimeout(_vpTimer);
+  _vpTimer = setTimeout(applyViewportLayout, 120);
+});
+window.addEventListener('orientationchange', ()=> setTimeout(applyViewportLayout, 200));
+
 function applyMobileMode(){
   mobileMode = false; // forzado escritorio
   document.body.classList.remove('mobile-mode');
@@ -3210,7 +3308,7 @@ function renderBookList(){
       const tName = testament === 'AT' ? 'Antiguo Testamento' : 'Nuevo Testamento';
       label.innerHTML =
         `<span class="t-label-text" tabindex="0" role="button"><span class="t-chevron">${isOpen ? '▾' : '▸'}</span> ${tName}</span>` +
-        `<button type="button" class="info-btn" title="Información sobre ${tName}">ℹ️</button>`;
+        `<button type="button" class="info-btn" title="Información sobre ${tName}">📚</button>`;
       const toggleTest = ()=>{
         if(openTestaments.has(testament)) openTestaments.delete(testament);
         else openTestaments.add(testament);
@@ -3240,7 +3338,7 @@ function renderBookList(){
     item.innerHTML =
       `<span>${book}${has && bookOpen ? '<span class="b-chevron">▾</span>' : (has ? '<span class="b-chevron">▸</span>' : '')}</span>` +
       (has?'':'<span style="font-size:10px;opacity:.5;">— sin datos</span>') +
-      `<button type="button" class="info-btn" title="Información sobre ${book}">ℹ️</button>`;
+      `<button type="button" class="info-btn" title="Información sobre ${book}">📚</button>`;
     item.querySelector('.info-btn').onclick = (e)=>{
       e.stopPropagation();
       showBookInfo(book);
@@ -3371,18 +3469,25 @@ function sortedVerseNums(book, chap){
   return Object.keys((BIBLE[book]||{})[chap] || {}).sort((a,b)=>+a-+b);
 }
 
+function formatSelectionLabel(){
+  if(!selectedVerses.length) return '';
+  const nums = [...selectedVerses].sort((a,b)=>+a-+b);
+  if(nums.length === 1) return 'Has marcado el versículo ' + nums[0] + '.';
+  return 'Has marcado ' + nums.length + ' versículos: ' + nums.join(', ') + '.';
+}
 function updateSelectionUI(){
   const bar = document.getElementById('selection-bar');
   const easyBtn = document.getElementById('easy-btn');
+  const stickySel = document.getElementById('reader-sel-status');
+  const label = formatSelectionLabel();
+  if(selectionInfo) selectionInfo.textContent = label;
+  if(stickySel) stickySel.textContent = label;
   if(selectedVerses.length === 0){
-    selectionInfo.textContent = '';
     clearSelBtn.style.display = 'none';
     if(bar) bar.classList.remove('has-sel');
     if(easyBtn) easyBtn.style.display = '';
     selectionUIActive = false;
   } else {
-    const nums = [...selectedVerses].sort((a,b)=>+a-+b);
-    selectionInfo.textContent = `${nums.length} versículo(s) seleccionado(s): v${nums.join(', v')}`;
     clearSelBtn.style.display = 'inline-block';
     if(bar) bar.classList.add('has-sel');
     if(easyBtn) easyBtn.style.display = 'none';
@@ -3437,26 +3542,53 @@ function renderReader(){
 
   const chapData = (BIBLE[currentBook] || {})[currentChap];
   const meta = getBookMeta(currentBook);
+
+  // Encabezado fijo (no se mueve al hacer scroll en los versículos)
+  const head = document.createElement('div');
+  head.id = 'reader-sticky-head';
   const bt = document.createElement('div');
   bt.className = 'book-title';
   bt.textContent = formatBookHeading(currentBook, currentChap);
   const ct = document.createElement('div');
   ct.className = 'chap-title';
-  ct.textContent = detailVerse ? `Versículo ${detailVerse}` : `Capítulo ${currentChap}`;
+  ct.textContent = detailVerse ? ('Versículo ' + detailVerse) : ('Capítulo ' + currentChap);
   const hint = document.createElement('div');
   hint.id = 'select-hint';
-  hint.textContent = 'Clic en versículo → acciones y casilla · Marca la casilla para seleccionar (aparecen en todos) · Desmarca todas para ocultar casillas · Supr → quitar favorito';
-  reader.appendChild(bt); reader.appendChild(ct); reader.appendChild(hint);
+  hint.textContent = 'Toca un versículo para ver opciones (favorito o nota). Marca la casilla si quieres elegir varios versículos. Si quitas todas las marcas, las casillas se ocultan.';
+  const selSt = document.createElement('div');
+  selSt.id = 'reader-sel-status';
+  selSt.textContent = formatSelectionLabel();
+  head.appendChild(bt);
+  head.appendChild(ct);
+  head.appendChild(hint);
+  head.appendChild(selSt);
+  // Botón limpiar selección junto al estado
+  if(selectedVerses.length){
+    const clr = document.createElement('button');
+    clr.type = 'button';
+    clr.className = 'btn';
+    clr.id = 'reader-clear-sel';
+    clr.textContent = 'Quitar marcas';
+    clr.style.marginTop = '6px';
+    clr.onclick = ()=>{ selectedVerses = []; selectionUIActive = false; updateSelectionUI(); renderReader(); };
+    head.appendChild(clr);
+  }
+  reader.appendChild(head);
+
+  const versesWrap = document.createElement('div');
+  versesWrap.id = 'reader-verses';
+  reader.appendChild(versesWrap);
 
   if(!chapData){
     const p = document.createElement('div');
     p.className = 'empty-msg';
     p.textContent = 'No hay datos cargados para este capítulo todavía.';
-    reader.appendChild(p);
+    versesWrap.appendChild(p);
     return;
   }
 
   const jesusMap = buildJesusMap(currentBook, currentChap);
+  const verseParent = document.getElementById('reader-verses') || reader;
   sortedVerseNums(currentBook, currentChap).forEach(vnum=>{
     const text = chapData[vnum];
     const id = vid(currentBook, currentChap, vnum);
@@ -3619,7 +3751,7 @@ function renderReader(){
       bodyEl.appendChild(noteBox);
     }
 
-    reader.appendChild(row);
+    verseParent.appendChild(row);
   });
 }
 
@@ -5194,7 +5326,26 @@ const DICTIONARY = {
   "demonio":"Espíritu maligno opuesto a Dios.",
   "satanas":"Adversario; el diablo.",
   "satanás":"Adversario; el diablo.",
-  "diablo":"El tentador y acusador; Satanás."
+  "diablo":"El tentador y acusador; Satanás.",
+
+  "dios":"El Creador y Señor soberano de todo. En la Biblia es el Dios vivo de Abraham, de Isaac y de Jacob, revelado plenamente en Jesucristo.",
+  "dioses":"Plural de dios; en la Biblia suele referirse a ídolos falsos frente al Dios verdadero.",
+  "jehova":"Nombre de Dios en muchas traducciones castellanas (YHWH). El Dios del pacto con Israel.",
+  "jehová":"Nombre de Dios en muchas traducciones castellanas (YHWH). El Dios del pacto con Israel.",
+  "yahveh":"Transcripción del nombre divino YHWH (Jehová / Yahweh).",
+  "yahweh":"Transcripción del nombre divino YHWH (Jehová / Yahweh).",
+  "elohim":"Palabra hebrea traducida «Dios»; aparece desde Génesis 1:1.",
+  "adonai":"Título hebreo que significa «Señor»; se usa para Dios.",
+  "altisimo":"Título de Dios: el Altísimo.",
+  "altísimo":"Título de Dios: el Altísimo.",
+  "espiritu":"El Espíritu de Dios / Espíritu Santo.",
+  "espíritu":"El Espíritu de Dios / Espíritu Santo.",
+  "cristo":"El Mesías ungido; título de Jesús.",
+  "mesias":"El Ungido prometido; cumplido en Jesús.",
+  "mesías":"El Ungido prometido; cumplido en Jesús.",
+  "jesus":"Jesús de Nazaret, el Cristo, Hijo de Dios, Salvador.",
+  "jesús":"Jesús de Nazaret, el Cristo, Hijo de Dios, Salvador.",
+  "salvador":"Quien salva; título de Dios y de Jesucristo."
 };
 
 function stripAccents(s){
@@ -5208,42 +5359,62 @@ Object.keys(DICTIONARY).forEach(k=>{
   DICT_NORM[normalizeKey(k)] = { term: k, def: DICTIONARY[k] };
 });
 
+const DICT_SHORT_VERBS = new Set(['dio','vio','fue','hizo','dijo','oyo','creo','vino','tuvo','puso','salio','era']);
+
 /** Variantes morfológicas (plurales, verbos RV1960) → posibles lemas */
 function dictLookupKeys(word){
   const k = normalizeKey(word);
   if(!k) return [];
   const keys = [k];
-  // plurales
-  if(k.endsWith('es') && k.length > 4) keys.push(k.slice(0,-2));
-  if(k.endsWith('s') && k.length > 3) keys.push(k.slice(0,-1));
-  if(k.endsWith('ces')) keys.push(k.slice(0,-3)+'z');
-  if(k.endsWith('itas') && k.length > 5) keys.push(k.slice(0,-1));
-  // pretérito / formas verbales frecuentes (ó→o, ió→io tras quitar acentos)
-  if(k.endsWith('o') && k.length > 4){
+  // Plurales: solo si el singular existe en el diccionario (evita dios→dio)
+  if(k.endsWith('ces') && k.length > 4) keys.push(k.slice(0,-3)+'z');
+  if(k.endsWith('es') && k.length > 5 && !k.endsWith('ies')) keys.push(k.slice(0,-2));
+  if(k.endsWith('s') && k.length > 3){
     const stem = k.slice(0,-1);
-    keys.push(stem+'ar', stem+'er', stem+'ir', stem);
-    // acaecio → acaecer
-    if(stem.endsWith('i')) keys.push(stem.slice(0,-1)+'er', stem.slice(0,-1)+'ar', stem.slice(0,-1)+'ir');
+    // Aceptar plural→singular solo si el singular está definido y no es pretérito corto
+    if(typeof DICT_NORM !== 'undefined' && DICT_NORM[stem] && !(typeof DICT_SHORT_VERBS !== 'undefined' && DICT_SHORT_VERBS.has(stem))){
+      keys.push(stem);
+    } else if(!/(os|as|is|us|ios)$/.test(k) && k.length > 4){
+      keys.push(stem);
+    }
   }
-  if(k.endsWith('io') && k.length > 4){
+  if(k.endsWith('itas') && k.length > 5) keys.push(k.slice(0,-1));
+  // Pretéritos: exigir longitud > 5 para no tocar "dios" (4 letras)
+  if(k.endsWith('o') && k.length > 5){
+    const stem = k.slice(0,-1);
+    keys.push(stem+'ar', stem+'er', stem+'ir');
+    if(stem.endsWith('i') && stem.length > 3){
+      keys.push(stem.slice(0,-1)+'er', stem.slice(0,-1)+'ar', stem.slice(0,-1)+'ir');
+    }
+  }
+  if(k.endsWith('io') && k.length > 5){
     const stem = k.slice(0,-2);
-    keys.push(stem+'er', stem+'ir', stem+'ar', stem+'o');
+    keys.push(stem+'er', stem+'ir', stem+'ar');
   }
   if(k.endsWith('ando') && k.length > 6) keys.push(k.slice(0,-4)+'ar');
   if(k.endsWith('iendo') && k.length > 7){ keys.push(k.slice(0,-5)+'er', k.slice(0,-5)+'ir'); }
-  if(k.endsWith('ado') && k.length > 5) keys.push(k.slice(0,-2)+'r', k.slice(0,-3)+'ar');
-  if(k.endsWith('ido') && k.length > 5) keys.push(k.slice(0,-2)+'r', k.slice(0,-3)+'er', k.slice(0,-3)+'ir');
-  // se + verbo pegado (levantose)
-  if(k.endsWith('se') && k.length > 5) keys.push(k.slice(0,-2), k.slice(0,-2)+'r');
-  if(k.endsWith('ose') && k.length > 5) keys.push(k.slice(0,-3)+'o', k.slice(0,-3)+'ar');
-  // he aqui pegado
-  if(k.startsWith('heaqui')) keys.push('heaqui', 'he');
+  if(k.endsWith('ado') && k.length > 5) keys.push(k.slice(0,-3)+'ar');
+  if(k.endsWith('ido') && k.length > 5) keys.push(k.slice(0,-3)+'er', k.slice(0,-3)+'ir');
+  if(k.endsWith('ose') && k.length > 6) keys.push(k.slice(0,-3)+'ar', k.slice(0,-3)+'er');
+  else if(k.endsWith('se') && k.length > 6) keys.push(k.slice(0,-2));
+  if(k.startsWith('heaqui')) keys.push('heaqui');
   return [...new Set(keys.filter(Boolean))];
 }
 
 function lookupBiblical(word){
-  for(const k of dictLookupKeys(word)){
-    if(DICT_NORM[k]) return { term: DICT_NORM[k].term, def: DICT_NORM[k].def, source: 'Diccionario bíblico de SEFER' };
+  const exact = normalizeKey(word);
+  if(!exact) return null;
+  // Coincidencia exacta siempre gana (Dios ≠ dio)
+  if(DICT_NORM[exact]){
+    return { term: DICT_NORM[exact].term, def: DICT_NORM[exact].def, source: 'Diccionario bíblico de SEFER' };
+  }
+  const keys = dictLookupKeys(word)
+    .filter(k => k && k !== exact)
+    .sort((a,b)=> b.length - a.length || a.localeCompare(b));
+  for(const k of keys){
+    if(!DICT_NORM[k]) continue;
+    if((exact === k + 's' || exact === k + 'es') && DICT_SHORT_VERBS.has(k)) continue;
+    return { term: DICT_NORM[k].term, def: DICT_NORM[k].def, source: 'Diccionario bíblico de SEFER' };
   }
   return null;
 }
@@ -5594,19 +5765,23 @@ function renderGeneHome(filter){
   const det = document.getElementById('gene-detail');
   if(!det) return;
   const q = geneSearchNorm(filter||'');
+  // Solo personas con biografía con contenido real
+  const withBio = Object.keys(GENEALOGY_PEOPLE).filter(id=> geneHasRichBio(GENEALOGY_PEOPLE[id]));
   let ids;
   if(q){
-    ids = Object.keys(GENEALOGY_PEOPLE).filter(id=> geneSearchNorm(GENEALOGY_PEOPLE[id].name).includes(q));
+    ids = withBio.filter(id=> geneSearchNorm(GENEALOGY_PEOPLE[id].name).includes(q));
     ids.sort((a,b)=> GENEALOGY_PEOPLE[a].name.localeCompare(GENEALOGY_PEOPLE[b].name,'es'));
   } else {
-    ids = GENE_FEATURED.filter(id=> GENEALOGY_PEOPLE[id]);
+    const feat = GENE_FEATURED.filter(id=> withBio.includes(id));
+    const rest = withBio.filter(id=> !feat.includes(id))
+      .sort((a,b)=> GENEALOGY_PEOPLE[a].name.localeCompare(GENEALOGY_PEOPLE[b].name,'es'));
+    ids = feat.concat(rest);
   }
   let chips = ids.map(id=> geneChip(id, GENEALOGY_PEOPLE[id].name)).join('');
-  if(!chips) chips = '<p class="gd-empty">No encontré ese nombre. Prueba con otro, por ejemplo «David».</p>';
+  if(!chips) chips = '<p class="gd-empty">No hay biografía para ese nombre. Prueba con otro, por ejemplo «David» o «Moisés».</p>';
   det.innerHTML =
-    '<p class="gd-hint">'+(q ? 'Resultados de tu búsqueda. Toca un nombre:' : 'Empieza por alguien conocido. Toca un nombre:')+'</p>'+
-    '<div class="gd-chips">'+chips+'</div>'+
-    (!q ? '<div class="gd-section">¿Buscas a otra persona?</div><p class="gd-hint">Escríbelo arriba. Si aparece poco en la Biblia, te lo diremos.</p>' : '');
+    '<p class="gd-hint">'+(q ? 'Resultados. Toca un nombre para leer su biografía:' : 'Personas con biografía. Toca un nombre:')+'</p>'+
+    '<div class="gd-chips">'+chips+'</div>';
   det.querySelectorAll('[data-gene-go]').forEach(btn=>{
     btn.onclick = ()=> selectGenePerson(btn.getAttribute('data-gene-go'));
   });
@@ -5617,28 +5792,22 @@ function selectGenePerson(id){
   const p = GENEALOGY_PEOPLE[id];
   const det = document.getElementById('gene-detail');
   if(!det || !p) return;
-  const parent = p.parent ? GENEALOGY_PEOPLE[p.parent] : null;
-  const kids = geneChildren(id);
+  const parent = p.parent && geneHasRichBio(GENEALOGY_PEOPLE[p.parent]) ? GENEALOGY_PEOPLE[p.parent] : null;
+  const kids = geneChildren(id).filter(k=> geneHasRichBio(GENEALOGY_PEOPLE[k]));
   const rich = geneHasRichBio(p);
 
   let bioHtml = rich
     ? '<p class="gd-bio">'+p.bio+'</p>'
-    : '<p class="gd-empty">'+GENE_SPARSE_MSG+'</p>';
-  if(!rich && p.bio && p.bio.trim()){
-    bioHtml = '<p class="gd-bio">'+p.bio+'</p><p class="gd-empty">'+GENE_SPARSE_MSG+'</p>';
-  }
+    : '<p class="gd-empty">No hay biografía detallada de esta persona en SEFER.</p>';
 
   let family = '';
   if(parent){
-    family += '<div class="gd-section">⬆️ Padre / madre en este árbol</div><div class="gd-chips">'+geneChip(parent ? p.parent : '', parent.name)+'</div>';
+    family += '<div class="gd-section">⬆️ Padre / madre</div><div class="gd-chips">'+geneChip(p.parent, parent.name)+'</div>';
   }
   if(kids.length){
-    family += '<div class="gd-section">⬇️ Hijos</div><div class="gd-chips">'+
+    family += '<div class="gd-section">⬇️ Hijos con biografía</div><div class="gd-chips">'+
       kids.map(k=> geneChip(k, GENEALOGY_PEOPLE[k].name)).join('')+
       '</div>';
-  }
-  if(!parent && !kids.length){
-    family += '<p class="gd-hint">Esta persona no tiene padre ni hijos enlazados en este árbol. Puedes volver y elegir a otra.</p>';
   }
 
   const refs = (p.refs||[]).map(r=>'<button type="button" class="gd-ref" data-ref="'+String(r).replace(/"/g,'')+'">'+r+'</button>').join('');
@@ -5687,6 +5856,7 @@ function closeGenealogia(){
   const m = document.getElementById('modal-genealogia');
   if(m) m.style.display = 'none';
 }
+document.getElementById('biography-btn')?.addEventListener('click', openGenealogia);
 document.getElementById('genealogy-btn')?.addEventListener('click', openGenealogia);
 document.getElementById('cerrar-genealogia')?.addEventListener('click', closeGenealogia);
 document.getElementById('modal-genealogia')?.addEventListener('click', (e)=>{
@@ -5744,9 +5914,9 @@ const SEFER_TOUR_STEPS = [
     text: 'Si no entiendes una palabra de la Biblia, ábrela aquí y búscala. Te explica qué significa de forma sencilla.'
   },
   {
-    sel: '#genealogy-btn',
-    title: 'Familias de la Biblia',
-    text: 'Aquí ves personas de la Biblia. Toca un nombre, lee su historia y usa los botones de Padre o Hijos para seguir. Es muy sencillo.'
+    sel: '#biography-btn, #genealogy-btn',
+    title: 'Biografías',
+    text: 'El botón Biografía muestra personas de la Biblia con historia. Toca un nombre y lee. Solo aparecen quienes tienen información.'
   },
   {
     sel: '#youtube-btn',
@@ -5889,14 +6059,13 @@ function openSeferHelp(){
     • <strong>Palabra</strong>: escribe en cualquier momento → barra central. Esc cierra.</div></div>
 
     <div class="im-block"><div class="im-label">Versículos y selección</div>
-    <div class="im-text">• Clic en un versículo → menú (favorito, nota) y <strong>casilla</strong> de ese versículo.<br>
-    • Al <strong>marcar</strong> la casilla aparecen casillas en todos; si desmarcas todas, desaparecen.<br>
+    <div class="im-text">• Toca un versículo para ver favorito o nota. Marca la casilla para elegir varios versículos; si quitas todas las marcas, las casillas se ocultan.<br>
     • Encabezado: <code>Antiguo Testamento: Libro 2 [Éxodo:1]</code>.<br>
     • Supr/Backspace en un favorito abierto lo quita.</div></div>
 
     <div class="im-block"><div class="im-label">Plan, Glosario, Notas y Favoritos</div>
     <div class="im-text">• 📅 <strong>Plan 1 año</strong>: órdenes Canónico / Inverso / Paralelo / Cronológico; inicio 1 ene–31 dic o desde hoy (365 días).<br>
-    • 📖 <strong>Glosario</strong>, 🌳 <strong>Personas de la Biblia</strong> (elige un nombre; Padre/Hijos para navegar; si hay poca información se indica), 📝 <strong>Notas</strong>, ❤️ <strong>Favoritos</strong> y 📚 <strong>Significados</strong> son ventanas flotantes (cierra con X).</div></div>
+    • 📖 <strong>Glosario</strong>, 👤 <strong>Biografía</strong> (personas con información bíblica; elige un nombre y lee su historia), 📝 <strong>Notas</strong>, ❤️ <strong>Favoritos</strong> y 📚 <strong>Significados</strong> son ventanas flotantes (cierra con X).</div></div>
 
     <div class="im-block"><div class="im-label">YouTube y Proyección</div>
     <div class="im-text">• <strong>YouTube</strong> (botón con logo rojo): pega enlace de sermón; solo el vídeo. Posición arriba/abajo derecha. Borrar / Pegar / Cargar. Título = título del vídeo − canal.<br>
