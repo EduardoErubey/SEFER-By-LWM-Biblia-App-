@@ -1612,35 +1612,54 @@ body.mobile-mode .welcome-mobile .welcome-hint{
   padding:8px 10px;
   font-size:15px;
 }
+/* Tooltips de la barra: debajo del botón, por encima del lector */
+#topbar{
+  position:relative;
+  z-index:400;
+  overflow:visible !important;
+}
+#topbar-actions{
+  position:relative;
+  z-index:401;
+  overflow:visible !important;
+}
+#topbar-left, #content-wrap, #reader, #reader-sticky-head{
+  /* el lector no debe tapar tooltips de la barra */
+}
+#reader-sticky-head{ z-index:6; }
+.btn-icon, .btn.has-tip{
+  position:relative;
+  overflow:visible;
+}
 .btn-icon::after, .btn.has-tip::after{
   content:attr(data-tooltip);
   position:absolute;
   left:50%;
-  bottom:calc(100% + 8px);
-  top:auto;
-  transform:translateX(-50%) translateY(4px);
+  top:calc(100% + 8px);
+  bottom:auto;
+  transform:translateX(-50%) translateY(-4px);
   background:var(--ink);
   color:var(--parchment);
   font-family:var(--font-ui);
-  font-size:11px;
+  font-size:11.5px;
   font-weight:600;
   white-space:normal;
-  max-width:min(240px, 70vw);
+  max-width:min(260px, 75vw);
+  min-width:120px;
   text-align:center;
   line-height:1.35;
-  padding:6px 10px;
+  padding:7px 11px;
   border-radius:6px;
   opacity:0;
   visibility:hidden;
   pointer-events:none;
   transition:opacity .18s, transform .18s, visibility .18s;
-  z-index:5000;
-  box-shadow:0 6px 16px rgba(0,0,0,0.28);
+  z-index:10050;
+  box-shadow:0 8px 20px rgba(0,0,0,0.35);
 }
-#topbar, #topbar-actions{ overflow:visible; }
 #topbar-actions .btn{ position:relative; z-index:1; }
 #topbar-actions .btn:hover,
-#topbar-actions .btn:focus-visible{ z-index:5001; }
+#topbar-actions .btn:focus-visible{ z-index:10051; }
 .btn-icon:hover::after, .btn.has-tip:hover::after,
 .btn-icon:focus-visible::after, .btn.has-tip:focus-visible::after{
   opacity:1;
@@ -2523,6 +2542,7 @@ body.vp-narrow .theme-dot{ width:18px; height:18px; }
 .bio-list-item:hover{ background:color-mix(in srgb, var(--gold) 12%, transparent); }
 .bio-list-item strong{ display:block; color:var(--rubric); font-size:14.5px; margin-bottom:2px; }
 .bio-preview{ display:block; font-size:12.5px; color:var(--ink-soft); }
+.bio-era-tag{ display:inline-block; font-size:11px; font-weight:600; color:var(--gold); margin:2px 0 4px; }
 </style>
 </head>
 <body data-theme="mexico">
@@ -5852,6 +5872,29 @@ function geneChip(id, label){
   return '<button type="button" class="gd-chip big" data-gene-go="'+id+'">'+label+'</button>';
 }
 
+const GENE_NT_HINT = /mateo|marcos|lucas|juan|hechos|romanos|corintios|galatas|gálatas|efesios|filipenses|colosenses|tesalonicenses|timoteo|tito|filemon|filemón|hebreos|santiago|pedro|judas|apocalipsis|jesus|jesús|cristo/;
+const GENE_AT_HINT = /genesis|génesis|exodo|éxodo|levitico|levítico|numeros|números|deuteronomio|josue|josué|jueces|rut|samuel|reyes|cronicas|crónicas|esdras|nehemias|nehemías|ester|job|salmos|proverbios|eclesiastes|eclesiastés|cantares|isaias|isaías|jeremias|jeremías|lamentaciones|ezequiel|daniel|oseas|oseas|joel|amos|amós|abdias|abdías|jonas|jonás|miqueas|nahum|nahúm|habacuc|sofonias|sofonías|hageo|zacarias|zacarías|malaquias|malaquías/;
+
+function geneEra(id){
+  const p = GENEALOGY_PEOPLE[id];
+  if(!p) return '';
+  if(p.era) return p.era;
+  const blob = ((p.refs||[]).join(' ') + ' ' + (p.name||'') + ' ' + (p.bio||'')).toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const nt = GENE_NT_HINT.test(blob);
+  const at = GENE_AT_HINT.test(blob);
+  if(nt && !at) return 'Nuevo Testamento';
+  if(at && !nt) return 'Antiguo Testamento';
+  if(nt && at) return 'Antiguo y Nuevo Testamento';
+  // nombres clave
+  const n = geneSearchNorm(p.name||'');
+  if(/jesus|pedro|pablo|maria|juan|pilato|barrabas|judas iscariote|herodes|caifas/.test(n)) return 'Nuevo Testamento';
+  if(/abraham|moises|david|salomon|noe|adan|eva|jose|isaac|jacob/.test(n)) return 'Antiguo Testamento';
+  return 'Periodo bíblico (ver pasajes)';
+}
+
+let geneHistory = [];
+
 function renderGeneHome(filter){
   const det = document.getElementById('gene-detail');
   if(!det) return;
@@ -5870,8 +5913,9 @@ function renderGeneHome(filter){
   ids.forEach(id=>{
     const p = GENEALOGY_PEOPLE[id];
     const rich = geneHasRichBio(p);
+    const era = geneEra(id);
     const preview = rich ? (p.bio.slice(0, 90) + (p.bio.length>90?'…':'')) : (p.bio && p.bio.trim() ? p.bio : 'Mención breve en la Escritura; hay poca información detallada.');
-    html += '<li class="bio-list-item" data-gene-go="'+id+'"><strong>'+p.name+'</strong><span class="bio-preview">'+preview+'</span></li>';
+    html += '<li class="bio-list-item" data-gene-go="'+id+'"><strong>'+p.name+'</strong><span class="bio-era-tag">'+era+'</span><span class="bio-preview">'+preview+'</span></li>';
   });
   html += '</ul>';
   det.innerHTML = html;
@@ -5880,39 +5924,58 @@ function renderGeneHome(filter){
   });
 }
 
-function selectGenePerson(id){
+function selectGenePerson(id, fromBack){
+  if(!fromBack && geneSelected && geneSelected !== id){
+    geneHistory.push(geneSelected);
+  }
   geneSelected = id;
   const p = GENEALOGY_PEOPLE[id];
   const det = document.getElementById('gene-detail');
   if(!det || !p) return;
-  const parent = p.parent && geneHasRichBio(GENEALOGY_PEOPLE[p.parent]) ? GENEALOGY_PEOPLE[p.parent] : null;
-  const kids = geneChildren(id).filter(k=> geneHasRichBio(GENEALOGY_PEOPLE[k]));
+  const parent = p.parent && GENEALOGY_PEOPLE[p.parent] ? GENEALOGY_PEOPLE[p.parent] : null;
+  const kids = geneChildren(id);
   const rich = geneHasRichBio(p);
+  const era = geneEra(id);
 
   let bioHtml = rich
     ? '<p class="gd-bio">'+p.bio+'</p>'
-    : '<p class="gd-empty">No hay biografía detallada de esta persona en SEFER.</p>';
+    : '<p class="gd-empty">'+(p.bio && p.bio.trim() ? p.bio : 'No hay biografía detallada de esta persona en SEFER. Solo se conoce lo que mencionan brevemente las Escrituras.')+'</p>';
 
   let family = '';
   if(parent){
     family += '<div class="gd-section">⬆️ Padre / madre</div><div class="gd-chips">'+geneChip(p.parent, parent.name)+'</div>';
   }
   if(kids.length){
-    family += '<div class="gd-section">⬇️ Hijos con biografía</div><div class="gd-chips">'+
+    family += '<div class="gd-section">⬇️ Hijos</div><div class="gd-chips">'+
       kids.map(k=> geneChip(k, GENEALOGY_PEOPLE[k].name)).join('')+
       '</div>';
   }
 
   const refs = (p.refs||[]).map(r=>'<button type="button" class="gd-ref" data-ref="'+String(r).replace(/"/g,'')+'">'+r+'</button>').join('');
+  const canBack = geneHistory.length > 0;
 
   det.innerHTML =
-    '<button type="button" class="btn" id="gene-back-home" style="margin-bottom:12px;">← Todos los nombres</button>'+
+    '<div class="bio-nav-row" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">'+
+      '<button type="button" class="btn" id="gene-back-btn">'+(canBack?'← Atrás':'← Lista')+'</button>'+
+      (canBack?'<button type="button" class="btn" id="gene-back-home">Todos los nombres</button>':'')+
+    '</div>'+
     '<div class="gd-name">'+p.name+'</div>'+
+    '<div class="gd-era" style="font-size:12.5px;font-weight:600;color:var(--gold);margin:0 0 10px;">📆 Época: '+era+'</div>'+
     bioHtml+
     (refs ? '<div class="gd-section">📖 Leer en la Biblia</div><div class="gd-refs">'+refs+'</div>' : '')+
     family;
 
+  document.getElementById('gene-back-btn')?.addEventListener('click', ()=>{
+    if(geneHistory.length){
+      const prev = geneHistory.pop();
+      selectGenePerson(prev, true);
+    } else {
+      geneSelected = null;
+      renderGeneHome(document.getElementById('gene-search')?.value || '');
+    }
+  });
   document.getElementById('gene-back-home')?.addEventListener('click', ()=>{
+    geneHistory = [];
     geneSelected = null;
     renderGeneHome(document.getElementById('gene-search')?.value || '');
   });
@@ -5942,6 +6005,7 @@ function openGenealogia(){
   const search = document.getElementById('gene-search');
   if(search) search.value = '';
   geneSelected = null;
+  geneHistory = [];
   renderGeneHome('');
   search?.focus();
 }
@@ -6039,7 +6103,7 @@ const SEFER_TOUR_STEPS = [
   {
     sel: '#biography-btn, #genealogy-btn',
     title: 'Biografías',
-    text: 'El botón Biografía muestra personas de la Biblia con historia. Toca un nombre y lee. Solo aparecen quienes tienen información.'
+    text: 'El botón Biografía lista personas de la Biblia. Indica si son del Antiguo o del Nuevo Testamento. Usa Atrás para volver.'
   },
   {
     sel: '#youtube-btn',
@@ -6188,7 +6252,7 @@ function openSeferHelp(){
 
     <div class="im-block"><div class="im-label">Plan, Glosario, Notas y Favoritos</div>
     <div class="im-text">• 📅 <strong>Plan 1 año</strong>: órdenes Canónico / Inverso / Paralelo / Cronológico; inicio 1 ene–31 dic o desde hoy (365 días).<br>
-    • 📖 <strong>Glosario</strong>, 👤 <strong>Biografía</strong> (lista de personas; toca un nombre) · 📜 <strong>Apócrifos</strong> (información, sin el texto de esos libros), 📝 <strong>Notas</strong>, ❤️ <strong>Favoritos</strong> y 📚 <strong>Significados</strong> son ventanas flotantes (cierra con X).</div></div>
+    • 📖 <strong>Glosario</strong>, 👤 <strong>Biografía</strong> (lista con época AT/NT; botón Atrás) · 📜 <strong>Apócrifos</strong> (información, sin el texto de esos libros), 📝 <strong>Notas</strong>, ❤️ <strong>Favoritos</strong> y 📚 <strong>Significados</strong> son ventanas flotantes (cierra con X).</div></div>
 
     <div class="im-block"><div class="im-label">YouTube y Proyección</div>
     <div class="im-text">• <strong>YouTube</strong> (botón con logo rojo): pega enlace de sermón; solo el vídeo. Posición arriba/abajo derecha. Borrar / Pegar / Cargar. Título = título del vídeo − canal.<br>
@@ -6676,6 +6740,22 @@ document.getElementById('modal-plan-lectura')?.addEventListener('click', (e)=>{
    GLOSARIO (usa el diccionario bíblico ya existente + extras)
    ========================================================= */
 const GLOSARIO_EXTRA = [
+  {palabra:'Contumaz', definicion:'Obstinado, rebelde, que se resiste con dureza a corregirse o a obedecer a Dios.'},
+  {palabra:'Dura cerviz', definicion:'Expresión bíblica para describir a alguien tercamente rebelde, que no se somete a Dios (como un animal que no acepta el yugo).'},
+  {palabra:'Cuitado', definicion:'Afligido, angustiado, lleno de pena o dificultad.'},
+  {palabra:'Tardo', definicion:'Lento, pesado para entender o para actuar; en la Biblia a veces se dice «tardo para oír» o «tardos de corazón».'},
+  {palabra:'Inicuo', definicion:'Malvado, injusto, que practica la iniquidad (el pecado y la maldad).'},
+  {palabra:'Vil', definicion:'Despreciable, de poco valor moral; persona o acción degradada.'},
+  {palabra:'Prevaricador', definicion:'Quien se desvía de la rectitud o de la ley de Dios; traiciona lo correcto.'},
+  {palabra:'Perverso', definicion:'Corrompido, torcido en su camino; contrario a lo bueno y justo.'},
+  {palabra:'Réprobo', definicion:'Rechazado o desaprobado; en sentido bíblico, quien se endurece y no aprueba retener a Dios en su conocimiento.'},
+  {palabra:'Fementido', definicion:'Falso, traidor, que falta a la fe o a la palabra dada.'},
+  {palabra:'Altivo', definicion:'Orgulloso, arrogante, que se ensalza a sí mismo.'},
+  {palabra:'Lisonjero', definicion:'Que adula o halaga con palabras falsas para ganar favor (a veces escrito «lisongero» en textos antiguos).'},
+  {palabra:'Lisongero', definicion:'Forma antigua de «lisonjero»: adulador, que halaga con engaño.'},
+  {palabra:'Fatuo', definicion:'Necio, vano, sin juicio; persona superficial o insensata.'},
+  {palabra:'Escarnecedor', definicion:'Quien se burla, ridiculiza o desprecia lo sagrado o a los justos.'},
+  {palabra:'Impío', definicion:'Sin temor de Dios; irreverente, que vive lejos de la piedad y de la obediencia a Dios.'},
   {palabra:'Gracia', definicion:'Favor inmerecido otorgado por Dios al pecador.'},
   {palabra:'Redención', definicion:'Rescate pagado para liberar; el sacrificio de Cristo nos redime.'},
   {palabra:'Justificación', definicion:'Acto por el cual Dios declara justo al que cree en Jesús.'},
