@@ -334,6 +334,7 @@ body{
 
 /* ---------- NAV ---------- */
 #nav{
+  --nav-w:280px;
   width:280px;
   min-width:280px;
   background:var(--parchment-2);
@@ -559,6 +560,7 @@ body.mobile-mode .chap-title{font-size:15px;}
 body.mobile-mode .verse{font-size:calc(var(--verse-size, 17px) * 1.02);}
 /* 3) Libros */
 body.mobile-mode #nav{
+  --nav-w:280px;
   width:100%;
   min-width:0;
   flex:1 1 0;
@@ -2456,7 +2458,8 @@ body.yt-active-br #topbar-actions{
 
 
 /* —— Resolución adaptativa —— */
-body.vp-narrow #nav{ width:220px; min-width:220px; }
+body.vp-narrow #nav{
+  --nav-w:280px; width:220px; min-width:220px; }
 body.vp-narrow #reader{ padding:18px 18px 40px; }
 body.vp-narrow #topbar{ padding:8px 12px; gap:8px; }
 body.vp-narrow #topbar-actions .btn{ padding:5px 8px; font-size:11.5px; }
@@ -2543,7 +2546,38 @@ body.vp-narrow .theme-dot{ width:18px; height:18px; }
 .bio-list-item strong{ display:block; color:var(--rubric); font-size:14.5px; margin-bottom:2px; }
 .bio-preview{ display:block; font-size:12.5px; color:var(--ink-soft); }
 .bio-era-tag{ display:inline-block; font-size:11px; font-weight:600; color:var(--gold); margin:2px 0 4px; }
+
+/* SEFER YT FIXED BL */
+#yt-player-wrap,
+#yt-player-wrap.yt-pos-bl,
+#yt-player-wrap.yt-pos-br,
+#yt-player-wrap.yt-pos-tr{
+  left: 16px !important;
+  right: auto !important;
+  bottom: 16px !important;
+  top: auto !important;
+}
+@media (min-width: 900px){
+  #yt-player-wrap,
+  #yt-player-wrap.yt-pos-bl,
+  #yt-player-wrap.yt-pos-br,
+  #yt-player-wrap.yt-pos-tr{
+    left: max(16px, calc(280px + 12px)) !important;
+  }
+}
+body.yt-active-bl #reader,
+body.yt-active-br #reader,
+body.yt-active-tr #reader{
+  padding-bottom: min(300px, 46vw) !important;
+  padding-right: 0 !important;
+}
+body.yt-active-bl #reader-verses,
+body.yt-active-br #reader-verses,
+body.yt-active-tr #reader-verses{
+  padding-bottom: min(280px, 42vw) !important;
+}
 </style>
+
 </head>
 <body data-theme="mexico">
 <div id="app">
@@ -2661,7 +2695,6 @@ body.vp-narrow .theme-dot{ width:18px; height:18px; }
   <div id="yt-player-bar">
     <span id="yt-player-title">Sermón</span>
     <div style="display:flex;gap:3px;align-items:center;flex-shrink:0;">
-      <button type="button" id="yt-pos-btn" class="yt-bar-btn" title="Cambiar posición">↗</button>
       <button type="button" id="yt-change-btn" class="yt-bar-btn" title="Cambiar enlace">🔗</button>
       <button type="button" id="yt-clear-btn" class="yt-bar-btn" title="Borrar enlace y cerrar">🗑</button>
       <button type="button" id="yt-close-btn" class="yt-bar-btn" title="Cerrar">✕</button>
@@ -6230,49 +6263,50 @@ function openSeferHelp(){
     <button type="button" class="btn primary tour-start-btn" id="start-sefer-tour-btn">🎯 Iniciar tour interactivo</button>
 
     <div class="im-block"><div class="im-label">¿Qué es SEFER?</div>
-    <div class="im-text">Biblia de estudio y proyección (RV1960) para Life Word Mission Playa del Carmen. Notas, favoritos, significados, plan anual, glosario, YouTube, proyección y logros. También usable con teclado.</div></div>
+    <div class="im-text">Biblia de estudio y proyección (Reina-Valera 1960) de <strong>Life Word Mission Playa del Carmen</strong>. Sirve para leer, tomar notas, marcar favoritos, proyectar versículos y estudiar con calma.</div></div>
 
-    <div class="im-block"><div class="im-label">Tour</div>
-    <div class="im-text">El <strong>tour</strong> te enseña SEFER paso a paso, con palabras sencillas. Resalta cada parte de la pantalla. Puedes salir con <strong>Esc</strong> o el botón Salir. Ideal si es tu primera vez.</div></div>
+    <div class="im-block"><div class="im-label">Tour guiado</div>
+    <div class="im-text">Pulsa <strong>Iniciar tour</strong> para un recorrido paso a paso por la pantalla. Puedes salir con <strong>Esc</strong>. Ideal si es tu primera vez.</div></div>
 
-    <div class="im-block"><div class="im-label">Navegación de libros</div>
-    <div class="im-text">• Expande AT/NT y libros; elige un capítulo para leer.<br>
-    • Botón <strong>?</strong> → ficha (significado, autor, fecha, <strong>idioma original</strong>, resumen).<br>
-    • <strong>↺</strong> reinicia navegación y vuelve al inicio. <strong>⛶</strong> pantalla completa.</div></div>
+    <div class="im-block"><div class="im-label">Libros y capítulos</div>
+    <div class="im-text">• A la izquierda: Antiguo y Nuevo Testamento. Abre un libro y elige un capítulo.<br>
+    • Botón <strong>📚</strong> junto al nombre: ficha del libro (autor, fecha, idioma original, resumen).<br>
+    • <strong>↺</strong> reinicia la navegación. <strong>⛶</strong> pantalla completa (como F11).</div></div>
 
     <div class="im-block"><div class="im-label">Búsquedas</div>
-    <div class="im-text">• <strong>Buscador de versículos</strong> (con lupa): ejemplos animados; escribe <code>Génesis 1:1</code>, rangos o listas. <strong>Tab</strong> autocompleta. Enter navega.<br>
-    • 🎲 <strong>Dado</strong> (junto a + de temas): versículo aleatorio.<br>
-    • <strong>Palabra</strong>: escribe en cualquier momento → barra central. Esc cierra.</div></div>
+    <div class="im-text">• <strong>Buscador de versículos</strong>: escribe por ejemplo <code>Juan 3:16</code>, un rango o varios versículos. <strong>Tab</strong> completa el nombre del libro. Enter abre la referencia.<br>
+    • 🎲 <strong>Dado</strong>: versículo al azar.<br>
+    • Al escribir una palabra en cualquier momento puede abrirse la búsqueda central de palabras.</div></div>
 
-    <div class="im-block"><div class="im-label">Versículos y selección</div>
-    <div class="im-text">• Toca un versículo para ver favorito o nota. Marca la casilla para elegir varios versículos; si quitas todas las marcas, las casillas se ocultan.<br>
-    • Encabezado: <code>Antiguo Testamento: Libro 2 [Éxodo:1]</code>.<br>
-    • Supr/Backspace en un favorito abierto lo quita.</div></div>
+    <div class="im-block"><div class="im-label">Lectura y versículos</div>
+    <div class="im-text">• El encabezado del capítulo (libro, capítulo e instrucciones) permanece fijo al hacer scroll.<br>
+    • Un clic en un versículo: favorito, nota y casilla de selección.<br>
+    • <strong>Doble clic</strong> en una palabra: significado (si existe; si no hay definición, no aparece ventana).<br>
+    • Marca casillas para elegir varios versículos y proyectarlos. «Quitar marcas» limpia la selección.</div></div>
 
-    <div class="im-block"><div class="im-label">Plan, Glosario, Notas y Favoritos</div>
-    <div class="im-text">• 📅 <strong>Plan 1 año</strong>: órdenes Canónico / Inverso / Paralelo / Cronológico; inicio 1 ene–31 dic o desde hoy (365 días).<br>
-    • 📖 <strong>Glosario</strong>, 👤 <strong>Biografía</strong> (lista con época AT/NT; botón Atrás) · 📜 <strong>Apócrifos</strong> (información, sin el texto de esos libros), 📝 <strong>Notas</strong>, ❤️ <strong>Favoritos</strong> y 📚 <strong>Significados</strong> son ventanas flotantes (cierra con X).</div></div>
+    <div class="im-block"><div class="im-label">Barra de herramientas</div>
+    <div class="im-text">• <strong>A− / A+</strong>: tamaño del texto.<br>
+    • 🔍 <strong>Detalle</strong>: resalta nombres, ciudades y palabras de Jesús.<br>
+    • 📚 Significados guardados · 📝 Notas · ♥ Favoritos.<br>
+    • 📅 <strong>Plan 1 año</strong> (canónico, inverso, paralelo, cronológico; desde el 1 de enero o desde hoy).<br>
+    • 📖 <strong>Glosario</strong> de términos bíblicos (lista completa, con buscador).<br>
+    • 👤 <strong>Biografía</strong>: lista de personas, época (AT/NT), botón Atrás.<br>
+    • 📜 <strong>Apócrifos</strong>: información y curiosidades (sin el texto de esos libros).<br>
+    • ☁️ Nube / perfil Google · 🎬 Proyectar · ❓ Ayuda.</div></div>
 
-    <div class="im-block"><div class="im-label">YouTube y Proyección</div>
-    <div class="im-text">• <strong>YouTube</strong> (botón con logo rojo): pega enlace de sermón; solo el vídeo. Posición arriba/abajo derecha. Borrar / Pegar / Cargar. Título = título del vídeo − canal.<br>
-    • 🎬 <strong>Proyectar</strong>: no se muestra en la bienvenida; al leer un capítulo proyecta selección o capítulo. Auto: cuenta 10 s; velocidad 0.03×→0.09×. <strong>Esc</strong> cierra.</div></div>
+    <div class="im-block"><div class="im-label">YouTube</div>
+    <div class="im-text">Pega el enlace de un sermón. El vídeo se muestra fijo en la <strong>esquina inferior izquierda</strong> (solo el vídeo, sin comentarios). El texto de los versículos deja espacio para no quedar detrás del reproductor.</div></div>
 
-    <div class="im-block"><div class="im-label">Nube, perfil y logros</div>
-    <div class="im-text">• ☁️ <strong>Sincronizar</strong> y 🏆 <strong>Perfil</strong> (esquina del panel de libros): Drive guarda favoritos, notas, significados, plan, tema y logros.<br>
-    • Logros por uso y por cada libro leído (nombres ligados al contenido).</div></div>
+    <div class="im-block"><div class="im-label">Proyección</div>
+    <div class="im-text">Proyecta el versículo actual, el capítulo o la selección marcada. Desplazamiento automático con conteo y velocidades. <strong>Esc</strong> cierra la proyección.</div></div>
 
-    <div class="im-block"><div class="im-label">Temas</div>
-    <div class="im-text">Lote ＋: México · Corea · Ucrania · 👑 Reino · 🌿 Edén<br>
-    Lote −: ☀️ Day · 🌙 Night · ⏳ Arena · 🕯️ Sándalo · 🌌 Amoled<br>
-    Predeterminado: México.</div></div>
+    <div class="im-block"><div class="im-label">Temas y pantalla</div>
+    <div class="im-text">Diez temas (México, Corea, Ucrania, Day, Night, Reino, Edén, Arena, Sándalo, AMOLED). El botón +/− cambia el lote de cinco temas. La app ajusta márgenes según el ancho de la ventana.</div></div>
 
-    <div class="im-block"><div class="im-label">Atajos</div>
-    <div class="im-text">• <strong>Esc</strong> — cierra modales, proyección o tour<br>
-    • <strong>Tab</strong> — completa nombre de libro en búsqueda<br>
-    • <strong>← →</strong> — en proyección, versículo anterior/siguiente<br>
-    • <strong>F11</strong> o ⛶ — pantalla completa</div></div>
+    <div class="im-block"><div class="im-label">Sincronización</div>
+    <div class="im-text">Con Google puedes guardar notas, favoritos, significados y progreso en la nube. El perfil muestra logros e insignias por lectura.</div></div>
   `;
+
   document.getElementById('info-modal').classList.add('open');
   focusInfoScroll();
   document.getElementById('start-sefer-tour-btn')?.addEventListener('click', ()=>{
@@ -6835,7 +6869,7 @@ document.getElementById('modal-glosario')?.addEventListener('click', (e)=>{
 /* =========================================================
    YOUTUBE — sermón en esquina (solo iframe embed)
    ========================================================= */
-let ytPosition = store.get('bp_yt_pos', 'br'); // 'br' | 'tr'
+let ytPosition = 'bl';
 
 function extractYouTubeId(url){
   if(!url) return null;
@@ -6863,28 +6897,19 @@ function buildYouTubeEmbedSrc(id){
 }
 function applyYoutubePosition(){
   const wrap = document.getElementById('yt-player-wrap');
-  const posBtn = document.getElementById('yt-pos-btn');
   if(!wrap) return;
-  wrap.classList.remove('yt-pos-br', 'yt-pos-tr');
-  wrap.classList.add(ytPosition === 'tr' ? 'yt-pos-tr' : 'yt-pos-br');
-  document.body.classList.remove('yt-active-br', 'yt-active-tr');
+  wrap.classList.remove('yt-pos-br', 'yt-pos-tr', 'yt-pos-bl');
+  wrap.classList.add('yt-pos-bl');
+  document.body.classList.remove('yt-active-br', 'yt-active-tr', 'yt-active-bl');
   if(wrap.style.display !== 'none' && wrap.style.display !== ''){
-    document.body.classList.add(ytPosition === 'tr' ? 'yt-active-tr' : 'yt-active-br');
+    document.body.classList.add('yt-active-bl');
   }
-  if(posBtn){
-    if(ytPosition === 'tr'){
-      posBtn.textContent = '↘';
-      posBtn.title = 'Mover a esquina inferior derecha';
-    } else {
-      posBtn.textContent = '↗';
-      posBtn.title = 'Mover debajo de Ayuda (arriba derecha)';
-    }
-  }
+  /* posición fija inferior izquierda */
 }
 function setYoutubeLayoutActive(active){
-  document.body.classList.remove('yt-active-br', 'yt-active-tr');
+  document.body.classList.remove('yt-active-br', 'yt-active-tr', 'yt-active-bl');
   if(active){
-    document.body.classList.add(ytPosition === 'tr' ? 'yt-active-tr' : 'yt-active-br');
+    document.body.classList.add('yt-active-bl');
   }
 }
 function openYoutubeModal(prefill){
@@ -6995,13 +7020,7 @@ document.getElementById('yt-change-btn')?.addEventListener('click', ()=>{
 });
 document.getElementById('yt-clear-btn')?.addEventListener('click', clearYoutubeLink);
 document.getElementById('yt-clear-modal-btn')?.addEventListener('click', clearYoutubeLink);
-document.getElementById('yt-pos-btn')?.addEventListener('click', ()=>{
-  ytPosition = (ytPosition === 'br') ? 'tr' : 'br';
-  store.set('bp_yt_pos', ytPosition);
-  applyYoutubePosition();
-  const wrap = document.getElementById('yt-player-wrap');
-  if(wrap && wrap.style.display !== 'none') setYoutubeLayoutActive(true);
-});
+/* yt-pos eliminado: siempre inferior izquierda */
 applyYoutubePosition();
 
 /* =========================================================
