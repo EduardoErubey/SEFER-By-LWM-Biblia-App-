@@ -2616,6 +2616,19 @@ body.yt-active-tr #reader-verses{
       </div>
     </div>
     <div id="book-list"></div>
+<!-- Reproductor YouTube en barra lateral (debajo de libros) -->
+<div id="yt-player-wrap" class="yt-sidebar" style="display:none;" aria-hidden="true">
+  <div id="yt-player-bar">
+    <span id="yt-player-title">Sermón</span>
+    <div style="display:flex;gap:3px;align-items:center;flex-shrink:0;">
+      <button type="button" id="yt-change-btn" class="yt-bar-btn" title="Cambiar enlace">✎</button>
+      <button type="button" id="yt-clear-btn" class="yt-bar-btn" title="Borrar enlace y cerrar">🗑</button>
+      <button type="button" id="yt-close-btn" class="yt-bar-btn" title="Cerrar">✕</button>
+    </div>
+  </div>
+  <div id="yt-iframe-box"></div>
+</div>
+
   </div>
 
   <div id="main">
@@ -2690,16 +2703,7 @@ body.yt-active-tr #reader-verses{
 
 
 
-<!-- Reproductor YouTube en esquina (solo vídeo) -->
-<div id="yt-player-wrap" class="yt-pos-br" style="display:none;">
-  <div id="yt-player-bar">
-    <span id="yt-player-title">Sermón</span>
-    <div style="display:flex;gap:3px;align-items:center;flex-shrink:0;">
-      <button type="button" id="yt-change-btn" class="yt-bar-btn" title="Cambiar enlace">🔗</button>
-      <button type="button" id="yt-clear-btn" class="yt-bar-btn" title="Borrar enlace y cerrar">🗑</button>
-      <button type="button" id="yt-close-btn" class="yt-bar-btn" title="Cerrar">✕</button>
-    </div>
-  </div>
+</div>
   <div id="yt-iframe-box"></div>
 </div>
 <div id="modal-youtube" style="display:none;position:fixed;inset:0;z-index:1350;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:20px;">
@@ -6141,7 +6145,7 @@ const SEFER_TOUR_STEPS = [
   {
     sel: '#youtube-btn',
     title: 'Ver un video de YouTube',
-    text: 'El botón de YouTube (rectángulo rojo) sirve para pegar el enlace de un sermón. El video se ve en una esquina mientras lees. No tapa el texto.'
+    text: 'El botón de YouTube sirve para pegar el enlace de un sermón. El video aparece debajo de la lista de libros, a la izquierda.'
   },
   {
     sel: '#project-btn',
@@ -6295,7 +6299,7 @@ function openSeferHelp(){
     • ☁️ Nube / perfil Google · 🎬 Proyectar · ❓ Ayuda.</div></div>
 
     <div class="im-block"><div class="im-label">YouTube</div>
-    <div class="im-text">Pega el enlace de un sermón. El vídeo se muestra fijo en la <strong>esquina inferior izquierda</strong> (solo el vídeo, sin comentarios). El texto de los versículos deja espacio para no quedar detrás del reproductor.</div></div>
+    <div class="im-text">Pega el enlace de un sermón. Al cargar un enlace, el vídeo aparece <strong>en la barra izquierda, debajo de la lista de libros</strong> (solo el vídeo). El ancho del vídeo sigue el de la barra; la lista de libros sigue arriba. Al borrar o cerrar el enlace, los libros vuelven a ocupar todo el lateral.</div></div>
 
     <div class="im-block"><div class="im-label">Proyección</div>
     <div class="im-text">Proyecta el versículo actual, el capítulo o la selección marcada. Desplazamiento automático con conteo y velocidades. <strong>Esc</strong> cierra la proyección.</div></div>
@@ -6896,21 +6900,16 @@ function buildYouTubeEmbedSrc(id){
   return 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?' + params;
 }
 function applyYoutubePosition(){
+  /* Vídeo integrado en #nav debajo de #book-list */
   const wrap = document.getElementById('yt-player-wrap');
   if(!wrap) return;
-  wrap.classList.remove('yt-pos-br', 'yt-pos-tr', 'yt-pos-bl');
-  wrap.classList.add('yt-pos-bl');
-  document.body.classList.remove('yt-active-br', 'yt-active-tr', 'yt-active-bl');
-  if(wrap.style.display !== 'none' && wrap.style.display !== ''){
-    document.body.classList.add('yt-active-bl');
-  }
-  /* posición fija inferior izquierda */
+  wrap.classList.add('yt-sidebar');
+  const visible = wrap.style.display !== 'none' && wrap.style.display !== '';
+  setYoutubeLayoutActive(visible);
 }
 function setYoutubeLayoutActive(active){
-  document.body.classList.remove('yt-active-br', 'yt-active-tr', 'yt-active-bl');
-  if(active){
-    document.body.classList.add('yt-active-bl');
-  }
+  document.body.classList.remove('yt-active-br', 'yt-active-tr', 'yt-active-bl', 'yt-sidebar-active');
+  if(active) document.body.classList.add('yt-sidebar-active');
 }
 function openYoutubeModal(prefill){
   const m = document.getElementById('modal-youtube');
@@ -6930,7 +6929,10 @@ function closeYoutubePlayer(){
   const wrap = document.getElementById('yt-player-wrap');
   const box = document.getElementById('yt-iframe-box');
   if(box) box.innerHTML = '';
-  if(wrap) wrap.style.display = 'none';
+  if(wrap){
+    wrap.style.display = 'none';
+    wrap.setAttribute('aria-hidden', 'true');
+  }
   setYoutubeLayoutActive(false);
 }
 function clearYoutubeLink(){
@@ -6980,8 +6982,9 @@ function loadYoutubeFromUrl(raw){
   iframe.title = 'Sermón de YouTube';
   iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
   box.appendChild(iframe);
+  wrap.style.display = 'flex';
+  wrap.setAttribute('aria-hidden', 'false');
   applyYoutubePosition();
-  wrap.style.display = 'block';
   setYoutubeLayoutActive(true);
   fetchYoutubeMeta(id);
   closeYoutubeModal();
