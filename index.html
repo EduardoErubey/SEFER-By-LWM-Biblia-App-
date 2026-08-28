@@ -2179,43 +2179,16 @@ body.mobile-mode { /* neutralize if residual class */ }
   vertical-align:middle;
   margin-right:4px;
 }
-#yt-player-wrap{
-  position:fixed;
-  z-index:1200;
-  width:min(360px, 42vw);
-  background:#111;
-  border:1px solid var(--line);
-  border-radius:10px;
-  overflow:hidden;
-  box-shadow:0 12px 40px rgba(0,0,0,0.35);
-}
+/* yt floating removed */
 /* Posición: esquina inferior derecha */
-#yt-player-wrap.yt-pos-br{
-  right:16px;
-  bottom:16px;
-  top:auto;
-}
+
 /* Posición: superior derecha (flotante; no mueve topbar ni botones) */
-#yt-player-wrap.yt-pos-tr{
-  right:16px;
-  top:72px;
-  bottom:auto;
-}
+
 /* Reserva espacio SOLO en el lector (versículos), nunca en la barra de botones */
-body.yt-active-br #reader{
-  padding-bottom: min(280px, 42vw) !important;
-}
-body.yt-active-tr #reader{
-  padding-right: min(380px, 44vw) !important;
-}
+
+
 /* Asegurar que topbar y botones no se desplacen */
-body.yt-active-tr #topbar,
-body.yt-active-tr #topbar-actions,
-body.yt-active-br #topbar,
-body.yt-active-br #topbar-actions{
-  margin-right: 0 !important;
-  padding-right: inherit;
-}
+
 #yt-player-bar{
   display:flex;
   align-items:center;
@@ -2264,11 +2237,7 @@ body.yt-active-br #topbar-actions{
   border:0;
 }
 @media (max-width:720px){
-  #yt-player-wrap{ width:min(calc(100% - 24px), 320px); }
-  #yt-player-wrap.yt-pos-br{ right:12px; bottom:12px; }
-  #yt-player-wrap.yt-pos-tr{ right:12px; top:64px; }
-  body.yt-active-tr #reader{ padding-right: 0 !important; padding-bottom: min(240px, 50vw) !important; }
-  body.yt-active-br #reader{ padding-bottom: min(240px, 50vw) !important; }
+  /* YouTube en sidebar: ancho 100% de la barra */
 }
 
 
@@ -2547,35 +2516,88 @@ body.vp-narrow .theme-dot{ width:18px; height:18px; }
 .bio-preview{ display:block; font-size:12.5px; color:var(--ink-soft); }
 .bio-era-tag{ display:inline-block; font-size:11px; font-weight:600; color:var(--gold); margin:2px 0 4px; }
 
-/* SEFER YT FIXED BL */
+
+/* ========== YouTube SOLO en barra lateral (debajo de libros) ========== */
+#nav{
+  display:flex !important;
+  flex-direction:column !important;
+  height:100%;
+  max-height:100%;
+  min-height:0;
+  overflow:hidden !important;
+}
+#nav-header,
+#theme-switch,
+#ref-search-wrap{
+  flex:0 0 auto;
+}
+#book-list{
+  flex:1 1 auto !important;
+  overflow-y:auto !important;
+  min-height:0 !important;
+}
 #yt-player-wrap,
+#yt-player-wrap.yt-sidebar,
 #yt-player-wrap.yt-pos-bl,
 #yt-player-wrap.yt-pos-br,
 #yt-player-wrap.yt-pos-tr{
-  left: 16px !important;
+  position: relative !important;
+  left: auto !important;
   right: auto !important;
-  bottom: 16px !important;
   top: auto !important;
+  bottom: auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  z-index: 4 !important;
+  flex: 0 0 auto !important;
+  display: none;
+  flex-direction: column;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #0b0b0b;
+  border: none !important;
+  border-top: 1px solid var(--line) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: hidden;
 }
-@media (min-width: 900px){
-  #yt-player-wrap,
-  #yt-player-wrap.yt-pos-bl,
-  #yt-player-wrap.yt-pos-br,
-  #yt-player-wrap.yt-pos-tr{
-    left: max(16px, calc(280px + 12px)) !important;
-  }
+body.yt-sidebar-active #yt-player-wrap,
+body.yt-sidebar-active #yt-player-wrap.yt-sidebar{
+  display: flex !important;
 }
+body.yt-sidebar-active #book-list{
+  flex: 1 1 72% !important;
+  max-height: 72% !important;
+}
+#yt-player-bar{
+  flex: 0 0 auto;
+  padding: 5px 8px;
+}
+#yt-iframe-box{
+  width: 100% !important;
+  max-width: 100% !important;
+  aspect-ratio: 16 / 9;
+  height: auto !important;
+  max-height: 26vh;
+  background: #000;
+  flex: 0 0 auto;
+  line-height: 0;
+}
+#yt-iframe-box iframe{
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+  display: block;
+}
+body.yt-sidebar-active #reader,
 body.yt-active-bl #reader,
 body.yt-active-br #reader,
 body.yt-active-tr #reader{
-  padding-bottom: min(300px, 46vw) !important;
+  padding-bottom: 0 !important;
   padding-right: 0 !important;
+  padding-left: 0 !important;
 }
-body.yt-active-bl #reader-verses,
-body.yt-active-br #reader-verses,
-body.yt-active-tr #reader-verses{
-  padding-bottom: min(280px, 42vw) !important;
-}
+
 </style>
 
 </head>
@@ -6900,10 +6922,24 @@ function buildYouTubeEmbedSrc(id){
   return 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?' + params;
 }
 function applyYoutubePosition(){
-  /* Vídeo integrado en #nav debajo de #book-list */
   const wrap = document.getElementById('yt-player-wrap');
   if(!wrap) return;
+  // Garantizar que el player viva dentro de #nav (por si quedó fuera)
+  const nav = document.getElementById('nav');
+  const bookList = document.getElementById('book-list');
+  if(nav && bookList && wrap.parentElement !== nav){
+    bookList.insertAdjacentElement('afterend', wrap);
+  }
   wrap.classList.add('yt-sidebar');
+  wrap.classList.remove('yt-pos-br', 'yt-pos-tr', 'yt-pos-bl');
+  // limpiar estilos inline de posicionamiento flotante
+  wrap.style.position = '';
+  wrap.style.left = '';
+  wrap.style.right = '';
+  wrap.style.top = '';
+  wrap.style.bottom = '';
+  wrap.style.width = '';
+  wrap.style.zIndex = '';
   const visible = wrap.style.display !== 'none' && wrap.style.display !== '';
   setYoutubeLayoutActive(visible);
 }
