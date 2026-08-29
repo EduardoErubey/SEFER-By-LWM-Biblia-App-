@@ -91,7 +91,77 @@ html, body{
   overflow:visible !important;
   position:relative;
   z-index:501;
+  display:flex !important;
+  flex-wrap:wrap !important;
+  align-items:center;
+  justify-content:flex-end !important;
+  gap:6px 8px;
 }
+#topbar-actions .tb-group{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:2px 4px;
+  border-radius:8px;
+  border:1px solid transparent;
+  background:transparent;
+}
+#topbar-actions .tb-group:hover{
+  border-color:var(--line);
+  background:color-mix(in srgb, var(--parchment-2) 70%, transparent);
+}
+#font-family-menu{
+  position:absolute;
+  top:calc(100% + 6px);
+  right:0;
+  z-index:700;
+  background:var(--card-bg);
+  border:1px solid var(--line);
+  border-radius:10px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.18);
+  padding:8px;
+  min-width:180px;
+  display:none;
+  flex-direction:column;
+  gap:4px;
+}
+#font-family-menu.open{ display:flex; }
+#font-family-menu button{
+  text-align:left;
+  padding:8px 10px;
+  border:none;
+  border-radius:6px;
+  background:transparent;
+  color:var(--ink);
+  cursor:pointer;
+  font-size:13px;
+}
+#font-family-menu button:hover{ background:var(--parchment-2); }
+#font-family-menu button.active{ background:var(--rubric); color:#fff; }
+#stage-extra-btns{ display:none; position:absolute; top:14px; left:14px; z-index:5; gap:8px; flex-wrap:wrap; }
+#stage-extra-btns .stage-extra{ min-width:36px; padding:6px 10px; opacity:0.85; }
+#stage-extra-btns .stage-extra:hover{ opacity:1; }
+#reader-scroll-arrows{
+  position:absolute;
+  right:8px;
+  bottom:16px;
+  z-index:20;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+#reader-scroll-arrows button{
+  width:32px; height:32px;
+  border-radius:50%;
+  border:1px solid var(--line);
+  background:var(--card-bg);
+  color:var(--ink);
+  cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,0.12);
+  font-size:14px;
+  line-height:1;
+}
+#reader-scroll-arrows button:hover{ background:var(--parchment-2); }
 #topbar-actions .btn,
 #topbar-actions .btn-icon,
 #help-btn{
@@ -175,18 +245,23 @@ html, body{
   display:flex !important;
   flex-wrap:nowrap !important;
   align-items:center !important;
+  justify-content:flex-end !important;
   gap:5px !important;
   margin-top:8px !important;
   width:100%;
   overflow:visible !important;
+  box-sizing:border-box !important;
+  padding-right:2px !important;
 }
 #theme-switch .theme-batch{
   display:inline-flex !important;
   flex-wrap:nowrap !important;
   align-items:center !important;
+  justify-content:flex-end !important;
   gap:5px !important;
   flex:0 1 auto;
   min-width:0;
+  margin-left:auto !important;
 }
 .theme-more-btn,
 .random-verse-btn{
@@ -409,19 +484,28 @@ html, body, #app{
       </div>
       <div id="topbar-actions">
         <button class="btn has-tip" id="clear-selection-btn" style="display:none;" data-tooltip="Quitar todos los versículos seleccionados">Limpiar</button>
-        <button class="btn btn-icon" id="font-dec" data-tooltip="Disminuir texto">A−</button>
-        <button class="btn btn-icon" id="font-inc" data-tooltip="Aumentar texto">A+</button>
-        <button class="btn has-tip" id="easy-btn" data-tooltip="Resalta nombres, ciudades y palabras de Jesús">🔍 Detalle</button>
-        <button class="btn has-tip" id="meanings-btn" data-tooltip="Significados de palabras guardados">📚 Significados</button>
-        <button class="btn has-tip" id="notes-btn" data-tooltip="Notas de exposición por versículo">📝 Notas</button>
-        <button class="btn fav-btn has-tip" id="favs-btn" data-tooltip="Versículos marcados como favoritos">❤️ Favoritos</button>
-        <button class="btn has-tip" id="plan-btn" data-tooltip="Plan de lectura de la Biblia en un año">📅 Plan 1 año</button>
-        <button class="btn has-tip" id="glossary-btn" data-tooltip="Glosario de términos bíblicos">📖 Glosario</button>
-        <button class="btn has-tip" id="biography-btn" data-tooltip="Biografías de personas de la Biblia">👤 Biografía</button>
-        <button class="btn has-tip" id="apocrifos-btn" data-tooltip="Libros apócrifos: qué son y por qué no están en el canon protestante">📜 Apócrifos</button>
-        <span id="estado-nube" style="display:none;" aria-hidden="true"></span>
-        <button class="btn has-tip" id="youtube-btn" data-tooltip="Ver un sermón de YouTube mientras lees (solo el vídeo)"><svg class="yt-logo" viewBox="0 0 28 20" width="18" height="13" aria-hidden="true"><rect width="28" height="20" rx="4" fill="#FF0000"/><path d="M11 5.5v9l7.5-4.5L11 5.5z" fill="#fff"/></svg> YouTube</button>
-        <button class="btn primary has-tip" id="project-btn" data-tooltip="Proyectar selección o versículo en pantalla completa">🎬 Proyectar</button>
+        <span class="tb-group" title="Texto">
+          <button class="btn btn-icon" id="font-dec" data-tooltip="Disminuir texto">A−</button>
+          <button class="btn btn-icon" id="font-inc" data-tooltip="Aumentar texto">A+</button>
+          <button class="btn btn-icon has-tip" id="font-family-btn" data-tooltip="Cambiar tipografía de lectura">Aa</button>
+          <button class="btn has-tip" id="easy-btn" data-tooltip="Resalta nombres, ciudades y palabras de Jesús">🔍 Detalle</button>
+        </span>
+        <span class="tb-group" title="Estudio">
+          <button class="btn has-tip" id="meanings-btn" data-tooltip="Significados de palabras guardados">📚 Significados</button>
+          <button class="btn has-tip" id="notes-btn" data-tooltip="Notas de exposición por versículo">📝 Notas</button>
+          <button class="btn fav-btn has-tip" id="favs-btn" data-tooltip="Versículos marcados como favoritos">❤️ Favoritos</button>
+        </span>
+        <span class="tb-group" title="Consulta">
+          <button class="btn has-tip" id="glossary-btn" data-tooltip="Glosario de términos bíblicos">📖 Glosario</button>
+          <button class="btn has-tip" id="biography-btn" data-tooltip="Biografías de personas de la Biblia">👤 Biografía</button>
+          <button class="btn has-tip" id="apocrifos-btn" data-tooltip="Libros apócrifos: qué son y por qué no están en el canon protestante">📜 Apócrifos</button>
+        </span>
+        <span class="tb-group" title="Herramientas">
+          <button class="btn has-tip" id="plan-btn" data-tooltip="Plan de lectura de la Biblia en un año">📅 Plan 1 año</button>
+          <span id="estado-nube" style="display:none;" aria-hidden="true"></span>
+          <button class="btn has-tip" id="youtube-btn" data-tooltip="Ver un sermón de YouTube mientras lees (solo el vídeo)"><svg class="yt-logo" viewBox="0 0 28 20" width="18" height="13" aria-hidden="true"><rect width="28" height="20" rx="4" fill="#FF0000"/><path d="M11 5.5v9l7.5-4.5L11 5.5z" fill="#fff"/></svg> YouTube</button>
+          <button class="btn primary has-tip" id="project-btn" data-tooltip="Proyectar selección o versículo en pantalla completa">🎬 Proyectar</button>
+        </span>
         <button class="btn has-tip" id="help-btn" data-tooltip="Guía de uso y atajos de teclado">❓ Ayuda</button>
       </div>
     </div>
@@ -461,6 +545,12 @@ html, body, #app{
 
 <div id="stage">
   <div id="stage-exit">Salir (Esc)</div>
+  <div id="stage-extra-btns" style="display:none;position:absolute;top:14px;left:14px;z-index:5;gap:8px;flex-wrap:wrap;">
+    <button type="button" class="stage-btn stage-extra" id="stage-fav-btn" title="Favorito">♥</button>
+    <button type="button" class="stage-btn stage-extra" id="stage-note-btn" title="Nota">📝</button>
+    <button type="button" class="stage-btn stage-extra" id="stage-mean-btn" title="Significados">📚</button>
+    <button type="button" class="stage-btn stage-extra" id="stage-dice-btn" title="Otro versículo al azar">🎲</button>
+  </div>
   <div class="stage-ref" id="stage-ref"></div>
   <div class="stage-text" id="stage-text"></div>
   <div id="stage-nav">
@@ -640,10 +730,28 @@ const SEFER_VERSION_NAME = "Sidebar compacta + bienvenida centrada + ventanas pe
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.4.5-stable",
+    name: "Proyección Esc/fullscreen, scroll estable, fuentes y toolkit agrupada",
+    date: "2026-08-29",
+    current: true,
+    changes: [
+      "Esc cierra proyección sin salir de pantalla completa",
+      "Salir de proyección ya no fuerza salida de fullscreen",
+      "Scroll del lector no salta arriba al seleccionar versículo",
+      "Al cerrar proyección se restaura la posición del versículo",
+      "Botones discretos (favorito, nota, significados, dado) en proyección solo si vino del dado",
+      "Selector de tipografías modernas (Fuentes) en la toolkit",
+      "Toolkit agrupada: texto · estudio · consulta · herramientas",
+      "Flechas ▲▼ para desplazar el área de lectura con clic",
+      "Temas alineados a la derecha en la barra lateral",
+      "Menos franjas negras en fullscreen al usar el dado"
+    ]
+  },
+  {
     id: "2.4.4-stable",
     name: "Sidebar compacta + bienvenida centrada + ventanas pequeñas",
     date: "2026-08-29",
-    current: true,
+    current: false,
     changes: [
       "Barra lateral compacta en 1280×720/768, 1024×768 y 800×600",
       "Botones reiniciar, dado y + en una sola fila sin saltos rotos",
@@ -1101,9 +1209,13 @@ function applyViewportLayout(){
   else document.body.classList.add('vp-wide');
   document.documentElement.style.setProperty('--vp-w', w + 'px');
   document.documentElement.style.setProperty('--vp-h', h + 'px');
-  // Evitar desbordes horizontales
+  // Evitar desbordes (franjas negras en fullscreen / dado)
+  document.documentElement.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
   document.documentElement.style.overflowX = 'hidden';
   document.body.style.overflowX = 'hidden';
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
 }
 applyViewportLayout();
 let _vpTimer = null;
@@ -1535,11 +1647,73 @@ function updateSelectionUI(){
 }
 clearSelBtn.onclick = ()=>{ selectedVerses = []; selectionUIActive = false; updateSelectionUI(); renderReader(); };
 
+const SEFER_FONTS = [
+  { id:'literata', name:'Literata (lectura)', stack:"'Literata', Georgia, serif" },
+  { id:'inter', name:'Inter (moderna)', stack:"'Inter', system-ui, sans-serif" },
+  { id:'fraunces', name:'Fraunces (títulos)', stack:"'Fraunces', Georgia, serif" },
+  { id:'roboto', name:'Roboto (Android)', stack:"'Roboto', 'Helvetica Neue', sans-serif" },
+  { id:'sf', name:'SF-style (Apple)', stack:"-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" },
+  { id:'noto', name:'Noto Sans', stack:"'Noto Sans', 'Helvetica Neue', sans-serif" },
+  { id:'georgia', name:'Georgia (clásica)', stack:"Georgia, 'Times New Roman', serif" },
+  { id:'mono', name:'Mono legible', stack:"ui-monospace, 'Cascadia Code', 'Segoe UI Mono', monospace" }
+];
+let verseFontFamily = store.get('sefer_font_family', 'literata');
 function applyVerseFont(){
   reader.style.setProperty('--verse-size', verseFontSize + 'px');
+  const f = SEFER_FONTS.find(x=>x.id===verseFontFamily) || SEFER_FONTS[0];
+  reader.style.setProperty('--verse-font', f.stack);
+  reader.style.fontFamily = f.stack;
+}
+function setupFontFamilyMenu(){
+  const btn = document.getElementById('font-family-btn');
+  if(!btn) return;
+  let menu = document.getElementById('font-family-menu');
+  if(!menu){
+    menu = document.createElement('div');
+    menu.id = 'font-family-menu';
+    btn.parentElement.style.position = 'relative';
+    btn.parentElement.appendChild(menu);
+  }
+  function renderMenu(){
+    menu.innerHTML = SEFER_FONTS.map(f=>
+      '<button type="button" data-font="'+f.id+'" class="'+(f.id===verseFontFamily?'active':'')+'" style="font-family:'+f.stack+'">'+f.name+'</button>'
+    ).join('');
+    menu.querySelectorAll('button').forEach(b=>{
+      b.onclick = (e)=>{
+        e.stopPropagation();
+        verseFontFamily = b.getAttribute('data-font');
+        try{ localStorage.setItem('sefer_font_family', JSON.stringify(verseFontFamily)); }catch(err){}
+        applyVerseFont();
+        menu.classList.remove('open');
+        renderMenu();
+      };
+    });
+  }
+  renderMenu();
+  btn.onclick = (e)=>{
+    e.stopPropagation();
+    menu.classList.toggle('open');
+  };
+  document.addEventListener('click', ()=> menu.classList.remove('open'));
+}
+// Flechas de scroll en el área de lectura
+function setupReaderScrollArrows(){
+  const wrap = document.getElementById('content-wrap') || reader?.parentElement;
+  if(!wrap || document.getElementById('reader-scroll-arrows')) return;
+  wrap.style.position = wrap.style.position || 'relative';
+  const box = document.createElement('div');
+  box.id = 'reader-scroll-arrows';
+  box.innerHTML = '<button type="button" id="reader-scroll-up" title="Subir">▲</button><button type="button" id="reader-scroll-down" title="Bajar">▼</button>';
+  wrap.appendChild(box);
+  const step = ()=> Math.max(80, Math.floor((reader.clientHeight||400)*0.35));
+  document.getElementById('reader-scroll-up').onclick = ()=>{ reader.scrollBy({ top: -step(), behavior:'smooth' }); };
+  document.getElementById('reader-scroll-down').onclick = ()=>{ reader.scrollBy({ top: step(), behavior:'smooth' }); };
 }
 
 function renderReader(){
+  // Guardar posición de scroll para no saltar arriba al seleccionar versículo
+  const prevScroll = reader.scrollTop || 0;
+  const keepScroll = !showWelcome && currentBook;
   reader.innerHTML = '';
   applyVerseFont();
 
@@ -1794,6 +1968,10 @@ function renderReader(){
 
     verseParent.appendChild(row);
   });
+  // Restaurar scroll (evita salto al top al seleccionar versículo)
+  if(keepScroll){
+    reader.scrollTop = prevScroll;
+  }
 }
 
 function setVerseSelected(vnum, on){
@@ -1881,11 +2059,13 @@ function goToRandomVerse(){
   openTestaments.add(BOOK_ORDER.find(e=>e.name===book)?.testament || 'AT');
   openBooks.add(book);
   saveNavState();
-  // Evitar scroll del documento (franja negra al usar scrollIntoView en body)
+  // Evitar scroll del documento (franja negra)
   try{
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
     window.scrollTo(0, 0);
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
   }catch(e){}
   goTo(book, chap);
   detailVerse = String(v);
@@ -1894,10 +2074,12 @@ function goToRandomVerse(){
   updateSelectionUI();
   renderReader();
   renderBookList();
-  // Mostrar en modo proyectar (pantalla completa de proyección)
+  // Mostrar en modo proyectar
+  stageFromDice = true;
   if(typeof openStage === 'function'){
     openStage(book, chap, [String(v)], 'single');
   }
+  try{ updateStageExtraBtns(); }catch(e){}
   try{ if(typeof bumpAchProgress==='function') bumpAchProgress('random_1',1); }catch(e){}
 }
 document.getElementById('random-verse-btn')?.addEventListener('click', goToRandomVerse);
@@ -2628,13 +2810,21 @@ let stagePassages = [];
 let stageIndex = 0;
 
 let stageMode = 'single'; // 'single' | 'selection' | 'chapter'
+var stageFromDice = false; // hoisted: true solo si se abrió proyección desde el dado
 function openStage(book, chap, verses, mode){
   stageMode = mode || (verses && verses.length > 1 ? 'selection' : 'single');
   stagePassages = [{book, chap, verses: [...verses].map(String).sort((a,b)=>+a-+b)}];
   stageIndex = 0;
   renderStage();
   stage.classList.add('open');
+  try{ updateStageExtraBtns(); }catch(e){}
   try{ if(typeof setAchProgress==='function') setAchProgress('project_1', 1); }catch(e){}
+}
+function updateStageExtraBtns(){
+  const box = document.getElementById('stage-extra-btns');
+  if(!box) return;
+  const show = !!(stage && stage.classList.contains('open') && stageFromDice);
+  box.style.display = show ? 'flex' : 'none';
 }
 function renderStage(){
   const p = stagePassages[stageIndex];
@@ -2727,6 +2917,7 @@ document.querySelectorAll('#project-sheet .ps-opt').forEach(btn=>{
     const mode = btn.dataset.proj;
     closeProjectSheet();
     if(showWelcome){ alert('Abre un capítulo primero.'); return; }
+    stageFromDice = false;
     if(mode === 'current'){
       const v = detailVerse || Object.keys((BIBLE[currentBook]||{})[currentChap]||{})[0];
       if(!v){ alert('No hay versículos en este capítulo.'); return; }
@@ -2743,9 +2934,34 @@ document.querySelectorAll('#project-sheet .ps-opt').forEach(btn=>{
     }
   };
 });
-document.getElementById('stage-exit').onclick = ()=> stage.classList.remove('open');
+document.getElementById('stage-exit').onclick = ()=> closeStageProjection();
 document.getElementById('stage-next').onclick = ()=> stageStep(1);
 document.getElementById('stage-prev').onclick = ()=> stageStep(-1);
+// Botones discretos en proyección (solo visibles si vino del dado)
+document.getElementById('stage-fav-btn')?.addEventListener('click', (e)=>{
+  e.stopPropagation();
+  const p = stagePassages[stageIndex]; if(!p || !p.verses.length) return;
+  const v = p.verses[0]; const id = p.book+'|'+p.chap+'|'+v;
+  if(favorites[id]){ delete favorites[id]; } else { favorites[id] = true; }
+  try{ saveFavorites(); }catch(err){}
+  const btn = document.getElementById('stage-fav-btn');
+  if(btn) btn.textContent = favorites[id] ? '♥' : '♡';
+});
+document.getElementById('stage-note-btn')?.addEventListener('click', (e)=>{
+  e.stopPropagation();
+  closeStageProjection();
+  try{ document.getElementById('notes-btn')?.click(); }catch(err){}
+});
+document.getElementById('stage-mean-btn')?.addEventListener('click', (e)=>{
+  e.stopPropagation();
+  closeStageProjection();
+  try{ document.getElementById('meanings-btn')?.click(); }catch(err){}
+});
+document.getElementById('stage-dice-btn')?.addEventListener('click', (e)=>{
+  e.stopPropagation();
+  closeStageProjection();
+  goToRandomVerse();
+});
 
 /* Auto-desplazamiento del texto en proyección (solo si hay overflow) */
 let stageAutoTimer = null;
@@ -2852,20 +3068,27 @@ updateSpeedBtnLabel();
 function closeStageProjection(){
   stopStageAuto();
   if(stage) stage.classList.remove('open');
-  // Si está en fullscreen del documento, salir también
+  // NO salir de fullscreen del documento (solo cerrar proyección)
+  // Restaurar scroll al versículo proyectado
   try{
-    if(document.fullscreenElement || document.webkitFullscreenElement){
-      const exit = document.exitFullscreen || document.webkitExitFullscreen;
-      if(exit) exit.call(document);
+    const v = detailVerse || (selectedVerses && selectedVerses[0]);
+    if(v && currentBook && currentChap){
+      requestAnimationFrame(()=>{
+        const el = document.querySelector('#reader .verse[data-vnum="'+v+'"]');
+        if(el) el.scrollIntoView({ block: 'center', behavior: 'instant' });
+      });
     }
   }catch(err){}
+  stageFromDice = false;
+  try{ updateStageExtraBtns(); }catch(e){}
 }
 document.getElementById('stage-exit')?.addEventListener('click', closeStageProjection);
 
 document.addEventListener('keydown', (e)=>{
-  if(e.key !== 'Escape') return;
+  if(e.key !== 'Escape' && e.key !== 'Esc') return;
   // Cerrar proyección con Esc (fase captura = prioridad alta)
-  if(stage && stage.classList.contains('open')){
+  const st = document.getElementById('stage');
+  if(st && st.classList.contains('open')){
     e.preventDefault();
     e.stopImmediatePropagation();
     closeStageProjection();
@@ -4348,6 +4571,9 @@ document.getElementById('font-dec').onclick = ()=>{
   store.set('bp_verse_font', verseFontSize);
   applyVerseFont();
 };
+try{ setupFontFamilyMenu(); }catch(e){}
+try{ setupReaderScrollArrows(); }catch(e){}
+try{ applyVerseFont(); }catch(e){}
 
 // Lectura fácil
 updateEasyBtn();
