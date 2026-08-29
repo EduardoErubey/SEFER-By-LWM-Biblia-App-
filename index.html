@@ -183,6 +183,7 @@ html, body{
 }
 .stage-note-actions{ display:flex; gap:8px; margin-top:8px; justify-content:flex-end; }
 /* Flechas de scroll integradas a la barra */
+/* —— Scrollbar personalizada unificada (flechas + track + thumb) —— */
 .sefer-scroll-wrap{
   position:relative !important;
   flex:1 1 auto !important;
@@ -192,87 +193,82 @@ html, body{
   overflow:hidden !important;
   width:100%;
 }
-.sefer-scroll-wrap > .sefer-scroll-target,
-#reader-verses.sefer-scroll-target,
-#book-list.sefer-scroll-target{
+.sefer-scroll-target{
   flex:1 1 auto !important;
   min-height:0 !important;
   overflow-x:hidden !important;
   overflow-y:auto !important;
   width:100% !important;
   box-sizing:border-box !important;
-  scrollbar-width: thin;
-  scrollbar-color: var(--ink-soft) var(--parchment-2);
+  /* Ocultar scrollbar nativa: usamos la personalizada */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-right: 14px !important; /* hueco para el rail */
 }
-.sefer-scroll-target::-webkit-scrollbar,
-#reader-verses::-webkit-scrollbar,
-#book-list::-webkit-scrollbar{
-  width: 11px;
-  height: 11px;
-}
-.sefer-scroll-target::-webkit-scrollbar-track,
-#reader-verses::-webkit-scrollbar-track,
-#book-list::-webkit-scrollbar-track{
-  background: var(--parchment-2);
-  border-left: 1px solid var(--line);
-}
-.sefer-scroll-target::-webkit-scrollbar-thumb,
-#reader-verses::-webkit-scrollbar-thumb,
-#book-list::-webkit-scrollbar-thumb{
-  background: color-mix(in srgb, var(--ink-soft) 55%, var(--parchment-2));
-  border-radius: 6px;
-  border: 2px solid var(--parchment-2);
-  min-height: 32px;
-}
-.sefer-scroll-target::-webkit-scrollbar-thumb:hover,
-#reader-verses::-webkit-scrollbar-thumb:hover,
-#book-list::-webkit-scrollbar-thumb:hover{
-  background: var(--ink-soft);
-}
-.sefer-scroll-rail{
+.sefer-scroll-target::-webkit-scrollbar{ width:0 !important; height:0 !important; display:none !important; }
+.sefer-sb{
   position:absolute;
   right:0;
   top:0;
   bottom:0;
-  width:11px;
-  z-index:25;
+  width:12px;
+  z-index:30;
   display:flex;
   flex-direction:column;
-  align-items:stretch;
-  pointer-events:none;
-  box-sizing:border-box;
-}
-.sefer-scroll-rail button{
-  pointer-events:auto;
-  width:11px;
-  height:12px;
-  min-width:11px;
-  min-height:12px;
-  padding:0;
-  margin:0;
-  border:none;
-  border-radius:0;
   background: var(--parchment-2);
-  color: var(--ink-soft);
-  cursor:pointer;
-  font-size:7px;
-  line-height:12px;
-  opacity:0.9;
-  flex:0 0 auto;
   border-left: 1px solid var(--line);
   box-sizing:border-box;
+  user-select:none;
 }
-.sefer-scroll-rail button:hover{
-  opacity:1;
-  background: color-mix(in srgb, var(--ink-soft) 28%, var(--parchment-2));
+.sefer-sb-btn{
+  flex:0 0 14px;
+  height:14px;
+  width:100%;
+  border:none;
+  padding:0;
+  margin:0;
+  cursor:pointer;
+  background: var(--parchment-2);
+  color: var(--ink-soft);
+  font-size:8px;
+  line-height:14px;
+  text-align:center;
+}
+.sefer-sb-btn:hover{
+  background: color-mix(in srgb, var(--ink-soft) 22%, var(--parchment-2));
   color: var(--ink);
 }
-.sefer-scroll-rail .sefer-scroll-mid{
+.sefer-sb-btn:active{
+  background: color-mix(in srgb, var(--rubric) 35%, var(--parchment-2));
+  color: var(--rubric);
+}
+.sefer-sb-track{
   flex:1 1 auto;
-  min-height:2px;
-  width:100%;
-  pointer-events:none;
-  background: transparent;
+  position:relative;
+  min-height:20px;
+  background: color-mix(in srgb, var(--parchment) 40%, var(--parchment-2));
+  cursor:pointer;
+}
+.sefer-sb-thumb{
+  position:absolute;
+  left:1px;
+  right:1px;
+  top:0;
+  height:30px;
+  border-radius:4px;
+  background: color-mix(in srgb, var(--ink-soft) 65%, var(--parchment-2));
+  border:1px solid var(--line);
+  box-sizing:border-box;
+  cursor:grab;
+  min-height:18px;
+}
+.sefer-sb-thumb:hover{
+  background: var(--ink-soft);
+}
+.sefer-sb-thumb.dragging{
+  cursor:grabbing;
+  background: var(--rubric);
+  border-color: var(--rubric-soft);
 }
 #content-wrap{
   position:relative !important;
@@ -1853,92 +1849,152 @@ function setupFontFamilyMenu(){
   };
   document.addEventListener('click', ()=> menu.classList.remove('open'));
 }
-// Flechas sutiles alineadas al track de la scrollbar del elemento que realmente scrollea
+// Scrollbar personalizada: ▲ + track/thumb + ▼, colores del tema, alineada al borde
 function attachScrollRail(scrollEl, railId){
   if(!scrollEl) return;
-  // Quitar rail anterior (p.ej. tras re-render de versículos)
   const old = document.getElementById(railId);
   if(old) old.remove();
-  let wrap = scrollEl.parentElement;
-  // Si el scroll es #reader-verses, el wrap es el propio reader (ya relative via CSS)
-  // Si es #book-list, envolver solo la lista
-  if(scrollEl.id === 'book-list'){
-    if(!wrap || !wrap.classList.contains('sefer-scroll-wrap')){
-      wrap = document.createElement('div');
-      wrap.className = 'sefer-scroll-wrap';
-      scrollEl.parentNode.insertBefore(wrap, scrollEl);
-      wrap.appendChild(scrollEl);
-    }
-  } else if(scrollEl.id === 'reader-verses'){
-    // Rail dentro de reader-verses's parent (#reader) but positioned over reader-verses
-    wrap = scrollEl; // posicionar rail como hijo absoluto del área que scrollea
-    const pos = getComputedStyle(scrollEl).position;
-    if(pos === 'static') scrollEl.style.position = 'relative';
-  } else {
-    if(!wrap || !wrap.classList.contains('sefer-scroll-wrap')){
-      wrap = document.createElement('div');
-      wrap.className = 'sefer-scroll-wrap';
-      scrollEl.parentNode.insertBefore(wrap, scrollEl);
-      wrap.appendChild(scrollEl);
-    }
-  }
-  scrollEl.classList.add('sefer-scroll-target');
-  const rail = document.createElement('div');
-  rail.id = railId;
-  rail.className = 'sefer-scroll-rail';
-  rail.innerHTML = '<button type="button" class="sefer-scroll-up" title="Subir" aria-label="Subir">▲</button><div class="sefer-scroll-mid"></div><button type="button" class="sefer-scroll-down" title="Bajar" aria-label="Bajar">▼</button>';
-  // Para reader-verses el rail va DENTRO del elemento que scrollea, pegado al borde con position sticky-like via absolute on relative parent
+
+  // Host: contenedor relative que envuelve o rodea el área con scroll
+  let host;
   if(scrollEl.id === 'reader-verses'){
-    // Parent is #reader; put rail as sibling overlay matching reader-verses box
-    const host = scrollEl.parentElement || scrollEl;
-    const hostPos = getComputedStyle(host).position;
-    if(hostPos === 'static') host.style.position = 'relative';
-    host.appendChild(rail);
-    // Sincronizar top/height del rail con #reader-verses
-    const syncRail = ()=>{
-      const top = scrollEl.offsetTop || 0;
-      const h = scrollEl.offsetHeight || 0;
-      rail.style.top = top + 'px';
-      rail.style.bottom = 'auto';
-      rail.style.height = h + 'px';
-      rail.style.right = '0px';
-    };
-    syncRail();
-    if(typeof ResizeObserver !== 'undefined'){
-      const ro = new ResizeObserver(syncRail);
-      ro.observe(scrollEl);
-      ro.observe(host);
+    host = scrollEl.parentElement || scrollEl; // #reader
+    if(getComputedStyle(host).position === 'static') host.style.position = 'relative';
+  } else if(scrollEl.id === 'book-list'){
+    if(!scrollEl.parentElement?.classList.contains('sefer-scroll-wrap')){
+      const w = document.createElement('div');
+      w.className = 'sefer-scroll-wrap';
+      scrollEl.parentNode.insertBefore(w, scrollEl);
+      w.appendChild(scrollEl);
     }
-    window.addEventListener('resize', syncRail);
+    host = scrollEl.parentElement;
   } else {
-    wrap.appendChild(rail);
+    if(!scrollEl.parentElement?.classList.contains('sefer-scroll-wrap')){
+      const w = document.createElement('div');
+      w.className = 'sefer-scroll-wrap';
+      scrollEl.parentNode.insertBefore(w, scrollEl);
+      w.appendChild(scrollEl);
+    }
+    host = scrollEl.parentElement;
   }
-  const step = ()=> Math.max(48, Math.floor((scrollEl.clientHeight||300)*0.35));
-  const up = rail.querySelector('.sefer-scroll-up');
-  const down = rail.querySelector('.sefer-scroll-down');
-  const doScroll = (dir)=>{
-    // Usar scrollTop directo por si scrollBy falla en algún layout
-    scrollEl.scrollTop = Math.max(0, Math.min(scrollEl.scrollHeight, scrollEl.scrollTop + dir * step()));
+
+  scrollEl.classList.add('sefer-scroll-target');
+
+  const sb = document.createElement('div');
+  sb.id = railId;
+  sb.className = 'sefer-sb';
+  sb.innerHTML =
+    '<button type="button" class="sefer-sb-btn sefer-sb-up" title="Subir" aria-label="Subir">▲</button>'+
+    '<div class="sefer-sb-track"><div class="sefer-sb-thumb"></div></div>'+
+    '<button type="button" class="sefer-sb-btn sefer-sb-down" title="Bajar" aria-label="Bajar">▼</button>';
+  host.appendChild(sb);
+
+  const track = sb.querySelector('.sefer-sb-track');
+  const thumb = sb.querySelector('.sefer-sb-thumb');
+  const upBtn = sb.querySelector('.sefer-sb-up');
+  const downBtn = sb.querySelector('.sefer-sb-down');
+
+  const syncPos = ()=>{
+    if(scrollEl.id === 'reader-verses'){
+      sb.style.top = (scrollEl.offsetTop || 0) + 'px';
+      sb.style.height = (scrollEl.offsetHeight || 0) + 'px';
+      sb.style.bottom = 'auto';
+      sb.style.right = '0';
+    } else {
+      sb.style.top = '0';
+      sb.style.bottom = '0';
+      sb.style.height = 'auto';
+      sb.style.right = '0';
+    }
   };
-  up.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); doScroll(-1); });
-  down.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); doScroll(1); });
-  function holdScroll(dir){
-    let t = null;
-    const go = ()=>{
-      scrollEl.scrollTop += dir * Math.max(16, Math.floor(step()*0.12));
-      t = requestAnimationFrame(go);
-    };
-    const start = (e)=>{ e.preventDefault(); e.stopPropagation(); if(t) cancelAnimationFrame(t); go(); };
-    const stop = ()=>{ if(t) cancelAnimationFrame(t); t = null; };
-    const btn = dir < 0 ? up : down;
+
+  const updateThumb = ()=>{
+    const ch = scrollEl.clientHeight || 1;
+    const sh = scrollEl.scrollHeight || 1;
+    const st = scrollEl.scrollTop || 0;
+    const trackH = track.clientHeight || 1;
+    if(sh <= ch + 1){
+      sb.style.display = 'none';
+      return;
+    }
+    sb.style.display = 'flex';
+    const ratio = ch / sh;
+    const thumbH = Math.max(18, Math.round(trackH * ratio));
+    const maxTop = Math.max(0, trackH - thumbH);
+    const top = maxTop * (st / Math.max(1, sh - ch));
+    thumb.style.height = thumbH + 'px';
+    thumb.style.top = top + 'px';
+  };
+
+  const step = ()=> Math.max(40, Math.floor((scrollEl.clientHeight||300)*0.3));
+  const doScroll = (dir)=>{
+    scrollEl.scrollTop = Math.max(0, Math.min(scrollEl.scrollHeight - scrollEl.clientHeight, scrollEl.scrollTop + dir * step()));
+    updateThumb();
+  };
+
+  upBtn.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); doScroll(-1); });
+  downBtn.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); doScroll(1); });
+
+  // Mantener pulsado
+  function hold(btn, dir){
+    let raf = null;
+    const tick = ()=>{ scrollEl.scrollTop += dir * Math.max(12, step()*0.1); updateThumb(); raf = requestAnimationFrame(tick); };
+    const start = (e)=>{ e.preventDefault(); e.stopPropagation(); if(raf) cancelAnimationFrame(raf); tick(); };
+    const stop = ()=>{ if(raf) cancelAnimationFrame(raf); raf = null; };
     btn.addEventListener('mousedown', start);
     btn.addEventListener('mouseup', stop);
     btn.addEventListener('mouseleave', stop);
     btn.addEventListener('touchstart', start, {passive:false});
     btn.addEventListener('touchend', stop);
   }
-  holdScroll(-1);
-  holdScroll(1);
+  hold(upBtn, -1);
+  hold(downBtn, 1);
+
+  // Clic en el track
+  track.addEventListener('click', (e)=>{
+    if(e.target === thumb) return;
+    const rect = track.getBoundingClientRect();
+    const y = e.clientY - rect.top;
+    const ratio = y / Math.max(1, rect.height);
+    scrollEl.scrollTop = ratio * (scrollEl.scrollHeight - scrollEl.clientHeight);
+    updateThumb();
+  });
+
+  // Arrastrar thumb
+  let dragging = false, startY = 0, startTop = 0;
+  thumb.addEventListener('mousedown', (e)=>{
+    e.preventDefault(); e.stopPropagation();
+    dragging = true;
+    thumb.classList.add('dragging');
+    startY = e.clientY;
+    startTop = parseFloat(thumb.style.top) || 0;
+  });
+  window.addEventListener('mousemove', (e)=>{
+    if(!dragging) return;
+    const trackH = track.clientHeight || 1;
+    const thumbH = thumb.offsetHeight || 18;
+    const maxTop = Math.max(0, trackH - thumbH);
+    let top = Math.max(0, Math.min(maxTop, startTop + (e.clientY - startY)));
+    thumb.style.top = top + 'px';
+    const sh = scrollEl.scrollHeight - scrollEl.clientHeight;
+    scrollEl.scrollTop = (maxTop > 0 ? top / maxTop : 0) * sh;
+  });
+  window.addEventListener('mouseup', ()=>{
+    if(!dragging) return;
+    dragging = false;
+    thumb.classList.remove('dragging');
+  });
+
+  scrollEl.addEventListener('scroll', updateThumb, {passive:true});
+
+  syncPos();
+  updateThumb();
+  if(typeof ResizeObserver !== 'undefined'){
+    const ro = new ResizeObserver(()=>{ syncPos(); updateThumb(); });
+    ro.observe(scrollEl);
+    ro.observe(host);
+  }
+  window.addEventListener('resize', ()=>{ syncPos(); updateThumb(); });
 }
 function setupBookListScrollRail(){
   try{
