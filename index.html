@@ -192,54 +192,87 @@ html, body{
   overflow:hidden !important;
   width:100%;
 }
-.sefer-scroll-wrap > .sefer-scroll-target{
+.sefer-scroll-wrap > .sefer-scroll-target,
+#reader-verses.sefer-scroll-target,
+#book-list.sefer-scroll-target{
   flex:1 1 auto !important;
   min-height:0 !important;
   overflow-x:hidden !important;
   overflow-y:auto !important;
-  scrollbar-gutter:stable;
   width:100% !important;
   box-sizing:border-box !important;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-soft) var(--parchment-2);
+}
+.sefer-scroll-target::-webkit-scrollbar,
+#reader-verses::-webkit-scrollbar,
+#book-list::-webkit-scrollbar{
+  width: 11px;
+  height: 11px;
+}
+.sefer-scroll-target::-webkit-scrollbar-track,
+#reader-verses::-webkit-scrollbar-track,
+#book-list::-webkit-scrollbar-track{
+  background: var(--parchment-2);
+  border-left: 1px solid var(--line);
+}
+.sefer-scroll-target::-webkit-scrollbar-thumb,
+#reader-verses::-webkit-scrollbar-thumb,
+#book-list::-webkit-scrollbar-thumb{
+  background: color-mix(in srgb, var(--ink-soft) 55%, var(--parchment-2));
+  border-radius: 6px;
+  border: 2px solid var(--parchment-2);
+  min-height: 32px;
+}
+.sefer-scroll-target::-webkit-scrollbar-thumb:hover,
+#reader-verses::-webkit-scrollbar-thumb:hover,
+#book-list::-webkit-scrollbar-thumb:hover{
+  background: var(--ink-soft);
 }
 .sefer-scroll-rail{
   position:absolute;
   right:0;
   top:0;
   bottom:0;
-  width:14px;
-  z-index:20;
+  width:11px;
+  z-index:25;
   display:flex;
   flex-direction:column;
-  align-items:center;
+  align-items:stretch;
   pointer-events:none;
   box-sizing:border-box;
 }
 .sefer-scroll-rail button{
   pointer-events:auto;
-  width:14px;
-  height:14px;
-  min-width:14px;
-  min-height:14px;
+  width:11px;
+  height:12px;
+  min-width:11px;
+  min-height:12px;
   padding:0;
   margin:0;
   border:none;
-  border-radius:2px;
-  background:color-mix(in srgb, var(--ink-soft) 28%, transparent);
-  color:var(--ink-soft);
+  border-radius:0;
+  background: var(--parchment-2);
+  color: var(--ink-soft);
   cursor:pointer;
-  font-size:8px;
-  line-height:14px;
-  opacity:0.65;
+  font-size:7px;
+  line-height:12px;
+  opacity:0.9;
   flex:0 0 auto;
+  border-left: 1px solid var(--line);
+  box-sizing:border-box;
 }
 .sefer-scroll-rail button:hover{
   opacity:1;
-  background:color-mix(in srgb, var(--ink-soft) 48%, transparent);
+  background: color-mix(in srgb, var(--ink-soft) 28%, var(--parchment-2));
+  color: var(--ink);
 }
-.sefer-scroll-rail .sefer-scroll-mid{ flex:1 1 auto; min-height:2px; width:1px; pointer-events:none; }
-/* Scrollbar pegada al borde derecho del área de lectura / lista */
-#reader, #book-list{
-  scrollbar-width: thin;
+.sefer-scroll-rail .sefer-scroll-mid{
+  flex:1 1 auto;
+  min-height:2px;
+  width:100%;
+  pointer-events:none;
+  background: transparent;
 }
 #content-wrap{
   position:relative !important;
@@ -248,6 +281,16 @@ html, body{
 }
 #nav{
   position:relative !important;
+}
+#reader{
+  position:relative !important;
+}
+#reader-verses{
+  position:relative;
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overflow-x:hidden;
 }
 #topbar-actions .btn,
 #topbar-actions .btn-icon,
@@ -1810,33 +1853,82 @@ function setupFontFamilyMenu(){
   };
   document.addEventListener('click', ()=> menu.classList.remove('open'));
 }
-// Flechas sutiles: solo a la altura de la scrollbar del elemento (no del header)
+// Flechas sutiles alineadas al track de la scrollbar del elemento que realmente scrollea
 function attachScrollRail(scrollEl, railId){
-  if(!scrollEl || document.getElementById(railId)) return;
-  // Envolver el área con scroll para que el rail coincida con su alto real
+  if(!scrollEl) return;
+  // Quitar rail anterior (p.ej. tras re-render de versículos)
+  const old = document.getElementById(railId);
+  if(old) old.remove();
   let wrap = scrollEl.parentElement;
-  if(!wrap || !wrap.classList.contains('sefer-scroll-wrap')){
-    wrap = document.createElement('div');
-    wrap.className = 'sefer-scroll-wrap';
-    scrollEl.parentNode.insertBefore(wrap, scrollEl);
-    wrap.appendChild(scrollEl);
+  // Si el scroll es #reader-verses, el wrap es el propio reader (ya relative via CSS)
+  // Si es #book-list, envolver solo la lista
+  if(scrollEl.id === 'book-list'){
+    if(!wrap || !wrap.classList.contains('sefer-scroll-wrap')){
+      wrap = document.createElement('div');
+      wrap.className = 'sefer-scroll-wrap';
+      scrollEl.parentNode.insertBefore(wrap, scrollEl);
+      wrap.appendChild(scrollEl);
+    }
+  } else if(scrollEl.id === 'reader-verses'){
+    // Rail dentro de reader-verses's parent (#reader) but positioned over reader-verses
+    wrap = scrollEl; // posicionar rail como hijo absoluto del área que scrollea
+    const pos = getComputedStyle(scrollEl).position;
+    if(pos === 'static') scrollEl.style.position = 'relative';
+  } else {
+    if(!wrap || !wrap.classList.contains('sefer-scroll-wrap')){
+      wrap = document.createElement('div');
+      wrap.className = 'sefer-scroll-wrap';
+      scrollEl.parentNode.insertBefore(wrap, scrollEl);
+      wrap.appendChild(scrollEl);
+    }
   }
   scrollEl.classList.add('sefer-scroll-target');
   const rail = document.createElement('div');
   rail.id = railId;
   rail.className = 'sefer-scroll-rail';
   rail.innerHTML = '<button type="button" class="sefer-scroll-up" title="Subir" aria-label="Subir">▲</button><div class="sefer-scroll-mid"></div><button type="button" class="sefer-scroll-down" title="Bajar" aria-label="Bajar">▼</button>';
-  wrap.appendChild(rail);
+  // Para reader-verses el rail va DENTRO del elemento que scrollea, pegado al borde con position sticky-like via absolute on relative parent
+  if(scrollEl.id === 'reader-verses'){
+    // Parent is #reader; put rail as sibling overlay matching reader-verses box
+    const host = scrollEl.parentElement || scrollEl;
+    const hostPos = getComputedStyle(host).position;
+    if(hostPos === 'static') host.style.position = 'relative';
+    host.appendChild(rail);
+    // Sincronizar top/height del rail con #reader-verses
+    const syncRail = ()=>{
+      const top = scrollEl.offsetTop || 0;
+      const h = scrollEl.offsetHeight || 0;
+      rail.style.top = top + 'px';
+      rail.style.bottom = 'auto';
+      rail.style.height = h + 'px';
+      rail.style.right = '0px';
+    };
+    syncRail();
+    if(typeof ResizeObserver !== 'undefined'){
+      const ro = new ResizeObserver(syncRail);
+      ro.observe(scrollEl);
+      ro.observe(host);
+    }
+    window.addEventListener('resize', syncRail);
+  } else {
+    wrap.appendChild(rail);
+  }
   const step = ()=> Math.max(48, Math.floor((scrollEl.clientHeight||300)*0.35));
   const up = rail.querySelector('.sefer-scroll-up');
   const down = rail.querySelector('.sefer-scroll-down');
-  up.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); scrollEl.scrollBy({ top: -step(), behavior:'smooth' }); });
-  down.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); scrollEl.scrollBy({ top: step(), behavior:'smooth' }); });
-  // Clic mantenido para desplazamiento continuo
+  const doScroll = (dir)=>{
+    // Usar scrollTop directo por si scrollBy falla en algún layout
+    scrollEl.scrollTop = Math.max(0, Math.min(scrollEl.scrollHeight, scrollEl.scrollTop + dir * step()));
+  };
+  up.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); doScroll(-1); });
+  down.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); doScroll(1); });
   function holdScroll(dir){
     let t = null;
-    const go = ()=>{ scrollEl.scrollTop += dir * Math.max(20, step()*0.15); t = requestAnimationFrame(go); };
-    const start = (e)=>{ e.preventDefault(); e.stopPropagation(); go(); };
+    const go = ()=>{
+      scrollEl.scrollTop += dir * Math.max(16, Math.floor(step()*0.12));
+      t = requestAnimationFrame(go);
+    };
+    const start = (e)=>{ e.preventDefault(); e.stopPropagation(); if(t) cancelAnimationFrame(t); go(); };
     const stop = ()=>{ if(t) cancelAnimationFrame(t); t = null; };
     const btn = dir < 0 ? up : down;
     btn.addEventListener('mousedown', start);
@@ -1848,18 +1940,30 @@ function attachScrollRail(scrollEl, railId){
   holdScroll(-1);
   holdScroll(1);
 }
-function setupReaderScrollArrows(){
+function setupBookListScrollRail(){
   try{
-    if(reader) attachScrollRail(reader, 'reader-scroll-rail');
     const bl = document.getElementById('book-list');
     if(bl) attachScrollRail(bl, 'booklist-scroll-rail');
   }catch(e){}
 }
+function setupReaderVersesScrollRail(){
+  try{
+    const rv = document.getElementById('reader-verses');
+    if(rv) attachScrollRail(rv, 'reader-scroll-rail');
+  }catch(e){}
+}
+function setupReaderScrollArrows(){
+  setupBookListScrollRail();
+  setupReaderVersesScrollRail();
+}
 
 function renderReader(){
-  // Guardar posición de scroll para no saltar arriba al seleccionar versículo
-  const prevScroll = reader.scrollTop || 0;
+  // Guardar scroll del contenedor real (#reader-verses o #reader)
+  const prevScrollEl = document.getElementById('reader-verses') || reader;
+  const prevScroll = prevScrollEl ? (prevScrollEl.scrollTop || 0) : 0;
   const keepScroll = !showWelcome && currentBook;
+  // Quitar rail viejo antes de vaciar reader
+  try{ document.getElementById('reader-scroll-rail')?.remove(); }catch(e){}
   reader.innerHTML = '';
   applyVerseFont();
 
@@ -2114,10 +2218,14 @@ function renderReader(){
 
     verseParent.appendChild(row);
   });
-  // Restaurar scroll (evita salto al top al seleccionar versículo)
-  if(keepScroll){
-    reader.scrollTop = prevScroll;
-  }
+  // Restaurar scroll y re-montar flechas sobre #reader-verses
+  requestAnimationFrame(()=>{
+    try{ setupReaderVersesScrollRail(); }catch(e){}
+    if(keepScroll){
+      const sc = document.getElementById('reader-verses') || reader;
+      if(sc) sc.scrollTop = prevScroll;
+    }
+  });
 }
 
 function setVerseSelected(vnum, on){
