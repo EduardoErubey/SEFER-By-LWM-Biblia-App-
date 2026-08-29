@@ -561,9 +561,6 @@ html, body, #app{
   </div>
 </div>
 
-</div>
-  <div id="yt-iframe-box"></div>
-</div>
 <div id="modal-youtube" style="display:none;position:fixed;inset:0;z-index:1350;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:20px;">
   <div class="im-card" style="max-width:420px;width:100%;background:var(--card-bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:20px 22px;position:relative;">
     <button type="button" id="cerrar-youtube-modal" style="position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-soft);">❌</button>
@@ -948,6 +945,17 @@ let currentChap = "1";
 let detailVerse = null;
 let selectedVerses = [];
 let selectionUIActive = false; // casillas visibles (tras clic en versículo o con selección)
+const SEFER_FONTS = [
+  { id:'literata', name:'Literata (lectura)', stack:"'Literata', Georgia, serif" },
+  { id:'inter', name:'Inter (moderna)', stack:"'Inter', system-ui, sans-serif" },
+  { id:'fraunces', name:'Fraunces (títulos)', stack:"'Fraunces', Georgia, serif" },
+  { id:'roboto', name:'Roboto (Android)', stack:"'Roboto', 'Helvetica Neue', sans-serif" },
+  { id:'sf', name:'SF-style (Apple)', stack:"-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" },
+  { id:'noto', name:'Noto Sans', stack:"'Noto Sans', 'Helvetica Neue', sans-serif" },
+  { id:'georgia', name:'Georgia (clásica)', stack:"Georgia, 'Times New Roman', serif" },
+  { id:'mono', name:'Mono legible', stack:"ui-monospace, 'Cascadia Code', 'Segoe UI Mono', monospace" }
+];
+let verseFontFamily = 'literata';
 let seferTourActive = false; // hoisted (tour) — evitar TDZ en updateProjectBtnVisibility
 let seferTourIndex = 0;
 
@@ -958,6 +966,7 @@ const store = {
   },
   set(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
 };
+try{ verseFontFamily = store.get('sefer_font_family', 'literata') || 'literata'; }catch(e){}
 let favorites = store.get('bp_favorites', store.get('bp_highlights', {})); // migra resaltados antiguos
 let notes      = store.get('bp_notes', {});
 // Migrar nombres de temas antiguos
@@ -1647,22 +1656,14 @@ function updateSelectionUI(){
 }
 clearSelBtn.onclick = ()=>{ selectedVerses = []; selectionUIActive = false; updateSelectionUI(); renderReader(); };
 
-const SEFER_FONTS = [
-  { id:'literata', name:'Literata (lectura)', stack:"'Literata', Georgia, serif" },
-  { id:'inter', name:'Inter (moderna)', stack:"'Inter', system-ui, sans-serif" },
-  { id:'fraunces', name:'Fraunces (títulos)', stack:"'Fraunces', Georgia, serif" },
-  { id:'roboto', name:'Roboto (Android)', stack:"'Roboto', 'Helvetica Neue', sans-serif" },
-  { id:'sf', name:'SF-style (Apple)', stack:"-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" },
-  { id:'noto', name:'Noto Sans', stack:"'Noto Sans', 'Helvetica Neue', sans-serif" },
-  { id:'georgia', name:'Georgia (clásica)', stack:"Georgia, 'Times New Roman', serif" },
-  { id:'mono', name:'Mono legible', stack:"ui-monospace, 'Cascadia Code', 'Segoe UI Mono', monospace" }
-];
-let verseFontFamily = store.get('sefer_font_family', 'literata');
 function applyVerseFont(){
-  reader.style.setProperty('--verse-size', verseFontSize + 'px');
-  const f = SEFER_FONTS.find(x=>x.id===verseFontFamily) || SEFER_FONTS[0];
-  reader.style.setProperty('--verse-font', f.stack);
-  reader.style.fontFamily = f.stack;
+  if(!reader) return;
+  reader.style.setProperty('--verse-size', (typeof verseFontSize!=='undefined'?verseFontSize:17) + 'px');
+  try{
+    const fonts = (typeof SEFER_FONTS!=='undefined' && SEFER_FONTS) ? SEFER_FONTS : [];
+    const f = fonts.find(x=>x.id===verseFontFamily) || fonts[0];
+    if(f){ reader.style.setProperty('--verse-font', f.stack); reader.style.fontFamily = f.stack; }
+  }catch(e){}
 }
 function setupFontFamilyMenu(){
   const btn = document.getElementById('font-family-btn');
