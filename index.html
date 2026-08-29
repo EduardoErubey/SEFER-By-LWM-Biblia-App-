@@ -346,8 +346,151 @@
 
 <script>
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.4.1-stable";
-const SEFER_VERSION_NAME = "Pre-minificación + toolkit contenida";
+const SEFER_VERSION = "2.4.2-stable";
+const SEFER_VERSION_NAME = "Historial con fechas YYYY-MM-DD + base estable";
+
+
+const SEFER_VERSION_HISTORY = [
+  {
+    id: "2.4.2-stable",
+    name: "Historial de versiones completo + base estable",
+    date: "2026-08-29",
+    current: true,
+    changes: [
+      "Historial completo visible con versionshistory",
+      "Todas las versiones con fecha YYYY-MM-DD",
+      "Registro de v1.0.0 a v2.5.0-broken y restauración 2.4.x",
+      "Misma base estable usable (sin sefer-data.js)"
+    ]
+  },
+  {
+    id: "2.4.1-stable",
+    name: "Pre-minificación + toolkit contenida",
+    date: "2026-08-29",
+    current: false,
+    changes: [
+      "Restauración estable tras el PLACEHOLDER y el minificado roto",
+      "index.html autónomo (sin depender de sefer-data.js)",
+      "Toolkit alineada a la derecha, sin salirse de los márgenes",
+      "YouTube en la barra izquierda, debajo de la lista de libros"
+    ]
+  },
+  {
+    id: "2.5.0-broken",
+    name: "Minificado + sefer-data (NO USAR)",
+    date: "2026-08-29",
+    current: false,
+    changes: [
+      "Minificación agresiva del HTML/JS",
+      "Genealogía y diccionario movidos a sefer-data.js",
+      "La app dejó de funcionar — revertido a 2.4.1-stable"
+    ]
+  },
+  {
+    id: "2.4.0",
+    name: "Pulido toolkit y resoluciones",
+    date: "2026-08-28",
+    current: false,
+    changes: [
+      "Ajustes de toolkit para resoluciones como 1366×768",
+      "Ayuda como referencia de margen derecho",
+      "YouTube bajo los libros (~70% lista / ~30% vídeo)"
+    ]
+  },
+  {
+    id: "2.3.1",
+    name: "Biografías, glosario y apócrifos",
+    date: "2026-08-27",
+    current: false,
+    changes: [
+      "Biografías en modo lista + época AT/NT + botón Atrás",
+      "Más nombres (Judas Iscariote, Ester, Sansón, etc.)",
+      "Sección Apócrifos (curiosidades, sin el texto de esos libros)",
+      "Glosario ampliado (contumaz, dura cerviz, etc.)",
+      "Significados con doble clic en una palabra",
+      "Plan de lectura con altura fija de ventana"
+    ]
+  },
+  {
+    id: "2.3.0",
+    name: "YouTube en lateral y bienvenida",
+    date: "2026-08-27",
+    current: false,
+    changes: [
+      "Vídeo de YouTube integrado en el panel de libros",
+      "Mensaje de bienvenida centrado",
+      "Ayuda actualizada",
+      "Corrección de tooltips de la barra de herramientas"
+    ]
+  },
+  {
+    id: "2.2.0",
+    name: "Lectura, proyección y casillas",
+    date: "2026-08-26",
+    current: false,
+    changes: [
+      "Encabezado fijo del capítulo al hacer scroll",
+      "Casillas de selección de versículos sin mover el texto",
+      "Proyectar: versículo actual, selección o capítulo",
+      "Auto-desplazamiento con cuenta regresiva y velocidades 0.03×–0.09×",
+      "Parser de referencias: libro cap:versículo, rangos y listas"
+    ]
+  },
+  {
+    id: "2.1.0",
+    name: "Logros, perfil y tour",
+    date: "2026-08-20",
+    current: false,
+    changes: [
+      "Sistema de logros e insignias por libro leído",
+      "Perfil con cuenta Google (foto, email, progreso)",
+      "Tour interactivo para usuarios nuevos",
+      "Pantalla completa (como F11)",
+      "Botón de versículo aleatorio (dado)"
+    ]
+  },
+  {
+    id: "2.0.0",
+    name: "Temas y sincronización",
+    date: "2026-08-15",
+    current: false,
+    changes: [
+      "Temas: México, Corea, Ucrania, Day, Night, Reino, Edén, Arena, Sándalo, AMOLED",
+      "Lotes de 5 temas con botón +/−",
+      "Tema por defecto México",
+      "Sincronización notas/favoritos/significados con Google Drive",
+      "Marca SEFER ספר / BY LWM PDC"
+    ]
+  },
+  {
+    id: "1.5.0",
+    name: "Estudio",
+    date: "2026-08-05",
+    current: false,
+    changes: [
+      "Plan de lectura de la Biblia en 1 año",
+      "Órdenes: canónico, inverso, paralelo, cronológico",
+      "Inicio: 1 ene–31 dic o desde hoy (365 días)",
+      "Glosario de términos bíblicos",
+      "Notas por versículo y favoritos",
+      "Panel de significados guardados"
+    ]
+  },
+  {
+    id: "1.0.0",
+    name: "Base",
+    date: "2026-07-27",
+    current: false,
+    changes: [
+      "Lectura Reina-Valera 1960",
+      "Navegación Antiguo / Nuevo Testamento, libros y capítulos",
+      "Buscador de referencias",
+      "Modo detalle (nombres, ciudades, palabras de Jesús)",
+      "Primera versión de temas visuales"
+    ]
+  }
+];
+
 
 /* =========================================================
    DATOS
@@ -1775,9 +1918,11 @@ function openVersionsHistory(){
       delta = '<div style="font-size:11px;color:var(--ink-soft);margin:4px 0 6px;font-style:italic;">Respecto a v'+prev.id+': se añadieron o cambiaron los puntos de abajo.</div>';
     }
     const lis = (v.changes||[]).map(c=>'<li style="margin:0 0 4px;">'+c+'</li>').join('');
+    const dateStr = (v.date && String(v.date).trim()) ? String(v.date).trim() : '—';
     return '<div style="margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line);">'
       + '<div style="font-weight:700;color:var(--rubric);font-size:14px;">v'+v.id+' '+badge+'</div>'
-      + '<div style="font-size:12px;color:var(--gold);margin:2px 0 4px;">'+(v.name||'')+(v.date?' · '+v.date:'')+'</div>'
+      + '<div style="font-size:12px;color:var(--gold);margin:2px 0 2px;">'+(v.name||'')+'</div>'
+      + '<div style="font-size:12px;font-weight:600;color:var(--ink-soft);margin:0 0 6px;">📅 '+dateStr+'</div>'
       + delta
       + '<ul style="margin:0;padding-left:18px;">'+lis+'</ul></div>';
   }).join('');
