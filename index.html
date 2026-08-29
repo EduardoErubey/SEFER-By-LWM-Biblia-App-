@@ -59,6 +59,91 @@
   #nav{ width:200px !important; min-width:200px !important; }
 }
 
+
+/* —— v2.4.3: tooltips toolkit debajo + sin franja negra por scroll —— */
+html, body{
+  margin:0 !important;
+  padding:0 !important;
+  height:100% !important;
+  width:100% !important;
+  overflow:hidden !important;
+  overscroll-behavior:none;
+}
+#app{
+  height:100vh !important;
+  height:100dvh !important;
+  width:100vw !important;
+  max-width:100% !important;
+  overflow:hidden !important;
+  position:relative;
+}
+#main{
+  min-width:0;
+  overflow:hidden !important;
+}
+/* Tooltips DEBAJO del botón, visibles sobre el área de lectura (no arriba del botón) */
+#topbar{
+  overflow:visible !important;
+  position:relative;
+  z-index:500 !important;
+}
+#topbar-actions{
+  overflow:visible !important;
+  position:relative;
+  z-index:501;
+}
+#topbar-actions .btn,
+#topbar-actions .btn-icon,
+#help-btn{
+  position:relative;
+  z-index:1;
+  overflow:visible !important;
+}
+#topbar-actions .btn:hover,
+#topbar-actions .btn:focus-visible,
+#help-btn:hover,
+#help-btn:focus-visible{
+  z-index:600;
+}
+.btn-icon::after,
+.btn.has-tip::after{
+  content:attr(data-tooltip) !important;
+  position:absolute !important;
+  left:50% !important;
+  top:calc(100% + 8px) !important;
+  bottom:auto !important;
+  transform:translateX(-50%) translateY(-4px) !important;
+  background:var(--ink) !important;
+  color:var(--parchment) !important;
+  font-family:var(--font-ui) !important;
+  font-size:11.5px !important;
+  font-weight:600 !important;
+  white-space:normal !important;
+  max-width:min(260px, 70vw) !important;
+  min-width:110px !important;
+  text-align:center !important;
+  line-height:1.35 !important;
+  padding:7px 11px !important;
+  border-radius:6px !important;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none !important;
+  z-index:20000 !important;
+  box-shadow:0 8px 20px rgba(0,0,0,0.4) !important;
+}
+.btn-icon:hover::after,
+.btn.has-tip:hover::after,
+.btn-icon:focus-visible::after,
+.btn.has-tip:focus-visible::after{
+  opacity:1 !important;
+  visibility:visible !important;
+  transform:translateX(-50%) translateY(0) !important;
+}
+#content-wrap, #reader, #reader-sticky-head{
+  position:relative;
+  z-index:1;
+}
+
 </style>
 
 </head>
@@ -346,16 +431,27 @@
 
 <script>
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.4.2-stable";
-const SEFER_VERSION_NAME = "Historial con fechas YYYY-MM-DD + base estable";
+const SEFER_VERSION = "2.4.3-stable";
+const SEFER_VERSION_NAME = "Dado→proyectar, tooltips toolkit, sin franja negra";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.4.3-stable",
+    name: "Dado→proyectar, tooltips toolkit, sin franja negra",
+    date: "2026-08-29",
+    current: true,
+    changes: [
+      "Botón dado abre el versículo aleatorio en modo proyectar",
+      "Tooltips de la toolkit debajo de los botones y sobre el área de lectura",
+      "Corregida franja negra al usar el dado (scroll del documento bloqueado)"
+    ]
+  },
+  {
     id: "2.4.2-stable",
     name: "Historial de versiones completo + base estable",
     date: "2026-08-29",
-    current: true,
+    current: false,
     changes: [
       "Historial completo visible con versionshistory",
       "Todas las versiones con fecha YYYY-MM-DD",
@@ -1570,17 +1666,23 @@ function goToRandomVerse(){
   openTestaments.add(BOOK_ORDER.find(e=>e.name===book)?.testament || 'AT');
   openBooks.add(book);
   saveNavState();
+  // Evitar scroll del documento (franja negra al usar scrollIntoView en body)
+  try{
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
+  }catch(e){}
   goTo(book, chap);
   detailVerse = String(v);
   selectionUIActive = false;
-  selectedVerses = [];
+  selectedVerses = [String(v)];
   updateSelectionUI();
   renderReader();
   renderBookList();
-  requestAnimationFrame(()=>{
-    const el = document.querySelector('.verse[data-vnum="'+String(v)+'"]');
-    if(el) el.scrollIntoView({block:'center', behavior:'smooth'});
-  });
+  // Mostrar en modo proyectar (pantalla completa de proyección)
+  if(typeof openStage === 'function'){
+    openStage(book, chap, [String(v)], 'single');
+  }
   try{ if(typeof bumpAchProgress==='function') bumpAchProgress('random_1',1); }catch(e){}
 }
 document.getElementById('random-verse-btn')?.addEventListener('click', goToRandomVerse);
