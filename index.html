@@ -32,24 +32,25 @@
 /* Superficies cristal */
 body[data-theme="amoled"]{
   background:
-    radial-gradient(1200px 700px at 10% -10%, rgba(255,255,255,0.85), transparent 55%),
-    radial-gradient(900px 600px at 100% 0%, rgba(120,180,255,0.45), transparent 50%),
-    linear-gradient(155deg, #b9cdf0 0%, #e8f0fa 42%, #d2e4f7 72%, #a8c4ea 100%) !important;
+    radial-gradient(1000px 600px at 8% 0%, rgba(255,255,255,0.95), transparent 50%),
+    radial-gradient(800px 500px at 95% 10%, rgba(160,200,255,0.55), transparent 48%),
+    radial-gradient(700px 500px at 50% 100%, rgba(200,220,255,0.4), transparent 55%),
+    linear-gradient(160deg, #c5d8f2 0%, #eef4fc 38%, #dceaf8 68%, #b7cef0 100%) !important;
 }
 body[data-theme="amoled"] #nav{
-  background:rgba(255,255,255,0.42) !important;
-  -webkit-backdrop-filter:saturate(180%) blur(28px);
-  backdrop-filter:saturate(180%) blur(28px);
-  border-right:1px solid rgba(255,255,255,0.55) !important;
-  box-shadow:4px 0 24px rgba(30,60,120,0.06);
+  background:rgba(255,255,255,0.48) !important;
+  -webkit-backdrop-filter:saturate(190%) blur(32px);
+  backdrop-filter:saturate(190%) blur(32px);
+  border-right:1px solid rgba(255,255,255,0.62) !important;
+  box-shadow:6px 0 28px rgba(30,60,120,0.07);
 }
 body[data-theme="amoled"] #topbar,
 body[data-theme="amoled"] #reader-sticky-head{
-  background:rgba(255,255,255,0.48) !important;
-  -webkit-backdrop-filter:saturate(180%) blur(22px);
-  backdrop-filter:saturate(180%) blur(22px);
-  border-bottom:1px solid rgba(255,255,255,0.5);
-  box-shadow:0 1px 0 rgba(255,255,255,0.35) inset;
+  background:rgba(255,255,255,0.55) !important;
+  -webkit-backdrop-filter:saturate(190%) blur(26px);
+  backdrop-filter:saturate(190%) blur(26px);
+  border-bottom:1px solid rgba(255,255,255,0.58);
+  box-shadow:0 1px 0 rgba(255,255,255,0.45) inset, 0 4px 16px rgba(30,60,120,0.05);
 }
 body[data-theme="amoled"] #main,
 body[data-theme="amoled"] #content-wrap,
@@ -109,17 +110,74 @@ body[data-theme="amoled"] #sefer-tour-card{
   box-shadow:0 12px 40px rgba(30,60,120,0.12);
   border-radius:16px;
 }
-body[data-theme="amoled"] #book-list .book-item,
-body[data-theme="amoled"] #book-list .chap-btn{
-  background:rgba(255,255,255,0.35);
-  border:1px solid rgba(255,255,255,0.4);
-  border-radius:8px;
+body[data-theme="amoled"] #book-list .book-item{
+  background:rgba(255,255,255,0.38);
+  border:1px solid rgba(255,255,255,0.5);
+  border-radius:12px;
+  margin:2px 8px;
+  padding:8px 12px;
 }
 body[data-theme="amoled"] #book-list .book-item:hover,
+body[data-theme="amoled"] #book-list .book-item.active{
+  background:rgba(255,255,255,0.72);
+  border-color:rgba(10,132,255,0.4);
+}
+/* Capítulos en círculos (como el mockup) */
+body[data-theme="amoled"] .chap-pill,
+body[data-theme="amoled"] #book-list .chap-btn,
+body[data-theme="amoled"] #book-list .chap-pill{
+  width:30px !important;
+  height:30px !important;
+  min-width:30px !important;
+  border-radius:50% !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  background:rgba(255,255,255,0.55) !important;
+  border:1px solid rgba(255,255,255,0.75) !important;
+  color:var(--ink) !important;
+  font-weight:600 !important;
+  font-size:12px !important;
+  box-shadow:0 1px 3px rgba(30,60,120,0.08), inset 0 1px 0 rgba(255,255,255,0.85);
+  -webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(8px);
+  margin:2px !important;
+}
+body[data-theme="amoled"] .chap-pill:hover,
 body[data-theme="amoled"] #book-list .chap-btn:hover,
-body[data-theme="amoled"] #book-list .chap-btn.active{
-  background:rgba(255,255,255,0.7);
-  border-color:rgba(10,132,255,0.35);
+body[data-theme="amoled"] #book-list .chap-pill:hover{
+  background:rgba(255,255,255,0.9) !important;
+  border-color:rgba(10,132,255,0.45) !important;
+  color:#0a84ff !important;
+}
+body[data-theme="amoled"] .chap-pill.active,
+body[data-theme="amoled"] #book-list .chap-btn.active,
+body[data-theme="amoled"] #book-list .chap-pill.active{
+  background:linear-gradient(180deg, #3b9bff 0%, #0a84ff 100%) !important;
+  border-color:rgba(255,255,255,0.4) !important;
+  color:#fff !important;
+  box-shadow:0 2px 10px rgba(10,132,255,0.35);
+}
+/* Toolkit: grupos más visibles */
+body[data-theme="amoled"] .tb-group{
+  display:inline-flex !important;
+  align-items:center;
+  gap:4px;
+  padding:4px 6px;
+  margin:0 2px;
+  background:rgba(255,255,255,0.35);
+  border:1px solid rgba(255,255,255,0.55);
+  border-radius:16px;
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px);
+  box-shadow:0 1px 4px rgba(30,60,120,0.06), inset 0 1px 0 rgba(255,255,255,0.65);
+}
+body[data-theme="amoled"] #topbar-actions{
+  gap:8px !important;
+}
+body[data-theme="amoled"] .tb-group .btn,
+body[data-theme="amoled"] .tb-group .btn-icon{
+  margin:0 !important;
 }
 body[data-theme="amoled"] .theme-dot{
   box-shadow:0 0 0 1px rgba(255,255,255,0.7), 0 2px 6px rgba(30,60,120,0.12);
@@ -5114,8 +5172,37 @@ function openSeferHelp(){
   document.getElementById('im-nav').style.display = 'none';
   document.getElementById('im-title').textContent = 'Instrucciones de SEFER';
   document.getElementById('im-sub').textContent = 'BY LIFE WORD MISSION · Reina-Valera 1960';
+  const isGlass = (typeof currentTheme !== 'undefined' && currentTheme === 'amoled');
+  // Iconos según tema activo (Glass = estilo Apple)
+  const ic = isGlass ? {
+    perfil:'👤', nube:'☁️', full:'⛶', reset:'↺', dado:'✨',
+    detalle:'🔎 Detalle', sig:'📑 Significados', notas:'✏️ Notas', fav:'❤️ Favoritos',
+    glos:'📖 Glosario', bio:'👥 Biografía', apo:'📄 Apócrifos',
+    plan:'📅 Plan 1 año', proj:'🖥️ Proyectar', help:'ℹ️ Ayuda',
+    tourBtn:'✨ Iniciar tour interactivo'
+  } : {
+    perfil:'🏆', nube:'☁️', full:'⛶', reset:'↺', dado:'🎲',
+    detalle:'🔍 Detalle', sig:'📚 Significados', notas:'📝 Notas', fav:'❤️ Favoritos',
+    glos:'📖 Glosario', bio:'👤 Biografía', apo:'📜 Apócrifos',
+    plan:'📅 Plan 1 año', proj:'🎬 Proyectar', help:'❓ Ayuda',
+    tourBtn:'🎯 Iniciar tour interactivo'
+  };
+  const glassBlock = isGlass ? `
+    <div class="im-block"><div class="im-label">Tema Glass (activo ahora)</div>
+    <div class="im-text">Estás usando <strong>Glass</strong>: interfaz liquid glass inspirada en macOS.
+    <br>• Capítulos en <strong>círculos</strong> de vidrio.
+    <br>• Toolkit en <strong>grupos redondeados</strong> (Texto, Estudio, Consulta, Herramientas).
+    <br>• Iconos estilo Apple en la barra y en la navegación:
+    <br>&nbsp;&nbsp;${ic.perfil} Perfil · ${ic.nube} Nube · ${ic.full} Pantalla completa · ${ic.reset} Reiniciar · ${ic.dado} Versículo al azar
+    <br>&nbsp;&nbsp;${ic.detalle} · ${ic.sig} · ${ic.notas} · ${ic.fav}
+    <br>&nbsp;&nbsp;${ic.glos} · ${ic.bio} · ${ic.apo}
+    <br>&nbsp;&nbsp;${ic.plan} · YouTube · ${ic.proj} · ${ic.help}
+    <br>Al cambiar a otro tema, los iconos vuelven al estilo general de SEFER.</div></div>` : `
+    <div class="im-block"><div class="im-label">Tema Glass</div>
+    <div class="im-text">En el segundo lote de temas (botón <strong>+</strong>) está <strong>🫧 Glass</strong>: liquid glass tipo macOS, capítulos en círculo, toolkit agrupada e <strong>iconos estilo Apple</strong> (ℹ️ ✏️ 📑 🖥️…). Actívalo para ver esa apariencia; la ayuda se adapta a los iconos del tema en uso.</div></div>`;
+
   document.getElementById('im-body').innerHTML = `
-    <button type="button" class="btn primary tour-start-btn" id="start-sefer-tour-btn">🎯 Iniciar tour interactivo</button>
+    <button type="button" class="btn primary tour-start-btn" id="start-sefer-tour-btn">${ic.tourBtn}</button>
 
     <div class="im-block"><div class="im-label">¿Qué es SEFER?</div>
     <div class="im-text">Biblia de estudio y proyección (<strong>Reina-Valera 1960</strong>) de <strong>Life Word Mission Playa del Carmen</strong>. Lee, anota, marca favoritos, consulta significados, sigue un plan de un año y proyecta versículos en pantalla grande.</div></div>
@@ -5123,13 +5210,15 @@ function openSeferHelp(){
     <div class="im-block"><div class="im-label">Tour guiado (23 pasos)</div>
     <div class="im-text">Pulsa <strong>Iniciar tour interactivo</strong> para un recorrido completo de toda la interfaz. Lenguaje sencillo. <strong>Esc</strong> sale · <strong>Enter</strong> o → avanza · ← retrocede.</div></div>
 
+    ${glassBlock}
+
     <div class="im-block"><div class="im-label">Barra lateral izquierda</div>
     <div class="im-text">• <strong>SEFER ספר / BY LWM PDC</strong>: marca de la app.<br>
-    • <strong>🏆 Perfil</strong>: logros e insignias. <strong>☁️ Nube</strong>: sincronizar con Google. <strong>⛶</strong> pantalla completa. <strong>↺</strong> reiniciar navegación.<br>
-    • <strong>Temas</strong>: 10 paletas (México, Corea, Ucrania, Day, Night, Reino, Edén, Arena, Sándalo, Glass). Solo 5 visibles; <strong>+</strong> / <strong>−</strong> cambian el lote. <strong>Glass</strong> usa liquid glass tipo macOS e iconos al estilo Apple (ℹ️ ✏️ 📑 🖥️…).<br>
-    • <strong>🎲 Dado</strong>: versículo al azar en modo proyectar.<br>
+    • <strong>${ic.perfil} Perfil</strong>: logros e insignias. <strong>${ic.nube} Nube</strong>: sincronizar con Google. <strong>${ic.full}</strong> pantalla completa. <strong>${ic.reset}</strong> reiniciar navegación.<br>
+    • <strong>Temas</strong>: 10 paletas (México, Corea, Ucrania, Day, Night, Reino, Edén, Arena, Sándalo, Glass). Solo 5 visibles; <strong>+</strong> / <strong>−</strong> cambian el lote.<br>
+    • <strong>${ic.dado}</strong>: versículo al azar${isGlass ? ' (en Glass el icono es ✨)' : ' en modo proyectar'}.<br>
     • <strong>Buscador de versículos</strong>: <code>Juan 3:16</code>, rangos (<code>1:1-5</code>) o varios (<code>1:1,3,6</code>). <strong>Tab</strong> completa el nombre del libro.<br>
-    • <strong>Libros</strong>: Antiguo y Nuevo Testamento. 📚 ficha del libro (autor, fecha, idioma original, resumen).<br>
+    • <strong>Libros</strong>: Antiguo y Nuevo Testamento. 📚 ficha del libro (autor, fecha, idioma original, resumen).${isGlass ? ' En Glass los números de capítulo son <strong>círculos</strong>.' : ''}<br>
     • <strong>Scrollbar</strong> personalizada (▲ track ▼) con colores del tema.</div></div>
 
     <div class="im-block"><div class="im-label">Área de lectura</div>
@@ -5140,11 +5229,11 @@ function openSeferHelp(){
     • Las casillas no mueven el texto: solo se muestran u ocultan.</div></div>
 
     <div class="im-block"><div class="im-label">Barra superior (toolkit)</div>
-    <div class="im-text">Agrupada en bloques:<br>
-    • <strong>Texto</strong>: A− A+ · Aa tipografías · 🔍 Detalle (nombres, lugares, palabras de Jesús).<br>
-    • <strong>Estudio</strong>: 📚 Significados · 📝 Notas · ❤️ Favoritos.<br>
-    • <strong>Consulta</strong>: 📖 Glosario · 👤 Biografía · 📜 Apócrifos.<br>
-    • <strong>Herramientas</strong>: 📅 Plan 1 año · YouTube · 🎬 Proyectar · ❓ Ayuda.</div></div>
+    <div class="im-text">Agrupada en bloques${isGlass ? ' (cápsulas de vidrio más visibles en Glass)' : ''}:<br>
+    • <strong>Texto</strong>: A− A+ · Aa tipografías · ${ic.detalle} (nombres, lugares, palabras de Jesús).<br>
+    • <strong>Estudio</strong>: ${ic.sig} · ${ic.notas} · ${ic.fav}.<br>
+    • <strong>Consulta</strong>: ${ic.glos} · ${ic.bio} · ${ic.apo}.<br>
+    • <strong>Herramientas</strong>: ${ic.plan} · YouTube · ${ic.proj} · ${ic.help}.</div></div>
 
     <div class="im-block"><div class="im-label">Plan de lectura en 1 año</div>
     <div class="im-text">Órdenes: canónico (AT→NT), inverso (NT→AT), paralelo o cronológico. Inicio: 1 de enero o desde hoy (365 días). Marca lo leído. Ventana compacta para ver varias lecturas.</div></div>
@@ -5156,7 +5245,7 @@ function openSeferHelp(){
     <div class="im-text">• Versículo actual, capítulo completo o selección marcada.<br>
     • <strong>Esc</strong> o «Salir» cierran la proyección <em>sin</em> salir de pantalla completa.<br>
     • Auto-desplazamiento con cuenta regresiva y velocidades 0.03×–0.09×.<br>
-    • Si entraste con el <strong>dado</strong>: botones ❤️ 📝 🎲 abajo a la derecha (no cierran la proyección).</div></div>
+    • Si entraste con el dado: botones ❤️ ${isGlass?'✏️':'📝'} ${isGlass?'✨':'🎲'} abajo a la derecha (no cierran la proyección).</div></div>
 
     <div class="im-block"><div class="im-label">Tipografías y scroll</div>
     <div class="im-text">• Botón <strong>Aa</strong>: tipografías legibles (Literata, Inter, Roboto, estilo Apple, etc.).<br>
