@@ -44,18 +44,38 @@ body[data-theme="amoled"] #nav{
   border-right:1px solid rgba(255,255,255,0.62) !important;
   box-shadow:6px 0 28px rgba(30,60,120,0.07);
 }
-body[data-theme="amoled"] #topbar,
-body[data-theme="amoled"] #reader-sticky-head{
+body[data-theme="amoled"] #topbar{
   background:rgba(255,255,255,0.55) !important;
   -webkit-backdrop-filter:saturate(190%) blur(26px);
   backdrop-filter:saturate(190%) blur(26px);
   border-bottom:1px solid rgba(255,255,255,0.58);
   box-shadow:0 1px 0 rgba(255,255,255,0.45) inset, 0 4px 16px rgba(30,60,120,0.05);
+  position:relative !important;
+  z-index:500 !important;
+}
+/* Encabezado del capítulo: tarjeta cristal con curvas, debajo de la toolkit (no debajo en z-index) */
+body[data-theme="amoled"] #reader-sticky-head{
+  background:rgba(255,255,255,0.52) !important;
+  -webkit-backdrop-filter:saturate(190%) blur(22px) !important;
+  backdrop-filter:saturate(190%) blur(22px) !important;
+  border:1px solid rgba(255,255,255,0.65) !important;
+  border-radius:16px !important;
+  margin:10px 14px 8px 10px !important;
+  padding:14px 16px 12px !important;
+  box-shadow:0 1px 0 rgba(255,255,255,0.55) inset, 0 6px 22px rgba(30,60,120,0.08) !important;
+  position:relative !important;
+  top:auto !important;
+  z-index:2 !important;
+  flex:0 0 auto !important;
+  box-sizing:border-box !important;
 }
 body[data-theme="amoled"] #main,
 body[data-theme="amoled"] #content-wrap,
 body[data-theme="amoled"] #reader{
   background:transparent !important;
+}
+body[data-theme="amoled"] #reader{
+  padding-top:2px !important;
 }
 body[data-theme="amoled"] #reader-verses{
   background:rgba(255,255,255,0.28);
@@ -64,7 +84,7 @@ body[data-theme="amoled"] #reader-verses{
   border-radius:16px;
   border:1px solid rgba(255,255,255,0.45);
   box-shadow:0 8px 32px rgba(40,80,140,0.08);
-  margin:8px 12px 12px 8px;
+  margin:4px 14px 12px 10px;
 }
 body[data-theme="amoled"] .btn,
 body[data-theme="amoled"] .btn-icon{
