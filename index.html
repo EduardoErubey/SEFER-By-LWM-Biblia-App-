@@ -1124,6 +1124,131 @@ body[data-theme="amoled"] #help-btn{
   display:flex !important;
 }
 
+
+/* ===== GLASS v2: mate + blur, SIN agrandar UI ===== */
+body[data-theme="amoled"]{
+  /* variables base opacas */
+}
+body[data-theme="amoled"] #nav,
+body[data-theme="amoled"] #topbar,
+body[data-theme="amoled"] #reader-sticky-head,
+body[data-theme="amoled"] .im-card,
+body[data-theme="amoled"] #side,
+body[data-theme="amoled"] .side-panel,
+body[data-theme="amoled"] #sefer-tour-card,
+body[data-theme="amoled"] #word-search-bar,
+body[data-theme="amoled"] #ref-search-wrap,
+body[data-theme="amoled"] #version-btn,
+body[data-theme="amoled"] #version-menu,
+body[data-theme="amoled"] #font-family-menu,
+body[data-theme="amoled"] #project-sheet .ps-card,
+body[data-theme="amoled"] #info-modal .im-card{
+  background:rgba(248,250,253,0.94) !important;
+  border-color:rgba(255,255,255,0.88) !important;
+  -webkit-backdrop-filter:saturate(150%) blur(18px) !important;
+  backdrop-filter:saturate(150%) blur(18px) !important;
+}
+body[data-theme="amoled"] #reader-verses{
+  background:rgba(248,250,253,0.90) !important;
+  border:1px solid rgba(255,255,255,0.80) !important;
+  -webkit-backdrop-filter:blur(16px) !important;
+  backdrop-filter:blur(16px) !important;
+  /* sin márgenes extra que agranden el layout */
+  margin:0 !important;
+  border-radius:12px !important;
+  box-shadow:0 4px 16px rgba(30,60,120,0.06) !important;
+}
+body[data-theme="amoled"] #book-list .book-item{
+  background:rgba(255,255,255,0.88) !important;
+  border:1px solid rgba(255,255,255,0.75) !important;
+  margin:0 !important;
+  padding:inherit !important;
+  border-radius:8px !important;
+}
+body[data-theme="amoled"] .tb-group{
+  /* solo borde/fondo, SIN padding/margin extra */
+  padding:0 !important;
+  margin:0 !important;
+  gap:inherit !important;
+  background:transparent !important;
+  border:none !important;
+  border-radius:0 !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+  box-shadow:none !important;
+}
+body[data-theme="amoled"] .btn,
+body[data-theme="amoled"] .btn-icon,
+body[data-theme="amoled"] #help-btn{
+  /* no cambiar tamaño respecto a otros temas */
+  font-size:inherit !important;
+  padding:inherit !important;
+  min-width:unset !important;
+  min-height:unset !important;
+  border-radius:8px !important;
+  background:rgba(255,255,255,0.90) !important;
+  border:1px solid rgba(255,255,255,0.80) !important;
+  -webkit-backdrop-filter:blur(12px) !important;
+  backdrop-filter:blur(12px) !important;
+}
+body[data-theme="amoled"] #nav-header-actions .nav-action-btn,
+body[data-theme="amoled"] .theme-more-btn,
+body[data-theme="amoled"] .random-verse-btn{
+  /* apariencia sin forzar width/height */
+  width:auto !important;
+  height:auto !important;
+  min-width:unset !important;
+  min-height:unset !important;
+  background:rgba(255,255,255,0.90) !important;
+  border:1px solid rgba(255,255,255,0.80) !important;
+  -webkit-backdrop-filter:blur(12px) !important;
+  backdrop-filter:blur(12px) !important;
+}
+body[data-theme="amoled"] .chap-pill,
+body[data-theme="amoled"] #book-list .chap-btn,
+body[data-theme="amoled"] #book-list .chap-pill{
+  /* círculo visual pero mismo box que otros temas */
+  border-radius:50% !important;
+  background:rgba(255,255,255,0.90) !important;
+  border:1px solid rgba(255,255,255,0.80) !important;
+  -webkit-backdrop-filter:blur(8px) !important;
+  backdrop-filter:blur(8px) !important;
+  box-shadow:none !important;
+}
+body[data-theme="amoled"] #reader{
+  padding-top:0 !important;
+}
+/* Selector traducción compacto */
+#version-switch.version-switch-toolkit{
+  flex:0 0 auto !important;
+  max-width:108px !important;
+  min-width:72px !important;
+  width:108px !important;
+  margin-right:4px !important;
+}
+#version-btn{
+  padding:4px 6px !important;
+  font-size:10px !important;
+  font-weight:600 !important;
+  max-width:108px !important;
+}
+#version-btn .vb-label{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  max-width:84px;
+}
+#version-btn .vb-caret{ font-size:8px; }
+#version-menu, #font-family-menu{
+  z-index:5000 !important;
+  position:fixed !important;
+}
+body[data-theme="amoled"] #help-btn{
+  font-size:11px !important;
+  padding:5px 8px !important;
+  background:rgba(248,250,253,0.96) !important;
+}
+
 </style>
 
 </head>
@@ -2469,47 +2594,49 @@ function setupFontFamilyMenu(){
   if(!menu){
     menu = document.createElement('div');
     menu.id = 'font-family-menu';
-    btn.parentElement.style.position = 'relative';
-    btn.parentElement.appendChild(menu);
+  }
+  if(menu.parentElement !== document.body){
+    document.body.appendChild(menu);
   }
   function renderMenu(){
-    menu.innerHTML = SEFER_FONTS.map(f=>
+    const fonts = (typeof SEFER_FONTS!=='undefined' && SEFER_FONTS) ? SEFER_FONTS : [];
+    menu.innerHTML = fonts.map(f=>
       '<button type="button" data-font="'+f.id+'" class="'+(f.id===verseFontFamily?'active':'')+'" style="font-family:'+f.stack+'">'+f.name+'</button>'
     ).join('');
     menu.querySelectorAll('button').forEach(b=>{
-      b.onclick = (e)=>{
+      b.onclick = function(e){
+        e.preventDefault();
         e.stopPropagation();
         verseFontFamily = b.getAttribute('data-font');
         try{ store.set('sefer_font_family', verseFontFamily); }catch(err){}
         applyVerseFont();
-        if(!showWelcome) try{ renderReader(); }catch(err){}
+        try{ if(typeof showWelcome==='undefined' || !showWelcome) renderReader(); }catch(err){}
         menu.classList.remove('open');
         renderMenu();
       };
     });
   }
   renderMenu();
-  btn.onclick = (e)=>{
+  btn.onclick = function(e){
     e.preventDefault();
     e.stopPropagation();
+    document.querySelectorAll('#version-menu.open').forEach(m=>m.classList.remove('open'));
     const open = !menu.classList.contains('open');
     if(open){
       const r = btn.getBoundingClientRect();
       menu.style.position = 'fixed';
       menu.style.top = (r.bottom + 6) + 'px';
-      menu.style.left = Math.max(8, r.right - 200) + 'px';
-      menu.style.right = 'auto';
-      menu.style.zIndex = '2000';
+      menu.style.left = Math.max(8, Math.min(r.right - 200, window.innerWidth - 220)) + 'px';
+      menu.style.zIndex = '5000';
       menu.classList.add('open');
     } else {
       menu.classList.remove('open');
     }
   };
-  document.addEventListener('click', (e)=>{
+  document.addEventListener('click', function(e){
     if(e.target === btn || btn.contains(e.target) || menu.contains(e.target)) return;
     menu.classList.remove('open');
   });
-  // Aplicar fuente guardada al iniciar
   try{ applyVerseFont(); }catch(err){}
 }
 // Scrollbar personalizada: ▲ + track/thumb + ▼, colores del tema, alineada al borde
@@ -5906,8 +6033,10 @@ function seferUpdateVersionUI(){
   const meta = SEFER_VERSION_META[currentBibleVersion] || SEFER_VERSION_META.rv1960;
   const btn = document.getElementById('version-btn');
   const label = btn && btn.querySelector('.vb-label');
-  if(label) label.textContent = meta.short + ' · ' + meta.label;
-  document.querySelectorAll('#version-menu .ver-item').forEach(el=>{
+  // etiqueta corta para que quepa en toolkit
+  if(label) label.textContent = meta.short || currentBibleVersion;
+  if(btn) btn.title = (meta.short || '') + ' · ' + (meta.label || '') + ' (Ctrl+Shift+T)';
+  document.querySelectorAll('#version-menu .ver-item, body > #version-menu .ver-item').forEach(el=>{
     el.classList.toggle('active', el.dataset.version === currentBibleVersion);
   });
 }
@@ -5943,22 +6072,27 @@ async function seferSetBibleVersion(id, opts){
 
 function wireVersionSwitcher(){
   const btn = document.getElementById('version-btn');
-  const menu = document.getElementById('version-menu');
+  let menu = document.getElementById('version-menu');
   if(!btn || !menu) return;
+  // Mover menú a body para no quedar recortado por overflow de toolkit
+  if(menu.parentElement !== document.body){
+    document.body.appendChild(menu);
+  }
   seferUpdateVersionUI();
   function placeVersionMenu(){
     const r = btn.getBoundingClientRect();
     menu.style.position = 'fixed';
-    menu.style.left = Math.max(8, r.left) + 'px';
+    menu.style.left = Math.max(6, Math.min(r.left, window.innerWidth - 240)) + 'px';
     menu.style.top = (r.bottom + 4) + 'px';
     menu.style.right = 'auto';
-    menu.style.minWidth = Math.max(r.width, 220) + 'px';
-    menu.style.zIndex = '2000';
+    menu.style.minWidth = '220px';
+    menu.style.zIndex = '5000';
   }
-  btn.addEventListener('click', (e)=>{
+  btn.onclick = function(e){
     e.preventDefault();
     e.stopPropagation();
     const open = !menu.classList.contains('open');
+    document.querySelectorAll('#font-family-menu.open').forEach(m=>m.classList.remove('open'));
     if(open){
       placeVersionMenu();
       menu.classList.add('open');
@@ -5967,32 +6101,35 @@ function wireVersionSwitcher(){
       menu.classList.remove('open');
       btn.setAttribute('aria-expanded','false');
     }
-  });
+  };
   menu.querySelectorAll('.ver-item').forEach(el=>{
-    el.addEventListener('click', (e)=>{
+    el.onclick = function(e){
       e.preventDefault();
       e.stopPropagation();
       const id = el.dataset.version;
       menu.classList.remove('open');
       btn.setAttribute('aria-expanded','false');
-      if(id && id !== currentBibleVersion) seferSetBibleVersion(id);
-    });
+      if(id) seferSetBibleVersion(id);
+    };
   });
-  document.addEventListener('click', (e)=>{
+  document.addEventListener('click', function(e){
     if(!menu.classList.contains('open')) return;
     if(menu.contains(e.target) || btn.contains(e.target)) return;
     menu.classList.remove('open');
     btn.setAttribute('aria-expanded','false');
   });
-  window.addEventListener('resize', ()=>{
+  window.addEventListener('resize', function(){
     if(menu.classList.contains('open')) placeVersionMenu();
   });
-  if(currentBibleVersion && currentBibleVersion !== 'rv1960'){
-    seferSetBibleVersion(currentBibleVersion, {silent:true});
-  } else {
-    if(window.BIBLE_DATA_RV1960) seferApplyBibleData(window.BIBLE_DATA_RV1960);
-    else if(window.BIBLE_DATA) seferApplyBibleData(window.BIBLE_DATA);
-  }
+  try{
+    if(currentBibleVersion && currentBibleVersion !== 'rv1960'){
+      seferSetBibleVersion(currentBibleVersion, {silent:true});
+    } else if(window.BIBLE_DATA_RV1960){
+      seferApplyBibleData(window.BIBLE_DATA_RV1960);
+    } else if(window.BIBLE_DATA){
+      seferApplyBibleData(window.BIBLE_DATA);
+    }
+  }catch(err){ console.warn('[SEFER] version init', err); }
 }
 
 /* =========================================================
