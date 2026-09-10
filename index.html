@@ -900,7 +900,7 @@ html, body, #app{
 #version-btn .vb-caret{opacity:0.6;font-size:10px;flex-shrink:0;}
 #version-menu{
   display:none;position:absolute;left:0;top:calc(100% + 4px);z-index:530;
-  min-width:100%;width:max(100%,240px);
+  min-width:180px;width:max-content;max-width:260px;
   background:var(--card-bg);border:1px solid var(--line);border-radius:10px;
   box-shadow:0 10px 28px rgba(0,0,0,0.18);padding:6px;max-height:min(60vh,360px);overflow-y:auto;
 }
@@ -1374,6 +1374,42 @@ body[data-theme="amoled"] #book-list .book-btn{
   font-size:inherit !important;
 }
 
+/* =========================================================
+   BLOQUE ADICIONAL — revisión SEFER (traducción, limpiar,
+   tamaños unificados, destacar/resaltar, proyección, dado)
+   ========================================================= */
+:root{
+  --book-item-h: 34px;      /* alto de referencia de .book-item (7px+7px padding + línea) */
+  --chapter-size: 27px;     /* ancho de .chap-pill (alto 25px, ver regla base) */
+  --chapters-gap: 5px;      /* separación entre .chap-pill */
+}
+/* Mismas medidas en TODOS los temas (incluido Glass): solo referencia documental,
+   los valores concretos ya viven en las reglas base .book-item / .chap-pill / .chap-strip */
+
+/* Resaltar (marcatexto de versículos) — distinto de .verse.highlighted (favoritos)
+   y de .verse.active-detail (Destacar) */
+.verse.highlighted-mark{
+  background: linear-gradient(to right, rgba(255, 215, 0, 0.25), rgba(255, 215, 0, 0.15));
+  box-shadow: inset 3px 0 0 #DAA520;
+}
+#highlight-btn.easy-on{
+  background:var(--gold-soft);border-color:var(--gold);color:var(--ink);font-weight:600;
+}
+
+/* Marcatexto en proyección (capítulo completo u otros modos) */
+#stage .stage-text .stage-highlighted-mark{
+  background: linear-gradient(to right, rgba(255,215,0,0.22), rgba(255,215,0,0.08));
+  box-shadow: inset 3px 0 0 #DAA520;
+  border-radius:4px;
+  padding:0 4px;
+}
+.stage-btn.on{
+  opacity:1;
+  background:var(--stage-accent);
+  color:var(--stage-bg);
+  border-color:var(--stage-accent);
+}
+
 </style>
 
 </head>
@@ -1452,17 +1488,18 @@ body[data-theme="amoled"] #book-list .book-btn{
             <button type="button" class="ver-item" data-version="tla" role="option">TLA</button>
           </div>
         </div>
-        <button class="btn has-tip" id="clear-selection-btn" style="display:none;" data-tooltip="Quitar todos los versículos seleccionados">Limpiar</button>
+        <button class="btn has-tip" id="clear-selection-btn" style="visibility:hidden;" data-tooltip="Quitar todos los versículos seleccionados">🧹 Limpiar</button>
         <span class="tb-group" title="Texto">
           <button class="btn btn-icon" id="font-dec" data-tooltip="Disminuir texto">A−</button>
           <button class="btn btn-icon" id="font-inc" data-tooltip="Aumentar texto">A+</button>
           <button class="btn btn-icon has-tip" id="font-family-btn" data-tooltip="Cambiar tipografía de lectura">Aa</button>
-          <button class="btn has-tip" id="easy-btn" data-tooltip="Resalta nombres, ciudades y palabras de Jesús">🔍 Detalle</button>
+          <button class="btn has-tip" id="easy-btn" data-tooltip="Destacar nombres, ciudades y palabras de Jesús">✨ Destacar</button>
         </span>
         <span class="tb-group" title="Estudio">
           <button class="btn has-tip" id="meanings-btn" data-tooltip="Significados de palabras guardados">📚 Significados</button>
           <button class="btn has-tip" id="notes-btn" data-tooltip="Notas de exposición por versículo">📝 Notas</button>
           <button class="btn fav-btn has-tip" id="favs-btn" data-tooltip="Versículos marcados como favoritos">❤️ Favoritos</button>
+          <button class="btn has-tip" id="highlight-btn" data-tooltip="Marcatexto de versículos">🖍️ Resaltar</button>
         </span>
         <span class="tb-group" title="Consulta">
           <button class="btn has-tip" id="glossary-btn" data-tooltip="Glosario de términos bíblicos">📖 Glosario</button>
@@ -1480,7 +1517,7 @@ body[data-theme="amoled"] #book-list .book-btn{
     </div>
     
     <div id="mobile-toolbar">
-      <button type="button" class="btn" id="mt-easy" data-tooltip="Modo Detalle">🔍 Detalle</button>
+      <button type="button" class="btn" id="mt-easy" data-tooltip="Destacar nombres, ciudades y palabras de Jesús">✨ Destacar</button>
 <button type="button" class="btn" id="mt-meanings" data-tooltip="Significados">📚 Significados</button>
       <button type="button" class="btn" id="mt-notes" data-tooltip="Notas">📝 Notas</button>
       <button type="button" class="btn fav-btn" id="mt-favs" data-tooltip="Favoritos">♥ Favoritos</button>
@@ -1527,6 +1564,7 @@ body[data-theme="amoled"] #book-list .book-btn{
   </div>
   <div id="stage-extra-btns" style="display:none;">
     <button type="button" class="stage-btn stage-extra" id="stage-fav-btn" title="Guardar en favoritos">❤️</button>
+    <button type="button" class="stage-btn stage-extra" id="stage-highlight-btn" title="Marcatexto del versículo">🖍️</button>
     <button type="button" class="stage-btn stage-extra" id="stage-note-btn" title="Escribir nota">📝</button>
     <button type="button" class="stage-btn stage-extra" id="stage-dice-btn" title="Otro versículo al azar">🎲</button>
   </div>
@@ -2007,6 +2045,17 @@ const store = {
 try{ verseFontFamily = store.get('sefer_font_family', 'literata') || 'literata'; }catch(e){}
 let favorites = store.get('bp_favorites', store.get('bp_highlights', {})); // migra resaltados antiguos
 let notes      = store.get('bp_notes', {});
+// Resaltar (marcatexto de versículos) — NO confundir con favoritos ni con Destacar (easyReading)
+function hvid(book, chap, v){ return `${book}:${chap}:${v}`; }
+let highlightedVerses = new Set(store.get('bp_highlighted_verses', []));
+let highlightMode = false;
+function saveHighlighted(){
+  store.set('bp_highlighted_verses', Array.from(highlightedVerses));
+  if(typeof scheduleDriveSave==='function') scheduleDriveSave();
+}
+function loadHighlighted(){
+  try{ highlightedVerses = new Set(store.get('bp_highlighted_verses', [])); }catch(e){ highlightedVerses = new Set(); }
+}
 // Migrar nombres de temas antiguos
 const THEME_MIGRATE = {
   original:'arena', frio:'paz', oscuro:'sandalo',
@@ -2168,7 +2217,7 @@ function updateEasyBtn(){
   const btn = document.getElementById('easy-btn');
   if(!btn) return;
   btn.classList.toggle('easy-on', easyReading);
-  btn.textContent = easyReading ? '✓ 🔍 Modo Detalle' : '🔍 Modo Detalle';
+  btn.textContent = easyReading ? '✓ ✨ Destacar' : '✨ Destacar';
 }
 
 function scrollVerseIntoView(vnum){
@@ -2681,12 +2730,12 @@ function updateSelectionUI(){
   if(selectionInfo) selectionInfo.textContent = label;
   if(stickySel) stickySel.textContent = label;
   if(selectedVerses.length === 0){
-    clearSelBtn.style.display = 'none';
+    clearSelBtn.style.visibility = 'hidden';
     if(bar) bar.classList.remove('has-sel');
     if(easyBtn) easyBtn.style.display = '';
     selectionUIActive = false;
   } else {
-    clearSelBtn.style.display = 'inline-block';
+    clearSelBtn.style.visibility = 'visible';
     if(bar) bar.classList.add('has-sel');
     if(easyBtn) easyBtn.style.display = 'none';
     selectionUIActive = true;
@@ -3035,6 +3084,7 @@ function renderReader(){
     const row = document.createElement('div');
     row.className = 'verse'
       + (favorites[id] ? ' highlighted':'')
+      + (highlightedVerses.has(hvid(currentBook, currentChap, vnum)) ? ' highlighted-mark':'')
       + (isSelected ? ' selected':'')
       + (detailVerse===vnum ? ' active-detail':'');
     const flags = (favorites[id] ? '<span class="fav-flag">♥</span>' : '')
@@ -3060,6 +3110,14 @@ function renderReader(){
 
     const activateVerse = (e)=>{
       if(e && (e.target.closest('.vaction') || e.target.closest('.note-box') || e.target.closest('.verse-check'))) return;
+      if(highlightMode){
+        if(e){ e.preventDefault && e.preventDefault(); e.stopPropagation && e.stopPropagation(); }
+        const hid = hvid(currentBook, currentChap, vnum);
+        if(highlightedVerses.has(hid)) highlightedVerses.delete(hid); else highlightedVerses.add(hid);
+        saveHighlighted();
+        renderReader();
+        return;
+      }
       const sel = window.getSelection();
       if(e && e.type === 'click' && sel && sel.toString().trim().length > 0) return;
       if(e && e.target && e.target.classList && e.target.classList.contains('w')){
@@ -4224,11 +4282,17 @@ function updateStageExtraBtns(){
   box.style.display = show ? 'flex' : 'none';
   const diceBtn = document.getElementById('stage-dice-btn');
   if(diceBtn) diceBtn.style.display = stageFromDice ? '' : 'none';
+  const favBtn = document.getElementById('stage-fav-btn');
+  const hlBtn = document.getElementById('stage-highlight-btn');
+  const isChapterMode = (stageMode === 'chapter');
+  if(favBtn) favBtn.style.display = isChapterMode ? 'none' : '';
+  if(hlBtn) hlBtn.style.display = isChapterMode ? '' : 'none';
   if(!show){
     const panel = document.getElementById('stage-note-panel');
     if(panel) panel.style.display = 'none';
   } else {
     try{ refreshStageFavBtn(); }catch(e){}
+    try{ refreshStageHighlightBtn(); }catch(e){}
   }
 }
 function renderStage(){
@@ -4255,7 +4319,9 @@ function renderStage(){
     const isGap = prevV !== null && (parseInt(v) - parseInt(prevV) !== 1);
     const isJump = useJumpStyle || isGap;
     const vnumClass = isJump ? 'stage-vnum jump' : 'stage-vnum';
-    const openTag = isGap ? '<span class="jump-block">' : '<span>';
+    const isHl = (typeof highlightedVerses !== 'undefined') && highlightedVerses.has(hvid(p.book, p.chap, v));
+    const wrapClass = (isGap ? 'jump-block' : '') + (isHl ? ' stage-highlighted-mark' : '');
+    const openTag = wrapClass.trim() ? `<span class="${wrapClass.trim()}">` : '<span>';
     const raw = stripPilcrow(chapData[v]||'');
     const body = (easyReading && jesusMap[v]) ? `<span class="jesus-words">${raw}</span>` : raw;
     html += `${openTag}<span class="${vnumClass}">${v}</span>${body} </span>`;
@@ -4391,6 +4457,22 @@ document.getElementById('stage-fav-btn')?.addEventListener('click', (e)=>{
   else { favorites[cur.id] = true; }
   try{ saveFavorites(); }catch(err){}
   refreshStageFavBtn();
+});
+function refreshStageHighlightBtn(){
+  const btn = document.getElementById('stage-highlight-btn');
+  const cur = stageCurrentVerseId();
+  if(!btn || !cur) return;
+  const hid = hvid(cur.p.book, cur.p.chap, cur.v);
+  btn.classList.toggle('on', highlightedVerses.has(hid));
+}
+document.getElementById('stage-highlight-btn')?.addEventListener('click', (e)=>{
+  e.stopPropagation();
+  const cur = stageCurrentVerseId(); if(!cur) return;
+  const hid = hvid(cur.p.book, cur.p.chap, cur.v);
+  if(highlightedVerses.has(hid)) highlightedVerses.delete(hid); else highlightedVerses.add(hid);
+  try{ saveHighlighted(); }catch(err){}
+  refreshStageHighlightBtn();
+  try{ renderStage(); }catch(err){}
 });
 document.getElementById('stage-note-btn')?.addEventListener('click', (e)=>{
   e.stopPropagation();
@@ -5804,7 +5886,7 @@ const SEFER_TOUR_STEPS = [
   {
     sel: '#random-verse-btn',
     title: '4. Versículo al azar',
-    text: 'El dado abre un versículo aleatorio en modo proyección para practicar o meditar.'
+    text: 'El dado abre un versículo aleatorio en modo proyección para practicar o meditar. En el tema Glass el icono es 🔀 (barajar) en vez de 🎲, para no confundirlo con ✨ Destacar; en los demás temas sigue siendo 🎲.'
   },
   {
     sel: '#ref-search-wrap, #ref-search',
@@ -5818,27 +5900,37 @@ const SEFER_TOUR_STEPS = [
   },
   {
     sel: '#version-switch, #version-btn',
-    title: '7. Traducción (toolkit)',
-    text: 'A la izquierda de la barra superior eliges la traducción: Reina Valera 1909 / 1960 (predeterminada) / 2015, NVI, NTV o TLA. Atajo: Ctrl+Shift+T.'
+    title: '7. Traducción (a la izquierda de la toolkit)',
+    text: 'Al inicio de la barra superior, a la izquierda, eliges la traducción: Reina Valera 1909 / 1960 (predeterminada) / 2015, NVI, NTV o TLA. El menú es compacto, no ocupa todo el ancho. Atajo: Ctrl+Shift+T.'
+  },
+  {
+    sel: '#clear-selection-btn',
+    title: '8. Limpiar selección',
+    text: 'Justo después de la traducción hay un espacio reservado para 🧹 Limpiar: solo se ve cuando tienes versículos marcados con la casilla, y quita todas las marcas de un toque.'
   },
   {
     sel: '#topbar-actions',
-    title: '8. Barra de herramientas',
-    text: 'De izquierda a derecha: tamaño del texto (Ctrl+− / Ctrl++), tipografía, detalle (Ctrl+D), significados (Ctrl+S), notas (Ctrl+N), favoritos (Ctrl+F), glosario (Ctrl+G), biografía (Ctrl+B), apócrifos (Ctrl+A), plan (Ctrl+P), YouTube (Ctrl+Y), proyectar (Ctrl+Enter) y ayuda (Ctrl+H).'
+    title: '9. Barra de herramientas',
+    text: 'De izquierda a derecha: tamaño del texto (Ctrl+− / Ctrl++), tipografía, ✨ Destacar nombres/ciudades/palabras de Jesús (Ctrl+D), significados (Ctrl+S), notas (Ctrl+N), favoritos (Ctrl+F), 🖍️ Resaltar, glosario (Ctrl+G), biografía (Ctrl+B), apócrifos (Ctrl+A), plan (Ctrl+P), YouTube (Ctrl+Y), proyectar (Ctrl+Enter) y ayuda (Ctrl+H), que siempre queda al final.'
+  },
+  {
+    sel: '#highlight-btn',
+    title: '10. 🖍️ Resaltar (marcatexto)',
+    text: 'Activa este botón y toca cualquier versículo para marcarlo con un fondo tipo marcatexto (no es favorito ni es Destacar). Vuelve a tocarlo para quitar la marca. Se guarda automáticamente.'
   },
   {
     sel: '#reader, #reader-sticky-head',
-    title: '9. Área de lectura',
-    text: 'Un clic en un versículo: favorito, nota y casilla. Doble clic en una palabra: significado. Las casillas no mueven el texto.'
+    title: '11. Área de lectura',
+    text: 'Un clic en un versículo: favorito, nota y casilla (o marcatexto si el modo Resaltar está activo). Doble clic en una palabra: significado. Las casillas no mueven el texto.'
   },
   {
     sel: '#project-btn',
-    title: '10. Proyectar',
-    text: 'Pantalla grande para culto. En proyección: Comparar pone otra traducción a la izquierda y derecha. Dos libros desde el buscador van arriba y abajo. Esc cierra la proyección sin salir de pantalla completa.'
+    title: '12. Proyectar',
+    text: 'Pantalla grande para culto. Con capítulo completo, el botón de favorito se reemplaza por 🖍️ Resaltar para marcar versículos mientras predicas. Comparar pone otra traducción a la izquierda y derecha. Dos libros desde el buscador van arriba y abajo. Esc cierra la proyección sin salir de pantalla completa.'
   },
   {
     sel: '#help-btn',
-    title: '11. Ayuda y fin',
+    title: '13. Ayuda y fin',
     text: 'Aquí está la guía completa y este tour. Ya conoces el recorrido de izquierda a derecha. ¡Que la Palabra te acompañe!'
   }
 ];
@@ -5961,14 +6053,14 @@ function openSeferHelp(){
   const isGlass = (typeof currentTheme !== 'undefined' && currentTheme === 'amoled');
   // Iconos según tema activo (Glass = estilo Apple)
   const ic = isGlass ? {
-    perfil:'👤', nube:'☁️', full:'⛶', reset:'↺', dado:'✨',
-    detalle:'🔎 Detalle', sig:'📑 Significados', notas:'✏️ Notas', fav:'❤️ Favoritos',
+    perfil:'👤', nube:'☁️', full:'⛶', reset:'↺', dado:'🔀',
+    destacar:'✨ Destacar', resaltar:'🖍️ Resaltar', limpiar:'🧹 Limpiar', sig:'📑 Significados', notas:'✏️ Notas', fav:'❤️ Favoritos',
     glos:'📖 Glosario', bio:'👥 Biografía', apo:'📄 Apócrifos',
     plan:'📅 Plan 1 año', proj:'🖥️ Proyectar', help:'ℹ️ Ayuda',
     tourBtn:'✨ Iniciar tour interactivo'
   } : {
     perfil:'🏆', nube:'☁️', full:'⛶', reset:'↺', dado:'🎲',
-    detalle:'🔍 Detalle', sig:'📚 Significados', notas:'📝 Notas', fav:'❤️ Favoritos',
+    destacar:'✨ Destacar', resaltar:'🖍️ Resaltar', limpiar:'🧹 Limpiar', sig:'📚 Significados', notas:'📝 Notas', fav:'❤️ Favoritos',
     glos:'📖 Glosario', bio:'👤 Biografía', apo:'📜 Apócrifos',
     plan:'📅 Plan 1 año', proj:'🎬 Proyectar', help:'❓ Ayuda',
     tourBtn:'🎯 Iniciar tour interactivo'
@@ -5980,7 +6072,7 @@ function openSeferHelp(){
     <br>• Toolkit en <strong>grupos redondeados</strong> (Texto, Estudio, Consulta, Herramientas).
     <br>• Iconos estilo Apple en la barra y en la navegación:
     <br>&nbsp;&nbsp;${ic.perfil} Perfil · ${ic.nube} Nube · ${ic.full} Pantalla completa · ${ic.reset} Reiniciar · ${ic.dado} Versículo al azar
-    <br>&nbsp;&nbsp;${ic.detalle} · ${ic.sig} · ${ic.notas} · ${ic.fav}
+    <br>&nbsp;&nbsp;${ic.destacar} · ${ic.sig} · ${ic.notas} · ${ic.fav} · ${ic.resaltar}
     <br>&nbsp;&nbsp;${ic.glos} · ${ic.bio} · ${ic.apo}
     <br>&nbsp;&nbsp;${ic.plan} · YouTube · ${ic.proj} · ${ic.help}
     <br>Al cambiar a otro tema, los iconos vuelven al estilo general de SEFER.</div></div>` : `
@@ -6002,7 +6094,7 @@ function openSeferHelp(){
     <div class="im-text">• <strong>SEFER ספר / BY LWM PDC</strong>: marca de la app.<br>
     • <strong>${ic.perfil} Perfil</strong>: logros e insignias. <strong>${ic.nube} Nube</strong>: sincronizar con Google. <strong>${ic.full}</strong> pantalla completa. <strong>${ic.reset}</strong> reiniciar navegación.<br>
     • <strong>Temas</strong>: 10 paletas (México, Corea, Ucrania, Day, Night, Reino, Edén, Arena, Sándalo, Glass). Solo 5 visibles; <strong>+</strong> / <strong>−</strong> cambian el lote.<br>
-    • <strong>${ic.dado}</strong>: versículo al azar${isGlass ? ' (en Glass el icono es ✨)' : ' en modo proyectar'}.<br>
+    • <strong>${ic.dado}</strong>: versículo al azar${isGlass ? ' (en Glass el icono es 🔀, para no confundirlo con ✨ Destacar)' : ' en modo proyectar'}.<br>
     • <strong>Buscador de versículos</strong>: <code>Juan 3:16</code>, rangos (<code>1:1-5</code>) o varios (<code>1:1,3,6</code>). <strong>Tab</strong> completa el nombre del libro.<br>
     • <strong>Libros</strong>: Antiguo y Nuevo Testamento. 📚 ficha del libro (autor, fecha, idioma original, resumen).${isGlass ? ' En Glass los números de capítulo son <strong>círculos</strong>.' : ''}<br>
     • <strong>Scrollbar</strong> personalizada (▲ track ▼) con colores del tema.</div></div>
@@ -6015,11 +6107,13 @@ function openSeferHelp(){
     • Las casillas no mueven el texto: solo se muestran u ocultan.</div></div>
 
     <div class="im-block"><div class="im-label">Barra superior (toolkit)</div>
-    <div class="im-text">Agrupada en bloques${isGlass ? ' (cápsulas de vidrio más visibles en Glass)' : ''}:<br>
-    • <strong>Texto</strong>: A− A+ · Aa tipografías · ${ic.detalle} (nombres, lugares, palabras de Jesús).<br>
-    • <strong>Estudio</strong>: ${ic.sig} · ${ic.notas} · ${ic.fav}.<br>
+    <div class="im-text">Agrupada en bloques${isGlass ? ' (cápsulas de vidrio más visibles en Glass)' : ''}, de izquierda a derecha:<br>
+    • <strong>Traducción</strong> (RV60/RV09…) al inicio, con menú compacto.<br>
+    • <strong>${ic.limpiar}</strong>: aparece justo después, solo cuando hay versículos seleccionados con casilla.<br>
+    • <strong>Texto</strong>: A− A+ · Aa tipografías · ${ic.destacar} (nombres, lugares, palabras de Jesús).<br>
+    • <strong>Estudio</strong>: ${ic.sig} · ${ic.notas} · ${ic.fav} · ${ic.resaltar} (marcatexto de versículos, distinto de favoritos y de Destacar).<br>
     • <strong>Consulta</strong>: ${ic.glos} · ${ic.bio} · ${ic.apo}.<br>
-    • <strong>Herramientas</strong>: ${ic.plan} · YouTube · ${ic.proj} · ${ic.help}.</div></div>
+    • <strong>Herramientas</strong>: ${ic.plan} · YouTube · ${ic.proj} · ${ic.help} (siempre al final).</div></div>
 
     <div class="im-block"><div class="im-label">Plan de lectura en 1 año</div>
     <div class="im-text">Órdenes: canónico (AT→NT), inverso (NT→AT), paralelo o cronológico. Inicio: 1 de enero o desde hoy (365 días). Marca lo leído. Ventana compacta para ver varias lecturas.</div></div>
@@ -6031,7 +6125,8 @@ function openSeferHelp(){
     <div class="im-text">• Versículo actual, capítulo completo o selección marcada.<br>
     • <strong>Esc</strong> o «Salir» cierran la proyección <em>sin</em> salir de pantalla completa.<br>
     • Auto-desplazamiento con cuenta regresiva y velocidades 0.03×–0.09×.<br>
-    • Si entraste con el dado: botones ❤️ ${isGlass?'✏️':'📝'} ${isGlass?'✨':'🎲'} abajo a la derecha (no cierran la proyección).</div></div>
+    • Si entraste con el dado: botones ❤️ ${isGlass?'✏️':'📝'} ${ic.dado} abajo a la derecha (no cierran la proyección).<br>
+    • En <strong>capítulo completo</strong>: el botón ❤️ se reemplaza por ${ic.resaltar}, que marca el versículo actual con marcatexto (se ve también en el lector).</div></div>
 
     <div class="im-block"><div class="im-label">Tipografías y scroll</div>
     <div class="im-text">• Botón <strong>Aa</strong>: tipografías legibles (Literata, Inter, Roboto, estilo Apple, etc.).<br>
@@ -6056,7 +6151,7 @@ function openSeferHelp(){
     • <strong>Ctrl+Shift+T</strong>: menú de traducción<br>
     • <strong>Ctrl+Shift+F</strong>: pantalla completa<br>
     • <strong>Ctrl+− / Ctrl++</strong>: tamaño del texto<br>
-    • <strong>Ctrl+D</strong> detalle · <strong>S</strong> significados · <strong>N</strong> notas · <strong>F</strong> favoritos<br>
+    • <strong>Ctrl+D</strong> destacar · <strong>S</strong> significados · <strong>N</strong> notas · <strong>F</strong> favoritos<br>
     • <strong>Ctrl+G</strong> glosario · <strong>B</strong> biografía · <strong>A</strong> apócrifos · <strong>P</strong> plan · <strong>Y</strong> YouTube<br>
     • <strong>Ctrl+Enter</strong> proyectar · <strong>Ctrl+H</strong> ayuda<br>
     • <strong>Tab</strong> en el buscador completa el libro · <strong>Esc</strong> cierra paneles/proyección/tour
@@ -6492,7 +6587,7 @@ try{ setupFontFamilyMenu(); }catch(e){}
 try{ setupReaderScrollArrows(); }catch(e){}
 try{ applyVerseFont(); }catch(e){}
 
-// Lectura fácil
+// Lectura fácil (Destacar)
 updateEasyBtn();
 document.getElementById('easy-btn').onclick = ()=>{
   easyReading = !easyReading; try{ if(easyReading && typeof setAchProgress==='function') setAchProgress('detail_1',1); }catch(e){};
@@ -6500,6 +6595,19 @@ document.getElementById('easy-btn').onclick = ()=>{
   updateEasyBtn();
   if(!showWelcome) renderReader();
 };
+
+// Resaltar (marcatexto de versículos) — función nueva, NO confundir con Destacar
+function updateHighlightBtn(){
+  const btn = document.getElementById('highlight-btn');
+  if(!btn) return;
+  btn.classList.toggle('easy-on', highlightMode);
+  btn.textContent = highlightMode ? '✓ 🖍️ Resaltar' : '🖍️ Resaltar';
+}
+updateHighlightBtn();
+document.getElementById('highlight-btn')?.addEventListener('click', ()=>{
+  highlightMode = !highlightMode;
+  updateHighlightBtn();
+});
 
 /* =========================================================
    MÓVIL: toolbar, buscador palabra, ayuda, scroll hide
@@ -6602,7 +6710,7 @@ document.getElementById('easy-btn').onclick = ()=>{
       <div class="im-text">• Escribe en cualquier momento para buscar una <strong>palabra</strong> en toda la Biblia (barra flotante).<br>
       • En el panel izquierdo: busca por <strong>referencia</strong> (ej. Génesis 1:1). <strong>Tab</strong> autocompleta el libro.</div></div>
       <div class="im-block"><div class="im-label">Herramientas</div>
-      <div class="im-text">• 🔍 Detalle · 📚 Significados · 📝 Notas · ❤️ Favoritos<br>
+      <div class="im-text">• ✨ Destacar · 📚 Significados · 📝 Notas · ❤️ Favoritos · 🖍️ Resaltar<br>
       • 📅 Plan 1 año (orden + calendario o desde hoy) · 📖 Glosario<br>
       • ☁️ Sincronizar (Google Drive) · 🎬 Proyectar · ❓ Ayuda</div></div>
       <div class="im-block"><div class="im-label">Temas</div>
@@ -6622,8 +6730,10 @@ const SEFER_GLASS_ICONS = {
   'btn-login-google': '☁️',
   'fullscreen-btn': '⛶',
   'nav-toggle': '↺',
-  'random-verse-btn': '✨',
-  'easy-btn': '🔎 Detalle',
+  'random-verse-btn': '🔀',
+  'stage-dice-btn': '🔀',
+  'easy-btn': '✨ Destacar',
+  'highlight-btn': '🖍️ Resaltar',
   'meanings-btn': '📑 Significados',
   'notes-btn': '✏️ Notas',
   'favs-btn': '❤️ Favoritos',
@@ -7315,7 +7425,7 @@ function buildAchievementDefs(){
     {id:'cloud_1', icon:'☁️', title:'En la nube', desc:'Sincroniza con Google Drive', goal:1},
     {id:'themes_5', icon:'🎨', title:'Estilo', desc:'Prueba 5 temas distintos', goal:5},
     {id:'themes_10', icon:'🌈', title:'Arcoíris', desc:'Prueba los 10 temas', goal:10},
-    {id:'detail_1', icon:'🔍', title:'Detallista', desc:'Activa Modo Detalle', goal:1},
+    {id:'detail_1', icon:'✨', title:'Destacador', desc:'Activa Destacar (nombres, ciudades y palabras de Jesús)', goal:1},
     {id:'books_10', icon:'🗺️', title:'Explorador', desc:'Abre 10 libros distintos', goal:10},
     {id:'books_39', icon:'📜', title:'Estudiante del AT', desc:'Abre los 39 libros del AT', goal:39},
     {id:'books_27', icon:'✝️', title:'Estudiante del NT', desc:'Abre los 27 libros del NT', goal:27},
