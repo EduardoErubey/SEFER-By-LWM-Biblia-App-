@@ -171,8 +171,6 @@ body[data-theme="amoled"] #book-list .book-item{
   background:rgba(255,255,255,0.38);
   border:1px solid rgba(255,255,255,0.5);
   border-radius:12px;
-  margin:2px 8px;
-  padding:8px 12px;
 }
 body[data-theme="amoled"] #book-list .book-item:hover,
 body[data-theme="amoled"] #book-list .book-item.active{
@@ -988,6 +986,44 @@ body[data-theme="amoled"] #version-menu{
 #stage.stage-stack .stage-pane,#stage.stage-compare .stage-pane{
   border:1px solid color-mix(in srgb, var(--stage-text) 18%, transparent);
   border-radius:12px;padding:16px 18px;
+}
+
+
+/* Toolkit siempre una sola linea */
+#topbar{
+  flex-wrap:nowrap !important;
+  overflow-x:auto !important;
+  overflow-y:visible !important;
+}
+#topbar-actions{
+  flex-wrap:nowrap !important;
+  overflow-x:auto !important;
+  overflow-y:visible !important;
+  justify-content:flex-start !important;
+  align-items:center !important;
+  gap:4px 5px !important;
+}
+#topbar-actions .btn,
+#topbar-actions .btn-icon,
+#help-btn{
+  flex:0 0 auto !important;
+  white-space:nowrap !important;
+}
+#version-switch.version-switch-toolkit{
+  flex:0 1 200px !important;
+  max-width:200px !important;
+  min-width:120px !important;
+  margin-right:8px !important;
+}
+#version-btn{
+  padding:5px 8px !important;
+  font-size:11px !important;
+}
+#help-btn{
+  margin-left:auto !important;
+}
+@media (max-width:1200px){
+  #version-switch.version-switch-toolkit{ max-width:150px !important; flex-basis:150px !important; }
 }
 
 </style>
@@ -2890,10 +2926,12 @@ function goToRandomVerse(){
   renderBookList();
   // Mostrar en modo proyectar
   stageFromDice = true;
+  stageFromSearch = false;
   if(typeof openStage === 'function'){
     openStage(book, chap, [String(v)], 'single');
   }
   try{ updateStageExtraBtns(); }catch(e){}
+  try{ updateStageCompareVisibility(); }catch(e){}
   try{ if(typeof bumpAchProgress==='function') bumpAchProgress('random_1',1); }catch(e){}
 }
 document.getElementById('random-verse-btn')?.addEventListener('click', goToRandomVerse);
@@ -3072,15 +3110,21 @@ function applyRefSuggestion(i){
   if(i < 0 || i >= refSugItems.length) return;
   const name = refSugItems[i];
   const val = refSearch.value;
-  // Reemplazar la parte del libro al inicio
-  const m = val.match(/^(\s*)([^\d:]*?)(\s*)(\d.*)?$/);
-  if(m && m[4]){
-    refSearch.value = name + ' ' + m[4].trim();
-  } else {
-    // Solo libro o texto parcial
-    const restMatch = val.match(/(\d.*)$/);
-    refSearch.value = restMatch ? (name + ' ' + restMatch[1]) : (name + ' ');
+  const dualPrefix = (refSearch._dualPrefix != null) ? refSearch._dualPrefix : '';
+  let work = val;
+  if(val.indexOf('|') >= 0){
+    const parts = val.split('|');
+    work = parts.slice(1).join('|').replace(/^\s*/, '');
   }
+  const m = work.match(/^(\s*)([^\d:]*?)(\s*)(\d.*)?$/);
+  let segment;
+  if(m && m[4]){
+    segment = name + ' ' + m[4].trim();
+  } else {
+    const restMatch = work.match(/(\d.*)$/);
+    segment = restMatch ? (name + ' ' + restMatch[1]) : (name + ' ');
+  }
+  refSearch.value = dualPrefix ? (dualPrefix + segment) : segment;
   refSuggest.classList.remove('open');
   refSugItems = [];
   refSugIndex = -1;
@@ -3092,24 +3136,38 @@ function applyRefSuggestion(i){
 
 function updateRefAutocomplete(){
   const val = refSearch.value;
-  // Si ya hay capítulo/versículo, no sugerir libros
-  if(/\d/.test(val) && /:/.test(val)){
+  // Tras "|": autocompletar el segundo libro
+  let prefix = '';
+  let work = val;
+  if(val.indexOf('|') >= 0){
+    const parts = val.split('|');
+    prefix = parts[0] + '|';
+    // conservar espacio tras | si el usuario lo escribió
+    const after = parts.slice(1).join('|');
+    const leadSpace = /^(\s*)/.exec(after);
+    prefix += leadSpace ? leadSpace[1] : '';
+    work = after.replace(/^\s*/, '');
+  }
+  // Si ya hay capítulo/versículo en el segmento activo, no sugerir libros
+  if(/\d/.test(work) && /:/.test(work)){
     refSuggest.classList.remove('open');
     return;
   }
-  // Extraer posible nombre de libro (todo antes del primer dígito)
-  const m = val.match(/^([^\d]*)/);
-  const bookPart = (m ? m[1] : val).trim();
+  // Extraer posible nombre de libro (todo antes del primer dígito) en el segmento activo
+  const m = work.match(/^([^\d]*)/);
+  const bookPart = (m ? m[1] : work).trim();
   if(bookPart.length < 1){
     refSuggest.classList.remove('open');
     return;
   }
   // Si coincide exactamente con un libro y hay espacio, cerrar
   const exact = BOOK_ORDER.find(e => stripAccentsNav(e.name) === stripAccentsNav(bookPart));
-  if(exact && /\s$/.test(val)){
+  if(exact && /\s$/.test(work)){
     refSuggest.classList.remove('open');
     return;
   }
+  // Guardar prefijo para applyRefSuggestion
+  refSearch._dualPrefix = prefix;
   const items = getBookSuggestions(bookPart);
   // No mostrar si solo hay una y es coincidencia exacta ya escrita
   if(items.length === 1 && stripAccentsNav(items[0]) === stripAccentsNav(bookPart)){
@@ -3667,6 +3725,7 @@ let stageIndex = 0;
 
 let stageMode = 'single'; // 'single' | 'selection' | 'chapter' | 'stack' | 'compare'
 var stageFromDice = false; // hoisted: true solo si se abrió proyección desde el dado
+var stageFromSearch = false; // proyección dual desde buscador (|)
 let stageCompareOn = false;
 let stageCompareVersion = 'nvi';
 let stageStackSecond = null; // {book,chap,verses} para proyección arriba/abajo
@@ -3678,6 +3737,7 @@ function openStage(book, chap, verses, mode){
   stageIndex = 0;
   stageStackSecond = null;
   stageCompareOn = false;
+  stageFromSearch = false;
   if(stage){ stage.classList.remove('stage-stack','stage-compare'); }
   const paneB = document.getElementById('stage-pane-b');
   if(paneB) paneB.style.display = 'none';
@@ -3686,6 +3746,7 @@ function openStage(book, chap, verses, mode){
   renderStage();
   stage.classList.add('open');
   try{ updateStageExtraBtns(); }catch(e){}
+  try{ updateStageCompareVisibility(); }catch(e){}
   try{ if(typeof setAchProgress==='function') setAchProgress('project_1', 1); }catch(e){}
 }
 
@@ -3693,6 +3754,7 @@ function openStage(book, chap, verses, mode){
 function openStageStack(p1, p2){
   stageMode = 'stack';
   stageFromDice = false;
+  stageFromSearch = true;
   stageCompareOn = false;
   stagePassages = [p1];
   stageIndex = 0;
@@ -3707,6 +3769,7 @@ function openStageStack(p1, p2){
   if(sel) sel.style.display = 'none';
   renderStage();
   try{ updateStageExtraBtns(); }catch(e){}
+  try{ updateStageCompareVisibility(); }catch(e){}
 }
 
 function fillStagePane(refEl, textEl, book, chap, verses, versionLabel){
@@ -3744,11 +3807,26 @@ function fillStagePane(refEl, textEl, book, chap, verses, versionLabel){
   textEl.innerHTML = html || '<span style="opacity:0.6">Sin texto en esta versión</span>';
 }
 
+
+function updateStageCompareVisibility(){
+  const wrap = document.getElementById('stage-compare-wrap');
+  if(!wrap) return;
+  // No mostrar comparar si la proyección viene del buscador (dos libros)
+  const hide = !!(stageFromSearch || stageMode === 'stack');
+  wrap.style.display = hide ? 'none' : 'flex';
+  if(hide){
+    const sel = document.getElementById('stage-compare-sel');
+    if(sel) sel.style.display = 'none';
+  }
+}
+
 function updateStageExtraBtns(){
   const box = document.getElementById('stage-extra-btns');
   if(!box) return;
-  const show = !!(stage && stage.classList.contains('open') && stageFromDice);
+  const show = !!(stage && stage.classList.contains('open') && !stageFromSearch);
   box.style.display = show ? 'flex' : 'none';
+  const diceBtn = document.getElementById('stage-dice-btn');
+  if(diceBtn) diceBtn.style.display = stageFromDice ? '' : 'none';
   if(!show){
     const panel = document.getElementById('stage-note-panel');
     if(panel) panel.style.display = 'none';
@@ -4069,6 +4147,7 @@ function closeStageProjection(){
   }catch(err){}
   stageFromDice = false;
   try{ updateStageExtraBtns(); }catch(e){}
+  try{ updateStageCompareVisibility(); }catch(e){}
 }
 document.getElementById('stage-exit')?.addEventListener('click', closeStageProjection);
 
