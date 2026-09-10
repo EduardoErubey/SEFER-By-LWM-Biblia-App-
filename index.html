@@ -850,6 +850,45 @@ html, body, #app{
   }
 }
 
+
+/* —— Selector de versión bíblica —— */
+#version-switch{position:relative;margin-top:8px;width:100%;}
+#version-btn{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:6px;
+  padding:7px 10px;border:1px solid var(--line);border-radius:8px;
+  background:var(--parchment);color:var(--ink);font-family:var(--font-ui);
+  font-size:12px;font-weight:600;cursor:pointer;text-align:left;
+}
+#version-btn:hover{border-color:var(--gold);color:var(--rubric);}
+#version-btn .vb-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#version-btn .vb-caret{opacity:0.6;font-size:10px;flex-shrink:0;}
+#version-menu{
+  display:none;position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:80;
+  background:var(--card-bg);border:1px solid var(--line);border-radius:10px;
+  box-shadow:0 10px 28px rgba(0,0,0,0.18);padding:6px;max-height:min(60vh,360px);overflow-y:auto;
+}
+#version-menu.open{display:block;}
+#version-menu .ver-group{
+  font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;
+  color:var(--gold);padding:8px 8px 4px;margin-top:2px;
+}
+#version-menu .ver-group:first-child{margin-top:0;}
+#version-menu .ver-item{
+  display:flex;align-items:center;gap:6px;width:100%;text-align:left;
+  border:none;background:transparent;color:var(--ink);font-family:var(--font-ui);
+  font-size:12.5px;padding:7px 10px;border-radius:6px;cursor:pointer;
+}
+#version-menu .ver-item:hover{background:var(--gold-soft);color:var(--ink);}
+#version-menu .ver-item.active{background:color-mix(in srgb, var(--rubric) 14%, transparent);color:var(--rubric);font-weight:700;}
+#version-menu .ver-item .ver-dot{opacity:0.7;width:12px;}
+#version-menu .ver-item .ver-def{font-size:10px;font-weight:600;color:var(--ink-soft);margin-left:auto;}
+body[data-theme="amoled"] #version-btn,
+body[data-theme="amoled"] #version-menu{
+  background:rgba(255,255,255,0.55)!important;
+  border-color:rgba(255,255,255,0.65)!important;
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+}
+
 </style>
 
 </head>
@@ -881,6 +920,25 @@ html, body, #app{
         <div id="theme-batch" class="theme-batch"></div>
         <button type="button" id="theme-more-btn" class="theme-more-btn" title="Más temas" data-tooltip="Cambiar lote de temas">＋</button>
         <button type="button" id="random-verse-btn" class="random-verse-btn" title="Versículo aleatorio" data-tooltip="Ir a un versículo al azar">🎲</button>
+      </div>
+
+      <div id="version-switch">
+        <button type="button" id="version-btn" aria-haspopup="listbox" aria-expanded="false" title="Versión de la Biblia">
+          <span class="vb-label">RV1960 · Reina-Valera 1960</span>
+          <span class="vb-caret">▼</span>
+        </button>
+        <div id="version-menu" role="listbox" aria-label="Versiones de la Biblia">
+          <div class="ver-group">Reina Valera</div>
+          <button type="button" class="ver-item" data-version="rv1909" role="option"><span class="ver-dot">•</span> 1909</button>
+          <button type="button" class="ver-item active" data-version="rv1960" role="option"><span class="ver-dot">•</span> 1960 <span class="ver-def">Predeterminado</span></button>
+          <button type="button" class="ver-item" data-version="rva2015" role="option"><span class="ver-dot">•</span> 2015</button>
+          <div class="ver-group">Nueva Versión Internacional</div>
+          <button type="button" class="ver-item" data-version="nvi" role="option">NVI (Español latino)</button>
+          <div class="ver-group">Nueva Traducción Viviente</div>
+          <button type="button" class="ver-item" data-version="ntv" role="option">NTV</button>
+          <div class="ver-group">Traducción en Lenguaje Actual</div>
+          <button type="button" class="ver-item" data-version="tla" role="option">TLA</button>
+        </div>
       </div>
       <div id="ref-search-wrap">
         <span class="ref-search-icon" aria-hidden="true">🔍</span>
@@ -1151,6 +1209,7 @@ html, body, #app{
 <script src="https://apis.google.com/js/api.js"></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="./bible-data.js"></script>
+<script src="./bible-versions.js"></script>
 <script src="./book-info.js"></script>
 
 <script>
@@ -1359,7 +1418,7 @@ const SEFER_VERSION_HISTORY = [
    BIBLE_DATA y BOOK_ORDER se cargan desde bible-data.js
    (debe estar en la misma carpeta que este archivo).
    ========================================================= */
-const BIBLE = window.BIBLE_DATA || {};
+let BIBLE = window.BIBLE_DATA || {};
 const BOOK_ORDER = window.BOOK_ORDER || [];
 const BOOK_INFO = window.BOOK_INFO || { introduccion_testamentos: [], libros: [] };
 if(!window.BIBLE_DATA || !BOOK_ORDER.length){
@@ -5225,7 +5284,7 @@ function openSeferHelp(){
     <button type="button" class="btn primary tour-start-btn" id="start-sefer-tour-btn">${ic.tourBtn}</button>
 
     <div class="im-block"><div class="im-label">¿Qué es SEFER?</div>
-    <div class="im-text">Biblia de estudio y proyección (<strong>Reina-Valera 1960</strong>) de <strong>Life Word Mission Playa del Carmen</strong>. Lee, anota, marca favoritos, consulta significados, sigue un plan de un año y proyecta versículos en pantalla grande.</div></div>
+    <div class="im-text">Biblia de estudio y proyección. Versión predeterminada: <strong>Reina-Valera 1960</strong>. También: RV1909, RVA2015, NVI, NTV y TLA (selector en la barra lateral) de <strong>Life Word Mission Playa del Carmen</strong>. Lee, anota, marca favoritos, consulta significados, sigue un plan de un año y proyecta versículos en pantalla grande.</div></div>
 
     <div class="im-block"><div class="im-label">Tour guiado (23 pasos)</div>
     <div class="im-text">Pulsa <strong>Iniciar tour interactivo</strong> para un recorrido completo de toda la interfaz. Lenguaje sencillo. <strong>Esc</strong> sale · <strong>Enter</strong> o → avanza · ← retrocede.</div></div>
@@ -5301,10 +5360,153 @@ function openSermonsPanel(){
 function openSermonDetail(){}
 function openSermonEditor(){}
 
+
+/* =========================================================
+   SELECTOR DE VERSIÓN BÍBLICA
+   ========================================================= */
+const SEFER_VERSION_FILES = {
+  rv1960:  './bible-data-rv1960.js',
+  rv1909:  './bible-data-rv1909.js',
+  nvi:     './bible-data-nvi.js',
+  ntv:     './bible-data-ntv.js',
+  tla:     './bible-data-tla.js',
+  rva2015: './bible-data-rva2015.js'
+};
+const SEFER_VERSION_META = {
+  rv1960:  { short:'RV1960',  label:'Reina-Valera 1960' },
+  rv1909:  { short:'RV1909',  label:'Reina-Valera 1909' },
+  rva2015: { short:'RVA2015', label:'Reina Valera 2015' },
+  nvi:     { short:'NVI',     label:'Nueva Versión Internacional' },
+  ntv:     { short:'NTV',     label:'Nueva Traducción Viviente' },
+  tla:     { short:'TLA',     label:'Traducción en Lenguaje Actual' }
+};
+let currentBibleVersion = (function(){
+  try {
+    const v = (store && store.get) ? store.get('bp_bible_version', 'rv1960') : 'rv1960';
+    return SEFER_VERSION_FILES[v] ? v : 'rv1960';
+  } catch(e){ return 'rv1960'; }
+})();
+const _bibleLoadPromises = {};
+
+function seferGetGlobalBible(id){
+  const map = {
+    rv1960: window.BIBLE_DATA_RV1960,
+    rv1909: window.BIBLE_DATA_RV1909,
+    nvi: window.BIBLE_DATA_NVI,
+    ntv: window.BIBLE_DATA_NTV,
+    tla: window.BIBLE_DATA_TLA,
+    rva2015: window.BIBLE_DATA_RVA2015
+  };
+  return map[id] || null;
+}
+
+function seferLoadBibleScript(id){
+  if(seferGetGlobalBible(id)) return Promise.resolve(seferGetGlobalBible(id));
+  if(_bibleLoadPromises[id]) return _bibleLoadPromises[id];
+  const src = SEFER_VERSION_FILES[id];
+  if(!src) return Promise.reject(new Error('Versión desconocida: '+id));
+  _bibleLoadPromises[id] = new Promise((resolve, reject)=>{
+    const s = document.createElement('script');
+    s.src = src;
+    s.async = true;
+    s.onload = ()=>{
+      const data = seferGetGlobalBible(id);
+      if(data) resolve(data);
+      else reject(new Error('No se cargó '+id));
+    };
+    s.onerror = ()=> reject(new Error('Error de red al cargar '+src));
+    document.head.appendChild(s);
+  });
+  return _bibleLoadPromises[id];
+}
+
+function seferApplyBibleData(data){
+  if(!data || typeof data !== 'object') return;
+  BIBLE = data;
+  window.BIBLE_DATA = data;
+}
+
+function seferUpdateVersionUI(){
+  const meta = SEFER_VERSION_META[currentBibleVersion] || SEFER_VERSION_META.rv1960;
+  const btn = document.getElementById('version-btn');
+  const label = btn && btn.querySelector('.vb-label');
+  if(label) label.textContent = meta.short + ' · ' + meta.label;
+  document.querySelectorAll('#version-menu .ver-item').forEach(el=>{
+    el.classList.toggle('active', el.dataset.version === currentBibleVersion);
+  });
+}
+
+async function seferSetBibleVersion(id, opts){
+  opts = opts || {};
+  if(!SEFER_VERSION_FILES[id]) id = 'rv1960';
+  try{
+    const data = await seferLoadBibleScript(id);
+    seferApplyBibleData(data);
+    currentBibleVersion = id;
+    try{ store.set('bp_bible_version', id); }catch(e){}
+    seferUpdateVersionUI();
+    // Cerrar menú
+    const menu = document.getElementById('version-menu');
+    const btn = document.getElementById('version-btn');
+    if(menu) menu.classList.remove('open');
+    if(btn) btn.setAttribute('aria-expanded','false');
+    // Re-render capítulo actual si hay datos
+    if(typeof renderReader === 'function' && currentBook && BIBLE[currentBook]){
+      try{ renderReader(); }catch(e){ console.warn(e); }
+    } else if(typeof renderBookList === 'function'){
+      try{ renderBookList(); }catch(e){}
+    }
+    if(!opts.silent && typeof setNubeStatus === 'function'){
+      /* no spamear nube */
+    }
+  }catch(err){
+    console.error('[SEFER] versión', err);
+    alert('No se pudo cargar la versión seleccionada. ¿Subiste los archivos bible-data-*.js al repositorio?\n\n'+err.message);
+  }
+}
+
+function wireVersionSwitcher(){
+  const btn = document.getElementById('version-btn');
+  const menu = document.getElementById('version-menu');
+  if(!btn || !menu) return;
+  seferUpdateVersionUI();
+  btn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  menu.querySelectorAll('.ver-item').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const id = el.dataset.version;
+      if(id && id !== currentBibleVersion) seferSetBibleVersion(id);
+      else {
+        menu.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
+      }
+    });
+  });
+  document.addEventListener('click', (e)=>{
+    if(!menu.classList.contains('open')) return;
+    if(menu.contains(e.target) || btn.contains(e.target)) return;
+    menu.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+  });
+  // Si la versión guardada no es 1960, cargar al inicio
+  if(currentBibleVersion && currentBibleVersion !== 'rv1960'){
+    seferSetBibleVersion(currentBibleVersion, {silent:true});
+  } else {
+    // Asegurar globals
+    if(window.BIBLE_DATA_RV1960) seferApplyBibleData(window.BIBLE_DATA_RV1960);
+    else if(window.BIBLE_DATA) seferApplyBibleData(window.BIBLE_DATA);
+  }
+}
+
 /* =========================================================
    INIT
    ========================================================= */
 // Inicio: pantalla de bienvenida (sin capítulo abierto)
+try{ wireVersionSwitcher(); }catch(e){ console.warn('[SEFER] version switcher', e); }
 renderBookList();
 showWelcomeScreen();
 tryLoadLocalFiles().then(()=>{ /* notas/favs desde carpetas locales si existen */ });
