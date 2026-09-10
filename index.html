@@ -108,7 +108,6 @@ body[data-theme="amoled"] #project-btn{
   border:1px solid rgba(255,255,255,0.35) !important;
   box-shadow:0 2px 10px rgba(10,132,255,0.35);
 }
-body[data-theme="amoled"] #ref-search,
 body[data-theme="amoled"] input[type="text"],
 body[data-theme="amoled"] input:not([type]),
 body[data-theme="amoled"] textarea{
@@ -118,6 +117,44 @@ body[data-theme="amoled"] textarea{
   -webkit-backdrop-filter:blur(10px);
   backdrop-filter:blur(10px);
   border-radius:12px;
+}
+/* Buscador de versículos: cristal mate (menos transparente, más blur) */
+body[data-theme="amoled"] #ref-search-wrap{
+  background:rgba(245,248,252,0.92) !important;
+  border:1px solid rgba(255,255,255,0.85) !important;
+  border-radius:12px !important;
+  -webkit-backdrop-filter:saturate(160%) blur(20px) !important;
+  backdrop-filter:saturate(160%) blur(20px) !important;
+  box-shadow:0 1px 0 rgba(255,255,255,0.9) inset, 0 4px 16px rgba(30,60,120,0.08) !important;
+  padding:0 !important;
+  overflow:hidden;
+}
+body[data-theme="amoled"] #ref-search{
+  background:transparent !important;
+  border:none !important;
+  color:var(--ink) !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+  border-radius:12px !important;
+  box-shadow:none !important;
+}
+body[data-theme="amoled"] #ref-search:focus{
+  background:transparent !important;
+  outline:none !important;
+}
+body[data-theme="amoled"] #ref-search-wrap.focused,
+body[data-theme="amoled"] #ref-search-wrap:focus-within{
+  border-color:rgba(10,132,255,0.45) !important;
+  box-shadow:0 1px 0 rgba(255,255,255,0.95) inset, 0 0 0 3px rgba(10,132,255,0.15), 0 4px 16px rgba(30,60,120,0.1) !important;
+}
+body[data-theme="amoled"] #ref-ph-anim{
+  color:rgba(60,80,110,0.55) !important;
+}
+body[data-theme="amoled"] #ref-suggest{
+  background:rgba(250,252,255,0.95) !important;
+  -webkit-backdrop-filter:blur(18px) !important;
+  backdrop-filter:blur(18px) !important;
+  border:1px solid rgba(255,255,255,0.8) !important;
 }
 body[data-theme="amoled"] .im-card,
 body[data-theme="amoled"] #side,
@@ -142,26 +179,16 @@ body[data-theme="amoled"] #book-list .book-item.active{
   background:rgba(255,255,255,0.72);
   border-color:rgba(10,132,255,0.4);
 }
-/* Capítulos en círculos (como el mockup) */
+/* Capítulos en Glass: solo apariencia (mismo tamaño base) */
 body[data-theme="amoled"] .chap-pill,
 body[data-theme="amoled"] #book-list .chap-btn,
 body[data-theme="amoled"] #book-list .chap-pill{
-  width:30px !important;
-  height:30px !important;
-  min-width:30px !important;
   border-radius:50% !important;
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
   background:rgba(255,255,255,0.55) !important;
   border:1px solid rgba(255,255,255,0.75) !important;
-  color:var(--ink) !important;
-  font-weight:600 !important;
-  font-size:12px !important;
   box-shadow:0 1px 3px rgba(30,60,120,0.08), inset 0 1px 0 rgba(255,255,255,0.85);
   -webkit-backdrop-filter:blur(8px);
   backdrop-filter:blur(8px);
-  margin:2px !important;
 }
 body[data-theme="amoled"] .chap-pill:hover,
 body[data-theme="amoled"] #book-list .chap-btn:hover,
@@ -239,18 +266,17 @@ body[data-theme="amoled"] #stage .stage-ref{
 /* Controles estilo Apple (solo Glass) */
 body[data-theme="amoled"] .btn,
 body[data-theme="amoled"] .btn-icon{
-  border-radius:980px !important;
+  /* solo apariencia: sin cambiar tamaño */
   font-weight:500;
   letter-spacing:0.01em;
 }
 body[data-theme="amoled"] #nav-header-actions .nav-action-btn{
-  width:32px;height:32px;border-radius:50%;
+  border-radius:50%;
   background:rgba(255,255,255,0.55) !important;
   border:1px solid rgba(255,255,255,0.7) !important;
   -webkit-backdrop-filter:blur(12px);
   backdrop-filter:blur(12px);
   box-shadow:0 1px 3px rgba(30,60,120,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
-  font-size:15px;line-height:1;
 }
 body[data-theme="amoled"] #nav-header-actions .nav-action-btn:hover{
   background:rgba(255,255,255,0.82) !important;
@@ -851,19 +877,32 @@ html, body, #app{
 }
 
 
-/* —— Selector de versión bíblica —— */
-#version-switch{position:relative;margin-top:8px;width:100%;}
+
+/* —— Selector de versión bíblica (toolkit, izquierda) —— */
+#topbar-actions{
+  justify-content:flex-start !important;
+}
+#version-switch.version-switch-toolkit{
+  position:relative;
+  flex:0 1 auto;
+  margin-right:auto;
+  max-width:min(280px, 42vw);
+  z-index:520;
+}
 #version-btn{
-  width:100%;display:flex;align-items:center;justify-content:space-between;gap:6px;
-  padding:7px 10px;border:1px solid var(--line);border-radius:8px;
-  background:var(--parchment);color:var(--ink);font-family:var(--font-ui);
-  font-size:12px;font-weight:600;cursor:pointer;text-align:left;
+  width:100%;
+  display:flex;align-items:center;justify-content:space-between;gap:6px;
+  padding:6px 10px;border:1px solid var(--line);border-radius:8px;
+  background:var(--parchment-2);color:var(--ink);font-family:var(--font-ui);
+  font-size:11.5px;font-weight:600;cursor:pointer;text-align:left;
+  white-space:nowrap;
 }
 #version-btn:hover{border-color:var(--gold);color:var(--rubric);}
-#version-btn .vb-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#version-btn .vb-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
 #version-btn .vb-caret{opacity:0.6;font-size:10px;flex-shrink:0;}
 #version-menu{
-  display:none;position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:80;
+  display:none;position:absolute;left:0;top:calc(100% + 4px);z-index:530;
+  min-width:100%;width:max(100%,240px);
   background:var(--card-bg);border:1px solid var(--line);border-radius:10px;
   box-shadow:0 10px 28px rgba(0,0,0,0.18);padding:6px;max-height:min(60vh,360px);overflow-y:auto;
 }
@@ -884,9 +923,71 @@ html, body, #app{
 #version-menu .ver-item .ver-def{font-size:10px;font-weight:600;color:var(--ink-soft);margin-left:auto;}
 body[data-theme="amoled"] #version-btn,
 body[data-theme="amoled"] #version-menu{
-  background:rgba(255,255,255,0.55)!important;
-  border-color:rgba(255,255,255,0.65)!important;
-  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  background:rgba(245,248,252,0.92)!important;
+  border-color:rgba(255,255,255,0.85)!important;
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+}
+/* Tooltips toolkit: siempre por encima de otros botones (ventanas estrechas / wrap) */
+#topbar,
+#topbar-actions{
+  overflow:visible !important;
+}
+#topbar-actions .btn,
+#topbar-actions .btn-icon,
+#help-btn{
+  position:relative;
+  z-index:1;
+  overflow:visible !important;
+}
+#topbar-actions .btn:hover,
+#topbar-actions .btn:focus-visible,
+#topbar-actions .btn-icon:hover,
+#topbar-actions .btn-icon:focus-visible,
+#help-btn:hover,
+#help-btn:focus-visible{
+  z-index:10060 !important;
+}
+#topbar-actions .btn-icon::after,
+#topbar-actions .btn.has-tip::after,
+#help-btn.has-tip::after{
+  z-index:10061 !important;
+  pointer-events:none !important;
+}
+/* Si el tooltip queda bajo el borde inferior de la barra, que pinte sobre el área de lectura */
+#main, #content-wrap, #reader, #reader-sticky-head{
+  position:relative;
+  z-index:1;
+}
+#topbar{
+  z-index:500 !important;
+}
+
+
+/* Proyección: stack (arriba/abajo) y compare (izq/der) */
+#stage-compare-wrap{
+  position:absolute;top:22px;left:26px;display:flex;align-items:center;gap:8px;z-index:5;
+}
+#stage-compare-sel{
+  font-family:var(--font-ui);font-size:12px;padding:6px 8px;border-radius:5px;
+  border:1px solid var(--stage-text);background:transparent;color:var(--stage-text);opacity:0.75;
+}
+#stage-compare-sel:hover,#stage-compare-btn:hover{opacity:1;}
+#stage-body{
+  display:flex;flex-direction:column;align-items:stretch;justify-content:center;
+  width:100%;max-width:1200px;flex:1;min-height:0;gap:12px;
+}
+#stage.stage-stack #stage-body{flex-direction:column;}
+#stage.stage-compare #stage-body{flex-direction:row;align-items:flex-start;max-width:96vw;gap:20px;}
+#stage.stage-compare .stage-pane{flex:1;min-width:0;}
+#stage.stage-stack #stage-pane-b{display:block !important;}
+#stage.stage-compare #stage-pane-b{display:block !important;}
+.stage-pane .stage-ref{margin-bottom:12px;}
+.stage-pane .stage-text{max-height:none;}
+#stage.stage-stack .stage-pane .stage-text{max-height:32vh;overflow-y:auto;}
+#stage.stage-compare .stage-pane .stage-text{max-height:70vh;overflow-y:auto;}
+#stage.stage-stack .stage-pane,#stage.stage-compare .stage-pane{
+  border:1px solid color-mix(in srgb, var(--stage-text) 18%, transparent);
+  border-radius:12px;padding:16px 18px;
 }
 
 </style>
@@ -921,25 +1022,6 @@ body[data-theme="amoled"] #version-menu{
         <button type="button" id="theme-more-btn" class="theme-more-btn" title="Más temas" data-tooltip="Cambiar lote de temas">＋</button>
         <button type="button" id="random-verse-btn" class="random-verse-btn" title="Versículo aleatorio" data-tooltip="Ir a un versículo al azar">🎲</button>
       </div>
-
-      <div id="version-switch">
-        <button type="button" id="version-btn" aria-haspopup="listbox" aria-expanded="false" title="Versión de la Biblia">
-          <span class="vb-label">RV1960 · Reina-Valera 1960</span>
-          <span class="vb-caret">▼</span>
-        </button>
-        <div id="version-menu" role="listbox" aria-label="Versiones de la Biblia">
-          <div class="ver-group">Reina Valera</div>
-          <button type="button" class="ver-item" data-version="rv1909" role="option"><span class="ver-dot">•</span> 1909</button>
-          <button type="button" class="ver-item active" data-version="rv1960" role="option"><span class="ver-dot">•</span> 1960 <span class="ver-def">Predeterminado</span></button>
-          <button type="button" class="ver-item" data-version="rva2015" role="option"><span class="ver-dot">•</span> 2015</button>
-          <div class="ver-group">Nueva Versión Internacional</div>
-          <button type="button" class="ver-item" data-version="nvi" role="option">NVI (Español latino)</button>
-          <div class="ver-group">Nueva Traducción Viviente</div>
-          <button type="button" class="ver-item" data-version="ntv" role="option">NTV</button>
-          <div class="ver-group">Traducción en Lenguaje Actual</div>
-          <button type="button" class="ver-item" data-version="tla" role="option">TLA</button>
-        </div>
-      </div>
       <div id="ref-search-wrap">
         <span class="ref-search-icon" aria-hidden="true">🔍</span>
         <input id="ref-search" placeholder="" autocomplete="off" spellcheck="false" aria-label="Buscador de versículos">
@@ -969,6 +1051,24 @@ body[data-theme="amoled"] #version-menu{
         <div id="current-ref">—</div>
       </div>
       <div id="topbar-actions">
+        <div id="version-switch" class="version-switch-toolkit">
+          <button type="button" id="version-btn" aria-haspopup="listbox" aria-expanded="false" title="Versión de la Biblia (Ctrl+Shift+T)">
+            <span class="vb-label">RV1960 · Reina-Valera 1960</span>
+            <span class="vb-caret">▼</span>
+          </button>
+          <div id="version-menu" role="listbox" aria-label="Versiones de la Biblia">
+            <div class="ver-group">Reina Valera</div>
+            <button type="button" class="ver-item" data-version="rv1909" role="option"><span class="ver-dot">•</span> 1909</button>
+            <button type="button" class="ver-item active" data-version="rv1960" role="option"><span class="ver-dot">•</span> 1960 <span class="ver-def">Predeterminado</span></button>
+            <button type="button" class="ver-item" data-version="rva2015" role="option"><span class="ver-dot">•</span> 2015</button>
+            <div class="ver-group">Nueva Versión Internacional</div>
+            <button type="button" class="ver-item" data-version="nvi" role="option">NVI (Español latino)</button>
+            <div class="ver-group">Nueva Traducción Viviente</div>
+            <button type="button" class="ver-item" data-version="ntv" role="option">NTV</button>
+            <div class="ver-group">Traducción en Lenguaje Actual</div>
+            <button type="button" class="ver-item" data-version="tla" role="option">TLA</button>
+          </div>
+        </div>
         <button class="btn has-tip" id="clear-selection-btn" style="display:none;" data-tooltip="Quitar todos los versículos seleccionados">Limpiar</button>
         <span class="tb-group" title="Texto">
           <button class="btn btn-icon" id="font-dec" data-tooltip="Disminuir texto">A−</button>
@@ -1031,6 +1131,17 @@ body[data-theme="amoled"] #version-menu{
 
 <div id="stage">
   <div id="stage-exit">Salir (Esc)</div>
+  <div id="stage-compare-wrap">
+    <button type="button" class="stage-btn" id="stage-compare-btn" title="Comparar con otra traducción (izq/der)">⇄ Comparar</button>
+    <select id="stage-compare-sel" title="Segunda traducción" style="display:none;">
+      <option value="rv1960">RV1960</option>
+      <option value="rv1909">RV1909</option>
+      <option value="rva2015">RVA2015</option>
+      <option value="nvi">NVI</option>
+      <option value="ntv">NTV</option>
+      <option value="tla">TLA</option>
+    </select>
+  </div>
   <div id="stage-extra-btns" style="display:none;">
     <button type="button" class="stage-btn stage-extra" id="stage-fav-btn" title="Guardar en favoritos">❤️</button>
     <button type="button" class="stage-btn stage-extra" id="stage-note-btn" title="Escribir nota">📝</button>
@@ -1043,8 +1154,16 @@ body[data-theme="amoled"] #version-menu{
       <button type="button" class="stage-btn" id="stage-note-cancel">Cerrar</button>
     </div>
   </div>
-  <div class="stage-ref" id="stage-ref"></div>
-  <div class="stage-text" id="stage-text"></div>
+  <div id="stage-body">
+    <div class="stage-pane" id="stage-pane-a">
+      <div class="stage-ref" id="stage-ref"></div>
+      <div class="stage-text" id="stage-text"></div>
+    </div>
+    <div class="stage-pane" id="stage-pane-b" style="display:none;">
+      <div class="stage-ref" id="stage-ref-b"></div>
+      <div class="stage-text" id="stage-text-b"></div>
+    </div>
+  </div>
   <div id="stage-nav">
     <button class="stage-btn" id="stage-prev">‹ Anterior</button>
     <button class="stage-btn" id="stage-auto" title="Desplazamiento automático (10 s de espera)" style="display:none;">▶ Auto</button>
@@ -1214,16 +1333,33 @@ body[data-theme="amoled"] #version-menu{
 
 <script>
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.4.4-stable";
-const SEFER_VERSION_NAME = "Sidebar compacta + bienvenida centrada + ventanas pequeñas";
+const SEFER_VERSION = "2.5.0-stable";
+const SEFER_VERSION_NAME = "Multi-traducción, atajos Ctrl, proyección dual, toolkit versión";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.0-stable",
+    name: "Multi-traducción, atajos Ctrl, proyección dual",
+    date: "2026-09-10",
+    current: true,
+    changes: [
+      "Selector de traducción en la toolkit (izquierda): RV1909 / RV1960 (predeterminada) / RVA2015 / NVI / NTV / TLA",
+      "Carga bajo demanda de bible-data-*.js al cambiar de versión",
+      "Atajos Ctrl: tamaño, detalle, significados, notas, favoritos, glosario, biografía, apócrifos, plan, YouTube, proyectar, ayuda",
+      "Ctrl+T tema siguiente (ciclo 10 temas y cambio de lote)",
+      "Ctrl+Shift+V buscador · Ctrl+Shift+T traducción · Ctrl+Shift+F pantalla completa",
+      "Buscador con | : dos libros → proyección arriba/abajo",
+      "Proyección: Comparar traducción izquierda/derecha",
+      "Glass: buscador mate; menos cambios de tamaño; tooltips por encima",
+      "Ayuda, tour e historial actualizados"
+    ]
+  },
+  {
     id: "2.4.6-stable",
     name: "Proyección: favorito/nota/dado; fuentes reales; scroll rails",
     date: "2026-08-29",
-    current: true,
+    current: false,
     changes: [
       "Botones de proyección (❤️ 📝 🎲) abajo a la derecha, solo si vino del dado",
       "❤️ guarda/quita favorito del versículo actual sin salir de proyección",
@@ -3034,16 +3170,58 @@ refSearch.addEventListener('keydown', (e)=>{
       applyRefSuggestion(refSugIndex >= 0 ? refSugIndex : 0);
     }
     refSuggest.classList.remove('open');
-    const parsed = parseRefQuery(refSearch.value);
+    const rawVal = refSearch.value.trim();
+    // Dos libros: "Juan 3:16 | Romanos 8:28" → proyección arriba/abajo
+    if(rawVal.indexOf('|') >= 0){
+      const dual = parseDualBookQuery(rawVal);
+      if(dual){
+        openStageStack(
+          {book: dual.a.book, chap: dual.a.chap, verses: dual.a.verses || ['1']},
+          {book: dual.b.book, chap: dual.b.chap, verses: dual.b.verses || ['1']}
+        );
+        refSearch.blur();
+        return;
+      }
+      alert('Usa un solo | y dos libros distintos.\nEjemplo: Juan 3:16 | Romanos 8:28');
+      return;
+    }
+    const parsed = parseRefQuery(rawVal);
     if(parsed && goToRef(parsed)){
       refSearch.blur();
     } else if(parsed && parsed.book){
-      // Intentar ir aunque el parse sea parcial
       goToRef({book: parsed.book, chap: parsed.chap || '1', verses: parsed.verses});
       refSearch.blur();
     }
   }
 });
+
+/** Parsea "LibroA cap:v | LibroB cap:v" (un solo |, dos libros distintos). */
+function parseDualBookQuery(raw){
+  const parts = String(raw||'').split('|');
+  if(parts.length !== 2) return null;
+  const a = parseRefQuery(parts[0].trim());
+  const b = parseRefQuery(parts[1].trim());
+  if(!a || !b || !a.book || !b.book) return null;
+  if(a.book === b.book) return null;
+  if(!BIBLE[a.book] || !BIBLE[b.book]) return null;
+  const chapA = a.chap || '1';
+  const chapB = b.chap || '1';
+  if(!BIBLE[a.book][chapA] || !BIBLE[b.book][chapB]) return null;
+  let versesA = a.verses;
+  let versesB = b.verses;
+  if(!versesA || !versesA.length){
+    const keys = Object.keys(BIBLE[a.book][chapA]||{}).sort((x,y)=>+x-+y);
+    versesA = keys.length ? [keys[0]] : ['1'];
+  }
+  if(!versesB || !versesB.length){
+    const keys = Object.keys(BIBLE[b.book][chapB]||{}).sort((x,y)=>+x-+y);
+    versesB = keys.length ? [keys[0]] : ['1'];
+  }
+  return {
+    a: {book:a.book, chap:String(chapA), verses: versesA.map(String)},
+    b: {book:b.book, chap:String(chapB), verses: versesB.map(String)}
+  };
+}
 refSearch.addEventListener('blur', ()=>{
   // Retraso para permitir clic en sugerencia
   setTimeout(()=> refSuggest.classList.remove('open'), 150);
@@ -3487,17 +3665,85 @@ const stageText = document.getElementById('stage-text');
 let stagePassages = [];
 let stageIndex = 0;
 
-let stageMode = 'single'; // 'single' | 'selection' | 'chapter'
+let stageMode = 'single'; // 'single' | 'selection' | 'chapter' | 'stack' | 'compare'
 var stageFromDice = false; // hoisted: true solo si se abrió proyección desde el dado
+let stageCompareOn = false;
+let stageCompareVersion = 'nvi';
+let stageStackSecond = null; // {book,chap,verses} para proyección arriba/abajo
+let stageCompareData = null; // segundo corpus BIBLE para compare
+
 function openStage(book, chap, verses, mode){
   stageMode = mode || (verses && verses.length > 1 ? 'selection' : 'single');
   stagePassages = [{book, chap, verses: [...verses].map(String).sort((a,b)=>+a-+b)}];
   stageIndex = 0;
+  stageStackSecond = null;
+  stageCompareOn = false;
+  if(stage){ stage.classList.remove('stage-stack','stage-compare'); }
+  const paneB = document.getElementById('stage-pane-b');
+  if(paneB) paneB.style.display = 'none';
+  const sel = document.getElementById('stage-compare-sel');
+  if(sel) sel.style.display = 'none';
   renderStage();
   stage.classList.add('open');
   try{ updateStageExtraBtns(); }catch(e){}
   try{ if(typeof setAchProgress==='function') setAchProgress('project_1', 1); }catch(e){}
 }
+
+/** Proyección de dos pasajes (libros distintos): arriba / abajo */
+function openStageStack(p1, p2){
+  stageMode = 'stack';
+  stageFromDice = false;
+  stageCompareOn = false;
+  stagePassages = [p1];
+  stageIndex = 0;
+  stageStackSecond = p2;
+  if(stage){
+    stage.classList.remove('stage-compare');
+    stage.classList.add('open','stage-stack');
+  }
+  const paneB = document.getElementById('stage-pane-b');
+  if(paneB) paneB.style.display = '';
+  const sel = document.getElementById('stage-compare-sel');
+  if(sel) sel.style.display = 'none';
+  renderStage();
+  try{ updateStageExtraBtns(); }catch(e){}
+}
+
+function fillStagePane(refEl, textEl, book, chap, verses, versionLabel){
+  if(!refEl || !textEl) return;
+  const data = (arguments.length >= 7 && arguments[6]) ? arguments[6] : BIBLE;
+  const chapData = (data[book]||{})[chap] || {};
+  const vlist = (verses||[]).map(String);
+  const first = vlist[0], last = vlist[vlist.length-1];
+  const isFullySequential = vlist.length > 1 && (parseInt(last) - parseInt(first) + 1) === vlist.length;
+  let ref = '';
+  if(vlist.length === 1) ref = book + ' ' + chap + ':' + first;
+  else if(isFullySequential) ref = book + ' ' + chap + ':' + first + '-' + last;
+  else ref = book + ' ' + chap + ':' + vlist.join(', ');
+  if(versionLabel) ref = versionLabel + ' · ' + ref;
+  refEl.textContent = ref;
+  const jesusMap = (data === BIBLE) ? buildJesusMap(book, chap) : {};
+  let html = '';
+  let prevV = null;
+  const useJumpStyle = !isFullySequential && vlist.length > 1;
+  vlist.forEach(v=>{
+    const isGap = prevV !== null && (parseInt(v) - parseInt(prevV) !== 1);
+    const isJump = useJumpStyle || isGap;
+    const cls = isJump ? 'stage-vnum jump' : 'stage-vnum';
+    const block = isJump ? 'jump-block' : '';
+    const raw = chapData[v] || chapData[String(v)] || '';
+    let line = raw;
+    if(jesusMap && jesusMap[v]){
+      // keep simple text if other version
+    }
+    if(block) html += '<div class="'+block+'">';
+    html += '<span class="'+cls+'">'+v+'</span> ' + (raw||'') + ' ';
+    if(block) html += '</div>';
+    prevV = v;
+  });
+  textEl.innerHTML = html || '<span style="opacity:0.6">Sin texto en esta versión</span>';
+}
+
 function updateStageExtraBtns(){
   const box = document.getElementById('stage-extra-btns');
   if(!box) return;
@@ -3542,10 +3788,39 @@ function renderStage(){
   });
   stageText.innerHTML = html;
 
-  // Anterior/Siguiente: ocultos en capítulo completo
+  // Panel B: stack (arriba/abajo dos libros) o compare (izq/der dos traducciones)
+  const paneB = document.getElementById('stage-pane-b');
+  const refB = document.getElementById('stage-ref-b');
+  const textB = document.getElementById('stage-text-b');
+  if(stageMode === 'stack' && stageStackSecond){
+    if(stage) stage.classList.add('stage-stack');
+    if(paneB) paneB.style.display = '';
+    try{
+      fillStagePane(refB, textB, stageStackSecond.book, stageStackSecond.chap, stageStackSecond.verses, null, BIBLE);
+    }catch(e){ console.warn(e); }
+  } else if(stageMode === 'compare' && stageCompareOn){
+    if(stage) stage.classList.add('stage-compare');
+    if(paneB) paneB.style.display = '';
+    const meta = (typeof SEFER_VERSION_META!=='undefined' && SEFER_VERSION_META[stageCompareVersion]) ? SEFER_VERSION_META[stageCompareVersion] : {short: stageCompareVersion};
+    const other = stageCompareData || (typeof seferGetGlobalBible==='function' ? seferGetGlobalBible(stageCompareVersion) : null) || {};
+    try{
+      fillStagePane(refB, textB, p.book, p.chap, verses, meta.short || stageCompareVersion, other);
+    }catch(e){ console.warn(e); }
+    // etiqueta versión actual en panel A
+    const metaA = (typeof SEFER_VERSION_META!=='undefined' && SEFER_VERSION_META[currentBibleVersion]) ? SEFER_VERSION_META[currentBibleVersion] : null;
+    if(metaA && stageRef){
+      const base = stageRef.textContent || '';
+      if(base && base.indexOf('·') < 0) stageRef.textContent = metaA.short + ' · ' + base;
+    }
+  } else {
+    if(stage){ stage.classList.remove('stage-stack','stage-compare'); }
+    if(paneB) paneB.style.display = 'none';
+  }
+
+  // Anterior/Siguiente: ocultos en capítulo completo o stack multi-libro
   const prevBtn = document.getElementById('stage-prev');
   const nextBtn = document.getElementById('stage-next');
-  if(stageMode === 'chapter'){
+  if(stageMode === 'chapter' || stageMode === 'stack'){
     if(prevBtn) prevBtn.style.display = 'none';
     if(nextBtn) nextBtn.style.display = 'none';
   } else {
@@ -3780,7 +4055,7 @@ document.getElementById('stage-speed-btn')?.addEventListener('click', ()=>{
 updateSpeedBtnLabel();
 function closeStageProjection(){
   stopStageAuto();
-  if(stage) stage.classList.remove('open');
+  if(stage) stage.classList.remove('open','stage-stack','stage-compare'); stageStackSecond=null; stageCompareOn=false;;
   // NO salir de fullscreen del documento (solo cerrar proyección)
   // Restaurar scroll al versículo proyectado
   try{
@@ -5037,159 +5312,60 @@ document.getElementById('gene-search')?.addEventListener('input', (e)=>{
 const SEFER_TOUR_STEPS = [
   {
     sel: '#nav-header .brand, #nav-header',
-    title: '1. Bienvenido a SEFER',
-    text: 'SEFER es tu Biblia en la computadora (Reina-Valera 1960). Sirve para leer, estudiar, anotar y proyectar versículos en pantalla grande. Es de Life Word Mission Playa del Carmen. Vamos a recorrer toda la pantalla, paso a paso.'
+    title: '1. Marca SEFER',
+    text: 'Aquí a la izquierda está SEFER (ספר), de Life Word Mission Playa del Carmen. Empezamos desde la izquierda y vamos hacia la derecha, como se lee un libro.'
   },
   {
-    sel: '#nav-header-actions, #btn-user-profile',
-    title: '2. Perfil, nube y pantalla completa',
-    text: 'Arriba a la izquierda: 🏆 perfil y logros (insignias por leer), ☁️ sincronizar con Google (guarda notas y favoritos en la nube), ⛶ pantalla completa (como la tecla F11) y ↺ reiniciar navegación (vuelve al inicio limpio).'
+    sel: '#nav-header-actions',
+    title: '2. Perfil, nube y pantalla',
+    text: 'Botones de la esquina: perfil y logros, sincronizar con Google (nube), pantalla completa y reiniciar la lista de libros. Atajo: Ctrl+Shift+F para pantalla completa.'
   },
   {
     sel: '#theme-switch, #theme-batch',
-    title: '3. Temas de colores',
-    text: 'Estos botones redondos cambian los colores de SEFER (México, Corea, Ucrania, día, noche, etc.). Solo se ven 5 a la vez. Usa + o − para cambiar de grupo. El tema que elijas se puede guardar en la nube.'
+    title: '3. Temas de color',
+    text: 'Cinco temas visibles. El botón +/− cambia de lote (hay 10 en total). Ctrl+T pasa al tema siguiente y cambia de lote solo cuando hace falta (por ejemplo de Edén a LWM-Day, o de Glass a México).'
   },
   {
     sel: '#random-verse-btn',
-    title: '4. El dado (versículo al azar)',
-    text: 'El botón 🎲 abre un versículo aleatorio de toda la Biblia y lo muestra en modo proyectar (pantalla grande). Ideal para un versículo del día. Si usas el dado, en proyección verás botones para favorito, nota y otro dado.'
+    title: '4. Versículo al azar',
+    text: 'El dado abre un versículo aleatorio en modo proyección para practicar o meditar.'
   },
   {
-    sel: '#ref-search, #ref-search-wrap',
+    sel: '#ref-search-wrap, #ref-search',
     title: '5. Buscador de versículos',
-    text: 'Escribe una referencia y pulsa Enter. Ejemplos: «Juan 3:16», «Salmos 23:1-6» o «Romanos 8:28, 31». Tab completa el nombre del libro (ej. «Ecle» + Tab → Eclesiastés). También acepta varios versículos separados por coma.'
+    text: 'Escribe por ejemplo Juan 3:16 y Enter. También rangos (1:1-5). Dos libros distintos: Juan 3:16 | Romanos 8:28 (con o sin espacios) abre proyección con el primero arriba y el segundo abajo. Atajo: Ctrl+Shift+V.'
   },
   {
-    sel: '#book-list, #nav',
+    sel: '#book-list',
     title: '6. Lista de libros',
-    text: 'Aquí está el Antiguo y el Nuevo Testamento. Haz clic en el nombre de un testamento para abrir o cerrar la lista. Haz clic en un libro y luego en un número de capítulo. La barra de la derecha de esta lista sirve para subir y bajar.'
+    text: 'Antiguo y Nuevo Testamento. Toca un libro y un capítulo. El icono 📚 muestra ficha del libro (autor, idioma, resumen).'
   },
   {
-    sel: '#book-list .info-btn, #book-list',
-    title: '7. Ficha de cada libro',
-    text: 'El botón 📚 junto a un libro o testamento abre una ficha: autor, fecha aproximada, significado del nombre, idioma original y un resumen. Así conoces el contexto antes de leer.'
+    sel: '#version-switch, #version-btn',
+    title: '7. Traducción (toolkit)',
+    text: 'A la izquierda de la barra superior eliges la traducción: Reina Valera 1909 / 1960 (predeterminada) / 2015, NVI, NTV o TLA. Atajo: Ctrl+Shift+T.'
   },
   {
-    sel: '#reader, #main',
-    title: '8. Área de lectura',
-    text: 'Aquí se lee el texto. Arriba queda fijo el nombre del libro y el capítulo (ejemplo: Antiguo Testamento: Libro 4 [Números:32]). Abajo puedes desplazarte con la rueda del ratón o con la barra de la derecha (flechas ▲ ▼ y el control deslizante).'
+    sel: '#topbar-actions',
+    title: '8. Barra de herramientas',
+    text: 'De izquierda a derecha: tamaño del texto (Ctrl+− / Ctrl++), tipografía, detalle (Ctrl+D), significados (Ctrl+S), notas (Ctrl+N), favoritos (Ctrl+F), glosario (Ctrl+G), biografía (Ctrl+B), apócrifos (Ctrl+A), plan (Ctrl+P), YouTube (Ctrl+Y), proyectar (Ctrl+Enter) y ayuda (Ctrl+H).'
   },
   {
-    sel: '#reader, #reader-verses',
-    title: '9. Clic en un versículo',
-    text: 'Un clic en un versículo abre opciones: marcar favorito ♥, escribir una nota 📝 y mostrar la casilla de selección. Si desmarcas todas las casillas, estas se ocultan hasta que vuelvas a hacer clic en un versículo.'
-  },
-  {
-    sel: '#reader, #reader-verses',
-    title: '10. Doble clic en una palabra',
-    text: 'Doble clic en una palabra del texto abre su significado (diccionario bíblico), solo si hay definición. Si la palabra no está en el diccionario, no se abre ninguna ventana. Así evitas confusiones.'
-  },
-  {
-    sel: '#font-dec, #font-inc, #font-family-btn',
-    title: '11. Tamaño y tipografía',
-    text: 'A− hace la letra más pequeña y A+ más grande. El botón Aa permite elegir tipografías modernas y legibles (como las de teléfonos y computadoras). El cambio se aplica al texto de los versículos.'
-  },
-  {
-    sel: '#easy-btn',
-    title: '12. Modo Detalle',
-    text: 'El botón 🔍 Detalle resalta nombres, lugares y las palabras de Jesús en el texto, para estudiar con más claridad. Vuelve a pulsarlo para desactivar el resaltado.'
-  },
-  {
-    sel: '#meanings-btn, #notes-btn, #favs-btn',
-    title: '13. Significados, notas y favoritos',
-    text: '📚 Significados: palabras que guardaste. 📝 Notas: tus anotaciones por versículo. ❤️ Favoritos: versículos marcados con el corazón. Se pueden sincronizar con la nube si inicias sesión con Google.'
-  },
-  {
-    sel: '#glossary-btn',
-    title: '14. Glosario',
-    text: 'Diccionario de términos bíblicos (cientos de palabras). Puedes buscar y desplazarte por toda la lista. La barra de búsqueda del glosario se queda fija al bajar.'
-  },
-  {
-    sel: '#biography-btn',
-    title: '15. Biografías',
-    text: 'Lista de personas de la Biblia. Indica si son del Antiguo o del Nuevo Testamento. Puedes buscar un nombre, ver su historia y usar «Atrás» para volver a la lista.'
-  },
-  {
-    sel: '#apocrifos-btn',
-    title: '16. Libros apócrifos',
-    text: 'Información sobre los libros apócrifos: qué son, por qué no están en el canon protestante y algunas curiosidades. No incluye el texto completo de esos libros, solo orientación.'
-  },
-  {
-    sel: '#plan-btn',
-    title: '17. Plan de lectura en 1 año',
-    text: 'Plan día por día. Puedes elegir orden canónico (AT→NT), inverso (NT→AT), paralelo o cronológico, y empezar el 1 de enero o desde hoy (365 días). Marca lo que ya leíste.'
-  },
-  {
-    sel: '#youtube-btn',
-    title: '18. YouTube (sermón)',
-    text: 'Pega el enlace de un video de YouTube y cárgalo. Solo se ve el video (sin comentarios ni sugerencias), debajo de la lista de libros a la izquierda. Puedes borrar el enlace cuando quieras.'
+    sel: '#reader, #reader-sticky-head',
+    title: '9. Área de lectura',
+    text: 'Un clic en un versículo: favorito, nota y casilla. Doble clic en una palabra: significado. Las casillas no mueven el texto.'
   },
   {
     sel: '#project-btn',
-    title: '19. Proyectar (pantalla grande)',
-    text: 'Muestra el texto en grande, ideal para predicar o estudiar en grupo. Puedes proyectar el versículo actual, el capítulo completo o solo los versículos con casilla marcada. Sal con Esc o con «Salir».'
-  },
-  {
-    sel: '#project-btn, #stage',
-    title: '20. Dentro de la proyección',
-    text: 'En proyección: flechas ← → cambian de versículo. Si el texto es largo, puedes activar desplazamiento automático y cambiar la velocidad. Si llegaste con el dado 🎲, también verás ❤️ favorito, 📝 nota y otro 🎲, sin salir de la proyección.'
-  },
-  {
-    sel: '#fullscreen-btn, #nav-header-actions',
-    title: '21. Pantalla completa',
-    text: 'El botón ⛶ pone SEFER a pantalla completa (como F11). Salir de proyectar no te saca de pantalla completa: son cosas distintas. Así puedes predicar a pantalla completa con calma.'
+    title: '10. Proyectar',
+    text: 'Pantalla grande para culto. En proyección: Comparar pone otra traducción a la izquierda y derecha. Dos libros desde el buscador van arriba y abajo. Esc cierra la proyección sin salir de pantalla completa.'
   },
   {
     sel: '#help-btn',
-    title: '22. Ayuda y este tour',
-    text: 'El botón ❓ Ayuda abre las instrucciones escritas. Desde ahí puedes volver a iniciar este tour cuando quieras. También puedes salir del tour con Esc en cualquier momento.'
-  },
-  {
-    sel: '#nav-header .brand, #help-btn',
-    title: '23. ¡Listo!',
-    text: 'Ya conoces SEFER: libros, búsqueda, lectura, notas, favoritos, glosario, biografías, plan de un año, YouTube y proyección. Si algo se olvida, abre ❓ Ayuda o repite el tour. ¡Que la Palabra te acompañe!'
+    title: '11. Ayuda y fin',
+    text: 'Aquí está la guía completa y este tour. Ya conoces el recorrido de izquierda a derecha. ¡Que la Palabra te acompañe!'
   }
 ];
-
-function seferTourFindEl(sel){
-  if(!sel) return null;
-  for(const part of sel.split(',')){
-    const el = document.querySelector(part.trim());
-    if(el && (el.offsetParent !== null || el.getClientRects().length > 0)) return el;
-  }
-  return document.querySelector(sel.split(',')[0].trim());
-}
-
-function seferTourPlaceCard(target){
-  const card = document.getElementById('sefer-tour-card');
-  const spot = document.getElementById('sefer-tour-spot');
-  if(!card) return;
-  const margin = 12;
-  const cw = card.offsetWidth || 320;
-  const ch = card.offsetHeight || 160;
-  let top, left;
-  if(target){
-    const r = target.getBoundingClientRect();
-    spot.style.display = 'block';
-    spot.style.top = Math.max(8, r.top - 6) + 'px';
-    spot.style.left = Math.max(8, r.left - 6) + 'px';
-    spot.style.width = Math.min(window.innerWidth - 16, r.width + 12) + 'px';
-    spot.style.height = Math.min(window.innerHeight - 16, r.height + 12) + 'px';
-    // Prefer below target
-    top = r.bottom + 14;
-    left = Math.min(Math.max(margin, r.left), window.innerWidth - cw - margin);
-    if(top + ch > window.innerHeight - margin){
-      top = Math.max(margin, r.top - ch - 14);
-    }
-  } else {
-    spot.style.display = 'none';
-    top = window.innerHeight / 2 - ch / 2;
-    left = window.innerWidth / 2 - cw / 2;
-  }
-  card.style.top = Math.max(margin, Math.min(top, window.innerHeight - ch - margin)) + 'px';
-  card.style.left = Math.max(margin, Math.min(left, window.innerWidth - cw - margin)) + 'px';
-}
 
 function seferTourShowStep(){
   const step = SEFER_TOUR_STEPS[seferTourIndex];
@@ -5333,10 +5509,30 @@ function openSeferHelp(){
     <div class="im-block"><div class="im-label">Sincronización y logros</div>
     <div class="im-text">Con Google se guardan notas, favoritos, significados y progreso. El perfil muestra insignias (por libros leídos y otras metas). Historial de versiones: escribe <code>versionshistory</code> en el buscador de palabras.</div></div>
 
-    <div class="im-block"><div class="im-label">Atajos útiles</div>
-    <div class="im-text">• <strong>Tab</strong> en el buscador: completa el libro.<br>
-    • <strong>Esc</strong>: cierra proyección, paneles o el tour.<br>
-    • <strong>← →</strong> en proyección: versículo anterior / siguiente.<br>
+    <div class="im-block"><div class="im-label">Traducciones</div>
+    <div class="im-text">Selector a la <strong>izquierda de la toolkit</strong>. Predeterminada: <strong>Reina-Valera 1960</strong>. También RV1909, RVA2015, NVI (latino), NTV y TLA. Las demás se cargan al elegirlas.</div></div>
+
+    <div class="im-block"><div class="im-label">Buscador con dos libros</div>
+    <div class="im-text">Formato: <code>Juan 3:16 | Romanos 8:28</code> (un solo <code>|</code>, dos libros distintos; espacios opcionales). Entra a <strong>proyección</strong> con el primero <strong>arriba</strong> y el segundo <strong>abajo</strong>.</div></div>
+
+    <div class="im-block"><div class="im-label">Comparar traducciones</div>
+    <div class="im-text">Dentro de proyección, botón <strong>⇄ Comparar</strong>: misma cita a la <strong>izquierda y derecha</strong> en dos versiones.</div></div>
+
+    <div class="im-block"><div class="im-label">Atajos de teclado (Ctrl)</div>
+    <div class="im-text">
+    • <strong>Ctrl+T</strong>: tema siguiente (10 temas en ciclo)<br>
+    • <strong>Ctrl+Shift+V</strong>: buscador de versículos<br>
+    • <strong>Ctrl+Shift+T</strong>: menú de traducción<br>
+    • <strong>Ctrl+Shift+F</strong>: pantalla completa<br>
+    • <strong>Ctrl+− / Ctrl++</strong>: tamaño del texto<br>
+    • <strong>Ctrl+D</strong> detalle · <strong>S</strong> significados · <strong>N</strong> notas · <strong>F</strong> favoritos<br>
+    • <strong>Ctrl+G</strong> glosario · <strong>B</strong> biografía · <strong>A</strong> apócrifos · <strong>P</strong> plan · <strong>Y</strong> YouTube<br>
+    • <strong>Ctrl+Enter</strong> proyectar · <strong>Ctrl+H</strong> ayuda<br>
+    • <strong>Tab</strong> en el buscador completa el libro · <strong>Esc</strong> cierra paneles/proyección/tour
+    </div></div>
+
+    <div class="im-block"><div class="im-label">Otros atajos</div>
+    <div class="im-text">• <strong>← →</strong> en proyección: versículo anterior / siguiente.<br>
     • <strong>Supr</strong> sobre un versículo favorito: quita el favorito.</div></div>
   `;
 
@@ -5506,6 +5702,218 @@ function wireVersionSwitcher(){
    INIT
    ========================================================= */
 // Inicio: pantalla de bienvenida (sin capítulo abierto)
+
+/* =========================================================
+   COMPARAR TRADUCCIONES + ATAJOS + TEMA SIGUIENTE
+   ========================================================= */
+async function stageToggleCompare(){
+  if(!stage || !stage.classList.contains('open')) return;
+  if(stageMode === 'stack'){
+    alert('En proyección de dos libros (arriba/abajo) no se usa comparar. Comparar es izquierda/derecha con otra traducción.');
+    return;
+  }
+  const sel = document.getElementById('stage-compare-sel');
+  if(stageCompareOn){
+    stageCompareOn = false;
+    stageMode = stagePassages[0] && stagePassages[0].verses && stagePassages[0].verses.length>1 ? 'selection' : 'single';
+    if(stage) stage.classList.remove('stage-compare');
+    if(sel) sel.style.display = 'none';
+    renderStage();
+    return;
+  }
+  // elegir segunda versión distinta a la actual
+  let v = (sel && sel.value) || stageCompareVersion || 'nvi';
+  if(v === currentBibleVersion){
+    const alts = ['rv1960','nvi','ntv','tla','rva2015','rv1909'].filter(x=>x!==currentBibleVersion);
+    v = alts[0] || 'nvi';
+    if(sel) sel.value = v;
+  }
+  stageCompareVersion = v;
+  try{
+    if(typeof seferLoadBibleScript === 'function'){
+      stageCompareData = await seferLoadBibleScript(v);
+    } else {
+      stageCompareData = seferGetGlobalBible(v);
+    }
+  }catch(e){
+    alert('No se pudo cargar la segunda traducción. ¿Subiste bible-data-'+v+'.js?');
+    return;
+  }
+  stageCompareOn = true;
+  stageMode = 'compare';
+  if(sel) sel.style.display = '';
+  if(stage) stage.classList.add('stage-compare');
+  renderStage();
+}
+
+function wireStageCompare(){
+  const btn = document.getElementById('stage-compare-btn');
+  const sel = document.getElementById('stage-compare-sel');
+  if(btn) btn.addEventListener('click', (e)=>{ e.stopPropagation(); stageToggleCompare(); });
+  if(sel){
+    // no listar la versión actual como única
+    sel.addEventListener('change', async ()=>{
+      stageCompareVersion = sel.value;
+      if(!stageCompareOn) return;
+      try{
+        stageCompareData = await seferLoadBibleScript(stageCompareVersion);
+        renderStage();
+      }catch(e){ alert('No se pudo cargar '+stageCompareVersion); }
+    });
+  }
+}
+
+const SEFER_THEME_CYCLE = ['mexico','corea','ucrania','reino','eden','lwm-day','lwm-night','arena','sandalo','amoled'];
+
+function seferNextTheme(){
+  const cur = (typeof currentTheme !== 'undefined' && currentTheme) ? currentTheme : 'mexico';
+  let i = SEFER_THEME_CYCLE.indexOf(cur);
+  if(i < 0) i = 0;
+  const next = SEFER_THEME_CYCLE[(i + 1) % SEFER_THEME_CYCLE.length];
+  // Activar lote correcto
+  const batchB = ['lwm-day','lwm-night','arena','sandalo','amoled'];
+  const wantB = batchB.indexOf(next) >= 0;
+  try{
+    store.set('bp_themes_more', wantB);
+  }catch(e){}
+  // Re-render theme dots si existe wire
+  try{
+    if(typeof wireThemeBatches === 'function'){ /* already IIFE */ }
+  }catch(e){}
+  currentTheme = next;
+  document.body.setAttribute('data-theme', currentTheme);
+  try{ store.set('bp_theme', currentTheme); }catch(e){}
+  try{ if(typeof applyThemeIcons==='function') applyThemeIcons(); }catch(e){}
+  // refrescar dots
+  const batchEl = document.getElementById('theme-batch');
+  const moreBtn = document.getElementById('theme-more-btn');
+  if(batchEl){
+    // trigger re-render by toggling more if needed
+    const showB = wantB;
+    if(moreBtn){
+      moreBtn.classList.toggle('open', showB);
+      moreBtn.textContent = showB ? '−' : '＋';
+    }
+    // rebuild dots from known batches if globals not available
+    try{
+      const flagUA = batchEl.querySelector('[data-t="ucrania"]');
+      // click simulation: set via re-call of wireThemeBatches is hard; manual rebuild
+    }catch(e){}
+  }
+  // Force theme batch UI by dispatching storage-compatible redraw
+  try{ seferRedrawThemeBatch(wantB, next); }catch(e){ console.warn(e); }
+}
+
+function seferRedrawThemeBatch(showB, active){
+  const batchEl = document.getElementById('theme-batch');
+  const btn = document.getElementById('theme-more-btn');
+  if(!batchEl) return;
+  const flagUA = '<svg class="flag-svg" viewBox="0 0 36 24" width="20" height="14" aria-hidden="true"><rect width="36" height="12" y="0" fill="#0057B7"/><rect width="36" height="12" y="12" fill="#FFD700"/></svg>';
+  const flagMX = '<svg class="flag-svg" viewBox="0 0 36 24" width="20" height="14" aria-hidden="true"><rect width="12" height="24" x="0" fill="#006847"/><rect width="12" height="24" x="12" fill="#fff"/><rect width="12" height="24" x="24" fill="#CE1126"/><circle cx="18" cy="12" r="3.2" fill="#006847"/></svg>';
+  const flagKR = '<svg class="flag-svg" viewBox="0 0 36 24" width="20" height="14" aria-hidden="true"><rect width="36" height="24" fill="#fff" stroke="#ddd" stroke-width="0.5"/><circle cx="18" cy="12" r="5" fill="#CD2E3A"/><path d="M18 12a5 5 0 0 1 0-0.01 2.5 2.5 0 1 0 0 0.01z" fill="#0047A0"/></svg>';
+  const A = [
+    {t:'mexico', tip:'México', html:flagMX},{t:'corea', tip:'Corea', html:flagKR},{t:'ucrania', tip:'Ucrania', html:flagUA},
+    {t:'reino', tip:'Reino', html:'👑'},{t:'eden', tip:'Edén', html:'🌿'}
+  ];
+  const B = [
+    {t:'lwm-day', tip:'LWM-Day', html:'☀️'},{t:'lwm-night', tip:'LWM-Night', html:'🌙'},{t:'arena', tip:'Arena', html:'⏳'},
+    {t:'sandalo', tip:'Sándalo', html:'🕯️'},{t:'amoled', tip:'Glass', html:'🫧'}
+  ];
+  const list = showB ? B : A;
+  batchEl.innerHTML = list.map(item => '<div class="theme-dot" data-t="'+item.t+'" data-tooltip="'+item.tip+'">'+item.html+'</div>').join('');
+  if(btn){ btn.classList.toggle('open', !!showB); btn.textContent = showB ? '−' : '＋'; }
+  batchEl.querySelectorAll('.theme-dot').forEach(dot=>{
+    dot.classList.toggle('active', dot.dataset.t === active);
+    dot.onclick = ()=>{
+      currentTheme = dot.dataset.t;
+      document.body.setAttribute('data-theme', currentTheme);
+      store.set('bp_theme', currentTheme);
+      batchEl.querySelectorAll('.theme-dot').forEach(d=> d.classList.toggle('active', d.dataset.t===currentTheme));
+      try{ applyThemeIcons(); }catch(e){}
+      if(typeof scheduleDriveSave==='function') scheduleDriveSave();
+    };
+  });
+}
+
+function seferIsTypingTarget(t){
+  if(!t) return false;
+  const tag = (t.tagName||'').toUpperCase();
+  if(tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return true;
+  if(t.isContentEditable) return true;
+  return false;
+}
+
+function wireSeferShortcuts(){
+  document.addEventListener('keydown', (e)=>{
+    const ctrl = e.ctrlKey || e.metaKey;
+    if(!ctrl) return;
+    const typing = seferIsTypingTarget(e.target);
+    const k = (e.key||'').toLowerCase();
+
+    // Ctrl+Shift+V → foco buscador versículos
+    if(e.shiftKey && k === 'v'){
+      e.preventDefault();
+      const rs = document.getElementById('ref-search');
+      if(rs){ rs.focus(); rs.select(); }
+      return;
+    }
+    // Ctrl+Shift+T → menú traducción
+    if(e.shiftKey && k === 't'){
+      e.preventDefault();
+      const btn = document.getElementById('version-btn');
+      const menu = document.getElementById('version-menu');
+      if(btn && menu){
+        menu.classList.add('open');
+        btn.setAttribute('aria-expanded','true');
+        btn.focus();
+      }
+      return;
+    }
+    // Ctrl+Shift+F → fullscreen app
+    if(e.shiftKey && k === 'f'){
+      e.preventDefault();
+      document.getElementById('fullscreen-btn')?.click();
+      return;
+    }
+    if(e.shiftKey) return; // otras con shift no
+    if(typing && k !== 'enter') return;
+
+    if(k === 't' && !e.shiftKey){
+      e.preventDefault();
+      seferNextTheme();
+      return;
+    }
+    if(k === '-' || k === '_'){
+      e.preventDefault();
+      document.getElementById('font-dec')?.click();
+      return;
+    }
+    if(k === '+' || k === '='){
+      e.preventDefault();
+      document.getElementById('font-inc')?.click();
+      return;
+    }
+    if(k === 'd'){ e.preventDefault(); document.getElementById('easy-btn')?.click(); return; }
+    if(k === 's'){ e.preventDefault(); document.getElementById('meanings-btn')?.click(); return; }
+    if(k === 'n'){ e.preventDefault(); document.getElementById('notes-btn')?.click(); return; }
+    if(k === 'f'){ e.preventDefault(); document.getElementById('favs-btn')?.click(); return; }
+    if(k === 'g'){ e.preventDefault(); document.getElementById('glossary-btn')?.click(); return; }
+    if(k === 'b'){ e.preventDefault(); document.getElementById('biography-btn')?.click(); return; }
+    if(k === 'a'){ e.preventDefault(); document.getElementById('apocrifos-btn')?.click(); return; }
+    if(k === 'p'){ e.preventDefault(); document.getElementById('plan-btn')?.click(); return; }
+    if(k === 'y'){ e.preventDefault(); document.getElementById('youtube-btn')?.click(); return; }
+    if(k === 'h'){ e.preventDefault(); document.getElementById('help-btn')?.click(); return; }
+    if(k === 'enter'){
+      e.preventDefault();
+      document.getElementById('project-btn')?.click();
+      return;
+    }
+  }, true);
+}
+
+
+try{ wireStageCompare(); }catch(e){}
+try{ wireSeferShortcuts(); }catch(e){}
 try{ wireVersionSwitcher(); }catch(e){ console.warn('[SEFER] version switcher', e); }
 renderBookList();
 showWelcomeScreen();
