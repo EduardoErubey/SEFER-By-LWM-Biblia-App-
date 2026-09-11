@@ -108,7 +108,7 @@ function openSeferHelp(){
     
     <div class="im-block"><div class="im-label">Destacar y Resaltar</div>
     <div class="im-text">• <strong>✨ Destacar</strong>: nombres, ciudades y palabras de Jesús automáticamente.<br>
-    • <strong>🖍️ Resaltar</strong> (proyección): palabras a mano; se guardan y se ven en el lector. No reemplaza a ❤️ Favoritos.<br>
+    • <strong>🖍️ Resaltar</strong> (proyección): como un subrayador. Pulsa 🖍️ (se activa), selecciona el texto y se resalta solo; el botón se apaga. Solo en ese versículo (no en toda la Biblia). Para quitar: activa 🖍️ y selecciona lo resaltado. No reemplaza a ❤️ Favoritos.<br>
     • <strong>🧹 Limpiar</strong>: quita marcas de versículos seleccionados.<br>
     • Dado: 🎲 normal · 🔀 en Glass.</div></div>
 

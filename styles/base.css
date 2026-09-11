@@ -1,6 +1,9 @@
 /* SEFER — extracted from index.html (no rule changes) */
 
 :root{
+  --sefer-hl: rgba(255, 230, 120, 0.55);
+  --sefer-hl-border: rgba(200, 160, 40, 0.35);
+
   --book-item-h:30px;
   --book-item-py:5px;
   --book-item-px:10px;

@@ -637,3 +637,18 @@ body[data-theme="amoled"] #book-list .chap-pill{
   min-height:var(--chapter-size) !important;
   padding:0 !important;
 }
+
+
+/* Resaltar: siempre claro y acorde al tema */
+[data-theme="mexico"]{ --sefer-hl: rgba(255, 220, 140, 0.55); --sefer-hl-border: rgba(180, 120, 40, 0.3); }
+[data-theme="korea"], [data-theme="corea"]{ --sefer-hl: rgba(255, 200, 210, 0.5); --sefer-hl-border: rgba(180, 60, 80, 0.25); }
+[data-theme="ucrania"]{ --sefer-hl: rgba(255, 236, 150, 0.55); --sefer-hl-border: rgba(180, 150, 40, 0.3); }
+[data-theme="lwm-day"], [data-theme="day"]{ --sefer-hl: rgba(255, 236, 160, 0.55); --sefer-hl-border: rgba(160, 130, 40, 0.28); }
+[data-theme="lwm-night"], [data-theme="night"]{ --sefer-hl: rgba(255, 220, 120, 0.4); --sefer-hl-border: rgba(220, 180, 60, 0.35); }
+[data-theme="reino"]{ --sefer-hl: rgba(200, 230, 255, 0.5); --sefer-hl-border: rgba(60, 120, 180, 0.3); }
+[data-theme="eden"]{ --sefer-hl: rgba(190, 235, 190, 0.55); --sefer-hl-border: rgba(50, 130, 70, 0.28); }
+[data-theme="arena"]{ --sefer-hl: rgba(255, 228, 170, 0.55); --sefer-hl-border: rgba(160, 120, 50, 0.3); }
+[data-theme="sandalo"]{ --sefer-hl: rgba(255, 210, 140, 0.4); --sefer-hl-border: rgba(200, 140, 60, 0.35); }
+[data-theme="amoled"]{ --sefer-hl: rgba(180, 220, 255, 0.45); --sefer-hl-border: rgba(80, 150, 220, 0.35); }
+[data-theme="paz"]{ --sefer-hl: rgba(200, 235, 210, 0.55); --sefer-hl-border: rgba(50, 120, 70, 0.28); }
+[data-theme="claro"]{ --sefer-hl: rgba(255, 240, 160, 0.55); --sefer-hl-border: rgba(160, 140, 40, 0.3); }

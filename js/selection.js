@@ -113,7 +113,31 @@ function renderReader(){
       + (detailVerse===vnum ? ' active-detail':'');
     const flags = (favorites[id] ? '<span class="fav-flag">♥</span>' : '')
       + (notes[id] ? '<span class="note-flag">✎ nota</span>' : '');
-    const bodyHtml = `<span class="vnum">${vnum}</span>${formatVerseHtml(text, !!jesusMap[vnum])}${flags}`;
+    let _vh = formatVerseHtml(text, !!jesusMap[vnum]);
+    try{
+      if(typeof applyHighlightsToVerseHtml === 'function'){
+        // aplicar sobre el texto plano y re-formatear de forma simple si hay marcas
+        const plain = stripPilcrow(text);
+        const marked = applyHighlightsToVerseHtml(plain, currentBook, currentChap, vnum);
+        if(marked !== plain){
+          // marked puede incluir <mark>; combinar con easyReading spans de forma básica
+          _vh = marked.replace(/([A-Za-záéíóúÁÉÍÓÚñÑüÜ]+)/g, (m, off, s)=>{
+            // no tocar dentro de tags
+            return m;
+          });
+          // Si no hay spans .w, usar marked directo; si formatVerseHtml añadió .w, preferir marked con clases
+          if(marked.indexOf('<mark') >= 0){
+            _vh = formatVerseHtml(plain, !!jesusMap[vnum]);
+            // insert marks into _vh by replacing phrase occurrences in text content - fallback: use marked as vtext
+            _vh = marked;
+            if(!!jesusMap[vnum] && easyReading){
+              _vh = '<span class="jesus-words">'+marked+'</span>';
+            }
+          }
+        }
+      }
+    }catch(e){}
+    const bodyHtml = `<span class="vnum">${vnum}</span>${_vh}${flags}`;
     // Casilla siempre en el DOM (sangría fija); solo cambia visibility
     row.innerHTML =
       `<label class="verse-check${showCheck?' is-visible':''}" title="Seleccionar versículo">` +
@@ -319,4 +343,70 @@ function toggleSelect(vnum){
     };
     renderReader.__seferHighlightWrapped = true;
   }
+})();
+
+
+/* Aplicar subrayados por versículo al renderizar lector */
+(function(){
+  function enhance(){
+    if(typeof window.formatVerseHtml !== 'function') return;
+    if(window.formatVerseHtml.__seferHl) return;
+    const orig = window.formatVerseHtml;
+    window.formatVerseHtml = function(text, isJesus){
+      let html = orig.apply(this, arguments);
+      try{
+        if(typeof applyHighlightsToVerseHtml === 'function' && typeof currentBook !== 'undefined' && typeof currentChap !== 'undefined'){
+          // vnum no está disponible aquí; se aplica en el loop si expone data-v
+        }
+      }catch(e){}
+      return html;
+    };
+    window.formatVerseHtml.__seferHl = true;
+  }
+  setTimeout(enhance, 0);
+})();
+
+(function wrapRenderReaderHighlights(){
+  function wrap(){
+    if(typeof renderReader !== 'function' || renderReader.__hlWrap2) return;
+    const orig = renderReader;
+    window.renderReader = function(){
+      const r = orig.apply(this, arguments);
+      try{
+        document.querySelectorAll('#reader-verses .verse, #reader .verse').forEach(row=>{
+          const vnumEl = row.querySelector('.vnum');
+          const vnum = vnumEl ? (vnumEl.getAttribute('data-v') || vnumEl.textContent || '').replace(/\D/g,'') : '';
+          if(!vnum || typeof currentBook==='undefined') return;
+          const body = row.querySelector('.vtext, .verse-text, .v-body') || row;
+          // Re-aplicar sobre texto: si ya hay marks, ok; si no, reconstruir desde highlights
+          if(typeof getHighlightsForVerse==='function'){
+            const list = getHighlightsForVerse(currentBook, currentChap, vnum);
+            if(!list.length) return;
+            // Si el cuerpo solo tiene spans .w, unir texto y reaplicar marks de forma simple
+            list.forEach(h=>{
+              const phrase = h.text;
+              if(!phrase) return;
+              // marcar spans .w consecutivos que formen la frase es complejo; usar HTML del row
+              if(body.innerHTML && body.innerHTML.indexOf('sefer-hl') === -1){
+                const plain = body.textContent || '';
+                if(plain.toLowerCase().indexOf(phrase.toLowerCase()) === -1) return;
+                // rebuild from plain text with marks, preserving structure roughly
+                let html = plain;
+                if(typeof applyHighlightsToVerseHtml==='function'){
+                  html = applyHighlightsToVerseHtml(plain, currentBook, currentChap, vnum);
+                  // Keep vnum if body is whole row - skip if dangerous
+                  const vtext = row.querySelector('.vtext, .verse-text');
+                  if(vtext) vtext.innerHTML = html;
+                }
+              }
+            });
+          }
+        });
+      }catch(e){}
+      return r;
+    };
+    renderReader.__hlWrap2 = true;
+  }
+  setTimeout(wrap, 0);
+  setTimeout(wrap, 200);
 })();

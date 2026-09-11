@@ -184,10 +184,6 @@ function formatVerseHtml(text, isJesus){
       if(EASY_CITIES.has(n)) cls += ' easy-city';
       else if(EASY_NAMES.has(n)) cls += ' easy-name';
     }
-    try{
-      const k = (typeof seferNormWordKey==='function') ? seferNormWordKey(m) : normEasy(m);
-      if(typeof highlightedWords!=='undefined' && highlightedWords && highlightedWords.has(k)) cls += ' word-highlighted';
-    }catch(e){}
     return `<span class="${cls}">${m}</span>`;
   });
   // Color de Jesús solo en modo lectura fácil
@@ -225,49 +221,106 @@ function scrollVerseIntoView(vnum){
 
 
 
-/* Resaltar palabras (manual) */
-let highlightedWords = new Set();
+
+
+/* ===== Resaltar (subrayado por versículo, no global) =====
+   Cada marca: { id, book, chap, vnum, text }
+   id = book|chap|vnum|textoNormalizado
+*/
+let seferHighlights = [];
 try{
-  const _hw = (typeof store!=='undefined' && store.get) ? store.get('bp_highlighted_words', []) : [];
-  if(Array.isArray(_hw)) highlightedWords = new Set(_hw.map(String));
-}catch(e){ highlightedWords = new Set(); }
-function saveHighlighted(){ try{ store.set('bp_highlighted_words', [...highlightedWords]); }catch(e){} }
+  const raw = store.get('bp_verse_highlights', null);
+  if(Array.isArray(raw)) seferHighlights = raw;
+  else {
+    // migrar formato antiguo (solo palabras globales) → se descarta
+    store.set('bp_verse_highlights', []);
+  }
+}catch(e){ seferHighlights = []; }
+
+function seferNormPhrase(s){
+  return String(s||'').trim().replace(/\s+/g,' ').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+
+function seferHighlightId(book, chap, vnum, text){
+  return [book, String(chap), String(vnum), seferNormPhrase(text)].join('|');
+}
+
+function saveHighlighted(){
+  try{ store.set('bp_verse_highlights', seferHighlights); }catch(e){}
+}
 function loadHighlighted(){
   try{
-    const _hw = store.get('bp_highlighted_words', []);
-    highlightedWords = new Set(Array.isArray(_hw) ? _hw.map(String) : []);
-  }catch(e){ highlightedWords = new Set(); }
-  return highlightedWords;
+    const raw = store.get('bp_verse_highlights', []);
+    seferHighlights = Array.isArray(raw) ? raw : [];
+  }catch(e){ seferHighlights = []; }
+  return seferHighlights;
 }
-function saveHighlightedWords(){ saveHighlighted(); }
-function seferNormWordKey(w){
-  try{
-    return (typeof normalizeKey==='function' ? normalizeKey(w) : String(w||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z]/g,''));
-  }catch(e){ return String(w||'').toLowerCase(); }
+
+/** Alterna resaltado del texto exacto en un versículo concreto */
+function toggleVerseHighlight(book, chap, vnum, text){
+  const phrase = String(text||'').trim().replace(/\s+/g,' ');
+  if(!book || !chap || !vnum || phrase.length < 1) return false;
+  const id = seferHighlightId(book, chap, vnum, phrase);
+  const idx = seferHighlights.findIndex(h => h.id === id);
+  if(idx >= 0){
+    seferHighlights.splice(idx, 1);
+    saveHighlighted();
+    return false; // removed
+  }
+  seferHighlights.push({ id, book, chap: String(chap), vnum: String(vnum), text: phrase });
+  saveHighlighted();
+  return true; // added
 }
-function highlightKey(book, chap, vnum, wordIndex, word){
-  return [book, chap, vnum, wordIndex, seferNormWordKey(word)].join(':');
+
+function getHighlightsForVerse(book, chap, vnum){
+  const b = book, c = String(chap), v = String(vnum);
+  return seferHighlights.filter(h => h.book === b && String(h.chap) === c && String(h.vnum) === v);
 }
-function toggleHighlightedWord(word, meta){
-  const k = meta || seferNormWordKey(word);
-  if(!k || String(k).length < 2) return;
-  if(highlightedWords.has(k)) highlightedWords.delete(k);
-  else highlightedWords.add(k);
-  saveHighlightedWords();
-}
-function applyWordHighlightsToElement(root){
-  if(!root || !highlightedWords || !highlightedWords.size) return;
-  root.querySelectorAll('.word, .w, .stage-word').forEach(el=>{
-    const k = seferNormWordKey(el.textContent||'');
-    if(k && highlightedWords.has(k)) el.classList.add('word-highlighted');
-    else el.classList.remove('word-highlighted');
+
+/** Envuelve frases resaltadas dentro del HTML de un versículo (texto ya escapado o plano) */
+function applyHighlightsToVerseHtml(htmlOrText, book, chap, vnum){
+  const list = getHighlightsForVerse(book, chap, vnum);
+  if(!list.length) return htmlOrText;
+  // Trabajar sobre texto plano si viene con spans: aplicar sobre text nodes es complejo;
+  // estrategia: si hay spans .w, marcar spans que formen parte de una frase; si es plano, wrap de substrings.
+  let s = String(htmlOrText);
+  // Ordenar por longitud desc para no romper frases largas
+  const sorted = [...list].sort((a,b)=> (b.text||'').length - (a.text||'').length);
+  sorted.forEach(h=>{
+    const phrase = h.text;
+    if(!phrase) return;
+    // Escapar regex
+    const esc = phrase.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/\s+/g,'\\s+');
+    try{
+      const re = new RegExp('('+esc+')', 'i');
+      // Solo primera aparición por frase en el versículo (comportamiento subrayador)
+      s = s.replace(re, function(m){
+        if(/word-highlighted/.test(m)) return m;
+        return '<mark class="word-highlighted sefer-hl">'+m+'</mark>';
+      });
+    }catch(e){}
   });
+  return s;
 }
-window.highlightedWords = highlightedWords;
-window.saveHighlightedWords = saveHighlightedWords;
+
+function applyWordHighlightsToElement(root){
+  // compat: no-op global; el resaltado es por versículo al renderizar
+  if(!root) return;
+}
+
+// compat API antigua
+let highlightedWords = new Set();
+function saveHighlightedWords(){ saveHighlighted(); }
+function toggleHighlightedWord(){ /* deprecated */ }
+function seferNormWordKey(w){ return seferNormPhrase(w); }
+
+window.seferHighlights = seferHighlights;
 window.saveHighlighted = saveHighlighted;
 window.loadHighlighted = loadHighlighted;
-window.toggleHighlightedWord = toggleHighlightedWord;
+window.toggleVerseHighlight = toggleVerseHighlight;
+window.getHighlightsForVerse = getHighlightsForVerse;
+window.applyHighlightsToVerseHtml = applyHighlightsToVerseHtml;
 window.applyWordHighlightsToElement = applyWordHighlightsToElement;
-window.seferNormWordKey = seferNormWordKey;
-window.highlightKey = highlightKey;
+window.seferHighlightId = seferHighlightId;
+window.seferNormPhrase = seferNormPhrase;

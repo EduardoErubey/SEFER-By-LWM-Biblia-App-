@@ -87,7 +87,9 @@ function fillStagePane(refEl, textEl, book, chap, verses, versionLabel){
       // keep simple text if other version
     }
     if(block) html += '<div class="'+block+'">';
-    html += '<span class="'+cls+'">'+v+'</span> ' + (raw||'') + ' ';
+    let body = raw||'';
+    try{ if(typeof applyHighlightsToVerseHtml==='function') body = applyHighlightsToVerseHtml(body, book, chap, v); }catch(e){}
+    html += '<span class="'+cls+'" data-v="'+v+'">'+v+'</span> <span class="stage-verse-body" data-book="'+book+'" data-chap="'+chap+'" data-v="'+v+'">' + body + '</span> ';
     if(block) html += '</div>';
     prevV = v;
   });
@@ -147,16 +149,14 @@ function renderStage(){
     const vnumClass = isJump ? 'stage-vnum jump' : 'stage-vnum';
     const openTag = isGap ? '<span class="jump-block">' : '<span>';
     const raw = stripPilcrow(chapData[v]||'');
-    const wordHtml = String(raw).replace(/([A-Za-záéíóúÁÉÍÓÚñÑüÜ]+)/g, (m)=>{
-      let cls = 'w stage-word';
-      try{
-        const k = (typeof seferNormWordKey==='function') ? seferNormWordKey(m) : m.toLowerCase();
-        if(typeof highlightedWords!=='undefined' && highlightedWords && highlightedWords.has(k)) cls += ' word-highlighted';
-      }catch(e){}
-      return '<span class="'+cls+'">'+m+'</span>';
-    });
-    const body = (easyReading && jesusMap[v]) ? `<span class="jesus-words">${wordHtml}</span>` : wordHtml;
-    html += `${openTag}<span class="${vnumClass}">${v}</span>${body} </span>`;
+    let bodyText = raw;
+    try{
+      if(typeof applyHighlightsToVerseHtml === 'function'){
+        bodyText = applyHighlightsToVerseHtml(raw, p.book, p.chap, v);
+      }
+    }catch(e){}
+    const body = (easyReading && jesusMap[v]) ? `<span class="jesus-words">${bodyText}</span>` : bodyText;
+    html += `${openTag}<span class="${vnumClass}" data-v="${v}">${v}</span><span class="stage-verse-body" data-book="${p.book}" data-chap="${p.chap}" data-v="${v}">${body}</span> </span>`;
     prevV = v;
   });
   stageText.innerHTML = html;
@@ -470,100 +470,114 @@ document.addEventListener('keydown', (e)=>{
 
 
 
-/* 🖍️ Resaltar palabras en proyección */
+
+
+
+
+/* ===== 🖍️ Resaltar = subrayador por versículo =====
+   Uso:
+   1) Pulsar 🖍️ → modo activo
+   2) Seleccionar texto en el versículo proyectado → se resalta SOLO ahí
+   3) El botón se desactiva solo
+   4) Para quitar: activar 🖍️, seleccionar lo resaltado → se quita
+*/
 let stageHighlightMode = false;
-(function wireStageWordHighlight(){
-  function setMode(on){
-    stageHighlightMode = !!on;
-    const btn = document.getElementById('stage-highlight-btn');
-    if(btn) btn.classList.toggle('active', stageHighlightMode);
-    const root = document.getElementById('stage');
-    if(root) root.classList.toggle('stage-highlight-on', stageHighlightMode);
+
+function seferGetStageSelectionContext(){
+  const sel = window.getSelection && window.getSelection();
+  if(!sel || sel.isCollapsed || !sel.toString().trim()) return null;
+  const stage = document.getElementById('stage');
+  if(!stage || !stage.contains(sel.anchorNode)) return null;
+  const text = sel.toString().replace(/\s+/g,' ').trim();
+  if(!text) return null;
+  let node = sel.anchorNode;
+  if(node && node.nodeType === 3) node = node.parentElement;
+  const body = node && node.closest ? node.closest('.stage-verse-body, [data-v]') : null;
+  let book, chap, vnum;
+  if(body && body.classList && body.classList.contains('stage-verse-body')){
+    book = body.getAttribute('data-book');
+    chap = body.getAttribute('data-chap');
+    vnum = body.getAttribute('data-v');
+  } else if(body){
+    vnum = body.getAttribute('data-v');
   }
+  try{
+    if((!book || !chap || !vnum) && typeof stagePassages !== 'undefined' && stagePassages[stageIndex]){
+      const p = stagePassages[stageIndex];
+      book = book || p.book;
+      chap = chap || p.chap;
+      if(!vnum && p.verses && p.verses.length === 1) vnum = p.verses[0];
+      if(!vnum && p.verses && p.verses.length){
+        const vEl = node && node.closest ? node.closest('.stage-vnum') : null;
+        if(vEl) vnum = (vEl.getAttribute('data-v') || vEl.textContent || '').trim();
+      }
+    }
+  }catch(e){}
+  if(!book || !chap || !vnum) return null;
+  return { book, chap, vnum, text };
+}
+
+function seferSetHighlightMode(on){
+  stageHighlightMode = !!on;
+  const b = document.getElementById('stage-highlight-btn');
+  if(b){
+    b.classList.toggle('active', stageHighlightMode);
+    b.setAttribute('aria-pressed', stageHighlightMode ? 'true' : 'false');
+    b.title = stageHighlightMode
+      ? 'Subrayador activo: selecciona texto (se desactiva al marcar)'
+      : 'Resaltar: activa y selecciona texto en el versículo';
+  }
+  const root = document.getElementById('stage');
+  if(root) root.classList.toggle('stage-highlight-on', stageHighlightMode);
+  try{ document.body.classList.toggle('sefer-hl-mode', stageHighlightMode); }catch(e){}
+}
+
+function seferApplyStageHighlightFromSelection(){
+  const ctx = seferGetStageSelectionContext();
+  if(!ctx) return null;
+  const added = toggleVerseHighlight(ctx.book, ctx.chap, ctx.vnum, ctx.text);
+  try{ window.getSelection().removeAllRanges(); }catch(e){}
+  try{ if(typeof renderStage === 'function') renderStage(); }catch(e){}
+  try{ if(typeof renderReader === 'function') renderReader(); }catch(e){}
+  return { added, ctx };
+}
+
+(function wireSeferHighlighter(){
+  // Clic en 🖍️: solo enciende/apaga el modo (no aplica sin selección)
   document.addEventListener('click', function(e){
     const t = e.target;
     if(!t) return;
-    if(t.id === 'stage-highlight-btn' || (t.closest && t.closest('#stage-highlight-btn'))){
-      e.preventDefault(); e.stopPropagation();
-      setMode(!stageHighlightMode);
-      return;
-    }
-    if(!stageHighlightMode) return;
-    const stage = document.getElementById('stage');
-    if(!stage || stage.style.display==='none') return;
-    const w = t.closest && (t.closest('.word') || t.closest('.w') || t.closest('.stage-word'));
-    if(!w || !stage.contains(w)) return;
-    e.preventDefault(); e.stopPropagation();
-    const text = (w.textContent||'').trim();
-    if(!text) return;
-    if(typeof toggleHighlightedWord==='function') toggleHighlightedWord(text);
-    const k = typeof seferNormWordKey==='function' ? seferNormWordKey(text) : text.toLowerCase();
-    document.querySelectorAll('#stage .word, #stage .w, #stage .stage-word, #reader .word, #reader .w, #reader-verses .word, #reader-verses .w').forEach(el=>{
-      const ek = typeof seferNormWordKey==='function' ? seferNormWordKey(el.textContent||'') : (el.textContent||'').toLowerCase();
-      if(ek === k) el.classList.toggle('word-highlighted', highlightedWords.has(k));
-    });
+    const b = t.id === 'stage-highlight-btn' ? t : (t.closest && t.closest('#stage-highlight-btn'));
+    if(!b) return;
+    e.preventDefault();
+    e.stopPropagation();
+    seferSetHighlightMode(!stageHighlightMode);
   }, true);
 
-  const wrapRender = function(name){
-    try{
-      const orig = window[name];
-      if(typeof orig !== 'function') return;
-      window[name] = function(){
-        const r = orig.apply(this, arguments);
-        try{
-          if(name==='renderStage'){
-            applyWordHighlightsToElement(document.getElementById('stage'));
-            document.querySelectorAll('#stage .stage-text, #stage .stage-verse, #stage .vtext').forEach(node=>{
-              if(node.querySelector('.word,.w,.stage-word')) return;
-              const txt = node.textContent||'';
-              if(!txt.trim()) return;
-              node.innerHTML = txt.split(/(\s+)/).map(part=>{
-                if(/^\s+$/.test(part) || !part) return part;
-                const clean = part.replace(/[^\wÁÉÍÓÚÜáéíóúüñÑ]/g,'');
-                if(!clean) return part;
-                const k = seferNormWordKey(clean);
-                const cls = 'stage-word word' + (highlightedWords.has(k) ? ' word-highlighted' : '');
-                return '<span class="'+cls+'">'+part.replace(/</g,'&lt;')+'</span>';
-              }).join('');
-            });
-          } else if(name==='renderReader'){
-            applyWordHighlightsToElement(document.getElementById('reader-verses')||document.getElementById('reader'));
-          }
-        }catch(err){}
-        return r;
-      };
-    }catch(e){}
-  };
-  // delay wrap until functions exist
-  setTimeout(function(){ wrapRender('renderStage'); wrapRender('renderReader'); }, 0);
-})();
-window.stageHighlightMode = stageHighlightMode;
-
-
-/* Mejora 🖍️: clic en palabra O aplicar a selección de texto */
-(function improveStageHighlight(){
-  function applyToDom(word){
-    const k = typeof seferNormWordKey==='function' ? seferNormWordKey(word) : String(word||'').toLowerCase();
-    if(!k) return;
-    if(typeof toggleHighlightedWord==='function') toggleHighlightedWord(word);
-    document.querySelectorAll('#stage .w, #stage .stage-word, #reader .w, #reader-verses .w').forEach(el=>{
-      const ek = typeof seferNormWordKey==='function' ? seferNormWordKey(el.textContent||'') : (el.textContent||'').toLowerCase();
-      if(ek === k) el.classList.toggle('word-highlighted', highlightedWords.has(k));
-    });
-  }
+  // Al soltar el ratón con modo activo y texto seleccionado → resaltar y apagar modo
   document.addEventListener('mouseup', function(e){
     if(!stageHighlightMode) return;
     const stage = document.getElementById('stage');
-    if(!stage || stage.style.display==='none') return;
-    const sel = window.getSelection && window.getSelection();
-    if(!sel || sel.isCollapsed || !sel.toString().trim()) return;
-    if(!stage.contains(sel.anchorNode)) return;
-    const text = sel.toString().trim();
-    // words in selection
-    text.split(/\s+/).forEach(w=>{
-      const clean = w.replace(/[^A-Za-záéíóúÁÉÍÓÚñÑüÜ]/g,'');
-      if(clean.length>=2) applyToDom(clean);
-    });
-    try{ sel.removeAllRanges(); }catch(err){}
+    if(!stage || stage.style.display === 'none') return;
+    // pequeño delay para que la selección del navegador quede lista
+    setTimeout(function(){
+      if(!stageHighlightMode) return;
+      const ctx = seferGetStageSelectionContext();
+      if(!ctx) return;
+      seferApplyStageHighlightFromSelection();
+      seferSetHighlightMode(false);
+    }, 10);
   }, true);
+
+  // Escape cancela el modo
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && stageHighlightMode){
+      seferSetHighlightMode(false);
+    }
+  });
 })();
+
+window.stageHighlightMode = stageHighlightMode;
+window.seferSetHighlightMode = seferSetHighlightMode;
+window.seferGetStageSelectionContext = seferGetStageSelectionContext;
+window.seferApplyStageHighlightFromSelection = seferApplyStageHighlightFromSelection;

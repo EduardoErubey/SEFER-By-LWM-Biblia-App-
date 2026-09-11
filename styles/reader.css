@@ -300,3 +300,31 @@ body.vp-medium #reader{padding:24px 28px 50px;}
 #stage.stage-highlight-on .stage-word{ cursor:pointer; }
 #stage.stage-highlight-on .w:hover,
 #stage.stage-highlight-on .stage-word:hover{ background:rgba(255,215,0,0.2); }
+
+
+/* Subrayador por versículo (🖍️ Resaltar) — color claro del tema */
+mark.word-highlighted,
+mark.sefer-hl,
+.sefer-hl,
+.word-highlighted{
+  background: var(--sefer-hl, rgba(255, 230, 120, 0.55)) !important;
+  box-shadow: inset 0 -2px 0 var(--sefer-hl-border, rgba(200, 160, 40, 0.35));
+  border-radius: 2px;
+  color: inherit !important;
+  padding: 0 1px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+#stage mark.word-highlighted,
+#stage mark.sefer-hl{
+  background: var(--sefer-hl, rgba(255, 230, 120, 0.55)) !important;
+}
+#stage-highlight-btn.active{
+  outline: 2px solid var(--gold, #d4af37);
+  background: var(--sefer-hl, rgba(255, 230, 120, 0.35));
+}
+body.sefer-hl-mode #stage,
+body.sefer-hl-mode #stage .stage-verse-body{
+  cursor: text;
+}
+
