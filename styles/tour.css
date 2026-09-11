@@ -19,3 +19,24 @@
 #sefer-tour-step{font-size:11px;color:var(--ink-soft,#888);}
 
 .tour-start-btn{width:100%;margin-bottom:12px;}
+
+
+#sefer-tour-overlay{
+  z-index:2000 !important;
+  pointer-events:none !important;
+  background:transparent !important;
+}
+#sefer-tour-spot{
+  z-index:2001 !important;
+  pointer-events:none !important;
+}
+#sefer-tour-card{
+  z-index:2002 !important;
+  pointer-events:auto !important;
+}
+
+
+/* Tour clickability — forced */
+#sefer-tour-overlay{ z-index:2000 !important; pointer-events:none !important; background:transparent !important; }
+#sefer-tour-spot{ z-index:2001 !important; pointer-events:none !important; }
+#sefer-tour-card{ z-index:2002 !important; pointer-events:auto !important; position:fixed !important; }

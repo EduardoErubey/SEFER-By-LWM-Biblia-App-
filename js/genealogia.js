@@ -217,3 +217,22 @@ function closeGenealogia(){
 
 /* → movido a data/ (ver script src) */
 
+
+
+/* SEFER fullscreen icon fix */
+(function(){
+  function isFs(){
+    return !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+  }
+  function syncFsBtn(){
+    const b = document.getElementById('fullscreen-btn');
+    if(!b) return;
+    const on = isFs();
+    b.textContent = '⛶';
+    b.setAttribute('data-tooltip', on ? 'Salir de pantalla completa' : 'Pantalla completa (como F11)');
+    b.title = on ? 'Salir de pantalla completa' : 'Pantalla completa';
+  }
+  document.addEventListener('fullscreenchange', syncFsBtn);
+  document.addEventListener('webkitfullscreenchange', syncFsBtn);
+  setTimeout(syncFsBtn, 0);
+})();

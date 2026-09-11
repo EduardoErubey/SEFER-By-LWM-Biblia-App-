@@ -16,7 +16,7 @@ function openSeferHelp(){
     tourBtn:'✨ Iniciar tour interactivo'
   } : {
     perfil:'🏆', nube:'☁️', full:'⛶', reset:'↺', dado:'🎲',
-    detalle:'✨ Resaltar', sig:'📚 Significados', notas:'📝 Notas', fav:'❤️ Favoritos',
+    detalle:'✨ Destacar', sig:'📚 Significados', notas:'📝 Notas', fav:'❤️ Favoritos',
     glos:'📖 Glosario', bio:'👤 Biografía', apo:'📜 Apócrifos',
     plan:'📅 Plan 1 año', proj:'🎬 Proyectar', help:'❓ Ayuda',
     tourBtn:'🎯 Iniciar tour interactivo'
@@ -101,9 +101,16 @@ function openSeferHelp(){
     <div class="im-block"><div class="im-label">Toolkit</div>
     <div class="im-text">• <strong>Traducción</strong> (izquierda, código corto RV60/RV09/NVI…): cambia la versión y recarga el capítulo.<br>
     • <strong>🧹 Limpiar</strong>: aparece al marcar versículos; quita todas las marcas (el espacio queda reservado).<br>
-    • <strong>✨ Resaltar</strong>: realza nombres, ciudades y palabras de Jesús.<br>
+    • <strong>✨ Destacar</strong>: realza nombres, ciudades y palabras de Jesús.<br>
     • <strong>❓ Ayuda</strong>: siempre al final de la barra.<br>
     • Dado: <strong>🎲</strong> en la mayoría de temas; <strong>🔀</strong> en Glass.</div></div>
+
+    
+    <div class="im-block"><div class="im-label">Destacar y Resaltar</div>
+    <div class="im-text">• <strong>✨ Destacar</strong>: nombres, ciudades y palabras de Jesús automáticamente.<br>
+    • <strong>🖍️ Resaltar</strong> (proyección): palabras a mano; se guardan y se ven en el lector. No reemplaza a ❤️ Favoritos.<br>
+    • <strong>🧹 Limpiar</strong>: quita marcas de versículos seleccionados.<br>
+    • Dado: 🎲 normal · 🔀 en Glass.</div></div>
 
     <div class="im-block"><div class="im-label">Atajos de teclado (Ctrl)</div>
     <div class="im-text">

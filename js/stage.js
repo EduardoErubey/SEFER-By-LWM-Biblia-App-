@@ -460,3 +460,73 @@ document.addEventListener('keydown', (e)=>{
   if(e.key === 'ArrowLeft'){ e.preventDefault(); stageStep(-1); }
 });
 
+
+
+/* 🖍️ Resaltar palabras en proyección */
+let stageHighlightMode = false;
+(function wireStageWordHighlight(){
+  function setMode(on){
+    stageHighlightMode = !!on;
+    const btn = document.getElementById('stage-highlight-btn');
+    if(btn) btn.classList.toggle('active', stageHighlightMode);
+    const root = document.getElementById('stage');
+    if(root) root.classList.toggle('stage-highlight-on', stageHighlightMode);
+  }
+  document.addEventListener('click', function(e){
+    const t = e.target;
+    if(!t) return;
+    if(t.id === 'stage-highlight-btn' || (t.closest && t.closest('#stage-highlight-btn'))){
+      e.preventDefault(); e.stopPropagation();
+      setMode(!stageHighlightMode);
+      return;
+    }
+    if(!stageHighlightMode) return;
+    const stage = document.getElementById('stage');
+    if(!stage || stage.style.display==='none') return;
+    const w = t.closest && (t.closest('.word') || t.closest('.w') || t.closest('.stage-word'));
+    if(!w || !stage.contains(w)) return;
+    e.preventDefault(); e.stopPropagation();
+    const text = (w.textContent||'').trim();
+    if(!text) return;
+    if(typeof toggleHighlightedWord==='function') toggleHighlightedWord(text);
+    const k = typeof seferNormWordKey==='function' ? seferNormWordKey(text) : text.toLowerCase();
+    document.querySelectorAll('#stage .word, #stage .w, #stage .stage-word, #reader .word, #reader .w, #reader-verses .word, #reader-verses .w').forEach(el=>{
+      const ek = typeof seferNormWordKey==='function' ? seferNormWordKey(el.textContent||'') : (el.textContent||'').toLowerCase();
+      if(ek === k) el.classList.toggle('word-highlighted', highlightedWords.has(k));
+    });
+  }, true);
+
+  const wrapRender = function(name){
+    try{
+      const orig = window[name];
+      if(typeof orig !== 'function') return;
+      window[name] = function(){
+        const r = orig.apply(this, arguments);
+        try{
+          if(name==='renderStage'){
+            applyWordHighlightsToElement(document.getElementById('stage'));
+            document.querySelectorAll('#stage .stage-text, #stage .stage-verse, #stage .vtext').forEach(node=>{
+              if(node.querySelector('.word,.w,.stage-word')) return;
+              const txt = node.textContent||'';
+              if(!txt.trim()) return;
+              node.innerHTML = txt.split(/(\s+)/).map(part=>{
+                if(/^\s+$/.test(part) || !part) return part;
+                const clean = part.replace(/[^\wÁÉÍÓÚÜáéíóúüñÑ]/g,'');
+                if(!clean) return part;
+                const k = seferNormWordKey(clean);
+                const cls = 'stage-word word' + (highlightedWords.has(k) ? ' word-highlighted' : '');
+                return '<span class="'+cls+'">'+part.replace(/</g,'&lt;')+'</span>';
+              }).join('');
+            });
+          } else if(name==='renderReader'){
+            applyWordHighlightsToElement(document.getElementById('reader-verses')||document.getElementById('reader'));
+          }
+        }catch(err){}
+        return r;
+      };
+    }catch(e){}
+  };
+  // delay wrap until functions exist
+  setTimeout(function(){ wrapRender('renderStage'); wrapRender('renderReader'); }, 0);
+})();
+window.stageHighlightMode = stageHighlightMode;

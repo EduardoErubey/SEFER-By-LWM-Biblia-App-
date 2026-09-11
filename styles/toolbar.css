@@ -700,3 +700,75 @@ body.vp-narrow #topbar-actions .btn{padding:5px 8px;font-size:11.5px;}
   z-index:1001 !important;
   pointer-events:none !important;
 }
+
+
+/* --- SEFER surgical toolkit --- */
+#topbar, #topbar-actions{
+  overflow:visible !important;
+  display:flex !important;
+  flex-wrap:nowrap !important;
+  align-items:center !important;
+}
+#topbar-actions{ justify-content:flex-end !important; }
+#version-switch.version-switch-toolkit{
+  order:-20 !important;
+  flex:0 0 auto !important;
+  margin-right:6px !important;
+}
+#version-btn{
+  min-width:3.4em !important;
+  max-width:4.8em !important;
+  width:4.5em !important;
+  padding:4px 5px !important;
+  font-size:11px !important;
+  font-weight:700 !important;
+}
+#version-btn .vb-label{
+  max-width:4.2em !important;
+  overflow:hidden;
+  text-overflow:clip;
+  white-space:nowrap;
+  display:block;
+  text-align:center;
+}
+#version-menu{
+  width:max-content !important;
+  max-width:260px !important;
+  min-width:160px !important;
+  z-index:10050 !important;
+}
+#clear-selection-btn{
+  order:-15 !important;
+  flex:0 0 auto !important;
+  visibility:hidden;
+  display:inline-flex !important;
+  align-items:center;
+  min-width:5.5em;
+  margin-right:6px !important;
+}
+#clear-selection-btn.is-visible{ visibility:visible !important; }
+#help-btn{ order:999 !important; margin-left:8px !important; flex:0 0 auto !important; }
+#topbar-actions .btn,
+#topbar-actions .btn-icon,
+#help-btn,
+#clear-selection-btn{
+  position:relative !important;
+  overflow:visible !important;
+}
+#topbar-actions .btn:hover,
+#topbar-actions .btn-icon:hover,
+#help-btn:hover,
+#clear-selection-btn:hover{ z-index:10000 !important; }
+#topbar-actions .btn::after,
+#topbar-actions .btn-icon::after,
+#help-btn::after,
+#clear-selection-btn::after,
+#topbar-actions .btn.has-tip::after,
+#topbar-actions .btn-icon.has-tip::after,
+#help-btn.has-tip::after{
+  z-index:10000 !important;
+  position:absolute !important;
+  top:calc(100% + 8px) !important;
+  bottom:auto !important;
+  pointer-events:none !important;
+}

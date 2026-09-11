@@ -195,8 +195,8 @@ function updateEasyBtn(){
   if(!btn) return;
   btn.classList.toggle('easy-on', easyReading);
   btn.classList.toggle('highlight-on', easyReading);
-  btn.textContent = easyReading ? '✓ ✨ Resaltar' : '✨ Resaltar';
-  btn.setAttribute('data-tooltip', 'Resaltar versículos');
+  btn.textContent = easyReading ? '✓ ✨ Destacar' : '✨ Destacar';
+  btn.setAttribute('data-tooltip', 'Destacar nombres, ciudades y palabras de Jesús');
   const host = document.getElementById('reader-verses') || reader;
   if(host){
     host.classList.toggle('highlight-mode', !!easyReading);
@@ -219,3 +219,51 @@ function scrollVerseIntoView(vnum){
   });
 }
 
+
+
+/* Resaltar palabras (manual) */
+let highlightedWords = new Set();
+try{
+  const _hw = (typeof store!=='undefined' && store.get) ? store.get('bp_highlighted_words', []) : [];
+  if(Array.isArray(_hw)) highlightedWords = new Set(_hw.map(String));
+}catch(e){ highlightedWords = new Set(); }
+function saveHighlighted(){ try{ store.set('bp_highlighted_words', [...highlightedWords]); }catch(e){} }
+function loadHighlighted(){
+  try{
+    const _hw = store.get('bp_highlighted_words', []);
+    highlightedWords = new Set(Array.isArray(_hw) ? _hw.map(String) : []);
+  }catch(e){ highlightedWords = new Set(); }
+  return highlightedWords;
+}
+function saveHighlightedWords(){ saveHighlighted(); }
+function seferNormWordKey(w){
+  try{
+    return (typeof normalizeKey==='function' ? normalizeKey(w) : String(w||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z]/g,''));
+  }catch(e){ return String(w||'').toLowerCase(); }
+}
+function highlightKey(book, chap, vnum, wordIndex, word){
+  return [book, chap, vnum, wordIndex, seferNormWordKey(word)].join(':');
+}
+function toggleHighlightedWord(word, meta){
+  const k = meta || seferNormWordKey(word);
+  if(!k || String(k).length < 2) return;
+  if(highlightedWords.has(k)) highlightedWords.delete(k);
+  else highlightedWords.add(k);
+  saveHighlightedWords();
+}
+function applyWordHighlightsToElement(root){
+  if(!root || !highlightedWords || !highlightedWords.size) return;
+  root.querySelectorAll('.word, .w, .stage-word').forEach(el=>{
+    const k = seferNormWordKey(el.textContent||'');
+    if(k && highlightedWords.has(k)) el.classList.add('word-highlighted');
+    else el.classList.remove('word-highlighted');
+  });
+}
+window.highlightedWords = highlightedWords;
+window.saveHighlightedWords = saveHighlightedWords;
+window.saveHighlighted = saveHighlighted;
+window.loadHighlighted = loadHighlighted;
+window.toggleHighlightedWord = toggleHighlightedWord;
+window.applyWordHighlightsToElement = applyWordHighlightsToElement;
+window.seferNormWordKey = seferNormWordKey;
+window.highlightKey = highlightKey;

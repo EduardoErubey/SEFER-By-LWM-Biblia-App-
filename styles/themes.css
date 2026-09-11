@@ -617,3 +617,23 @@ body[data-theme="amoled"] #book-list .chap-pill{
   padding:0 !important;
   margin:0 !important;
 }
+
+
+/* Glass: apariencia only — no size changes */
+body[data-theme="amoled"] .book-item,
+body[data-theme="amoled"] #book-list .book-item{
+  min-height:var(--book-item-h) !important;
+  padding:var(--book-item-py) var(--book-item-px) !important;
+  font-size:12.5px !important;
+  width:auto !important;
+  height:auto !important;
+}
+body[data-theme="amoled"] .chap-pill,
+body[data-theme="amoled"] #book-list .chap-btn,
+body[data-theme="amoled"] #book-list .chap-pill{
+  width:var(--chapter-size) !important;
+  height:var(--chapter-size) !important;
+  min-width:var(--chapter-size) !important;
+  min-height:var(--chapter-size) !important;
+  padding:0 !important;
+}

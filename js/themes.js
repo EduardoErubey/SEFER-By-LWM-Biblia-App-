@@ -1,3 +1,16 @@
+
+function seferUpdateDiceEmoji(){
+  try{
+    const glass = (typeof currentTheme !== 'undefined' && currentTheme === 'amoled');
+    const emoji = glass ? '🔀' : '🎲';
+    const tip = glass ? 'Versículo al azar (barajar)' : 'Versículo aleatorio';
+    const main = document.getElementById('random-verse-btn');
+    if(main){ main.textContent = emoji; main.setAttribute('data-tooltip', tip); main.title = tip; }
+    const stageDice = document.getElementById('stage-dice-btn');
+    if(stageDice){ stageDice.textContent = emoji; stageDice.title = glass ? 'Otro al azar' : 'Otro versículo al azar'; }
+  }catch(e){}
+}
+window.seferUpdateDiceEmoji = seferUpdateDiceEmoji;
 /* SEFER module: themes.js — script clásico (sin import/export) */
 
 /* --- SEFER themes.js lines 254-406 --- */
@@ -221,3 +234,28 @@ document.addEventListener('keydown', (e)=>{
   try{ applyThemeIcons(); }catch(e){}
 })();
 
+
+;(function(){
+  const _ati = window.applyThemeIcons;
+  if(typeof applyThemeIcons === 'function'){
+    window.applyThemeIcons = function(){
+      const r = applyThemeIcons === window.applyThemeIcons ? null : null;
+    };
+  }
+})();
+
+/* Destacar label after theme icons */
+(function(){
+  const wrap = function(fn){
+    return function(){
+      const r = fn && fn.apply(this, arguments);
+      try{ if(typeof updateEasyBtn==='function') updateEasyBtn(); }catch(e){}
+      try{ if(typeof seferUpdateDiceEmoji==='function') seferUpdateDiceEmoji(); }catch(e){}
+      return r;
+    };
+  };
+  if(typeof applyThemeIcons === 'function'){
+    applyThemeIcons = wrap(applyThemeIcons);
+    window.applyThemeIcons = applyThemeIcons;
+  }
+})();

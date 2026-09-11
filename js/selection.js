@@ -159,12 +159,19 @@ function renderReader(){
     };
     row.onclick = activateVerse;
     row.ondblclick = (e)=>{
-      if(e.target && e.target.classList && e.target.classList.contains('w')){
-        e.preventDefault();
-        e.stopPropagation();
-        showWordPopup(e.target.textContent, e.clientX, e.clientY);
+      try{ e.preventDefault(); e.stopPropagation(); }catch(_e){}
+      try{ window.getSelection && window.getSelection().removeAllRanges(); }catch(_e){}
+      const t = e.target;
+      if(t && t.classList && (t.classList.contains('w') || t.classList.contains('word'))){
+        if(typeof showWordPopup === 'function') showWordPopup(t.textContent, e.clientX, e.clientY);
       }
     };
+    row.addEventListener('contextmenu', function(e){
+      const t = e.target;
+      if(t && t.classList && (t.classList.contains('w') || t.classList.contains('word'))){
+        e.preventDefault();
+      }
+    });
     row.onkeydown = (e)=>{
       if(e.target.closest('.vaction') || e.target.closest('.note-box') || e.target.closest('textarea')) return;
       if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); activateVerse(e); }
@@ -283,8 +290,14 @@ function setVerseSelected(vnum, on){
   if(on && i === -1) selectedVerses.push(vnum);
   if(!on && i !== -1) selectedVerses.splice(i,1);
   if(selectedVerses.length === 0){
+    if(clearSelBtn){ clearSelBtn.classList.remove('is-visible'); clearSelBtn.style.visibility = 'hidden'; }
+    if(bar) bar.classList.remove('has-sel');
+    if(easyBtn) easyBtn.style.display = '';
     selectionUIActive = false;
   } else {
+    if(clearSelBtn){ clearSelBtn.classList.add('is-visible'); clearSelBtn.style.visibility = 'visible'; }
+    if(bar) bar.classList.add('has-sel');
+    if(easyBtn) easyBtn.style.display = '';
     selectionUIActive = true;
   }
   updateSelectionUI();
@@ -294,3 +307,16 @@ function toggleSelect(vnum){
   setVerseSelected(vnum, selectedVerses.indexOf(vnum) === -1);
 }
 
+
+
+(function(){
+  if(typeof renderReader === 'function' && !renderReader.__seferHighlightWrapped){
+    const orig = renderReader;
+    window.renderReader = function(){
+      const r = orig.apply(this, arguments);
+      try{ if(typeof applyWordHighlightsToElement==='function') applyWordHighlightsToElement(document.getElementById('reader-verses')||document.getElementById('reader')); }catch(e){}
+      return r;
+    };
+    renderReader.__seferHighlightWrapped = true;
+  }
+})();

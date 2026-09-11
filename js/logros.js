@@ -93,7 +93,7 @@ function buildAchievementDefs(){
     {id:'cloud_1', icon:'☁️', title:'En la nube', desc:'Sincroniza con Google Drive', goal:1},
     {id:'themes_5', icon:'🎨', title:'Estilo', desc:'Prueba 5 temas distintos', goal:5},
     {id:'themes_10', icon:'🌈', title:'Arcoíris', desc:'Prueba los 10 temas', goal:10},
-    {id:'detail_1', icon:'🔍', title:'Detallista', desc:'Activa Resaltar', goal:1},
+    {id:'detail_1', icon:'🔍', title:'Destacador', desc:'Activa Destacar', goal:1},
     {id:'books_10', icon:'🗺️', title:'Explorador', desc:'Abre 10 libros distintos', goal:10},
     {id:'books_39', icon:'📜', title:'Estudiante del AT', desc:'Abre los 39 libros del AT', goal:39},
     {id:'books_27', icon:'✝️', title:'Estudiante del NT', desc:'Abre los 27 libros del NT', goal:27},

@@ -262,3 +262,19 @@ body.vp-medium #reader{padding:24px 28px 50px;}
 #easy-btn.highlight-on{
   outline:2px solid var(--gold);
 }
+
+
+.word-highlighted{
+  background:rgba(255,215,0,0.3);
+  border-radius:2px;
+  box-decoration-break:clone;
+  -webkit-box-decoration-break:clone;
+}
+#stage-highlight-btn.active{
+  outline:2px solid var(--gold,#d4af37);
+  background:rgba(255,215,0,0.15);
+}
+#reader .word, #reader-verses .word, #reader .w, #reader-verses .w{
+  -webkit-user-select:none;
+  user-select:none;
+}

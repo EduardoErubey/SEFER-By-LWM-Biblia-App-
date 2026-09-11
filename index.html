@@ -6,6 +6,7 @@
 <title>SEFER ספר — BY LIFE WORD MISSION</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/nav.css">
   <link rel="stylesheet" href="styles/toolbar.css">
@@ -17,7 +18,6 @@
   <link rel="stylesheet" href="styles/tour.css">
   <link rel="stylesheet" href="styles/themes.css">
   <link rel="stylesheet" href="styles/responsive.css">
-
 
 </head>
 <body data-theme="mexico">
@@ -100,7 +100,7 @@
           <button class="btn btn-icon" id="font-dec" data-tooltip="Disminuir texto">A−</button>
           <button class="btn btn-icon" id="font-inc" data-tooltip="Aumentar texto">A+</button>
           <button class="btn btn-icon has-tip" id="font-family-btn" data-tooltip="Cambiar tipografía de lectura">Aa</button>
-          <button class="btn has-tip" id="easy-btn" data-action="highlight" data-tooltip="Resaltar versículos">✨ Resaltar</button>
+          <button class="btn has-tip" id="easy-btn" data-action="highlight" data-tooltip="Destacar nombres, ciudades y palabras de Jesús">✨ Destacar</button>
         </span>
         <span class="tb-group" title="Estudio">
           <button class="btn has-tip" id="meanings-btn" data-tooltip="Significados de palabras guardados">📚 Significados</button>
@@ -123,7 +123,7 @@
     </div>
     
     <div id="mobile-toolbar">
-      <button type="button" class="btn" id="mt-easy" data-tooltip="Resaltar">✨ Resaltar</button>
+      <button type="button" class="btn" id="mt-easy" data-tooltip="Destacar">✨ Destacar</button>
 <button type="button" class="btn" id="mt-meanings" data-tooltip="Significados">📚 Significados</button>
       <button type="button" class="btn" id="mt-notes" data-tooltip="Notas">📝 Notas</button>
       <button type="button" class="btn fav-btn" id="mt-favs" data-tooltip="Favoritos">♥ Favoritos</button>
@@ -171,6 +171,7 @@
   <div id="stage-extra-btns" style="display:none;">
     <button type="button" class="stage-btn stage-extra" id="stage-fav-btn" title="Guardar en favoritos">❤️</button>
     <button type="button" class="stage-btn stage-extra" id="stage-note-btn" title="Escribir nota">📝</button>
+    <button type="button" class="stage-btn stage-extra" id="stage-highlight-btn" title="Resaltar palabras (manual)">🖍️</button>
     <button type="button" class="stage-btn stage-extra" id="stage-dice-btn" title="Otro versículo al azar">🎲</button>
   </div>
   <div id="stage-note-panel" style="display:none;">
@@ -353,11 +354,12 @@
 
 <script src="https://apis.google.com/js/api.js"></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
-<script src="./bible-data.js"></script>
-<script src="./bible-versions.js"></script>
-<script src="./book-info.js"></script>
 
-
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="./bible-data.js"></script>
+  <script src="./bible-versions.js"></script>
+  <script src="./book-info.js"></script>
   <script src="./data/sefer-version.js"></script>
   <script src="./data/dictionary.js"></script>
   <script src="./data/genealogy.js"></script>

@@ -290,3 +290,27 @@ html, body{
   background: var(--rubric);
   border-color: var(--rubric-soft);
 }
+
+
+/* unified sizes */
+.book-item, #book-list .book-item{
+  min-height:var(--book-item-h) !important;
+  padding:var(--book-item-py) var(--book-item-px) !important;
+  box-sizing:border-box !important;
+  font-size:12.5px !important;
+  line-height:1.25 !important;
+}
+.chap-pill, #book-list .chap-btn, #book-list .chap-pill, .chap-btn{
+  width:var(--chapter-size) !important;
+  height:var(--chapter-size) !important;
+  min-width:var(--chapter-size) !important;
+  min-height:var(--chapter-size) !important;
+  max-width:var(--chapter-size) !important;
+  max-height:var(--chapter-size) !important;
+  padding:0 !important;
+  font-size:11px !important;
+  box-sizing:border-box !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}

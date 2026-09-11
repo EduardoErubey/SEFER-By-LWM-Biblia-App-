@@ -172,3 +172,33 @@ document.addEventListener('mousedown', (e)=>{
   }
 });
 
+
+
+/* Doble clic: sin menú nativo Edge/Chrome */
+(function wireWordDblClickGuard(){
+  function handler(e){
+    try{ e.preventDefault(); }catch(_e){}
+    const t = e.target;
+    if(!t || !t.classList) return;
+    if(!(t.classList.contains('w') || t.classList.contains('word'))) return;
+    try{ e.stopPropagation(); }catch(_e){}
+    try{ window.getSelection && window.getSelection().removeAllRanges(); }catch(_e){}
+    if(typeof showWordPopup === 'function'){
+      showWordPopup(t.textContent, e.clientX, e.clientY);
+    }
+  }
+  function bind(){
+    const roots = [document.getElementById('reader-verses'), document.getElementById('reader')].filter(Boolean);
+    roots.forEach(root=>{
+      root.addEventListener('dblclick', handler, true);
+      root.addEventListener('contextmenu', function(e){
+        const t = e.target;
+        if(t && t.classList && (t.classList.contains('w') || t.classList.contains('word'))){
+          e.preventDefault();
+        }
+      }, true);
+    });
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind);
+  else bind();
+})();

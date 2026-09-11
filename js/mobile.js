@@ -102,7 +102,7 @@
       <div class="im-text">• Escribe en cualquier momento para buscar una <strong>palabra</strong> en toda la Biblia (barra flotante).<br>
       • En el panel izquierdo: busca por <strong>referencia</strong> (ej. Génesis 1:1). <strong>Tab</strong> autocompleta el libro.</div></div>
       <div class="im-block"><div class="im-label">Herramientas</div>
-      <div class="im-text">• ✨ Resaltar · 📚 Significados · 📝 Notas · ❤️ Favoritos<br>
+      <div class="im-text">• ✨ Destacar · 📚 Significados · 📝 Notas · ❤️ Favoritos<br>
       • 📅 Plan 1 año (orden + calendario o desde hoy) · 📖 Glosario<br>
       • ☁️ Sincronizar (Google Drive) · 🎬 Proyectar · ❓ Ayuda</div></div>
       <div class="im-block"><div class="im-label">Temas</div>
@@ -123,7 +123,7 @@ const SEFER_GLASS_ICONS = {
   'fullscreen-btn': '⛶',
   'nav-toggle': '↺',
   'random-verse-btn': '🔀',
-  'easy-btn': '✨ Resaltar',
+  'easy-btn': '✨ Destacar',
   'meanings-btn': '📑 Significados',
   'notes-btn': '✏️ Notas',
   'favs-btn': '❤️ Favoritos',

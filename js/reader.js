@@ -115,3 +115,25 @@ function applyVerseFont(){
     }
   }catch(e){}
 }
+
+
+/* Aplicar 🖍️ Resaltar (palabras guardadas) al área de lectura */
+(function(){
+  const tryWrap = function(){
+    if(typeof window.renderReader !== 'function') return;
+    if(window.renderReader.__seferHighlightWrapped) return;
+    const orig = window.renderReader;
+    window.renderReader = function(){
+      const r = orig.apply(this, arguments);
+      try{
+        if(typeof applyWordHighlightsToElement === 'function'){
+          applyWordHighlightsToElement(document.getElementById('reader-verses') || document.getElementById('reader'));
+        }
+      }catch(e){}
+      return r;
+    };
+    window.renderReader.__seferHighlightWrapped = true;
+  };
+  setTimeout(tryWrap, 0);
+  setTimeout(tryWrap, 100);
+})();
