@@ -202,3 +202,25 @@ document.addEventListener('mousedown', (e)=>{
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind);
   else bind();
 })();
+
+
+/* SEFER dblclick capture v2 — bloquea menú Edge/Chrome */
+document.addEventListener('dblclick', function(e){
+  const t = e.target;
+  if(!t || !t.closest) return;
+  const root = t.closest('#reader, #reader-verses');
+  if(!root) return;
+  if(!(t.classList && (t.classList.contains('w') || t.classList.contains('word')))) return;
+  e.preventDefault();
+  e.stopImmediatePropagation();
+  try{ window.getSelection && window.getSelection().removeAllRanges(); }catch(_e){}
+  if(typeof showWordPopup === 'function'){
+    showWordPopup(t.textContent, e.clientX, e.clientY);
+  }
+}, true);
+document.addEventListener('contextmenu', function(e){
+  const t = e.target;
+  if(t && t.classList && (t.classList.contains('w') || t.classList.contains('word'))){
+    if(t.closest && t.closest('#reader, #reader-verses')) e.preventDefault();
+  }
+}, true);

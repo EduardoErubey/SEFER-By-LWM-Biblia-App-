@@ -142,3 +142,46 @@ document.addEventListener('keydown', (e)=>{
   if(e.key === 'ArrowLeft'){ e.preventDefault(); document.getElementById('sefer-tour-prev')?.click(); }
 }, true);
 
+
+
+/* Tour z-index / clicks force */
+(function(){
+  const forceTourUi = function(){
+    const ov = document.getElementById('sefer-tour-overlay');
+    const spot = document.getElementById('sefer-tour-spot');
+    const card = document.getElementById('sefer-tour-card');
+    if(ov){
+      ov.style.zIndex = '20000';
+      ov.style.pointerEvents = 'none';
+      ov.style.background = 'transparent';
+    }
+    if(spot){
+      spot.style.zIndex = '20001';
+      spot.style.pointerEvents = 'none';
+    }
+    if(card){
+      card.style.zIndex = '20002';
+      card.style.pointerEvents = 'auto';
+      card.style.position = 'fixed';
+      card.querySelectorAll('button').forEach(b=>{ b.style.pointerEvents = 'auto'; b.style.position = 'relative'; b.style.zIndex = '20003'; });
+    }
+  };
+  const _show = window.seferTourShowStep;
+  if(typeof seferTourShowStep === 'function'){
+    const orig = seferTourShowStep;
+    window.seferTourShowStep = seferTourShowStep = function(){
+      const r = orig.apply(this, arguments);
+      forceTourUi();
+      return r;
+    };
+  }
+  const _start = window.startSeferTour;
+  if(typeof startSeferTour === 'function'){
+    const origS = startSeferTour;
+    window.startSeferTour = startSeferTour = function(){
+      const r = origS.apply(this, arguments);
+      forceTourUi();
+      return r;
+    };
+  }
+})();

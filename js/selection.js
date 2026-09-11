@@ -61,17 +61,18 @@ function renderReader(){
   const hint = document.createElement('div');
   hint.id = 'select-hint';
   hint.textContent = 'Toca un versículo para ver opciones (favorito o nota). Doble clic en una palabra para ver su significado. Marca la casilla para elegir varios versículos.';
-  const headRow = document.createElement('div');
-  headRow.id = 'reader-head-row';
-  headRow.className = 'reader-head-row';
+  const titleRow = document.createElement('div');
+  titleRow.id = 'reader-title-row';
+  titleRow.className = 'reader-title-row';
+  titleRow.appendChild(ct);
   const selWrap = document.createElement('div');
   selWrap.id = 'reader-sel-wrap';
   selWrap.className = 'reader-sel-wrap';
   const selSt = document.createElement('div');
   selSt.id = 'reader-sel-status';
   selSt.textContent = formatSelectionLabel();
-  selWrap.appendChild(selSt);
   if(selectedVerses.length){
+    selWrap.appendChild(selSt);
     const clr = document.createElement('button');
     clr.type = 'button';
     clr.className = 'btn';
@@ -80,11 +81,10 @@ function renderReader(){
     clr.onclick = ()=>{ selectedVerses = []; selectionUIActive = false; updateSelectionUI(); renderReader(); };
     selWrap.appendChild(clr);
   }
-  headRow.appendChild(hint);
-  headRow.appendChild(selWrap);
+  titleRow.appendChild(selWrap);
   head.appendChild(bt);
-  head.appendChild(ct);
-  head.appendChild(headRow);
+  head.appendChild(titleRow);
+  head.appendChild(hint);
   reader.appendChild(head);
 
   const versesWrap = document.createElement('div');

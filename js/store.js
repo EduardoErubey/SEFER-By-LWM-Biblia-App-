@@ -184,6 +184,10 @@ function formatVerseHtml(text, isJesus){
       if(EASY_CITIES.has(n)) cls += ' easy-city';
       else if(EASY_NAMES.has(n)) cls += ' easy-name';
     }
+    try{
+      const k = (typeof seferNormWordKey==='function') ? seferNormWordKey(m) : normEasy(m);
+      if(typeof highlightedWords!=='undefined' && highlightedWords && highlightedWords.has(k)) cls += ' word-highlighted';
+    }catch(e){}
     return `<span class="${cls}">${m}</span>`;
   });
   // Color de Jesús solo en modo lectura fácil

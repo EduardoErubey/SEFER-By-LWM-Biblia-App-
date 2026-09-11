@@ -13,9 +13,9 @@ const SEFER_VERSION_FILES = {
   rva2015: './bible-data-rva2015.js'
 };
 const SEFER_VERSION_META = {
-  rv1960:  { short:'RV60',  label:'Reina-Valera 1960' },
-  rv1909:  { short:'RV09',  label:'Reina-Valera 1909' },
-  rva2015: { short:'RV15',  label:'Reina Valera 2015' },
+  rv1960:  { short:'RV1960',  label:'Reina-Valera 1960' },
+  rv1909:  { short:'RV1909',  label:'Reina-Valera 1909' },
+  rva2015: { short:'RV2015',  label:'Reina Valera 2015' },
   nvi:     { short:'NVI',   label:'Nueva Versión Internacional' },
   ntv:     { short:'NTV',   label:'Nueva Traducción Viviente' },
   tla:     { short:'TLA',   label:'Traducción en Lenguaje Actual' }

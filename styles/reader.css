@@ -278,3 +278,25 @@ body.vp-medium #reader{padding:24px 28px 50px;}
   -webkit-user-select:none;
   user-select:none;
 }
+
+.reader-title-row{
+  display:flex;
+  flex-wrap:nowrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  width:100%;
+}
+.reader-title-row .chap-title{ flex:1 1 auto; margin:0; }
+
+#stage .word-highlighted,
+#stage .w.word-highlighted,
+.stage-word.word-highlighted{
+  background:rgba(255,215,0,0.45) !important;
+  border-radius:3px;
+  box-shadow:0 0 0 1px rgba(200,160,0,0.35);
+}
+#stage.stage-highlight-on .w,
+#stage.stage-highlight-on .stage-word{ cursor:pointer; }
+#stage.stage-highlight-on .w:hover,
+#stage.stage-highlight-on .stage-word:hover{ background:rgba(255,215,0,0.2); }

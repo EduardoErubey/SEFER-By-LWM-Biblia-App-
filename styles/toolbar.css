@@ -772,3 +772,84 @@ body.vp-narrow #topbar-actions .btn{padding:5px 8px;font-size:11.5px;}
   bottom:auto !important;
   pointer-events:none !important;
 }
+
+
+/* Version button 3-6 chars */
+#version-btn{
+  min-width:3.2em !important;
+  max-width:6.2em !important;
+  width:auto !important;
+  padding:4px 6px !important;
+  font-size:11px !important;
+  font-weight:700 !important;
+}
+#version-btn .vb-label{
+  max-width:6em !important;
+  overflow:hidden;
+  text-overflow:clip;
+  white-space:nowrap;
+  display:block;
+  text-align:center;
+}
+#version-switch.version-switch-toolkit{ order:-20 !important; }
+
+/* Tooltips: solo el botón, no el grupo */
+#topbar-actions .tb-group{ position:relative; overflow:visible; }
+#topbar-actions .tb-group[title]::after{ content:none !important; display:none !important; }
+#topbar-actions .btn::after,
+#topbar-actions .btn-icon::after{
+  content:attr(data-tooltip) !important;
+  white-space:nowrap !important;
+  max-width:min(280px, 70vw) !important;
+  z-index:10000 !important;
+}
+#topbar-actions .btn:not([data-tooltip])::after,
+#topbar-actions .btn-icon:not([data-tooltip])::after{
+  content:none !important;
+  display:none !important;
+}
+
+/* Selection status alineado a la derecha con el título de capítulo/versículo */
+.reader-title-row{
+  display:flex !important;
+  flex-wrap:nowrap !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:12px !important;
+  width:100% !important;
+}
+.reader-title-row .chap-title{
+  flex:1 1 auto !important;
+  margin:0 !important;
+  min-width:0 !important;
+}
+.reader-sel-wrap{
+  flex:0 0 auto !important;
+  display:flex !important;
+  flex-wrap:nowrap !important;
+  align-items:center !important;
+  justify-content:flex-end !important;
+  gap:8px !important;
+  white-space:nowrap !important;
+  text-align:right !important;
+  max-width:55% !important;
+}
+#reader-sel-status{
+  font-size:12px !important;
+  color:var(--gold) !important;
+  font-weight:600 !important;
+  white-space:nowrap !important;
+}
+#reader-clear-sel{
+  flex-shrink:0 !important;
+  white-space:nowrap !important;
+  font-size:11px !important;
+  padding:4px 8px !important;
+}
+#select-hint{
+  display:block !important;
+  width:100% !important;
+  margin-top:6px !important;
+  margin-bottom:12px !important;
+  white-space:normal !important;
+}

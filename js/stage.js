@@ -147,7 +147,15 @@ function renderStage(){
     const vnumClass = isJump ? 'stage-vnum jump' : 'stage-vnum';
     const openTag = isGap ? '<span class="jump-block">' : '<span>';
     const raw = stripPilcrow(chapData[v]||'');
-    const body = (easyReading && jesusMap[v]) ? `<span class="jesus-words">${raw}</span>` : raw;
+    const wordHtml = String(raw).replace(/([A-Za-záéíóúÁÉÍÓÚñÑüÜ]+)/g, (m)=>{
+      let cls = 'w stage-word';
+      try{
+        const k = (typeof seferNormWordKey==='function') ? seferNormWordKey(m) : m.toLowerCase();
+        if(typeof highlightedWords!=='undefined' && highlightedWords && highlightedWords.has(k)) cls += ' word-highlighted';
+      }catch(e){}
+      return '<span class="'+cls+'">'+m+'</span>';
+    });
+    const body = (easyReading && jesusMap[v]) ? `<span class="jesus-words">${wordHtml}</span>` : wordHtml;
     html += `${openTag}<span class="${vnumClass}">${v}</span>${body} </span>`;
     prevV = v;
   });
@@ -530,3 +538,32 @@ let stageHighlightMode = false;
   setTimeout(function(){ wrapRender('renderStage'); wrapRender('renderReader'); }, 0);
 })();
 window.stageHighlightMode = stageHighlightMode;
+
+
+/* Mejora 🖍️: clic en palabra O aplicar a selección de texto */
+(function improveStageHighlight(){
+  function applyToDom(word){
+    const k = typeof seferNormWordKey==='function' ? seferNormWordKey(word) : String(word||'').toLowerCase();
+    if(!k) return;
+    if(typeof toggleHighlightedWord==='function') toggleHighlightedWord(word);
+    document.querySelectorAll('#stage .w, #stage .stage-word, #reader .w, #reader-verses .w').forEach(el=>{
+      const ek = typeof seferNormWordKey==='function' ? seferNormWordKey(el.textContent||'') : (el.textContent||'').toLowerCase();
+      if(ek === k) el.classList.toggle('word-highlighted', highlightedWords.has(k));
+    });
+  }
+  document.addEventListener('mouseup', function(e){
+    if(!stageHighlightMode) return;
+    const stage = document.getElementById('stage');
+    if(!stage || stage.style.display==='none') return;
+    const sel = window.getSelection && window.getSelection();
+    if(!sel || sel.isCollapsed || !sel.toString().trim()) return;
+    if(!stage.contains(sel.anchorNode)) return;
+    const text = sel.toString().trim();
+    // words in selection
+    text.split(/\s+/).forEach(w=>{
+      const clean = w.replace(/[^A-Za-záéíóúÁÉÍÓÚñÑüÜ]/g,'');
+      if(clean.length>=2) applyToDom(clean);
+    });
+    try{ sel.removeAllRanges(); }catch(err){}
+  }, true);
+})();
