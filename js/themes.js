@@ -18,6 +18,10 @@ window.seferUpdateDiceEmoji = seferUpdateDiceEmoji;
    TEMAS
    ========================================================= */
 document.body.setAttribute('data-theme', currentTheme);
+try{
+  const GLASS = ['amoled','lwm-night','mexico','ucrania','corea'];
+  document.body.classList.toggle('theme-glass', GLASS.includes(currentTheme));
+}catch(e){}
 try{ if(typeof applyThemeIcons==='function') applyThemeIcons(); }catch(e){}
 /* theme dots se enlazan en wireThemeBatches() */
 
@@ -228,6 +232,10 @@ document.addEventListener('keydown', (e)=>{
       const applyTheme = ()=>{
         currentTheme = dot.dataset.t;
         document.body.setAttribute('data-theme', currentTheme);
+        try{
+          const GLASS = ['amoled','lwm-night','mexico','ucrania','corea'];
+          document.body.classList.toggle('theme-glass', GLASS.includes(currentTheme));
+        }catch(e){}
         batchEl.querySelectorAll('.theme-dot').forEach(d=> d.classList.toggle('active', d.dataset.t===currentTheme));
         store.set('bp_theme', currentTheme);
         try{ applyThemeIcons(); }catch(e){}

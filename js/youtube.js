@@ -56,7 +56,21 @@ function applyYoutubePosition(){
 }
 function setYoutubeLayoutActive(active){
   document.body.classList.remove('yt-active-br', 'yt-active-tr', 'yt-active-bl', 'yt-sidebar-active');
-  if(active) document.body.classList.add('yt-sidebar-active');
+  const wrap = document.getElementById('yt-player-wrap');
+  if(active){
+    document.body.classList.add('yt-sidebar-active');
+    if(wrap){
+      wrap.style.display = 'flex';
+      wrap.setAttribute('aria-hidden', 'false');
+    }
+  } else {
+    if(wrap){
+      wrap.style.display = 'none';
+      wrap.setAttribute('aria-hidden', 'true');
+      const box = document.getElementById('yt-iframe-box');
+      if(box) box.innerHTML = '';
+    }
+  }
 }
 function openYoutubeModal(prefill){
   const m = document.getElementById('modal-youtube');

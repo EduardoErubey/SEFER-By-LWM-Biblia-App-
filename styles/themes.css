@@ -38,7 +38,7 @@
 
 /* Superficies cristal */
 
-body[data-theme="amoled"]{
+body.theme-glass{
   background:
     radial-gradient(1000px 600px at 8% 0%, rgba(255,255,255,0.95), transparent 50%),
     radial-gradient(800px 500px at 95% 10%, rgba(160,200,255,0.55), transparent 48%),
@@ -46,7 +46,7 @@ body[data-theme="amoled"]{
     linear-gradient(160deg, #c5d8f2 0%, #eef4fc 38%, #dceaf8 68%, #b7cef0 100%) !important;
 }
 
-body[data-theme="amoled"] #nav{
+body.theme-glass #nav{
   background:rgba(255,255,255,0.48) !important;
   -webkit-backdrop-filter:saturate(190%) blur(32px);
   backdrop-filter:saturate(190%) blur(32px);
@@ -54,7 +54,7 @@ body[data-theme="amoled"] #nav{
   box-shadow:6px 0 28px rgba(30,60,120,0.07);
 }
 
-body[data-theme="amoled"] #topbar{
+body.theme-glass #topbar{
   background:rgba(255,255,255,0.55) !important;
   -webkit-backdrop-filter:saturate(190%) blur(26px);
   backdrop-filter:saturate(190%) blur(26px);
@@ -66,7 +66,7 @@ body[data-theme="amoled"] #topbar{
 
 /* Encabezado del capítulo: tarjeta cristal con curvas, debajo de la toolkit (no debajo en z-index) */
 
-body[data-theme="amoled"] #reader-sticky-head{
+body.theme-glass #reader-sticky-head{
   background:rgba(255,255,255,0.52) !important;
   -webkit-backdrop-filter:saturate(190%) blur(22px) !important;
   backdrop-filter:saturate(190%) blur(22px) !important;
@@ -82,17 +82,17 @@ body[data-theme="amoled"] #reader-sticky-head{
   box-sizing:border-box !important;
 }
 
-body[data-theme="amoled"] #main,
-body[data-theme="amoled"] #content-wrap,
-body[data-theme="amoled"] #reader{
+body.theme-glass #main,
+body.theme-glass #content-wrap,
+body.theme-glass #reader{
   background:transparent !important;
 }
 
-body[data-theme="amoled"] #reader{
+body.theme-glass #reader{
   padding-top:2px !important;
 }
 
-body[data-theme="amoled"] #reader-verses{
+body.theme-glass #reader-verses{
   background:rgba(255,255,255,0.28);
   -webkit-backdrop-filter:blur(16px);
   backdrop-filter:blur(16px);
@@ -102,8 +102,8 @@ body[data-theme="amoled"] #reader-verses{
   margin:4px 14px 12px 10px;
 }
 
-body[data-theme="amoled"] .btn,
-body[data-theme="amoled"] .btn-icon{
+body.theme-glass .btn,
+body.theme-glass .btn-icon{
   background:rgba(255,255,255,0.55) !important;
   border:1px solid rgba(255,255,255,0.65) !important;
   color:var(--ink) !important;
@@ -113,23 +113,23 @@ body[data-theme="amoled"] .btn-icon{
   border-radius:10px;
 }
 
-body[data-theme="amoled"] .btn:hover,
-body[data-theme="amoled"] .btn-icon:hover{
+body.theme-glass .btn:hover,
+body.theme-glass .btn-icon:hover{
   background:rgba(255,255,255,0.78) !important;
   border-color:rgba(255,255,255,0.9) !important;
 }
 
-body[data-theme="amoled"] .btn.primary,
-body[data-theme="amoled"] #project-btn{
+body.theme-glass .btn.primary,
+body.theme-glass #project-btn{
   background:linear-gradient(180deg, #3b9bff 0%, #0a84ff 100%) !important;
   color:#fff !important;
   border:1px solid rgba(255,255,255,0.35) !important;
   box-shadow:0 2px 10px rgba(10,132,255,0.35);
 }
 
-body[data-theme="amoled"] input[type="text"],
-body[data-theme="amoled"] input:not([type]),
-body[data-theme="amoled"] textarea{
+body.theme-glass input[type="text"],
+body.theme-glass input:not([type]),
+body.theme-glass textarea{
   background:rgba(255,255,255,0.55) !important;
   border:1px solid rgba(255,255,255,0.65) !important;
   color:var(--ink) !important;
@@ -140,7 +140,7 @@ body[data-theme="amoled"] textarea{
 
 /* Buscador de versículos: cristal mate (menos transparente, más blur) */
 
-body[data-theme="amoled"] #ref-search-wrap{
+body.theme-glass #ref-search-wrap{
   background:rgba(245,248,252,0.92) !important;
   border:1px solid rgba(255,255,255,0.85) !important;
   border-radius:12px !important;
@@ -151,7 +151,7 @@ body[data-theme="amoled"] #ref-search-wrap{
   overflow:hidden;
 }
 
-body[data-theme="amoled"] #ref-search{
+body.theme-glass #ref-search{
   background:transparent !important;
   border:none !important;
   color:var(--ink) !important;
@@ -161,32 +161,32 @@ body[data-theme="amoled"] #ref-search{
   box-shadow:none !important;
 }
 
-body[data-theme="amoled"] #ref-search:focus{
+body.theme-glass #ref-search:focus{
   background:transparent !important;
   outline:none !important;
 }
 
-body[data-theme="amoled"] #ref-search-wrap.focused,
-body[data-theme="amoled"] #ref-search-wrap:focus-within{
+body.theme-glass #ref-search-wrap.focused,
+body.theme-glass #ref-search-wrap:focus-within{
   border-color:rgba(10,132,255,0.45) !important;
   box-shadow:0 1px 0 rgba(255,255,255,0.95) inset, 0 0 0 3px rgba(10,132,255,0.15), 0 4px 16px rgba(30,60,120,0.1) !important;
 }
 
-body[data-theme="amoled"] #ref-ph-anim{
+body.theme-glass #ref-ph-anim{
   color:rgba(60,80,110,0.55) !important;
 }
 
-body[data-theme="amoled"] #ref-suggest{
+body.theme-glass #ref-suggest{
   background:rgba(250,252,255,0.95) !important;
   -webkit-backdrop-filter:blur(18px) !important;
   backdrop-filter:blur(18px) !important;
   border:1px solid rgba(255,255,255,0.8) !important;
 }
 
-body[data-theme="amoled"] .im-card,
-body[data-theme="amoled"] #side,
-body[data-theme="amoled"] .side-panel,
-body[data-theme="amoled"] #sefer-tour-card{
+body.theme-glass .im-card,
+body.theme-glass #side,
+body.theme-glass .side-panel,
+body.theme-glass #sefer-tour-card{
   background:rgba(255,255,255,0.62) !important;
   -webkit-backdrop-filter:saturate(180%) blur(28px);
   backdrop-filter:saturate(180%) blur(28px);
@@ -195,23 +195,23 @@ body[data-theme="amoled"] #sefer-tour-card{
   border-radius:16px;
 }
 
-body[data-theme="amoled"] #book-list .book-item{
+body.theme-glass #book-list .book-item{
   background:rgba(255,255,255,0.90) !important;
   border:1px solid rgba(255,255,255,0.75) !important;
   /* altura/padding iguales a otros temas */
 }
 
-body[data-theme="amoled"] #book-list .book-item:hover,
-body[data-theme="amoled"] #book-list .book-item.active{
+body.theme-glass #book-list .book-item:hover,
+body.theme-glass #book-list .book-item.active{
   background:rgba(255,255,255,0.72);
   border-color:rgba(10,132,255,0.4);
 }
 
 /* Capítulos en Glass: solo apariencia (mismo tamaño base) */
 
-body[data-theme="amoled"] .chap-pill,
-body[data-theme="amoled"] #book-list .chap-btn,
-body[data-theme="amoled"] #book-list .chap-pill{
+body.theme-glass .chap-pill,
+body.theme-glass #book-list .chap-btn,
+body.theme-glass #book-list .chap-pill{
   border-radius:50% !important;
   background:rgba(255,255,255,0.55) !important;
   border:1px solid rgba(255,255,255,0.75) !important;
@@ -220,17 +220,17 @@ body[data-theme="amoled"] #book-list .chap-pill{
   backdrop-filter:blur(8px);
 }
 
-body[data-theme="amoled"] .chap-pill:hover,
-body[data-theme="amoled"] #book-list .chap-btn:hover,
-body[data-theme="amoled"] #book-list .chap-pill:hover{
+body.theme-glass .chap-pill:hover,
+body.theme-glass #book-list .chap-btn:hover,
+body.theme-glass #book-list .chap-pill:hover{
   background:rgba(255,255,255,0.9) !important;
   border-color:rgba(10,132,255,0.45) !important;
   color:#0a84ff !important;
 }
 
-body[data-theme="amoled"] .chap-pill.active,
-body[data-theme="amoled"] #book-list .chap-btn.active,
-body[data-theme="amoled"] #book-list .chap-pill.active{
+body.theme-glass .chap-pill.active,
+body.theme-glass #book-list .chap-btn.active,
+body.theme-glass #book-list .chap-pill.active{
   background:linear-gradient(180deg, #3b9bff 0%, #0a84ff 100%) !important;
   border-color:rgba(255,255,255,0.4) !important;
   color:#fff !important;
@@ -239,7 +239,7 @@ body[data-theme="amoled"] #book-list .chap-pill.active{
 
 /* Toolkit: grupos más visibles */
 
-body[data-theme="amoled"] .tb-group{
+body.theme-glass .tb-group{
   display:inline-flex !important;
   align-items:center;
   gap:4px;
@@ -253,75 +253,75 @@ body[data-theme="amoled"] .tb-group{
   box-shadow:0 1px 4px rgba(30,60,120,0.06), inset 0 1px 0 rgba(255,255,255,0.65);
 }
 
-body[data-theme="amoled"] #topbar-actions{
+body.theme-glass #topbar-actions{
   gap:8px !important;
 }
 
-body[data-theme="amoled"] .tb-group .btn,
-body[data-theme="amoled"] .tb-group .btn-icon{
+body.theme-glass .tb-group .btn,
+body.theme-glass .tb-group .btn-icon{
   margin:0 !important;
 }
 
-body[data-theme="amoled"] .theme-dot{
+body.theme-glass .theme-dot{
   box-shadow:0 0 0 1px rgba(255,255,255,0.7), 0 2px 6px rgba(30,60,120,0.12);
 }
 
-body[data-theme="amoled"] .theme-dot[data-t="amoled"]{
+body.theme-glass .theme-dot[data-t="amoled"]{
   background:linear-gradient(135deg, #e8f3ff, #a8cfff 55%, #7eb6ff);
 }
 
-body[data-theme="amoled"] .sefer-sb{
+body.theme-glass .sefer-sb{
   background:rgba(255,255,255,0.4) !important;
   border-left:1px solid rgba(255,255,255,0.5) !important;
 }
 
-body[data-theme="amoled"] .sefer-sb-btn{
+body.theme-glass .sefer-sb-btn{
   background:rgba(255,255,255,0.45) !important;
   color:var(--ink-soft) !important;
 }
 
-body[data-theme="amoled"] .sefer-sb-track{
+body.theme-glass .sefer-sb-track{
   background:rgba(255,255,255,0.25) !important;
 }
 
-body[data-theme="amoled"] .sefer-sb-thumb{
+body.theme-glass .sefer-sb-thumb{
   background:rgba(90,120,160,0.45) !important;
   border:1px solid rgba(255,255,255,0.5) !important;
 }
 
-body[data-theme="amoled"] #stage{
+body.theme-glass #stage{
   background:radial-gradient(ellipse at center, #152238 0%, #0b1220 70%) !important;
 }
 
-body[data-theme="amoled"] .brand,
-body[data-theme="amoled"] #nav-header .brand{
+body.theme-glass .brand,
+body.theme-glass #nav-header .brand{
   color:#0a84ff;
   text-shadow:0 1px 0 rgba(255,255,255,0.5);
 }
 
-body[data-theme="amoled"] .book-title{ color:#0a84ff; }
+body.theme-glass .book-title{ color:#0a84ff; }
 
-body[data-theme="amoled"] .chap-title{ color:var(--ink); }
+body.theme-glass .chap-title{ color:var(--ink); }
 
-body[data-theme="amoled"] #select-hint{ color:var(--ink-soft); }
+body.theme-glass #select-hint{ color:var(--ink-soft); }
 
 /* Proyección legible: sin vidrio excesivo sobre el texto */
 
-body[data-theme="amoled"] #stage .stage-verse,
-body[data-theme="amoled"] #stage .stage-ref{
+body.theme-glass #stage .stage-verse,
+body.theme-glass #stage .stage-ref{
   text-shadow:0 2px 12px rgba(0,0,0,0.35);
 }
 
 /* Controles estilo Apple (solo Glass) */
 
-body[data-theme="amoled"] .btn,
-body[data-theme="amoled"] .btn-icon{
+body.theme-glass .btn,
+body.theme-glass .btn-icon{
   /* solo apariencia: sin cambiar tamaño */
   font-weight:500;
   letter-spacing:0.01em;
 }
 
-body[data-theme="amoled"] #nav-header-actions .nav-action-btn{
+body.theme-glass #nav-header-actions .nav-action-btn{
   border-radius:50%;
   background:rgba(255,255,255,0.55) !important;
   border:1px solid rgba(255,255,255,0.7) !important;
@@ -330,12 +330,12 @@ body[data-theme="amoled"] #nav-header-actions .nav-action-btn{
   box-shadow:0 1px 3px rgba(30,60,120,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
 }
 
-body[data-theme="amoled"] #nav-header-actions .nav-action-btn:hover{
+body.theme-glass #nav-header-actions .nav-action-btn:hover{
   background:rgba(255,255,255,0.82) !important;
 }
 
-body[data-theme="amoled"] .theme-more-btn,
-body[data-theme="amoled"] .random-verse-btn{
+body.theme-glass .theme-more-btn,
+body.theme-glass .random-verse-btn{
   border-radius:50% !important;
   border:1px solid rgba(255,255,255,0.7) !important;
   background:rgba(255,255,255,0.55) !important;
@@ -345,12 +345,12 @@ body[data-theme="amoled"] .random-verse-btn{
   box-shadow:0 1px 3px rgba(30,60,120,0.08);
 }
 
-body[data-theme="amoled"] .theme-more-btn:hover,
-body[data-theme="amoled"] .random-verse-btn:hover{
+body.theme-glass .theme-more-btn:hover,
+body.theme-glass .random-verse-btn:hover{
   background:rgba(255,255,255,0.85) !important;
 }
 
-body[data-theme="amoled"] #stage .jesus-words{color:#7ec8ff !important;}
+body.theme-glass #stage .jesus-words{color:#7ec8ff !important;}
 
 [data-theme="eden"]{--parchment:#F3F6EE;--parchment-2:#E8EEDF;--ink:#2C3B2A;--ink-soft:#5A6B55;--rubric:#5B7A4A;--rubric-soft:#7A9A68;--gold:#A68B3C;--gold-soft:#D4C89A;--line:#C9D4B8;--stage-bg:#1A2218;--stage-text:#E8F0E0;--stage-accent:#7A9A68;--stage-jump:#C9A84A;--stage-jump-text:#1A1608;--card-bg:#ffffff;--jesus:#4A6B3A;--fav:#6B8A4A;}
 
@@ -404,8 +404,8 @@ body[data-theme="amoled"] #stage .jesus-words{color:#7ec8ff !important;}
 
 [data-theme="amoled"] #stage .jesus-words{color:#FF8A80;}
 
-body[data-theme="amoled"] #version-btn,
-body[data-theme="amoled"] #version-menu{
+body.theme-glass #version-btn,
+body.theme-glass #version-menu{
   background:rgba(245,248,252,0.92)!important;
   border-color:rgba(255,255,255,0.85)!important;
   -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
@@ -413,7 +413,7 @@ body[data-theme="amoled"] #version-menu{
 
 /* Buscador de palabras (spotlight): cristal mate como el buscador de versículos */
 
-body[data-theme="amoled"] #word-search-bar{
+body.theme-glass #word-search-bar{
   background:rgba(245,248,252,0.92) !important;
   border:1px solid rgba(255,255,255,0.85) !important;
   border-radius:16px !important;
@@ -423,34 +423,34 @@ body[data-theme="amoled"] #word-search-bar{
   overflow:hidden;
 }
 
-body[data-theme="amoled"] #word-search-bar .ws-input-row{
+body.theme-glass #word-search-bar .ws-input-row{
   background:transparent !important;
   border-bottom:1px solid rgba(255,255,255,0.55) !important;
 }
 
-body[data-theme="amoled"] #word-search-input{
+body.theme-glass #word-search-input{
   background:transparent !important;
   color:var(--ink) !important;
   -webkit-backdrop-filter:none !important;
   backdrop-filter:none !important;
 }
 
-body[data-theme="amoled"] #word-search-input::placeholder{
+body.theme-glass #word-search-input::placeholder{
   color:rgba(60,80,110,0.55) !important;
 }
 
-body[data-theme="amoled"] #word-search-results{
+body.theme-glass #word-search-results{
   background:rgba(250,252,255,0.88) !important;
   -webkit-backdrop-filter:blur(14px) !important;
   backdrop-filter:blur(14px) !important;
 }
 
-body[data-theme="amoled"] #word-search-results .result-item:hover,
-body[data-theme="amoled"] #word-search-results .ws-hit:hover{
+body.theme-glass #word-search-results .result-item:hover,
+body.theme-glass #word-search-results .ws-hit:hover{
   background:rgba(10,132,255,0.08) !important;
 }
 
-body[data-theme="amoled"] #mobile-word-search-wrap input{
+body.theme-glass #mobile-word-search-wrap input{
   background:rgba(245,248,252,0.92) !important;
   border:1px solid rgba(255,255,255,0.85) !important;
   -webkit-backdrop-filter:saturate(160%) blur(16px) !important;
@@ -458,7 +458,7 @@ body[data-theme="amoled"] #mobile-word-search-wrap input{
   color:var(--ink) !important;
 }
 
-body[data-theme="amoled"] #help-btn{
+body.theme-glass #help-btn{
   background:rgba(245,248,252,0.95) !important;
   border:1px solid rgba(255,255,255,0.85) !important;
   box-shadow:-8px 0 14px rgba(245,248,252,0.9) !important;
@@ -468,31 +468,31 @@ body[data-theme="amoled"] #help-btn{
 
 /* ===== GLASS v2: mate + blur, SIN agrandar UI ===== */
 
-body[data-theme="amoled"]{
+body.theme-glass{
   /* variables base opacas */
 }
 
-body[data-theme="amoled"] #nav,
-body[data-theme="amoled"] #topbar,
-body[data-theme="amoled"] #reader-sticky-head,
-body[data-theme="amoled"] .im-card,
-body[data-theme="amoled"] #side,
-body[data-theme="amoled"] .side-panel,
-body[data-theme="amoled"] #sefer-tour-card,
-body[data-theme="amoled"] #word-search-bar,
-body[data-theme="amoled"] #ref-search-wrap,
-body[data-theme="amoled"] #version-btn,
-body[data-theme="amoled"] #version-menu,
-body[data-theme="amoled"] #font-family-menu,
-body[data-theme="amoled"] #project-sheet .ps-card,
-body[data-theme="amoled"] #info-modal .im-card{
+body.theme-glass #nav,
+body.theme-glass #topbar,
+body.theme-glass #reader-sticky-head,
+body.theme-glass .im-card,
+body.theme-glass #side,
+body.theme-glass .side-panel,
+body.theme-glass #sefer-tour-card,
+body.theme-glass #word-search-bar,
+body.theme-glass #ref-search-wrap,
+body.theme-glass #version-btn,
+body.theme-glass #version-menu,
+body.theme-glass #font-family-menu,
+body.theme-glass #project-sheet .ps-card,
+body.theme-glass #info-modal .im-card{
   background:rgba(248,250,253,0.94) !important;
   border-color:rgba(255,255,255,0.88) !important;
   -webkit-backdrop-filter:saturate(150%) blur(18px) !important;
   backdrop-filter:saturate(150%) blur(18px) !important;
 }
 
-body[data-theme="amoled"] #reader-verses{
+body.theme-glass #reader-verses{
   background:rgba(248,250,253,0.90) !important;
   border:1px solid rgba(255,255,255,0.80) !important;
   -webkit-backdrop-filter:blur(16px) !important;
@@ -503,13 +503,13 @@ body[data-theme="amoled"] #reader-verses{
   box-shadow:0 4px 16px rgba(30,60,120,0.06) !important;
 }
 
-body[data-theme="amoled"] #book-list .book-item{
+body.theme-glass #book-list .book-item{
   background:rgba(255,255,255,0.90) !important;
   border:1px solid rgba(255,255,255,0.75) !important;
   /* altura/padding iguales a otros temas */
 }
 
-body[data-theme="amoled"] .tb-group{
+body.theme-glass .tb-group{
   /* solo borde/fondo, SIN padding/margin extra */
   padding:0 !important;
   margin:0 !important;
@@ -522,9 +522,9 @@ body[data-theme="amoled"] .tb-group{
   box-shadow:none !important;
 }
 
-body[data-theme="amoled"] .btn,
-body[data-theme="amoled"] .btn-icon,
-body[data-theme="amoled"] #help-btn{
+body.theme-glass .btn,
+body.theme-glass .btn-icon,
+body.theme-glass #help-btn{
   /* no cambiar tamaño respecto a otros temas */
   font-size:inherit !important;
   padding:inherit !important;
@@ -537,9 +537,9 @@ body[data-theme="amoled"] #help-btn{
   backdrop-filter:blur(12px) !important;
 }
 
-body[data-theme="amoled"] #nav-header-actions .nav-action-btn,
-body[data-theme="amoled"] .theme-more-btn,
-body[data-theme="amoled"] .random-verse-btn{
+body.theme-glass #nav-header-actions .nav-action-btn,
+body.theme-glass .theme-more-btn,
+body.theme-glass .random-verse-btn{
   /* apariencia sin forzar width/height */
   width:auto !important;
   height:auto !important;
@@ -551,9 +551,9 @@ body[data-theme="amoled"] .random-verse-btn{
   backdrop-filter:blur(12px) !important;
 }
 
-body[data-theme="amoled"] .chap-pill,
-body[data-theme="amoled"] #book-list .chap-btn,
-body[data-theme="amoled"] #book-list .chap-pill{
+body.theme-glass .chap-pill,
+body.theme-glass #book-list .chap-btn,
+body.theme-glass #book-list .chap-pill{
   /* círculo visual pero mismo box que otros temas */
   border-radius:50% !important;
   background:rgba(255,255,255,0.90) !important;
@@ -563,11 +563,11 @@ body[data-theme="amoled"] #book-list .chap-pill{
   box-shadow:none !important;
 }
 
-body[data-theme="amoled"] #reader{
+body.theme-glass #reader{
   padding-top:0 !important;
 }
 
-body[data-theme="amoled"] #help-btn{
+body.theme-glass #help-btn{
   font-size:11px !important;
   padding:5px 8px !important;
   background:rgba(248,250,253,0.96) !important;
@@ -575,8 +575,8 @@ body[data-theme="amoled"] #help-btn{
 
 /* Glass: mismos tamaños de libro que el resto (solo color) */
 
-body[data-theme="amoled"] #book-list .book-item,
-body[data-theme="amoled"] .book-item{
+body.theme-glass #book-list .book-item,
+body.theme-glass .book-item{
   padding:unset !important;
   margin:0 !important;
   line-height:inherit !important;
@@ -587,17 +587,17 @@ body[data-theme="amoled"] .book-item{
   border:1px solid rgba(255,255,255,0.75) !important;
 }
 
-body[data-theme="amoled"] #book-list .book-item .book-name,
-body[data-theme="amoled"] .book-item span,
-body[data-theme="amoled"] #book-list .book-btn{
+body.theme-glass #book-list .book-item .book-name,
+body.theme-glass .book-item span,
+body.theme-glass #book-list .book-btn{
   line-height:inherit !important;
   padding-top:0 !important;
   padding-bottom:0 !important;
   font-size:inherit !important;
 }
 
-body[data-theme="amoled"] .book-item,
-body[data-theme="amoled"] #book-list .book-item{
+body.theme-glass .book-item,
+body.theme-glass #book-list .book-item{
   min-height:var(--book-item-h) !important;
   height:auto !important;
   padding:var(--book-item-py) var(--book-item-px) !important;
@@ -605,9 +605,9 @@ body[data-theme="amoled"] #book-list .book-item{
   margin:0 !important;
 }
 
-body[data-theme="amoled"] .chap-pill,
-body[data-theme="amoled"] #book-list .chap-btn,
-body[data-theme="amoled"] #book-list .chap-pill{
+body.theme-glass .chap-pill,
+body.theme-glass #book-list .chap-btn,
+body.theme-glass #book-list .chap-pill{
   width:var(--chapter-size) !important;
   height:var(--chapter-size) !important;
   min-width:var(--chapter-size) !important;
@@ -620,17 +620,17 @@ body[data-theme="amoled"] #book-list .chap-pill{
 
 
 /* Glass: apariencia only — no size changes */
-body[data-theme="amoled"] .book-item,
-body[data-theme="amoled"] #book-list .book-item{
+body.theme-glass .book-item,
+body.theme-glass #book-list .book-item{
   min-height:var(--book-item-h) !important;
   padding:var(--book-item-py) var(--book-item-px) !important;
   font-size:12.5px !important;
   width:auto !important;
   height:auto !important;
 }
-body[data-theme="amoled"] .chap-pill,
-body[data-theme="amoled"] #book-list .chap-btn,
-body[data-theme="amoled"] #book-list .chap-pill{
+body.theme-glass .chap-pill,
+body.theme-glass #book-list .chap-btn,
+body.theme-glass #book-list .chap-pill{
   width:var(--chapter-size) !important;
   height:var(--chapter-size) !important;
   min-width:var(--chapter-size) !important;
@@ -654,29 +654,24 @@ body[data-theme="amoled"] #book-list .chap-pill{
 [data-theme="claro"]{ --sefer-hl: rgba(255, 240, 160, 0.55); --sefer-hl-border: rgba(160, 140, 40, 0.3); }
 
 
-/* Lote Glass: México / Ucrania / Corea con estética cristal (mismas medidas) */
-body[data-theme="mexico"],
-body[data-theme="ucrania"],
-body[data-theme="corea"]{
-  /* medidas heredan :root; solo estilo */
+
+
+
+/* Capítulos en círculo (lote Glass) — medidas unificadas, solo forma */
+body.theme-glass .chap-pill,
+body.theme-glass #book-list .chap-btn,
+body.theme-glass #book-list .chap-pill{
+  border-radius: 50% !important;
 }
-body[data-theme="mexico"] #nav,
-body[data-theme="mexico"] #topbar,
-body[data-theme="mexico"] .sticky-head,
-body[data-theme="ucrania"] #nav,
-body[data-theme="ucrania"] #topbar,
-body[data-theme="ucrania"] .sticky-head,
-body[data-theme="corea"] #nav,
-body[data-theme="corea"] #topbar,
-body[data-theme="corea"] .sticky-head{
-  -webkit-backdrop-filter: saturate(160%) blur(16px);
-  backdrop-filter: saturate(160%) blur(16px);
+body.theme-glass .btn,
+body.theme-glass .btn-icon,
+body.theme-glass .theme-dot{
+  border-radius: 12px !important;
 }
-body[data-theme="mexico"] .btn,
-body[data-theme="ucrania"] .btn,
-body[data-theme="corea"] .btn,
-body[data-theme="mexico"] .theme-dot,
-body[data-theme="ucrania"] .theme-dot,
-body[data-theme="corea"] .theme-dot{
-  border-radius: 12px;
+body.theme-glass #nav,
+body.theme-glass #topbar,
+body.theme-glass .sticky-head,
+body.theme-glass #reader-sticky-head{
+  -webkit-backdrop-filter: saturate(180%) blur(18px) !important;
+  backdrop-filter: saturate(180%) blur(18px) !important;
 }
