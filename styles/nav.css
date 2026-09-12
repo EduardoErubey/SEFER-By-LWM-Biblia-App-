@@ -436,3 +436,15 @@ body.yt-sidebar-active #book-list{
 }
 .search-clear-btn:hover{ color:var(--rubric); background:var(--gold-soft); }
 #ref-search-wrap #ref-search{ padding-right:28px !important; }
+
+body:not(.yt-sidebar-active) #yt-player-wrap{
+  display:none !important;
+  height:0 !important;
+  max-height:0 !important;
+  min-height:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+  overflow:hidden !important;
+  flex:0 0 0 !important;
+  pointer-events:none !important;
+}

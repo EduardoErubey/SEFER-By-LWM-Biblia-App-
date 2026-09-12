@@ -126,7 +126,28 @@ const EASY_NAMES = new Set([
   'cyrus','ciro','darius','darío','dario','artajerjes','artaxerxes','mardoqueo','amardis',
   'hannah','ana','samuel','josias','josías','ezequias','hezekiah','manases','manasés',
   'jesus','jesús','cristo','mesías','mesias','jehová','jehova','yahvé','yahweh','señor',
-  'satanás','satanas','diablo','belial','miguel','gabriel','rafael'
+  'satanás','satanas','diablo','belial','miguel','gabriel','rafael',
+  // ampliados Destacar
+  'lea','raquel','laban','labán','ruben','rubén','simeon','simeón','levi','leví','dan','neftali','neftalí',
+  'gad','aser','asér','zabulon','zabulón','isacar','benjamin','benjamín','juda','judá','diná','dina',
+  'miriam','maria','caleb','eleazar','itamar','finees','fineés','baalam','balaam',
+  'debora','débora','barac','jael','jeftee','jefté','eli','jonathan','jonatán','goliat','absalon','absalón',
+  'salomon','salomón','roboam','roboám','jeroboam','jeroboám','eliseo','naaman','naamán',
+  'ezekiel','ezequiel','baltasar','esdras','ester','aman','haman',
+  'isaias','isaías','jeremias','jeremías','joel','abdias','abdías','jonas','jonás',
+  'emmanuel','emanuel','manuel','jesucristo','cefas','cefás','tadeo','iscariote',
+  'pablo','barnabas','barnabás','barnabé','silas','priscilla','priscila','lidia',
+  'gamaliel','caiafas','caifás','herodias','herodías','lazaro','lázaro','magdalena',
+  'elizabeth','elisabet','elisabeth','lucifer','beelzebú','beelzebub',
+  'booz','boaz','bildad','zofar','elifaz','eliú','ona','onan','tamar','rahab','raab',
+  'uriah','joab','seba','gad','melquisedec','melchizedek','jetro','jetró','hobab',
+  'balac','balák','rahab','raab','salmon','booz','obed','jesse','isaí',
+  'asaf','heman','etan','jedutun','sadrac','mesac','abednego','abed-nego',
+  'miqueas','nahum','nahúm','habacuc','sofonias','sofonías','hageo','zacarias','malaquias',
+  'bartolome','bartolomé','andres','andrés','tomas','tomás','mateo','lucas','marcos',
+  'timoteo','tito','filemon','filemón','onesimo','onesímo','epafrodito','arquipo',
+  'sofia','sabiduria','sabiduría'
+
 ].map(s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')));
 
 const EASY_CITIES = new Set([
@@ -141,6 +162,23 @@ const EASY_CITIES = new Set([
   'tarsis','nínive','ur','harán','haran','egipto','gosén','gosen','ramses','pithom',
   'madian','midian','edom','moab','amón','amon','filistea','gaza','asdod','ascalón','ascalon',
   'gat','hebrón','beerseba','beer-seba','dan','betlehem','bethlehem'
+,
+
+  // ampliados Destacar lugares
+  'beerseba','bersheba','hebron','hebrón','siquem','siquem','siloh','siló','gilgal','mizpa',
+  'gabaon','gabaón','gabaa','tirsa','jezreel','megiddo','hazor','hazór',
+  'betel','bet-el','jerico','jericó','caná','cana','idumea','edom','moab','amon','amón',
+  'filistea','gosén','gosen','ramses','raamses','ur','haran','harán','padan','mesopotamia',
+  'adma','seboim','zoar','mambre','mamre','olivos','nebo','pisga','carmelo','tabor','hermon','hermón',
+  'genesaret','genesareth','etiopia','etiopía','cus','libia','arabia','fenicia','tarsis',
+  'pafos','perga','iconio','listra','derbe','colosas','laodicea','filadelfia','esmirna',
+  'pergamo','pérgamo','tiatira','sardis','sardes','bitinia','galacia','macedonia','acaya','acaia',
+  'patmos','malta','melita','creta','chipre','troas','asia','siria','judea','judá',
+  'betlehem','belen','belén','jerusalen','jerusalén','efeso','éfeso','tesalonica','tesalónica',
+  'baal','peor','silo','siló','siloe','siloé','getsemani','getsemaní','golgota','gólgota',
+  'sinaí','sinai','horeb','edén','eden','sodoma','gomorra','ninive','nínive','asiria','persia','media',
+  'italia','grecia','roma','egipto','babilonia','babel','canaán','canaan','galilea','samaria',
+  'damasco','tiro','sidón','sidon','nazaret','capernaum','cafarnaum','cafarnaúm','betania','betfage'
 ].map(s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')));
 
 function normEasy(s){

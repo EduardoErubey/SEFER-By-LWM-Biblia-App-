@@ -908,3 +908,33 @@ body.vp-narrow #topbar-actions .btn{padding:5px 8px;font-size:11.5px;}
   z-index:10060 !important;
   transform:none !important;
 }
+
+/* Toolkit: todos los botones visibles */
+#topbar-actions{
+  display:flex !important;
+  flex-wrap:nowrap !important;
+  align-items:center !important;
+  gap:2px !important;
+  max-width:100% !important;
+  min-width:0 !important;
+}
+#clear-selection-btn{
+  visibility:hidden;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  min-width:2.2em !important;
+  padding:4px 6px !important;
+  font-size:12px !important;
+  overflow:visible !important;
+  flex:0 0 auto !important;
+  white-space:nowrap !important;
+}
+#clear-selection-btn.is-visible{ visibility:visible !important; }
+#topbar-actions .btn,
+#topbar-actions .btn-icon{
+  flex:0 0 auto !important;
+  white-space:nowrap !important;
+  padding:4px 6px !important;
+  font-size:11.5px !important;
+}

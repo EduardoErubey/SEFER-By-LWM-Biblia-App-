@@ -675,3 +675,150 @@ body.theme-glass #reader-sticky-head{
   -webkit-backdrop-filter: saturate(180%) blur(18px) !important;
   backdrop-filter: saturate(180%) blur(18px) !important;
 }
+
+
+
+
+
+/* ===== Glass + paleta (fusión) — fondo y acentos del tema, cristal encima ===== */
+body.theme-glass .chap-pill,
+body.theme-glass #book-list .chap-btn,
+body.theme-glass #book-list .chap-pill,
+body.theme-glass .chap-btn{
+  border-radius: 50% !important;
+  -webkit-backdrop-filter: blur(12px) saturate(160%) !important;
+  backdrop-filter: blur(12px) saturate(160%) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 1px 3px rgba(0,0,0,0.08) !important;
+}
+body.theme-glass .btn,
+body.theme-glass .btn-icon,
+body.theme-glass .theme-dot,
+body.theme-glass .book-item{
+  border-radius: 12px !important;
+  -webkit-backdrop-filter: blur(10px) saturate(150%) !important;
+  backdrop-filter: blur(10px) saturate(150%) !important;
+}
+body.theme-glass #nav,
+body.theme-glass #topbar,
+body.theme-glass .sticky-head,
+body.theme-glass #reader-sticky-head,
+body.theme-glass #ref-search-wrap,
+body.theme-glass #side,
+body.theme-glass .im-card{
+  -webkit-backdrop-filter: blur(18px) saturate(170%) !important;
+  backdrop-filter: blur(18px) saturate(170%) !important;
+}
+
+/* Day Glass — ya tiene vars amoled; refuerzo cristal */
+body.theme-glass[data-theme="amoled"]{
+  background:
+    radial-gradient(900px 500px at 10% 0%, rgba(255,255,255,0.9), transparent 55%),
+    radial-gradient(700px 400px at 95% 15%, rgba(120,180,255,0.45), transparent 50%),
+    var(--parchment) !important;
+}
+body.theme-glass[data-theme="amoled"] #nav{
+  background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(220,232,246,0.42)) !important;
+  border-right: 1px solid rgba(255,255,255,0.5) !important;
+}
+
+/* Night Glass — azul noche + cristal */
+body.theme-glass[data-theme="lwm-night"]{
+  background:
+    radial-gradient(800px 480px at 15% 0%, rgba(50,90,140,0.45), transparent 55%),
+    radial-gradient(600px 400px at 90% 20%, rgba(30,60,100,0.35), transparent 50%),
+    #0A1628 !important;
+}
+body.theme-glass[data-theme="lwm-night"] #nav{
+  background: linear-gradient(180deg, rgba(18,40,65,0.72), rgba(10,22,40,0.55)) !important;
+  border-right: 1px solid rgba(91,163,224,0.25) !important;
+}
+body.theme-glass[data-theme="lwm-night"] .chap-pill,
+body.theme-glass[data-theme="lwm-night"] #book-list .chap-pill{
+  background: rgba(30,55,85,0.55) !important;
+  border: 1px solid rgba(91,163,224,0.35) !important;
+  color: #E8F0F8 !important;
+}
+body.theme-glass[data-theme="lwm-night"] .chap-pill.active,
+body.theme-glass[data-theme="lwm-night"] #book-list .chap-pill.active{
+  background: linear-gradient(180deg, #5BA3E0, #3D9AE8) !important;
+  color: #fff !important;
+}
+
+/* Mex Glass — verde / blanco / rojo */
+body.theme-glass[data-theme="mexico"]{
+  background:
+    linear-gradient(135deg, rgba(0,104,71,0.12) 0%, transparent 42%),
+    linear-gradient(225deg, rgba(206,17,38,0.12) 0%, transparent 42%),
+    radial-gradient(700px 420px at 50% 0%, rgba(255,255,255,0.85), transparent 55%),
+    #F8F5F0 !important;
+}
+body.theme-glass[data-theme="mexico"] #nav{
+  background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(0,104,71,0.10) 55%, rgba(206,17,38,0.08)) !important;
+  border-right: 1px solid rgba(0,104,71,0.28) !important;
+}
+body.theme-glass[data-theme="mexico"] .chap-pill,
+body.theme-glass[data-theme="mexico"] #book-list .chap-pill{
+  background: rgba(255,255,255,0.55) !important;
+  border: 1px solid rgba(0,104,71,0.28) !important;
+}
+body.theme-glass[data-theme="mexico"] .chap-pill.active,
+body.theme-glass[data-theme="mexico"] #book-list .chap-pill.active{
+  background: linear-gradient(180deg, #2A8A62, #006847) !important;
+  color: #fff !important;
+  border-color: rgba(206,17,38,0.35) !important;
+}
+body.theme-glass[data-theme="mexico"] #topbar{
+  background: linear-gradient(90deg, rgba(0,104,71,0.08), rgba(255,255,255,0.5), rgba(206,17,38,0.08)) !important;
+}
+
+/* Ukr Glass — azul / amarillo */
+body.theme-glass[data-theme="ucrania"]{
+  background:
+    linear-gradient(180deg, rgba(0,87,183,0.14) 0%, transparent 48%),
+    linear-gradient(0deg, rgba(255,215,0,0.16) 0%, transparent 48%),
+    radial-gradient(700px 400px at 80% 10%, rgba(255,255,255,0.8), transparent 50%),
+    #F5F8FC !important;
+}
+body.theme-glass[data-theme="ucrania"] #nav{
+  background: linear-gradient(180deg, rgba(0,87,183,0.18), rgba(255,255,255,0.5) 45%, rgba(255,215,0,0.14)) !important;
+  border-right: 1px solid rgba(0,87,183,0.3) !important;
+}
+body.theme-glass[data-theme="ucrania"] .chap-pill,
+body.theme-glass[data-theme="ucrania"] #book-list .chap-pill{
+  background: rgba(255,255,255,0.55) !important;
+  border: 1px solid rgba(0,87,183,0.28) !important;
+}
+body.theme-glass[data-theme="ucrania"] .chap-pill.active,
+body.theme-glass[data-theme="ucrania"] #book-list .chap-pill.active{
+  background: linear-gradient(180deg, #2E75C8, #0057B7) !important;
+  color: #fff !important;
+}
+body.theme-glass[data-theme="ucrania"] #topbar{
+  background: linear-gradient(90deg, rgba(0,87,183,0.12), rgba(255,255,255,0.55), rgba(255,215,0,0.14)) !important;
+}
+
+/* Kor Glass — rojo / azul / blanco */
+body.theme-glass[data-theme="corea"]{
+  background:
+    radial-gradient(500px 360px at 30% 20%, rgba(205,46,58,0.14), transparent 55%),
+    radial-gradient(500px 360px at 70% 25%, rgba(0,71,160,0.14), transparent 55%),
+    radial-gradient(600px 400px at 50% 0%, rgba(255,255,255,0.9), transparent 50%),
+    #FAF7F7 !important;
+}
+body.theme-glass[data-theme="corea"] #nav{
+  background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(205,46,58,0.08) 50%, rgba(0,71,160,0.08)) !important;
+  border-right: 1px solid rgba(205,46,58,0.25) !important;
+}
+body.theme-glass[data-theme="corea"] .chap-pill,
+body.theme-glass[data-theme="corea"] #book-list .chap-pill{
+  background: rgba(255,255,255,0.55) !important;
+  border: 1px solid rgba(0,71,160,0.25) !important;
+}
+body.theme-glass[data-theme="corea"] .chap-pill.active,
+body.theme-glass[data-theme="corea"] #book-list .chap-pill.active{
+  background: linear-gradient(180deg, #E05A64, #CD2E3A) !important;
+  color: #fff !important;
+}
+body.theme-glass[data-theme="corea"] #topbar{
+  background: linear-gradient(90deg, rgba(205,46,58,0.1), rgba(255,255,255,0.55), rgba(0,71,160,0.1)) !important;
+}

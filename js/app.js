@@ -43,3 +43,10 @@ if(document.readyState === 'loading'){
 } else {
   seferBoot();
 }
+
+try{
+  const GLASS = ['amoled','lwm-night','mexico','ucrania','corea'];
+  if(typeof currentTheme !== 'undefined'){
+    document.body.classList.toggle('theme-glass', GLASS.includes(currentTheme));
+  }
+}catch(e){}

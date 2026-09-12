@@ -529,7 +529,7 @@ function seferSetHighlightMode(on){
   }
   const root = document.getElementById('stage');
   if(root) root.classList.toggle('stage-highlight-on', stageHighlightMode);
-  try{ document.body.classList.toggle('sefer-hl-mode', stageHighlightMode); }catch(e){}
+  try{ /* no body class for hl mode */ }catch(e){}
 }
 
 function seferApplyStageHighlightFromSelection(){
@@ -557,16 +557,20 @@ function seferApplyStageHighlightFromSelection(){
   // Al soltar el ratón con modo activo y texto seleccionado → resaltar y apagar modo
   document.addEventListener('mouseup', function(e){
     if(!stageHighlightMode) return;
-    const stage = document.getElementById('stage');
-    if(!stage || stage.style.display === 'none') return;
-    // pequeño delay para que la selección del navegador quede lista
+    const stageEl = document.getElementById('stage');
+    if(!stageEl || !stageEl.classList.contains('open')) return;
+    if(e.target && e.target.closest && e.target.closest('#stage-highlight-btn')) return;
     setTimeout(function(){
       if(!stageHighlightMode) return;
+      const sel = window.getSelection && window.getSelection();
+      if(!sel || sel.isCollapsed) return;
+      const text = (sel.toString() || '').replace(/\s+/g,' ').trim();
+      if(text.length < 2) return;
       const ctx = seferGetStageSelectionContext();
       if(!ctx) return;
       seferApplyStageHighlightFromSelection();
       seferSetHighlightMode(false);
-    }, 10);
+    }, 15);
   }, true);
 
   // Escape cancela el modo
@@ -581,3 +585,58 @@ window.stageHighlightMode = stageHighlightMode;
 window.seferSetHighlightMode = seferSetHighlightMode;
 window.seferGetStageSelectionContext = seferGetStageSelectionContext;
 window.seferApplyStageHighlightFromSelection = seferApplyStageHighlightFromSelection;
+
+
+/* ⇄ Comparar traducciones (izq / der) */
+(function wireStageCompare(){
+  const btn = document.getElementById('stage-compare-btn');
+  const sel = document.getElementById('stage-compare-sel');
+  if(!btn) return;
+  function loadCompareCorpus(id){
+    try{
+      if(typeof seferGetGlobalBible === 'function') return seferGetGlobalBible(id);
+    }catch(e){}
+    try{
+      if(typeof SEFER_BIBLES !== 'undefined' && SEFER_BIBLES[id]) return SEFER_BIBLES[id];
+    }catch(e){}
+    return null;
+  }
+  btn.addEventListener('click', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    if(stageFromSearch || stageMode === 'stack' || stageMode === 'chapter') return;
+    stageCompareOn = !stageCompareOn;
+    if(stageCompareOn){
+      stageMode = 'compare';
+      if(sel){
+        sel.style.display = '';
+        stageCompareVersion = sel.value || stageCompareVersion || 'nvi';
+      }
+      stageCompareData = loadCompareCorpus(stageCompareVersion);
+      if(!stageCompareData || !Object.keys(stageCompareData).length){
+        alert('No se pudo cargar la segunda traducción ('+stageCompareVersion+'). ¿Están los archivos bible-data de esa versión?');
+        stageCompareOn = false;
+        stageMode = 'single';
+        if(sel) sel.style.display = 'none';
+        stageCompareData = null;
+      }
+    } else {
+      stageMode = (stagePassages[0] && stagePassages[0].verses && stagePassages[0].verses.length > 1) ? 'selection' : 'single';
+      if(sel) sel.style.display = 'none';
+      stageCompareData = null;
+      try{ if(stage) stage.classList.remove('stage-compare'); }catch(err){}
+      const paneB = document.getElementById('stage-pane-b');
+      if(paneB) paneB.style.display = 'none';
+    }
+    try{ renderStage(); }catch(err){ console.error(err); }
+    try{ updateStageCompareVisibility(); }catch(err){}
+  });
+  if(sel){
+    sel.addEventListener('change', function(){
+      stageCompareVersion = sel.value || 'nvi';
+      if(!stageCompareOn) return;
+      stageCompareData = loadCompareCorpus(stageCompareVersion);
+      try{ renderStage(); }catch(err){ console.error(err); }
+    });
+  }
+})();

@@ -1,13 +1,12 @@
 
 function seferUpdateDiceEmoji(){
   try{
-    const glass = (typeof currentTheme !== 'undefined' && ['amoled','lwm-night','mexico','ucrania','corea'].includes(currentTheme));
-    const emoji = glass ? '🔀' : '🎲';
-    const tip = glass ? 'Versículo al azar (barajar)' : 'Versículo aleatorio';
+    const emoji = '🎲';
+    const tip = 'Versículo aleatorio';
     const main = document.getElementById('random-verse-btn');
     if(main){ main.textContent = emoji; main.setAttribute('data-tooltip', tip); main.title = tip; }
     const stageDice = document.getElementById('stage-dice-btn');
-    if(stageDice){ stageDice.textContent = emoji; stageDice.title = glass ? 'Otro al azar' : 'Otro versículo al azar'; }
+    if(stageDice){ stageDice.textContent = emoji; stageDice.title = 'Otro versículo al azar'; }
   }catch(e){}
 }
 window.seferUpdateDiceEmoji = seferUpdateDiceEmoji;
@@ -178,7 +177,7 @@ document.addEventListener('keydown', (e)=>{
   const flagMX = '<svg class="flag-svg" viewBox="0 0 36 24" width="20" height="14" aria-hidden="true"><rect width="12" height="24" x="0" fill="#006847"/><rect width="12" height="24" x="12" fill="#fff"/><rect width="12" height="24" x="24" fill="#CE1126"/><circle cx="18" cy="12" r="3.2" fill="#006847"/></svg>';
   const flagKR = '<svg class="flag-svg" viewBox="0 0 36 24" width="20" height="14" aria-hidden="true"><rect width="36" height="24" fill="#fff" stroke="#ddd" stroke-width="0.5"/><circle cx="18" cy="12" r="5" fill="#CD2E3A"/><path d="M18 12a5 5 0 0 1 0-0.01 2.5 2.5 0 1 0 0 0.01z" fill="#0047A0"/><g fill="#000"><rect x="6" y="4" width="5" height="1.2"/><rect x="6" y="6" width="2" height="1.2"/><rect x="9" y="6" width="2" height="1.2"/><rect x="6" y="8" width="5" height="1.2"/><rect x="25" y="4" width="5" height="1.2"/><rect x="25" y="6.6" width="5" height="1.2"/><rect x="25" y="9.2" width="5" height="1.2"/><rect x="6" y="14.5" width="5" height="1.2"/><rect x="6" y="17.1" width="2" height="1.2"/><rect x="9" y="17.1" width="2" height="1.2"/><rect x="6" y="19.7" width="5" height="1.2"/><rect x="25" y="14.5" width="2" height="1.2"/><rect x="28" y="14.5" width="2" height="1.2"/><rect x="25" y="17.1" width="5" height="1.2"/><rect x="25" y="19.7" width="2" height="1.2"/><rect x="28" y="19.7" width="2" height="1.2"/></g></svg>';
   const BATCH_A = [
-    {t:'lwm-day', tip:'Life Word Mission', html:'☀️'},
+    {t:'lwm-day', tip:'Life Word Mission', html:'🕊️'},
     {t:'eden', tip:'Edén', html:'🌿'},
     {t:'sandalo', tip:'Sándalo', html:'🕯️'},
     {t:'reino', tip:'Reino', html:'👑'},

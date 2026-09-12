@@ -187,3 +187,27 @@ document.getElementById('yt-clear-modal-btn')?.addEventListener('click', clearYo
 /* yt-pos eliminado: siempre inferior izquierda */
 applyYoutubePosition();
 
+
+
+/* Cierre YouTube reforzado (X y borrar) */
+(function wireYoutubeCloseHard(){
+  function hardClose(e){
+    if(e){ try{ e.preventDefault(); e.stopPropagation(); }catch(err){} }
+    try{ store.set('bp_yt_url', ''); }catch(err){}
+    const wrap = document.getElementById('yt-player-wrap');
+    const box = document.getElementById('yt-iframe-box');
+    if(box) box.innerHTML = '';
+    if(wrap){
+      wrap.style.cssText = 'display:none!important;height:0!important;max-height:0!important;overflow:hidden!important;flex:0 0 0!important;';
+      wrap.setAttribute('aria-hidden','true');
+    }
+    document.body.classList.remove('yt-sidebar-active','yt-active-br','yt-active-tr','yt-active-bl');
+    try{ if(typeof setYoutubeLayoutActive==='function') setYoutubeLayoutActive(false); }catch(err){}
+  }
+  document.addEventListener('click', function(e){
+    const t = e.target;
+    if(!t || !t.closest) return;
+    if(t.closest('#yt-close-btn') || t.closest('#yt-clear-btn')) hardClose(e);
+  }, true);
+  window.seferHardCloseYoutube = hardClose;
+})();
