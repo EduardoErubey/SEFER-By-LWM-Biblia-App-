@@ -889,3 +889,22 @@ body.vp-narrow #topbar-actions .btn{padding:5px 8px;font-size:11.5px;}
   left: 0 !important;
   right: auto !important;
 }
+
+
+/* Menú traducciones: debajo del botón, sin tapar sidebar */
+#version-switch.version-switch-toolkit{
+  position:relative !important;
+  order:0 !important;
+  z-index:70 !important;
+}
+#version-menu{
+  position:absolute !important;
+  top:calc(100% + 4px) !important;
+  left:0 !important;
+  right:auto !important;
+  bottom:auto !important;
+  width:max-content !important;
+  max-width:min(260px, 70vw) !important;
+  z-index:10060 !important;
+  transform:none !important;
+}

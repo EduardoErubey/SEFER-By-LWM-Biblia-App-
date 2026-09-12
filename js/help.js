@@ -22,6 +22,26 @@ function openSeferHelp(){
     tourBtn:'🎯 Iniciar tour interactivo'
   };
   const glassBlock = isGlass ? `
+    
+    <div class="im-block"><div class="im-label">📘 Manual SEFER (fácil)</div>
+    <div class="im-text">
+    <strong>1. Elegir un libro</strong><br>
+    En la izquierda toca un testamento y un libro. Luego toca un número de capítulo.<br><br>
+    <strong>2. Buscar un versículo</strong><br>
+    Arriba escribe, por ejemplo: <em>Juan 3:16</em>. También puedes: <em>Génesis 1:1-3,5-6</em> o dos pasajes con <em>|</em>:<br>
+    <em>Juan 3:16 | Romanos 8:28</em>. Usa Tab para completar el nombre del libro. La ✕ borra de un toque.<br><br>
+    <strong>3. Temas</strong><br>
+    Hay dos grupos: <em>Clásicos</em> (Life Word Mission, Edén…) y <em>Glass</em> (Day Glass, Mex Glass…). El botón ＋/− cambia de grupo. El tema por defecto es Life Word Mission.<br><br>
+    <strong>4. Destacar ✨</strong><br>
+    Ayuda a ver nombres, ciudades y palabras de Jesús. No colorea el versículo entero.<br><br>
+    <strong>5. Resaltar 🖍️ (en proyección)</strong><br>
+    Pulsa 🖍️, selecciona un texto y se subraya solo en ese versículo. Para quitar: 🖍️ y selecciona lo marcado.<br><br>
+    <strong>6. Proyectar</strong><br>
+    Útil en la iglesia. Puedes ir versículo a versículo, capítulo completo o varios marcados.<br><br>
+    <strong>7. Tour</strong><br>
+    Desde Ayuda inicia el tour: un paseo corto por cada botón importante.
+    </div></div>
+
     <div class="im-block"><div class="im-label">Tema Glass (activo ahora)</div>
     <div class="im-text">Estás usando <strong>Glass</strong>: interfaz liquid glass inspirada en macOS.
     <br>• Capítulos en <strong>círculos</strong> de vidrio.

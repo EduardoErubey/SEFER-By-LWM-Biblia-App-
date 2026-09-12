@@ -1,7 +1,7 @@
 
 function seferUpdateDiceEmoji(){
   try{
-    const glass = (typeof currentTheme !== 'undefined' && currentTheme === 'amoled');
+    const glass = (typeof currentTheme !== 'undefined' && ['amoled','lwm-night','mexico','ucrania','corea'].includes(currentTheme));
     const emoji = glass ? '🔀' : '🎲';
     const tip = glass ? 'Versículo al azar (barajar)' : 'Versículo aleatorio';
     const main = document.getElementById('random-verse-btn');
@@ -174,22 +174,47 @@ document.addEventListener('keydown', (e)=>{
   const flagMX = '<svg class="flag-svg" viewBox="0 0 36 24" width="20" height="14" aria-hidden="true"><rect width="12" height="24" x="0" fill="#006847"/><rect width="12" height="24" x="12" fill="#fff"/><rect width="12" height="24" x="24" fill="#CE1126"/><circle cx="18" cy="12" r="3.2" fill="#006847"/></svg>';
   const flagKR = '<svg class="flag-svg" viewBox="0 0 36 24" width="20" height="14" aria-hidden="true"><rect width="36" height="24" fill="#fff" stroke="#ddd" stroke-width="0.5"/><circle cx="18" cy="12" r="5" fill="#CD2E3A"/><path d="M18 12a5 5 0 0 1 0-0.01 2.5 2.5 0 1 0 0 0.01z" fill="#0047A0"/><g fill="#000"><rect x="6" y="4" width="5" height="1.2"/><rect x="6" y="6" width="2" height="1.2"/><rect x="9" y="6" width="2" height="1.2"/><rect x="6" y="8" width="5" height="1.2"/><rect x="25" y="4" width="5" height="1.2"/><rect x="25" y="6.6" width="5" height="1.2"/><rect x="25" y="9.2" width="5" height="1.2"/><rect x="6" y="14.5" width="5" height="1.2"/><rect x="6" y="17.1" width="2" height="1.2"/><rect x="9" y="17.1" width="2" height="1.2"/><rect x="6" y="19.7" width="5" height="1.2"/><rect x="25" y="14.5" width="2" height="1.2"/><rect x="28" y="14.5" width="2" height="1.2"/><rect x="25" y="17.1" width="5" height="1.2"/><rect x="25" y="19.7" width="2" height="1.2"/><rect x="28" y="19.7" width="2" height="1.2"/></g></svg>';
   const BATCH_A = [
-    {t:'mexico', tip:'México', html:flagMX},
-    {t:'corea', tip:'Corea', html:flagKR},
-    {t:'ucrania', tip:'Ucrania', html:flagUA},
+    {t:'lwm-day', tip:'Life Word Mission', html:'☀️'},
+    {t:'eden', tip:'Edén', html:'🌿'},
+    {t:'sandalo', tip:'Sándalo', html:'🕯️'},
     {t:'reino', tip:'Reino', html:'👑'},
-    {t:'eden', tip:'Edén', html:'🌿'}
+    {t:'arena', tip:'Arena', html:'⏳'}
   ];
   const BATCH_B = [
-    {t:'lwm-day', tip:'LWM-Day', html:'☀️'},
-    {t:'lwm-night', tip:'LWM-Night', html:'🌙'},
-    {t:'arena', tip:'Arena', html:'⏳'},
-    {t:'sandalo', tip:'Sándalo', html:'🕯️'},
-    {t:'amoled', tip:'Glass', html:'🫧'}
+    {t:'amoled', tip:'Day Glass', html:'🫧'},
+    {t:'lwm-night', tip:'Night Glass', html:'🌙'},
+    {t:'mexico', tip:'Mex Glass', html:flagMX},
+    {t:'ucrania', tip:'Ukr Glass', html:flagUA},
+    {t:'corea', tip:'Kor Glass', html:flagKR}
   ];
   const batchEl = document.getElementById('theme-batch');
   const btn = document.getElementById('theme-more-btn');
   if(!batchEl || !btn) return;
+
+  // +/− encima del tema 1; reservar hueco antiguo con visibility:hidden
+  const themeSwitch = document.getElementById('theme-switch');
+  if(themeSwitch && btn && batchEl){
+    let topRow = document.getElementById('theme-batch-top');
+    if(!topRow){
+      topRow = document.createElement('div');
+      topRow.id = 'theme-batch-top';
+      topRow.className = 'theme-batch-top';
+      themeSwitch.insertBefore(topRow, batchEl);
+    }
+    if(btn.parentElement !== topRow) topRow.appendChild(btn);
+    let spacer = document.getElementById('theme-more-spacer');
+    if(!spacer){
+      spacer = document.createElement('span');
+      spacer.id = 'theme-more-spacer';
+      spacer.className = 'theme-more-spacer';
+      spacer.setAttribute('aria-hidden','true');
+      // colocar spacer donde estaba el botón (junto a dados/lote)
+      const dice = document.getElementById('random-verse-btn');
+      if(dice && dice.parentElement) dice.parentElement.insertBefore(spacer, dice);
+      else themeSwitch.appendChild(spacer);
+    }
+  }
+
 
   let showB = !!store.get('bp_themes_more', false);
   if(BATCH_B.some(x => x.t === currentTheme)) showB = true;
@@ -234,15 +259,6 @@ document.addEventListener('keydown', (e)=>{
   try{ applyThemeIcons(); }catch(e){}
 })();
 
-
-;(function(){
-  const _ati = window.applyThemeIcons;
-  if(typeof applyThemeIcons === 'function'){
-    window.applyThemeIcons = function(){
-      const r = applyThemeIcons === window.applyThemeIcons ? null : null;
-    };
-  }
-})();
 
 /* Destacar label after theme icons */
 (function(){

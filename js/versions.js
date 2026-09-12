@@ -118,12 +118,20 @@ function wireVersionSwitcher(){
   seferUpdateVersionUI();
   function placeVersionMenu(){
     const r = btn.getBoundingClientRect();
+    const mw = Math.min(260, window.innerWidth - 12);
+    let left = r.left;
+    // Preferir alineado al botón; si se sale por la derecha, desplazar
+    if(left + mw > window.innerWidth - 6) left = Math.max(6, window.innerWidth - mw - 6);
+    // No empujar el menú sobre la barra de libros: si el botón está a la derecha del nav, ok
     menu.style.position = 'fixed';
-    menu.style.left = Math.max(6, Math.min(r.left, window.innerWidth - 240)) + 'px';
+    menu.style.left = left + 'px';
     menu.style.top = (r.bottom + 4) + 'px';
     menu.style.right = 'auto';
-    menu.style.minWidth = '220px';
-    menu.style.zIndex = '5000';
+    menu.style.bottom = 'auto';
+    menu.style.minWidth = '180px';
+    menu.style.maxWidth = mw + 'px';
+    menu.style.width = 'max-content';
+    menu.style.zIndex = '10060';
   }
   btn.onclick = function(e){
     e.preventDefault();

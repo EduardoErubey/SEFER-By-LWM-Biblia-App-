@@ -38,11 +38,11 @@ const THEME_MIGRATE = {
   original:'arena', frio:'paz', oscuro:'sandalo',
   playa:'arena', cielo:'paz', noche:'sandalo', mono:'claro'
 };
-let currentTheme = store.get('bp_theme', 'mexico');
+let currentTheme = store.get('bp_theme', 'lwm-day');
 if(THEME_MIGRATE[currentTheme]) currentTheme = THEME_MIGRATE[currentTheme];
-if(currentTheme==='paz'||currentTheme==='claro') currentTheme='mexico';
+if(currentTheme==='paz'||currentTheme==='claro') currentTheme='lwm-day';
 const VALID_THEMES = ['lwm-day','lwm-night','sandalo','arena','amoled','eden','reino','ucrania','mexico','corea'];
-if(!VALID_THEMES.includes(currentTheme)) currentTheme = 'mexico';
+if(!VALID_THEMES.includes(currentTheme)) currentTheme = 'lwm-day';
 let sidePanel = null; // 'notes' | 'favs' | 'trash' | null
 let notesTrash = store.get('bp_notes_trash', []); // [{ref, text, deletedAt}]
 function saveNotesTrash(){ store.set('bp_notes_trash', notesTrash); }

@@ -20,12 +20,13 @@
   <link rel="stylesheet" href="styles/responsive.css">
 
 </head>
-<body data-theme="mexico">
+<body data-theme="lwm-day">
 <div id="app">
 
   <div id="mobile-header">
     
     <div id="mobile-word-search-wrap" style="display:none;">
+      <button type="button" id="mobile-word-search-clear" class="search-clear-btn" title="Borrar" aria-label="Borrar" hidden>✕</button>
       <input id="mobile-word-search-input" placeholder="Buscar palabra…" autocomplete="off" spellcheck="false">
     </div>
   </div>
@@ -51,6 +52,7 @@
       </div>
       <div id="ref-search-wrap">
         <span class="ref-search-icon" aria-hidden="true">🔍</span>
+        <button type="button" id="ref-search-clear" class="search-clear-btn" title="Borrar búsqueda" aria-label="Borrar búsqueda" hidden>✕</button>
         <input id="ref-search" placeholder="" autocomplete="off" spellcheck="false" aria-label="Buscador de versículos">
         <span id="ref-ph-anim">Buscador de versículos</span>
         <div id="ref-suggest"></div>

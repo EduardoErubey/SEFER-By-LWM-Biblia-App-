@@ -142,7 +142,33 @@ function parseVersesPart(book, chap, versePart){
   versePart = (versePart || '').trim();
   if(!versePart) return {book, chap, verses:null};
 
-  // Rango: 1-5 · 1–5 · 1—5
+  // Lista mixta: 1-3,5-6 · 1,3,4-6 · 1-3,5
+  if(/[,-–—]/.test(versePart) && /^[\d\s,–—-]+$/.test(versePart)){
+    const verses = [];
+    const seen = Object.create(null);
+    versePart.split(/\s*,\s*/).forEach(part=>{
+      part = part.trim();
+      if(!part) return;
+      const range = part.match(/^(\d+)\s*[-–—]\s*(\d+)$/);
+      if(range){
+        const a = parseInt(range[1],10), b = parseInt(range[2],10);
+        const lo = Math.min(a,b), hi = Math.max(a,b);
+        for(let i=lo;i<=hi;i++){
+          const s = String(i);
+          if(!seen[s]){ seen[s]=1; verses.push(s); }
+        }
+        return;
+      }
+      const n = parseInt(part,10);
+      if(!isNaN(n)){
+        const s = String(n);
+        if(!seen[s]){ seen[s]=1; verses.push(s); }
+      }
+    });
+    if(verses.length) return {book, chap, verses};
+  }
+
+  // Rango simple: 1-5
   const range = versePart.match(/^(\d+)\s*[-–—]\s*(\d+)\s*$/);
   if(range){
     const a = parseInt(range[1],10), b = parseInt(range[2],10);
@@ -151,7 +177,7 @@ function parseVersesPart(book, chap, versePart){
     for(let i=lo;i<=hi;i++) verses.push(String(i));
     return {book, chap, verses};
   }
-  // Lista: 1,3,6 · 1, 3, 6
+  // Lista simple: 1,3,6
   if(/^\d+(\s*,\s*\d+)+\s*$/.test(versePart)){
     const verses = versePart.split(/\s*,\s*/).map(x=>String(parseInt(x,10))).filter(v=>v && v!=='NaN');
     return {book, chap, verses};
@@ -168,6 +194,8 @@ function parseRefQuery(raw){
   //   Libro capítulo:versículo          → Génesis 1:1
   //   Libro capítulo:inicio-fin         → Génesis 1:1-5
   //   Libro capítulo:a, b, c            → Génesis 1:1,3,6
+  //   Libro capítulo:1-3,5-6           → Génesis 1:1-3,5-6
+  //   Libro … | Libro …               → dual proyección
   //   Libro capítulo                    → Génesis 1
   //   capítulo:versículo (libro actual) → 1:1
   //   Solo libro                        → Génesis
@@ -446,3 +474,29 @@ refSearch.addEventListener('blur', ()=>{
   setTimeout(()=> refSuggest.classList.remove('open'), 150);
 });
 
+
+
+/* Borrado instantáneo buscador de referencias */
+(function wireSearchClear(){
+  function wire(inputId, btnId){
+    const input = document.getElementById(inputId);
+    const btn = document.getElementById(btnId);
+    if(!input || !btn) return;
+    const sync = ()=>{ btn.hidden = !(input.value||'').trim(); };
+    input.addEventListener('input', sync);
+    input.addEventListener('change', sync);
+    btn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      input.value = '';
+      input.dispatchEvent(new Event('input', {bubbles:true}));
+      sync();
+      input.focus();
+      const sug = document.getElementById('ref-suggest');
+      if(sug) sug.innerHTML = '';
+    });
+    sync();
+  }
+  wire('ref-search', 'ref-search-clear');
+  wire('mobile-word-search-input', 'mobile-word-search-clear');
+  wire('word-search', 'word-search-clear');
+})();

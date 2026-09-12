@@ -652,3 +652,31 @@ body[data-theme="amoled"] #book-list .chap-pill{
 [data-theme="amoled"]{ --sefer-hl: rgba(180, 220, 255, 0.45); --sefer-hl-border: rgba(80, 150, 220, 0.35); }
 [data-theme="paz"]{ --sefer-hl: rgba(200, 235, 210, 0.55); --sefer-hl-border: rgba(50, 120, 70, 0.28); }
 [data-theme="claro"]{ --sefer-hl: rgba(255, 240, 160, 0.55); --sefer-hl-border: rgba(160, 140, 40, 0.3); }
+
+
+/* Lote Glass: México / Ucrania / Corea con estética cristal (mismas medidas) */
+body[data-theme="mexico"],
+body[data-theme="ucrania"],
+body[data-theme="corea"]{
+  /* medidas heredan :root; solo estilo */
+}
+body[data-theme="mexico"] #nav,
+body[data-theme="mexico"] #topbar,
+body[data-theme="mexico"] .sticky-head,
+body[data-theme="ucrania"] #nav,
+body[data-theme="ucrania"] #topbar,
+body[data-theme="ucrania"] .sticky-head,
+body[data-theme="corea"] #nav,
+body[data-theme="corea"] #topbar,
+body[data-theme="corea"] .sticky-head{
+  -webkit-backdrop-filter: saturate(160%) blur(16px);
+  backdrop-filter: saturate(160%) blur(16px);
+}
+body[data-theme="mexico"] .btn,
+body[data-theme="ucrania"] .btn,
+body[data-theme="corea"] .btn,
+body[data-theme="mexico"] .theme-dot,
+body[data-theme="ucrania"] .theme-dot,
+body[data-theme="corea"] .theme-dot{
+  border-radius: 12px;
+}
