@@ -5,12 +5,12 @@
    SELECTOR DE VERSIÓN BÍBLICA
    ========================================================= */
 const SEFER_VERSION_FILES = {
-  rv1960:  './bible-data-rv1960.js',
-  rv1909:  './bible-data-rv1909.js',
-  nvi:     './bible-data-nvi.js',
-  ntv:     './bible-data-ntv.js',
-  tla:     './bible-data-tla.js',
-  rva2015: './bible-data-rva2015.js'
+  rv1960:  './bible/bible-data-rv1960.js',
+  rv1909:  './bible/bible-data-rv1909.js',
+  nvi:     './bible/bible-data-nvi.js',
+  ntv:     './bible/bible-data-ntv.js',
+  tla:     './bible/bible-data-tla.js',
+  rva2015: './bible/bible-data-rva2015.js'
 };
 const SEFER_VERSION_META = {
   rv1960:  { short:'RV1960',  label:'Reina-Valera 1960' },
@@ -103,7 +103,7 @@ async function seferSetBibleVersion(id, opts){
     }
   }catch(err){
     console.error('[SEFER] versión', err);
-    alert('No se pudo cargar la versión seleccionada. ¿Subiste los archivos bible-data-*.js al repositorio?\n\n'+err.message);
+    alert('No se pudo cargar la versión seleccionada. ¿Subiste los archivos bible/bible-data-*.js en la carpeta bible/ del repositorio?\n\n'+err.message);
   }
 }
 

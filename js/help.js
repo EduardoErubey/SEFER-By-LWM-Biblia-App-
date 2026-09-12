@@ -25,25 +25,51 @@ function openSeferHelp(){
     
     <div class="im-block"><div class="im-label">📘 Manual SEFER (fácil)</div>
     <div class="im-text">
-    <strong>1. Elegir un libro</strong><br>
-    En la izquierda toca un testamento y un libro. Luego toca un número de capítulo.<br><br>
+    SEFER es tu Biblia digital para <strong>leer</strong>, <strong>estudiar</strong> y <strong>proyectar</strong> en la iglesia o en casa.<br><br>
+
+    <strong>1. Abrir un libro</strong><br>
+    En la barra de la izquierda elige Antiguo o Nuevo Testamento.<br>
+    Toca un libro y luego el número del capítulo.<br><br>
+
     <strong>2. Buscar un versículo</strong><br>
-    Arriba escribe, por ejemplo: <em>Juan 3:16</em>. También puedes: <em>Génesis 1:1-3,5-6</em> o dos pasajes con <em>|</em>:<br>
-    <em>Juan 3:16 | Romanos 8:28</em>. Usa Tab para completar el nombre del libro. La ✕ borra de un toque.<br><br>
-    <strong>3. Temas</strong><br>
-    Hay dos grupos: <em>Clásicos</em> (Life Word Mission, Edén…) y <em>Glass</em> (Day Glass, Mex Glass…). El botón ＋/− cambia de grupo. El tema por defecto es Life Word Mission.<br><br>
-    <strong>4. Destacar ✨</strong><br>
-    Ayuda a ver nombres, ciudades y palabras de Jesús. No colorea el versículo entero.<br><br>
-    <strong>5. Resaltar 🖍️ (en proyección)</strong><br>
-    Pulsa 🖍️, selecciona un texto y se subraya solo en ese versículo. Para quitar: 🖍️ y selecciona lo marcado.<br><br>
+    En el buscador escribe, por ejemplo:<br>
+    <em>Juan 3:16</em><br>
+    También puedes usar rangos y listas:<br>
+    <em>Génesis 1:1-3,5-6</em><br>
+    Dos pasajes a la vez (proyección arriba y abajo):<br>
+    <em>Juan 3:16 | Romanos 8:28</em><br>
+    <strong>Tab</strong> completa el nombre del libro.<br>
+    La <strong>✕</strong> borra la búsqueda de un toque.<br><br>
+
+    <strong>3. Temas de apariencia</strong><br>
+    Hay dos grupos de 5 temas:<br>
+    • <em>Clásicos:</em> Life Word Mission (predeterminado), Edén, Sándalo, Reino, Arena<br>
+    • <em>Glass:</em> Day Glass, Night Glass, Mex Glass, Ukr Glass, Kor Glass<br>
+    El botón <strong>＋ / −</strong> (arriba de los temas) cambia de grupo.<br><br>
+
+    <strong>4. ✨ Destacar</strong><br>
+    Marca solos nombres, lugares y palabras de Jesús para leer más fácil.<br>
+    No pinta de color el versículo entero.<br><br>
+
+    <strong>5. 🖍️ Resaltar (solo en proyección)</strong><br>
+    1) Pulsa 🖍️<br>
+    2) Selecciona el texto<br>
+    3) Se subraya solo en ese versículo<br>
+    Para quitar: activa 🖍️ y selecciona otra vez lo marcado.<br>
+    No sustituye a los favoritos (❤️).<br><br>
+
     <strong>6. Proyectar</strong><br>
-    Útil en la iglesia. Puedes ir versículo a versículo, capítulo completo o varios marcados.<br><br>
-    <strong>7. Tour</strong><br>
-    Desde Ayuda inicia el tour: un paseo corto por cada botón importante.
+    Ideal para el culto. Puedes proyectar un versículo, varios o el capítulo.<br>
+    En proyección: comparar traducciones, auto-desplazamiento y 🖍️ Resaltar.<br><br>
+
+    <strong>7. Tour guiado</strong><br>
+    Desde este mismo panel de Ayuda puedes iniciar el tour.<br>
+    Es un paseo corto por cada parte de SEFER.
     </div></div>
 
+
     <div class="im-block"><div class="im-label">Tema Glass (activo ahora)</div>
-    <div class="im-text">Estás usando <strong>Glass</strong>: interfaz liquid glass inspirada en macOS.
+    <div class="im-text">Si eliges un tema del grupo <strong>Glass</strong>, verás transparencias, desenfoque y capítulos en círculo, cada uno con su propia paleta de color (por ejemplo Mex Glass usa los colores de la bandera).
     <br>• Capítulos en <strong>círculos</strong> de vidrio.
     <br>• Toolkit en <strong>grupos redondeados</strong> (Texto, Estudio, Consulta, Herramientas).
     <br>• Iconos estilo Apple en la barra y en la navegación:
@@ -139,8 +165,10 @@ function openSeferHelp(){
     • <strong>Ctrl+Shift+T</strong>: menú de traducción<br>
     • <strong>Ctrl+Shift+F</strong>: pantalla completa<br>
     • <strong>Ctrl+− / Ctrl++</strong>: tamaño del texto<br>
-    • <strong>Ctrl+D</strong> Resaltar · <strong>S</strong> significados · <strong>N</strong> notas · <strong>F</strong> favoritos<br>
-    • <strong>Ctrl+G</strong> glosario · <strong>B</strong> biografía · <strong>A</strong> apócrifos · <strong>P</strong> plan · <strong>Y</strong> YouTube<br>
+    • <strong>Ctrl+D</strong> Destacar<br>
+    • <strong>S</strong> Significados · <strong>N</strong> Notas · <strong>F</strong> Favoritos<br>
+    • <strong>Ctrl+G</strong> Glosario<br>
+    • <strong>B</strong> Biografía · <strong>A</strong> Apócrifos · <strong>P</strong> Plan · <strong>Y</strong> YouTube<br>
     • <strong>Ctrl+Enter</strong> proyectar · <strong>Ctrl+H</strong> ayuda<br>
     • <strong>Tab</strong> en el buscador completa el libro · <strong>Esc</strong> cierra paneles/proyección/tour
     </div></div>

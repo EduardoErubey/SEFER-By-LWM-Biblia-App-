@@ -822,3 +822,117 @@ body.theme-glass[data-theme="corea"] #book-list .chap-pill.active{
 body.theme-glass[data-theme="corea"] #topbar{
   background: linear-gradient(90deg, rgba(205,46,58,0.1), rgba(255,255,255,0.55), rgba(0,71,160,0.1)) !important;
 }
+
+
+/* Night Glass — oscuro total (sin bloques claros) */
+body.theme-glass[data-theme="lwm-night"],
+body[data-theme="lwm-night"]{
+  color: #E8F0F8 !important;
+  background:
+    radial-gradient(900px 520px at 12% -10%, rgba(40,90,140,0.35), transparent 55%),
+    radial-gradient(700px 420px at 100% 10%, rgba(20,50,90,0.3), transparent 50%),
+    #070e18 !important;
+}
+body[data-theme="lwm-night"] #app,
+body[data-theme="lwm-night"] #main,
+body[data-theme="lwm-night"] #content-wrap,
+body[data-theme="lwm-night"] #reader,
+body[data-theme="lwm-night"] #reader-verses,
+body.theme-glass[data-theme="lwm-night"] #app,
+body.theme-glass[data-theme="lwm-night"] #main,
+body.theme-glass[data-theme="lwm-night"] #content-wrap,
+body.theme-glass[data-theme="lwm-night"] #reader,
+body.theme-glass[data-theme="lwm-night"] #reader-verses{
+  background: transparent !important;
+  color: #E8F0F8 !important;
+}
+body[data-theme="lwm-night"] #nav,
+body.theme-glass[data-theme="lwm-night"] #nav{
+  background: linear-gradient(180deg, rgba(12,28,48,0.92), rgba(8,16,28,0.88)) !important;
+  border-right: 1px solid rgba(91,163,224,0.22) !important;
+  color: #E8F0F8 !important;
+  -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
+  backdrop-filter: blur(18px) saturate(140%) !important;
+}
+body[data-theme="lwm-night"] #topbar,
+body.theme-glass[data-theme="lwm-night"] #topbar,
+body[data-theme="lwm-night"] .sticky-head,
+body[data-theme="lwm-night"] #reader-sticky-head,
+body.theme-glass[data-theme="lwm-night"] .sticky-head,
+body.theme-glass[data-theme="lwm-night"] #reader-sticky-head{
+  background: rgba(10,22,40,0.82) !important;
+  border-color: rgba(91,163,224,0.2) !important;
+  color: #E8F0F8 !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  backdrop-filter: blur(16px) !important;
+}
+body[data-theme="lwm-night"] .btn,
+body[data-theme="lwm-night"] .btn-icon,
+body[data-theme="lwm-night"] .nav-action-btn,
+body[data-theme="lwm-night"] .theme-dot,
+body[data-theme="lwm-night"] .book-item,
+body[data-theme="lwm-night"] input,
+body[data-theme="lwm-night"] textarea,
+body[data-theme="lwm-night"] select,
+body.theme-glass[data-theme="lwm-night"] .btn,
+body.theme-glass[data-theme="lwm-night"] .btn-icon,
+body.theme-glass[data-theme="lwm-night"] .book-item,
+body.theme-glass[data-theme="lwm-night"] input,
+body.theme-glass[data-theme="lwm-night"] #ref-search-wrap{
+  background: rgba(18,36,58,0.75) !important;
+  color: #E8F0F8 !important;
+  border-color: rgba(91,163,224,0.28) !important;
+}
+body[data-theme="lwm-night"] .btn:hover,
+body[data-theme="lwm-night"] .book-item:hover,
+body[data-theme="lwm-night"] .book-item.active{
+  background: rgba(40,80,120,0.55) !important;
+  color: #fff !important;
+}
+body[data-theme="lwm-night"] .chap-pill,
+body[data-theme="lwm-night"] #book-list .chap-btn,
+body[data-theme="lwm-night"] #book-list .chap-pill,
+body.theme-glass[data-theme="lwm-night"] .chap-pill,
+body.theme-glass[data-theme="lwm-night"] #book-list .chap-pill{
+  background: rgba(20,40,65,0.7) !important;
+  color: #D0E4F8 !important;
+  border: 1px solid rgba(91,163,224,0.3) !important;
+  border-radius: 50% !important;
+}
+body[data-theme="lwm-night"] .chap-pill.active,
+body[data-theme="lwm-night"] #book-list .chap-pill.active,
+body.theme-glass[data-theme="lwm-night"] .chap-pill.active{
+  background: linear-gradient(180deg, #5BA3E0, #2E7AB8) !important;
+  color: #fff !important;
+}
+body[data-theme="lwm-night"] .testament-label,
+body[data-theme="lwm-night"] #select-hint,
+body[data-theme="lwm-night"] .ink-soft,
+body[data-theme="lwm-night"] #current-ref,
+body[data-theme="lwm-night"] .book-title,
+body[data-theme="lwm-night"] .chap-title{
+  color: #A8C0D8 !important;
+}
+body[data-theme="lwm-night"] .verse,
+body[data-theme="lwm-night"] #reader{
+  color: #E8F0F8 !important;
+}
+body[data-theme="lwm-night"] .im-card,
+body[data-theme="lwm-night"] #side,
+body[data-theme="lwm-night"] .side-panel,
+body[data-theme="lwm-night"] #sefer-tour-card,
+body[data-theme="lwm-night"] #version-menu,
+body[data-theme="lwm-night"] #font-family-menu{
+  background: rgba(12,24,40,0.92) !important;
+  color: #E8F0F8 !important;
+  border-color: rgba(91,163,224,0.3) !important;
+}
+body[data-theme="lwm-night"] #ref-search,
+body[data-theme="lwm-night"] #ref-ph-anim{
+  color: #E8F0F8 !important;
+  background: transparent !important;
+}
+body[data-theme="lwm-night"] .welcome,
+body[data-theme="lwm-night"] .welcome-mobile{
+  color: #E8F0F8 !important;
+}
