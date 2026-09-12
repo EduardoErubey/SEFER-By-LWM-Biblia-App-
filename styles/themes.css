@@ -936,3 +936,215 @@ body[data-theme="lwm-night"] .welcome,
 body[data-theme="lwm-night"] .welcome-mobile{
   color: #E8F0F8 !important;
 }
+
+
+/* =========================================================
+   Night Glass — oscuro TOTAL (sin filas/botones blancos)
+   ========================================================= */
+body[data-theme="lwm-night"],
+body.theme-glass[data-theme="lwm-night"]{
+  --parchment: #0B1420;
+  --parchment-2: #121C2C;
+  --ink: #E8F0F8;
+  --ink-soft: #9BB0C4;
+  --rubric: #6BB0E8;
+  --rubric-soft: #8BC4F0;
+  --gold: #5BA3E0;
+  --gold-soft: rgba(91,163,224,0.18);
+  --line: rgba(120,160,200,0.22);
+  --card-bg: #152538;
+  color-scheme: dark;
+}
+
+body[data-theme="lwm-night"] #app,
+body[data-theme="lwm-night"] #main,
+body[data-theme="lwm-night"] #content-wrap,
+body[data-theme="lwm-night"] #reader,
+body[data-theme="lwm-night"] #reader-verses,
+body[data-theme="lwm-night"] #nav,
+body[data-theme="lwm-night"] #topbar{
+  background-color: transparent !important;
+  color: #E8F0F8 !important;
+}
+
+body[data-theme="lwm-night"]{
+  background:
+    radial-gradient(900px 500px at 10% -5%, rgba(40,90,140,0.28), transparent 55%),
+    radial-gradient(700px 420px at 100% 0%, rgba(20,50,90,0.25), transparent 50%),
+    #070E18 !important;
+}
+
+/* Barra lateral */
+body[data-theme="lwm-night"] #nav{
+  background: linear-gradient(180deg, rgba(10,22,40,0.96), rgba(7,14,24,0.94)) !important;
+  border-right: 1px solid rgba(91,163,224,0.2) !important;
+}
+
+/* Filas de libros: NUNCA blancas */
+body[data-theme="lwm-night"] #book-list .book-item,
+body[data-theme="lwm-night"] #book-list .book-btn,
+body[data-theme="lwm-night"] .book-item,
+body.theme-glass[data-theme="lwm-night"] #book-list .book-item{
+  background: rgba(18,32,52,0.85) !important;
+  color: #E0ECF8 !important;
+  border: 1px solid rgba(91,163,224,0.18) !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+body[data-theme="lwm-night"] #book-list .book-item:hover,
+body[data-theme="lwm-night"] #book-list .book-item.active,
+body.theme-glass[data-theme="lwm-night"] #book-list .book-item:hover,
+body.theme-glass[data-theme="lwm-night"] #book-list .book-item.active{
+  background: rgba(40,80,120,0.45) !important;
+  color: #FFFFFF !important;
+  border-color: rgba(91,163,224,0.4) !important;
+}
+
+/* Capítulos circulares oscuros */
+body[data-theme="lwm-night"] .chap-pill,
+body[data-theme="lwm-night"] #book-list .chap-btn,
+body[data-theme="lwm-night"] #book-list .chap-pill{
+  background: rgba(16,30,50,0.9) !important;
+  color: #C8DCF0 !important;
+  border: 1px solid rgba(91,163,224,0.28) !important;
+  border-radius: 50% !important;
+}
+body[data-theme="lwm-night"] .chap-pill:hover,
+body[data-theme="lwm-night"] #book-list .chap-pill:hover{
+  background: rgba(50,100,150,0.45) !important;
+  color: #fff !important;
+}
+body[data-theme="lwm-night"] .chap-pill.active,
+body[data-theme="lwm-night"] #book-list .chap-pill.active{
+  background: linear-gradient(180deg, #5BA3E0, #2F7AB8) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+/* Testament labels */
+body[data-theme="lwm-night"] .testament-label{
+  color: #8AA8C4 !important;
+  background: transparent !important;
+}
+
+/* Controles de temas (+/−, dado, dots): sin pastillas blancas */
+body[data-theme="lwm-night"] #theme-switch,
+body[data-theme="lwm-night"] #theme-batch,
+body[data-theme="lwm-night"] #theme-batch-top{
+  background: transparent !important;
+}
+body[data-theme="lwm-night"] .theme-more-btn,
+body[data-theme="lwm-night"] #theme-more-btn,
+body[data-theme="lwm-night"] .random-verse-btn,
+body[data-theme="lwm-night"] #random-verse-btn,
+body[data-theme="lwm-night"] .theme-dot,
+body[data-theme="lwm-night"] #theme-more-spacer{
+  background: rgba(20,36,58,0.9) !important;
+  color: #E8F0F8 !important;
+  border: 1px solid rgba(91,163,224,0.3) !important;
+  box-shadow: none !important;
+}
+body[data-theme="lwm-night"] .theme-dot.active{
+  outline: 2px solid #5BA3E0 !important;
+  background: rgba(40,80,120,0.55) !important;
+}
+body[data-theme="lwm-night"] .theme-more-btn:hover,
+body[data-theme="lwm-night"] .random-verse-btn:hover{
+  background: rgba(50,100,150,0.5) !important;
+}
+
+/* Buscador */
+body[data-theme="lwm-night"] #ref-search-wrap{
+  background: rgba(14,26,42,0.9) !important;
+  border: 1px solid rgba(91,163,224,0.28) !important;
+  border-radius: 999px !important;
+}
+body[data-theme="lwm-night"] #ref-search,
+body[data-theme="lwm-night"] #ref-ph-anim{
+  color: #E8F0F8 !important;
+  background: transparent !important;
+}
+body[data-theme="lwm-night"] #ref-search::placeholder{
+  color: #7A94AE !important;
+}
+
+/* Topbar / toolkit: sin botones blancos opacos */
+body[data-theme="lwm-night"] #topbar{
+  background: rgba(8,16,28,0.92) !important;
+  border-bottom: 1px solid rgba(91,163,224,0.18) !important;
+}
+body[data-theme="lwm-night"] #topbar-actions .btn,
+body[data-theme="lwm-night"] #topbar-actions .btn-icon,
+body[data-theme="lwm-night"] #version-btn,
+body[data-theme="lwm-night"] #help-btn,
+body[data-theme="lwm-night"] #clear-selection-btn,
+body[data-theme="lwm-night"] .nav-action-btn{
+  background: rgba(18,34,54,0.92) !important;
+  color: #E0ECF8 !important;
+  border: 1px solid rgba(91,163,224,0.28) !important;
+  box-shadow: none !important;
+}
+body[data-theme="lwm-night"] #topbar-actions .btn:hover,
+body[data-theme="lwm-night"] #topbar-actions .btn-icon:hover,
+body[data-theme="lwm-night"] .nav-action-btn:hover{
+  background: rgba(40,80,120,0.5) !important;
+  color: #fff !important;
+}
+body[data-theme="lwm-night"] #topbar-actions .btn.easy-on,
+body[data-theme="lwm-night"] #easy-btn.easy-on{
+  background: rgba(91,163,224,0.28) !important;
+  border-color: #5BA3E0 !important;
+  color: #fff !important;
+}
+body[data-theme="lwm-night"] .tb-group{
+  background: rgba(14,26,42,0.6) !important;
+  border: 1px solid rgba(91,163,224,0.15) !important;
+}
+
+/* Menús desplegables */
+body[data-theme="lwm-night"] #version-menu,
+body[data-theme="lwm-night"] #font-family-menu,
+body[data-theme="lwm-night"] #ref-suggest{
+  background: rgba(12,22,36,0.96) !important;
+  color: #E8F0F8 !important;
+  border: 1px solid rgba(91,163,224,0.3) !important;
+}
+body[data-theme="lwm-night"] #version-menu .ver-item:hover,
+body[data-theme="lwm-night"] #ref-suggest div:hover{
+  background: rgba(40,80,120,0.4) !important;
+}
+
+/* Bienvenida y textos */
+body[data-theme="lwm-night"] .welcome,
+body[data-theme="lwm-night"] .welcome-mobile,
+body[data-theme="lwm-night"] #select-hint,
+body[data-theme="lwm-night"] .book-title,
+body[data-theme="lwm-night"] .chap-title,
+body[data-theme="lwm-night"] #current-ref{
+  color: #C8DCF0 !important;
+}
+body[data-theme="lwm-night"] .verse{
+  color: #E8F0F8 !important;
+}
+
+/* Icono info de libro */
+body[data-theme="lwm-night"] .info-btn{
+  background: rgba(20,40,65,0.9) !important;
+  color: #8BC4F0 !important;
+  border-color: rgba(91,163,224,0.35) !important;
+}
+
+/* Sticky head lector */
+body[data-theme="lwm-night"] .sticky-head,
+body[data-theme="lwm-night"] #reader-sticky-head{
+  background: rgba(8,16,28,0.92) !important;
+  border-bottom: 1px solid rgba(91,163,224,0.15) !important;
+}
+
+/* Scrollbar */
+body[data-theme="lwm-night"] ::-webkit-scrollbar-thumb{
+  background: rgba(91,163,224,0.35) !important;
+}
+body[data-theme="lwm-night"] ::-webkit-scrollbar-track{
+  background: rgba(0,0,0,0.25) !important;
+}
