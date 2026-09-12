@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEFER ספר — BY LIFE WORD MISSION</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/nav.css">
+  <link rel="stylesheet" href="styles/toolbar.css">
+  <link rel="stylesheet" href="styles/reader.css">
+  <link rel="stylesheet" href="styles/stage.css">
+  <link rel="stylesheet" href="styles/modals.css">
+  <link rel="stylesheet" href="styles/side-panel.css">
+  <link rel="stylesheet" href="styles/word-popup.css">
+  <link rel="stylesheet" href="styles/tour.css">
+  <link rel="stylesheet" href="styles/themes.css">
+  <link rel="stylesheet" href="styles/responsive.css">
+
+</head>
+<body data-theme="lwm-day">
+<div id="app">
+
+  <div id="mobile-header">
+    
+    <div id="mobile-word-search-wrap" style="display:none;">
+      <button type="button" id="mobile-word-search-clear" class="search-clear-btn" title="Borrar" aria-label="Borrar" hidden>✕</button>
+      <input id="mobile-word-search-input" placeholder="Buscar palabra…" autocomplete="off" spellcheck="false">
+    </div>
+  </div>
+
+  <div id="nav">
+    <div id="nav-header">
+      <div id="nav-header-row">
+        <div>
+          <div class="brand">SEFER<span class="brand-heb">ספר</span></div>
+          <div class="brand-sub">BY LWM PDC</div>
+        </div>
+        <div id="nav-header-actions">
+          <button type="button" id="btn-user-profile" class="nav-action-btn" data-tooltip="Perfil, logros e insignias" title="Perfil">🏆</button>
+          <button type="button" id="btn-login-google" class="nav-action-btn" data-tooltip="Sincronizar con Google Drive" title="Sincronizar">☁️</button>
+          <button type="button" id="fullscreen-btn" class="nav-action-btn" data-tooltip="Pantalla completa (como F11)" title="Pantalla completa">⛶</button>
+          <button type="button" id="nav-toggle" class="nav-action-btn" data-tooltip="Reiniciar navegación" title="Reiniciar navegación (contraer todo)">↺</button>
+        </div>
+      </div>
+      <div id="theme-switch">
+        <div id="theme-batch" class="theme-batch"></div>
+        <button type="button" id="theme-more-btn" class="theme-more-btn" title="Más temas" data-tooltip="Cambiar lote de temas">＋</button>
+        <button type="button" id="random-verse-btn" class="random-verse-btn" title="Versículo aleatorio" data-tooltip="Ir a un versículo al azar">🎲</button>
+      </div>
+      <div id="ref-search-wrap">
+        <span class="ref-search-icon" aria-hidden="true">🔍</span>
+        <button type="button" id="ref-search-clear" class="search-clear-btn" title="Borrar búsqueda" aria-label="Borrar búsqueda" hidden>✕</button>
+        <input id="ref-search" placeholder="" autocomplete="off" spellcheck="false" aria-label="Buscador de versículos">
+        <span id="ref-ph-anim">Buscador de versículos</span>
+        <div id="ref-suggest"></div>
+      </div>
+    </div>
+    <div id="book-list"></div>
+
+<div id="yt-player-wrap" class="yt-sidebar" style="display:none;" aria-hidden="true">
+  <div id="yt-player-bar">
+    <span id="yt-player-title">Sermón</span>
+    <div style="display:flex;gap:3px;align-items:center;flex-shrink:0;">
+      <button type="button" id="yt-change-btn" class="yt-bar-btn" title="Cambiar enlace">✎</button>
+      <button type="button" id="yt-clear-btn" class="yt-bar-btn" title="Borrar enlace y cerrar">🗑</button>
+      <button type="button" id="yt-close-btn" class="yt-bar-btn" title="Cerrar">✕</button>
+    </div>
+  </div>
+  <div id="yt-iframe-box"></div>
+</div>
+
+  </div>
+
+  <div id="main">
+    <div id="topbar">
+      <div id="topbar-left">
+        <div id="current-ref">—</div>
+      </div>
+      <div id="topbar-actions">
+        <button class="btn has-tip" id="clear-selection-btn" data-tooltip="Quitar marcas de versículos seleccionados">🧹 Limpiar</button>
+                <div id="version-switch" class="version-switch-toolkit">
+          <button type="button" id="version-btn" aria-haspopup="listbox" aria-expanded="false" title="Versión de la Biblia (Ctrl+Shift+T)">
+            <span class="vb-label">RV1960</span>
+          </button>
+          <div id="version-menu" role="listbox" aria-label="Versiones de la Biblia">
+            <div class="ver-group">Reina Valera</div>
+            <button type="button" class="ver-item" data-version="rv1909" role="option"><span class="ver-dot">•</span> 1909</button>
+            <button type="button" class="ver-item active" data-version="rv1960" role="option"><span class="ver-dot">•</span> 1960 <span class="ver-def">Predeterminado</span></button>
+            <button type="button" class="ver-item" data-version="rva2015" role="option"><span class="ver-dot">•</span> 2015</button>
+            <div class="ver-group">Nueva Versión Internacional</div>
+            <button type="button" class="ver-item" data-version="nvi" role="option">NVI (Español latino)</button>
+            <div class="ver-group">Nueva Traducción Viviente</div>
+            <button type="button" class="ver-item" data-version="ntv" role="option">NTV</button>
+            <div class="ver-group">Traducción en Lenguaje Actual</div>
+            <button type="button" class="ver-item" data-version="tla" role="option">TLA</button>
+          </div>
+        </div>
+        <span class="tb-group">
+          <button class="btn btn-icon" id="font-dec" data-tooltip="Disminuir texto">A−</button>
+          <button class="btn btn-icon" id="font-inc" data-tooltip="Aumentar texto">A+</button>
+          <button class="btn btn-icon has-tip" id="font-family-btn" data-tooltip="Cambiar tipografía de lectura">Aa</button>
+          <button class="btn has-tip" id="easy-btn" data-action="highlight" data-tooltip="Destacar nombres, ciudades y palabras de Jesús">✨ Destacar</button>
+        </span>
+        <span class="tb-group" title="Estudio">
+          <button class="btn has-tip" id="meanings-btn" data-tooltip="Significados de palabras guardados">📚 Significados</button>
+          <button class="btn has-tip" id="notes-btn" data-tooltip="Notas de exposición por versículo">📝 Notas</button>
+          <button class="btn fav-btn has-tip" id="favs-btn" data-tooltip="Versículos marcados como favoritos">❤️ Favoritos</button>
+        </span>
+        <span class="tb-group" title="Consulta">
+          <button class="btn has-tip" id="glossary-btn" data-tooltip="Glosario de términos bíblicos">📖 Glosario</button>
+          <button class="btn has-tip" id="biography-btn" data-tooltip="Biografías de personas de la Biblia">👤 Biografía</button>
+          <button class="btn has-tip" id="apocrifos-btn" data-tooltip="Libros apócrifos: qué son y por qué no están en el canon protestante">📜 Apócrifos</button>
+        </span>
+        <span class="tb-group" title="Herramientas">
+          <button class="btn has-tip" id="plan-btn" data-tooltip="Plan de lectura de la Biblia en un año">📅 Plan 1 año</button>
+          <span id="estado-nube" style="display:none;" aria-hidden="true"></span>
+          <button class="btn has-tip" id="youtube-btn" data-tooltip="Ver un sermón de YouTube mientras lees (solo el vídeo)"><svg class="yt-logo" viewBox="0 0 28 20" width="18" height="13" aria-hidden="true"><rect width="28" height="20" rx="4" fill="#FF0000"/><path d="M11 5.5v9l7.5-4.5L11 5.5z" fill="#fff"/></svg> YouTube</button>
+          <button class="btn primary has-tip" id="project-btn" data-tooltip="Proyectar selección o versículo en pantalla completa">🎬 Proyectar</button>
+        </span>
+        <button class="btn has-tip" id="help-btn" data-tooltip="Guía de uso y atajos de teclado">❓ Ayuda</button>
+      </div>
+    </div>
+    
+    <div id="mobile-toolbar">
+      <button type="button" class="btn" id="mt-easy" data-tooltip="Destacar">✨ Destacar</button>
+<button type="button" class="btn" id="mt-meanings" data-tooltip="Significados">📚 Significados</button>
+      <button type="button" class="btn" id="mt-notes" data-tooltip="Notas">📝 Notas</button>
+      <button type="button" class="btn fav-btn" id="mt-favs" data-tooltip="Favoritos">♥ Favoritos</button>
+      <button type="button" class="btn" id="mt-help" data-tooltip="Ayuda">❓ Ayuda</button>
+    </div>
+    <div id="selection-bar"><div id="selection-info"></div></div>
+
+    <div id="content-wrap">
+      <div id="reader"></div>
+      <div id="side-backdrop"></div>
+      <div id="side"></div>
+    </div>
+  </div>
+
+  <div id="mobile-footer">
+    <div id="mobile-footer-themes"></div>
+    <div id="mobile-footer-search"></div>
+  </div>
+
+</div>
+
+<div id="project-sheet">
+  <div class="ps-card">
+    <div class="ps-title">🎬 Proyectar</div>
+    <button type="button" class="ps-opt" data-proj="current">📄 Versículo actual</button>
+    <button type="button" class="ps-opt" data-proj="selection" id="ps-opt-selection">☑️ Selección de versículos</button>
+    <button type="button" class="ps-opt" data-proj="chapter">📚 Capítulo completo</button>
+    <button type="button" class="ps-cancel" id="ps-cancel">Cancelar</button>
+  </div>
+</div>
+
+<div id="stage">
+  <div id="stage-exit">Salir (Esc)</div>
+  <div id="stage-compare-wrap">
+    <button type="button" class="stage-btn" id="stage-compare-btn" title="Comparar con otra traducción (izq/der)">⇄ Comparar</button>
+    <select id="stage-compare-sel" title="Segunda traducción" style="display:none;">
+      <option value="rv1960">RV1960</option>
+      <option value="rv1909">RV1909</option>
+      <option value="rva2015">RVA2015</option>
+      <option value="nvi">NVI</option>
+      <option value="ntv">NTV</option>
+      <option value="tla">TLA</option>
+    </select>
+  </div>
+  <div id="stage-extra-btns" style="display:none;">
+    <button type="button" class="stage-btn stage-extra" id="stage-fav-btn" title="Guardar en favoritos">❤️</button>
+    <button type="button" class="stage-btn stage-extra" id="stage-note-btn" title="Escribir nota">📝</button>
+    <button type="button" class="stage-btn stage-extra" id="stage-highlight-btn" title="Resaltar palabras (manual)">🖍️</button>
+    <button type="button" class="stage-btn stage-extra" id="stage-dice-btn" title="Otro versículo al azar">🎲</button>
+  </div>
+  <div id="stage-note-panel" style="display:none;">
+    <textarea id="stage-note-ta" placeholder="Escribe una nota sobre este versículo…"></textarea>
+    <div class="stage-note-actions">
+      <button type="button" class="stage-btn" id="stage-note-save">Guardar</button>
+      <button type="button" class="stage-btn" id="stage-note-cancel">Cerrar</button>
+    </div>
+  </div>
+  <div id="stage-body">
+    <div class="stage-pane" id="stage-pane-a">
+      <div class="stage-ref" id="stage-ref"></div>
+      <div class="stage-text" id="stage-text"></div>
+    </div>
+    <div class="stage-pane" id="stage-pane-b" style="display:none;">
+      <div class="stage-ref" id="stage-ref-b"></div>
+      <div class="stage-text" id="stage-text-b"></div>
+    </div>
+  </div>
+  <div id="stage-nav">
+    <button class="stage-btn" id="stage-prev">‹ Anterior</button>
+    <button class="stage-btn" id="stage-auto" title="Desplazamiento automático (10 s de espera)" style="display:none;">▶ Auto</button>
+    <button class="stage-btn stage-speed" id="stage-speed-btn" title="Velocidad (clic para cambiar)" style="display:none;">0.03×</button>
+    <button class="stage-btn" id="stage-next">Siguiente ›</button>
+  </div>
+</div>
+
+<div id="modal-youtube" style="display:none;position:fixed;inset:0;z-index:1350;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:20px;">
+  <div class="im-card" style="max-width:420px;width:100%;background:var(--card-bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:20px 22px;position:relative;">
+    <button type="button" id="cerrar-youtube-modal" style="position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-soft);">❌</button>
+    <div style="font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--rubric);margin:0 28px 10px 0;">Sermón de YouTube</div>
+    <p style="font-size:13px;color:var(--ink-soft);margin:0 0 12px;line-height:1.5;">Pega el enlace del vídeo. Se mostrará <strong>solo el reproductor</strong> en una esquina (sin comentarios ni lista de sugerencias de la página de YouTube).</p>
+    <input id="yt-url-input" type="url" placeholder="https://www.youtube.com/watch?v=… o https://youtu.be/…" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--parchment);color:var(--ink);font-family:var(--font-ui);font-size:13px;margin-bottom:12px;">
+    <div class="yt-modal-actions">
+      <button type="button" class="btn" id="yt-clear-modal-btn">Borrar</button>
+      <button type="button" class="btn" id="yt-paste-btn">Pegar</button>
+      <button type="button" class="btn primary" id="yt-load-btn">Cargar vídeo</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal-plan-lectura" style="display:none;position:fixed;inset:0;z-index:1300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:20px;">
+  <div class="im-card" style="max-width:483px;width:92%;height:min(480px,70vh);max-height:70vh;display:flex;flex-direction:column;overflow:hidden;background:var(--card-bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:16px 18px 14px;position:relative;box-sizing:border-box;">
+    <button type="button" id="cerrar-plan" style="position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-soft);">❌</button>
+    <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--rubric);margin:0 28px 8px 0;">📅 Plan de Lectura en 1 Año</div>
+    <div style="font-size:12px;font-weight:600;color:var(--ink-soft);margin:0 0 6px;">Orden de lectura</div>
+    <div class="plan-order-row" style="display:flex;gap:5px;flex-wrap:nowrap;margin:0 0 12px;overflow-x:auto;">
+      <button type="button" class="btn plan-order-btn active" data-order="canonical">Canónico AT→NT</button>
+      <button type="button" class="btn plan-order-btn" data-order="inverse">Inverso NT→AT</button>
+      <button type="button" class="btn plan-order-btn" data-order="parallel">Paralelo</button>
+      <button type="button" class="btn plan-order-btn" data-order="chrono">Cronológico</button>
+    </div>
+    <div style="font-size:12px;font-weight:600;color:var(--ink-soft);margin:0 0 6px;">Inicio del plan</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px;">
+      <button type="button" class="btn plan-mode-btn active" id="plan-mode-calendar" data-mode="calendar">1 ene – 31 dic</button>
+      <button type="button" class="btn plan-mode-btn" id="plan-mode-today" data-mode="today">Desde hoy (365 días)</button>
+    </div>
+    <p style="font-size:13px;color:var(--ink-soft);margin:0 0 12px;">Día <strong id="dia-actual-plan">—</strong> <span id="plan-mode-label" style="opacity:0.8;"></span></p>
+    <div id="lectura-de-hoy"></div>
+    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button type="button" class="btn" id="plan-prev-day">‹ Día anterior</button>
+      <button type="button" class="btn" id="plan-next-day">Día siguiente ›</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal-perfil" style="display:none;position:fixed;inset:0;z-index:1300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:20px;">
+  <div class="im-card" style="max-width:560px;width:100%;max-height:88vh;display:flex;flex-direction:column;background:var(--card-bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:0;position:relative;overflow:hidden;">
+    <button type="button" id="cerrar-perfil" style="position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-soft);z-index:2;">❌</button>
+    <div id="perfil-header" style="flex:0 0 auto;padding:20px 22px 14px;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:center;">
+      <img id="perfil-foto" alt="" style="width:56px;height:56px;border-radius:50%;object-fit:cover;background:var(--parchment-2);border:2px solid var(--line);display:none;">
+      <div id="perfil-foto-placeholder" style="width:56px;height:56px;border-radius:50%;background:var(--parchment-2);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:24px;">👤</div>
+      <div style="min-width:0;flex:1;">
+        <div id="perfil-nombre" style="font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--rubric);">Invitado</div>
+        <div id="perfil-email" style="font-size:12px;color:var(--ink-soft);word-break:break-all;">Conecta con ☁️ Sincronizar para ver tu cuenta</div>
+        <div id="perfil-stats" style="font-size:12px;margin-top:6px;color:var(--ink-soft);"></div>
+      </div>
+    </div>
+    <div style="flex:0 0 auto;padding:10px 22px 6px;font-family:var(--font-display);font-weight:700;font-size:15px;color:var(--rubric);">🏆 Logros e insignias</div>
+    <div id="lista-logros" style="flex:1 1 auto;overflow-y:auto;padding:8px 18px 16px;"></div>
+    <div style="flex:0 0 auto;padding:10px 22px 14px;border-top:1px solid var(--line);">
+      <button type="button" class="btn primary" id="cerrar-perfil-2">Cerrar</button>
+    </div>
+  </div>
+</div>
+<div id="toast-logro" class="toast-logro" aria-live="polite"></div>
+
+<div id="modal-apocrifos" style="display:none;position:fixed;inset:0;z-index:1300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:16px;">
+  <div class="im-card" style="max-width:640px;width:100%;max-height:90vh;display:flex;flex-direction:column;background:var(--card-bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:0;position:relative;overflow:hidden;">
+    <button type="button" id="cerrar-apocrifos" style="position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-soft);z-index:2;">❌</button>
+    <div style="flex:0 0 auto;padding:16px 44px 12px 18px;border-bottom:1px solid var(--line);">
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--rubric);">📜 Libros apócrifos</div>
+      <p style="margin:6px 0 0;font-size:13px;color:var(--ink-soft);line-height:1.45;">Información y curiosidades. No se incluye el texto de estos libros. En SEFER usamos el canon de la Reina-Valera 1960 (66 libros).</p>
+    </div>
+    <div id="apocrifos-body" style="flex:1 1 auto;overflow-y:auto;padding:14px 18px 20px;font-size:13.5px;line-height:1.55;"></div>
+  </div>
+</div>
+
+<div id="modal-genealogia" style="display:none;position:fixed;inset:0;z-index:1300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:16px;">
+  <div class="im-card" style="max-width:640px;width:100%;max-height:90vh;display:flex;flex-direction:column;background:var(--card-bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:0;position:relative;overflow:hidden;">
+    <button type="button" id="cerrar-genealogia" style="position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-soft);z-index:2;">❌</button>
+    <div style="flex:0 0 auto;padding:16px 44px 12px 18px;border-bottom:1px solid var(--line);">
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--rubric);">👤 Biografías de la Biblia</div>
+      <p style="margin:6px 0 0;font-size:13px;color:var(--ink-soft);line-height:1.45;">Solo personas con información bíblica. Elige un nombre, lee su historia y sigue por familia si quieres.</p>
+      <input type="text" id="gene-search" placeholder="Escribe un nombre (ejemplo: David)" style="width:100%;margin-top:10px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--parchment);color:var(--ink);font-family:var(--font-ui);font-size:14px;outline:none;box-sizing:border-box;">
+    </div>
+    <div id="gene-detail" style="flex:1 1 auto;overflow-y:auto;padding:14px 16px 18px;"></div>
+  </div>
+</div>
+
+<div id="modal-glosario" style="display:none;position:fixed;inset:0;z-index:1300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:20px;">
+  <div class="im-card" style="max-width:520px;width:100%;max-height:85vh;display:flex;flex-direction:column;background:var(--card-bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:0;position:relative;overflow:hidden;">
+    <button type="button" id="cerrar-glosario" style="position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-soft);z-index:2;">❌</button>
+    <div style="flex:0 0 auto;padding:18px 22px 10px;background:var(--card-bg);border-bottom:1px solid var(--line);">
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--rubric);margin:0 28px 10px 0;">📖 Glosario Bíblico</div>
+      <input type="text" id="buscador-glosario" placeholder="Buscar palabra (ej. Gracia, Redención)…" style="width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--parchment);color:var(--ink);font-family:var(--font-ui);font-size:13px;outline:none;">
+    </div>
+    <ul id="lista-glosario" style="list-style:none;padding:12px 22px 16px;margin:0;font-family:var(--font-body);font-size:13.5px;line-height:1.55;overflow-y:auto;flex:1 1 auto;"></ul>
+  </div>
+</div>
+
+<div id="sefer-tour-overlay" aria-hidden="true"></div>
+<div id="sefer-tour-spot" style="display:none;"></div>
+<div id="sefer-tour-card" style="display:none;" role="dialog" aria-modal="true">
+  <h4 id="sefer-tour-title"></h4>
+  <p id="sefer-tour-text"></p>
+  <div id="sefer-tour-actions">
+    <span id="sefer-tour-step"></span>
+    <div class="tour-nav">
+      <button type="button" class="btn" id="sefer-tour-skip">Salir</button>
+      <button type="button" class="btn" id="sefer-tour-prev">Anterior</button>
+      <button type="button" class="btn primary" id="sefer-tour-next">Siguiente</button>
+    </div>
+  </div>
+</div>
+<div id="word-popup">
+  <span class="wp-close" title="Cerrar">❌</span>
+  <div class="wp-term"></div>
+  <div class="wp-def"></div>
+  <div class="wp-source"></div>
+  <div class="wp-actions">
+    <button type="button" class="wp-save" id="wp-save-btn" title="Guardar significado">💾 Guardar</button>
+  </div>
+</div>
+
+
+<!-- Historial de versiones (oculto: buscador → versionshistory) -->
+<div id="modal-versions" style="display:none;position:fixed;inset:0;z-index:1400;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;padding:16px;">
+  <div class="im-card" style="max-width:560px;width:100%;max-height:88vh;display:flex;flex-direction:column;background:var(--card-bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:0;position:relative;overflow:hidden;">
+    <button type="button" id="cerrar-versions" style="position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-soft);z-index:2;">❌</button>
+    <div style="flex:0 0 auto;padding:16px 44px 12px 18px;border-bottom:1px solid var(--line);">
+      <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--rubric);">📋 Historial de versiones</div>
+      <p id="versions-current-label" style="margin:6px 0 0;font-size:12.5px;color:var(--ink-soft);"></p>
+    </div>
+    <div id="versions-body" style="flex:1 1 auto;overflow-y:auto;padding:12px 16px 18px;font-size:13px;line-height:1.5;"></div>
+  </div>
+</div>
+
+<div id="word-search-bar">
+  <div class="ws-input-row">
+    <input id="word-search-input" placeholder="Buscar palabra en la Biblia…" autocomplete="off" spellcheck="false">
+  </div>
+  <div id="word-search-results"></div>
+</div>
+
+<div id="info-modal">
+  <div class="im-card" tabindex="-1">
+    <button type="button" class="im-close" title="Cerrar (Esc)">❌</button>
+    <div class="im-title" id="im-title"></div>
+    <div class="im-sub" id="im-sub"></div>
+    <div class="im-scroll" id="im-scroll" tabindex="0">
+      <div id="im-body"></div>
+    </div>
+    <div class="im-nav" id="im-nav" style="display:none;">
+      <button type="button" id="im-prev">‹ Anterior</button>
+      <button type="button" id="im-next">Siguiente ›</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://apis.google.com/js/api.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="./bible-data.js"></script>
+  <script src="./bible-versions.js"></script>
+  <script src="./book-info.js"></script>
+  <script src="./data/sefer-version.js"></script>
+  <script src="./data/dictionary.js"></script>
+  <script src="./data/genealogy.js"></script>
+  <script src="./data/apocrifos.js"></script>
+  <script src="./data/plan-books.js"></script>
+  <script src="./data/glosario-extra.js"></script>
+  <script src="./js/config.js"></script>
+  <script src="./js/store.js"></script>
+  <script src="./js/nav.js"></script>
+  <script src="./js/reader.js"></script>
+  <script src="./js/selection.js"></script>
+  <script src="./js/search-ref.js"></script>
+  <script src="./js/search-word.js"></script>
+  <script src="./js/notes-favs.js"></script>
+  <script src="./js/meanings.js"></script>
+  <script src="./js/stage.js"></script>
+  <script src="./js/themes.js"></script>
+  <script src="./js/fonts.js"></script>
+  <script src="./js/scroll-rails.js"></script>
+  <script src="./js/versions.js"></script>
+  <script src="./js/plan.js"></script>
+  <script src="./js/glosario.js"></script>
+  <script src="./js/genealogia.js"></script>
+  <script src="./js/apocrifos.js"></script>
+  <script src="./js/youtube.js"></script>
+  <script src="./js/logros.js"></script>
+  <script src="./js/drive.js"></script>
+  <script src="./js/tour.js"></script>
+  <script src="./js/help.js"></script>
+  <script src="./js/shortcuts.js"></script>
+  <script src="./js/mobile.js"></script>
+  <script src="./js/app.js"></script>
+
+</body>
+</html>

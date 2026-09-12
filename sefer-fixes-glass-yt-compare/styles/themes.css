@@ -1,0 +1,728 @@
+/* SEFER — extracted from index.html (no rule changes) */
+
+:root, [data-theme="sandalo"]{--parchment:#1A1612;--parchment-2:#241F1A;--ink:#EDE6D9;--ink-soft:#A89F8E;--rubric:#C75B54;--rubric-soft:#D47A74;--gold:#D4AF37;--gold-soft:#4A3F2A;--line:#3A3228;--stage-bg:#0D0B09;--stage-text:#EFDFAE;--stage-accent:#C0392B;--stage-jump:#D9A441;--stage-jump-text:#1A1204;--card-bg:#2A241C;--jesus:#E8A0A0;--fav:#E74C3C;}
+
+[data-theme="paz"]{--parchment:#F3F7F2;--parchment-2:#E4EFE3;--ink:#1A2E1C;--ink-soft:#4A6350;--rubric:#2E7D4F;--rubric-soft:#4C9A6A;--gold:#3D8B5C;--gold-soft:#C5E0CC;--line:#C8D9C9;--stage-bg:#0F1F14;--stage-text:#E4F0E6;--stage-accent:#5CB87A;--stage-jump:#D4A84B;--stage-jump-text:#1A1204;--card-bg:#ffffff;--jesus:#1E6B3A;--fav:#2E7D4F;}
+
+[data-theme="arena"]{--parchment:#F6F0DF;--parchment-2:#EFE6CC;--ink:#2B241C;--ink-soft:#5B5142;--rubric:#8A2E28;--rubric-soft:#B65750;--gold:#A6822B;--gold-soft:#D8C48B;--line:#D9CCA6;--stage-bg:#141009;--stage-text:#EFDFAE;--stage-accent:#C0392B;--stage-jump:#D9A441;--stage-jump-text:#1A1204;--card-bg:#ffffff;--jesus:#8B1E1E;--fav:#C0392B;}
+
+[data-theme="claro"]{--parchment:#F4F4F4;--parchment-2:#E6E6E6;--ink:#1B1B1B;--ink-soft:#5A5A5A;--rubric:#1B1B1B;--rubric-soft:#444444;--gold:#3D3D3D;--gold-soft:#CFCFCF;--line:#D2D2D2;--stage-bg:#0D0D0D;--stage-text:#EDEDED;--stage-accent:#FFFFFF;--stage-jump:#9A9A9A;--stage-jump-text:#0D0D0D;--card-bg:#ffffff;--jesus:#333333;--fav:#1B1B1B;}
+
+/* Liquid Glass (antes AMOLED) — estilo macOS Tahoe */
+
+[data-theme="amoled"]{
+  --parchment:#dce8f6;
+  --parchment-2:rgba(255,255,255,0.52);
+  --ink:#1a2332;
+  --ink-soft:#5c6b82;
+  --rubric:#0a84ff;
+  --rubric-soft:#5ac8ff;
+  --gold:#0071e3;
+  --gold-soft:rgba(10,132,255,0.14);
+  --line:rgba(255,255,255,0.55);
+  --stage-bg:#0b1220;
+  --stage-text:#f4f7fb;
+  --stage-accent:#64b5ff;
+  --stage-jump:#0a84ff;
+  --stage-jump-text:#ffffff;
+  --card-bg:rgba(255,255,255,0.58);
+  --jesus:#1d4ed8;
+  --fav:#ff375f;
+}
+
+[data-theme="amoled"] .verse.selected{background:rgba(10,132,255,0.14);box-shadow:inset 3px 0 0 #0a84ff;}
+
+[data-theme="amoled"] .verse.active-detail{background:rgba(10,132,255,0.10);box-shadow:inset 3px 0 0 #5ac8ff;}
+
+[data-theme="amoled"] .verse.highlighted{background:rgba(10,132,255,0.18);}
+
+/* Superficies cristal */
+
+body.theme-glass{
+  background:
+    radial-gradient(1000px 600px at 8% 0%, rgba(255,255,255,0.95), transparent 50%),
+    radial-gradient(800px 500px at 95% 10%, rgba(160,200,255,0.55), transparent 48%),
+    radial-gradient(700px 500px at 50% 100%, rgba(200,220,255,0.4), transparent 55%),
+    linear-gradient(160deg, #c5d8f2 0%, #eef4fc 38%, #dceaf8 68%, #b7cef0 100%) !important;
+}
+
+body.theme-glass #nav{
+  background:rgba(255,255,255,0.48) !important;
+  -webkit-backdrop-filter:saturate(190%) blur(32px);
+  backdrop-filter:saturate(190%) blur(32px);
+  border-right:1px solid rgba(255,255,255,0.62) !important;
+  box-shadow:6px 0 28px rgba(30,60,120,0.07);
+}
+
+body.theme-glass #topbar{
+  background:rgba(255,255,255,0.55) !important;
+  -webkit-backdrop-filter:saturate(190%) blur(26px);
+  backdrop-filter:saturate(190%) blur(26px);
+  border-bottom:1px solid rgba(255,255,255,0.58);
+  box-shadow:0 1px 0 rgba(255,255,255,0.45) inset, 0 4px 16px rgba(30,60,120,0.05);
+  position:relative !important;
+  z-index:500 !important;
+}
+
+/* Encabezado del capítulo: tarjeta cristal con curvas, debajo de la toolkit (no debajo en z-index) */
+
+body.theme-glass #reader-sticky-head{
+  background:rgba(255,255,255,0.52) !important;
+  -webkit-backdrop-filter:saturate(190%) blur(22px) !important;
+  backdrop-filter:saturate(190%) blur(22px) !important;
+  border:1px solid rgba(255,255,255,0.65) !important;
+  border-radius:16px !important;
+  margin:10px 14px 8px 10px !important;
+  padding:14px 16px 12px !important;
+  box-shadow:0 1px 0 rgba(255,255,255,0.55) inset, 0 6px 22px rgba(30,60,120,0.08) !important;
+  position:relative !important;
+  top:auto !important;
+  z-index:2 !important;
+  flex:0 0 auto !important;
+  box-sizing:border-box !important;
+}
+
+body.theme-glass #main,
+body.theme-glass #content-wrap,
+body.theme-glass #reader{
+  background:transparent !important;
+}
+
+body.theme-glass #reader{
+  padding-top:2px !important;
+}
+
+body.theme-glass #reader-verses{
+  background:rgba(255,255,255,0.28);
+  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,0.45);
+  box-shadow:0 8px 32px rgba(40,80,140,0.08);
+  margin:4px 14px 12px 10px;
+}
+
+body.theme-glass .btn,
+body.theme-glass .btn-icon{
+  background:rgba(255,255,255,0.55) !important;
+  border:1px solid rgba(255,255,255,0.65) !important;
+  color:var(--ink) !important;
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
+  box-shadow:0 1px 2px rgba(30,60,120,0.06), inset 0 1px 0 rgba(255,255,255,0.7);
+  border-radius:10px;
+}
+
+body.theme-glass .btn:hover,
+body.theme-glass .btn-icon:hover{
+  background:rgba(255,255,255,0.78) !important;
+  border-color:rgba(255,255,255,0.9) !important;
+}
+
+body.theme-glass .btn.primary,
+body.theme-glass #project-btn{
+  background:linear-gradient(180deg, #3b9bff 0%, #0a84ff 100%) !important;
+  color:#fff !important;
+  border:1px solid rgba(255,255,255,0.35) !important;
+  box-shadow:0 2px 10px rgba(10,132,255,0.35);
+}
+
+body.theme-glass input[type="text"],
+body.theme-glass input:not([type]),
+body.theme-glass textarea{
+  background:rgba(255,255,255,0.55) !important;
+  border:1px solid rgba(255,255,255,0.65) !important;
+  color:var(--ink) !important;
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  border-radius:12px;
+}
+
+/* Buscador de versículos: cristal mate (menos transparente, más blur) */
+
+body.theme-glass #ref-search-wrap{
+  background:rgba(245,248,252,0.92) !important;
+  border:1px solid rgba(255,255,255,0.85) !important;
+  border-radius:12px !important;
+  -webkit-backdrop-filter:saturate(160%) blur(20px) !important;
+  backdrop-filter:saturate(160%) blur(20px) !important;
+  box-shadow:0 1px 0 rgba(255,255,255,0.9) inset, 0 4px 16px rgba(30,60,120,0.08) !important;
+  padding:0 !important;
+  overflow:hidden;
+}
+
+body.theme-glass #ref-search{
+  background:transparent !important;
+  border:none !important;
+  color:var(--ink) !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+  border-radius:12px !important;
+  box-shadow:none !important;
+}
+
+body.theme-glass #ref-search:focus{
+  background:transparent !important;
+  outline:none !important;
+}
+
+body.theme-glass #ref-search-wrap.focused,
+body.theme-glass #ref-search-wrap:focus-within{
+  border-color:rgba(10,132,255,0.45) !important;
+  box-shadow:0 1px 0 rgba(255,255,255,0.95) inset, 0 0 0 3px rgba(10,132,255,0.15), 0 4px 16px rgba(30,60,120,0.1) !important;
+}
+
+body.theme-glass #ref-ph-anim{
+  color:rgba(60,80,110,0.55) !important;
+}
+
+body.theme-glass #ref-suggest{
+  background:rgba(250,252,255,0.95) !important;
+  -webkit-backdrop-filter:blur(18px) !important;
+  backdrop-filter:blur(18px) !important;
+  border:1px solid rgba(255,255,255,0.8) !important;
+}
+
+body.theme-glass .im-card,
+body.theme-glass #side,
+body.theme-glass .side-panel,
+body.theme-glass #sefer-tour-card{
+  background:rgba(255,255,255,0.62) !important;
+  -webkit-backdrop-filter:saturate(180%) blur(28px);
+  backdrop-filter:saturate(180%) blur(28px);
+  border:1px solid rgba(255,255,255,0.65) !important;
+  box-shadow:0 12px 40px rgba(30,60,120,0.12);
+  border-radius:16px;
+}
+
+body.theme-glass #book-list .book-item{
+  background:rgba(255,255,255,0.90) !important;
+  border:1px solid rgba(255,255,255,0.75) !important;
+  /* altura/padding iguales a otros temas */
+}
+
+body.theme-glass #book-list .book-item:hover,
+body.theme-glass #book-list .book-item.active{
+  background:rgba(255,255,255,0.72);
+  border-color:rgba(10,132,255,0.4);
+}
+
+/* Capítulos en Glass: solo apariencia (mismo tamaño base) */
+
+body.theme-glass .chap-pill,
+body.theme-glass #book-list .chap-btn,
+body.theme-glass #book-list .chap-pill{
+  border-radius:50% !important;
+  background:rgba(255,255,255,0.55) !important;
+  border:1px solid rgba(255,255,255,0.75) !important;
+  box-shadow:0 1px 3px rgba(30,60,120,0.08), inset 0 1px 0 rgba(255,255,255,0.85);
+  -webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(8px);
+}
+
+body.theme-glass .chap-pill:hover,
+body.theme-glass #book-list .chap-btn:hover,
+body.theme-glass #book-list .chap-pill:hover{
+  background:rgba(255,255,255,0.9) !important;
+  border-color:rgba(10,132,255,0.45) !important;
+  color:#0a84ff !important;
+}
+
+body.theme-glass .chap-pill.active,
+body.theme-glass #book-list .chap-btn.active,
+body.theme-glass #book-list .chap-pill.active{
+  background:linear-gradient(180deg, #3b9bff 0%, #0a84ff 100%) !important;
+  border-color:rgba(255,255,255,0.4) !important;
+  color:#fff !important;
+  box-shadow:0 2px 10px rgba(10,132,255,0.35);
+}
+
+/* Toolkit: grupos más visibles */
+
+body.theme-glass .tb-group{
+  display:inline-flex !important;
+  align-items:center;
+  gap:4px;
+  padding:4px 6px;
+  margin:0 2px;
+  background:rgba(255,255,255,0.35);
+  border:1px solid rgba(255,255,255,0.55);
+  border-radius:16px;
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px);
+  box-shadow:0 1px 4px rgba(30,60,120,0.06), inset 0 1px 0 rgba(255,255,255,0.65);
+}
+
+body.theme-glass #topbar-actions{
+  gap:8px !important;
+}
+
+body.theme-glass .tb-group .btn,
+body.theme-glass .tb-group .btn-icon{
+  margin:0 !important;
+}
+
+body.theme-glass .theme-dot{
+  box-shadow:0 0 0 1px rgba(255,255,255,0.7), 0 2px 6px rgba(30,60,120,0.12);
+}
+
+body.theme-glass .theme-dot[data-t="amoled"]{
+  background:linear-gradient(135deg, #e8f3ff, #a8cfff 55%, #7eb6ff);
+}
+
+body.theme-glass .sefer-sb{
+  background:rgba(255,255,255,0.4) !important;
+  border-left:1px solid rgba(255,255,255,0.5) !important;
+}
+
+body.theme-glass .sefer-sb-btn{
+  background:rgba(255,255,255,0.45) !important;
+  color:var(--ink-soft) !important;
+}
+
+body.theme-glass .sefer-sb-track{
+  background:rgba(255,255,255,0.25) !important;
+}
+
+body.theme-glass .sefer-sb-thumb{
+  background:rgba(90,120,160,0.45) !important;
+  border:1px solid rgba(255,255,255,0.5) !important;
+}
+
+body.theme-glass #stage{
+  background:radial-gradient(ellipse at center, #152238 0%, #0b1220 70%) !important;
+}
+
+body.theme-glass .brand,
+body.theme-glass #nav-header .brand{
+  color:#0a84ff;
+  text-shadow:0 1px 0 rgba(255,255,255,0.5);
+}
+
+body.theme-glass .book-title{ color:#0a84ff; }
+
+body.theme-glass .chap-title{ color:var(--ink); }
+
+body.theme-glass #select-hint{ color:var(--ink-soft); }
+
+/* Proyección legible: sin vidrio excesivo sobre el texto */
+
+body.theme-glass #stage .stage-verse,
+body.theme-glass #stage .stage-ref{
+  text-shadow:0 2px 12px rgba(0,0,0,0.35);
+}
+
+/* Controles estilo Apple (solo Glass) */
+
+body.theme-glass .btn,
+body.theme-glass .btn-icon{
+  /* solo apariencia: sin cambiar tamaño */
+  font-weight:500;
+  letter-spacing:0.01em;
+}
+
+body.theme-glass #nav-header-actions .nav-action-btn{
+  border-radius:50%;
+  background:rgba(255,255,255,0.55) !important;
+  border:1px solid rgba(255,255,255,0.7) !important;
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
+  box-shadow:0 1px 3px rgba(30,60,120,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+body.theme-glass #nav-header-actions .nav-action-btn:hover{
+  background:rgba(255,255,255,0.82) !important;
+}
+
+body.theme-glass .theme-more-btn,
+body.theme-glass .random-verse-btn{
+  border-radius:50% !important;
+  border:1px solid rgba(255,255,255,0.7) !important;
+  background:rgba(255,255,255,0.55) !important;
+  color:#0a84ff !important;
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
+  box-shadow:0 1px 3px rgba(30,60,120,0.08);
+}
+
+body.theme-glass .theme-more-btn:hover,
+body.theme-glass .random-verse-btn:hover{
+  background:rgba(255,255,255,0.85) !important;
+}
+
+body.theme-glass #stage .jesus-words{color:#7ec8ff !important;}
+
+[data-theme="eden"]{--parchment:#F3F6EE;--parchment-2:#E8EEDF;--ink:#2C3B2A;--ink-soft:#5A6B55;--rubric:#5B7A4A;--rubric-soft:#7A9A68;--gold:#A68B3C;--gold-soft:#D4C89A;--line:#C9D4B8;--stage-bg:#1A2218;--stage-text:#E8F0E0;--stage-accent:#7A9A68;--stage-jump:#C9A84A;--stage-jump-text:#1A1608;--card-bg:#ffffff;--jesus:#4A6B3A;--fav:#6B8A4A;}
+
+[data-theme="reino"]{--parchment:#0F1A2E;--parchment-2:#16233A;--ink:#E8E4D8;--ink-soft:#9AA3B5;--rubric:#C9A227;--rubric-soft:#D4B84A;--gold:#E0C35A;--gold-soft:#3A3218;--line:#2A3A55;--stage-bg:#0A1220;--stage-text:#F0EAD8;--stage-accent:#C9A227;--stage-jump:#E0C35A;--stage-jump-text:#1A1204;--card-bg:#1A283F;--jesus:#E8C070;--fav:#C9A227;}
+
+[data-theme="reino"] .verse.selected{background:rgba(201,162,39,0.22);box-shadow:inset 3px 0 0 #C9A227;}
+
+[data-theme="reino"] .verse.active-detail{background:rgba(201,162,39,0.15);box-shadow:inset 3px 0 0 #C9A227;}
+
+[data-theme="reino"] .verse.highlighted{background:rgba(201,162,39,0.28);}
+
+[data-theme="reino"] #stage .jesus-words{color:#E8C070;}
+
+[data-theme="eden"] #stage .jesus-words{color:#A8C898;}
+
+[data-theme="lwm-day"]{--parchment:#F0F5FA;--parchment-2:#E2EBF4;--ink:#0A2540;--ink-soft:#4A657A;--rubric:#0B5CAB;--rubric-soft:#2B7BC7;--gold:#1A7AD4;--gold-soft:#C5DCF0;--line:#C5D4E3;--stage-bg:#0A1A2E;--stage-text:#E8F0F8;--stage-accent:#3D9AE8;--stage-jump:#F2A65A;--stage-jump-text:#1A1204;--card-bg:#ffffff;--jesus:#0B4A8A;--fav:#0B5CAB;}
+
+[data-theme="lwm-night"]{--parchment:#0A1628;--parchment-2:#122033;--ink:#E8F0F8;--ink-soft:#8AA0B5;--rubric:#5BA3E0;--rubric-soft:#7BB8EA;--gold:#3D9AE8;--gold-soft:#1A3A55;--line:#1E3348;--stage-bg:#060E18;--stage-text:#E8F0F8;--stage-accent:#5BA3E0;--stage-jump:#F2A65A;--stage-jump-text:#1A1204;--card-bg:#152538;--jesus:#8BC4F0;--fav:#5BA3E0;}
+
+[data-theme="lwm-night"] .verse.selected{background:rgba(61,154,232,0.22);box-shadow:inset 3px 0 0 #3D9AE8;}
+
+[data-theme="lwm-night"] .verse.active-detail{background:rgba(91,163,224,0.15);box-shadow:inset 3px 0 0 #5BA3E0;}
+
+[data-theme="lwm-night"] .verse.highlighted{background:rgba(91,163,224,0.28);}
+
+[data-theme="lwm-night"] #stage .jesus-words{color:#8BC4F0;}
+
+[data-theme="lwm-day"] #stage .jesus-words{color:#0B4A8A;}
+
+[data-theme="ucrania"]{--parchment:#F5F8FC;--parchment-2:#E8F0FA;--ink:#0A1F3D;--ink-soft:#2C4A6E;--rubric:#0057B7;--rubric-soft:#2E75C8;--gold:#FFD700;--gold-soft:#FFF3B0;--line:#C5D4E8;--stage-bg:#0A1628;--stage-text:#F5F8FC;--stage-accent:#FFD700;--stage-jump:#FFD700;--stage-jump-text:#0A1F3D;--card-bg:#ffffff;--jesus:#0057B7;--fav:#0057B7;}
+
+[data-theme="ucrania"] .testament-label, [data-theme="ucrania"] #reader .book-title, [data-theme="ucrania"] .verse .vnum, [data-theme="ucrania"] .result-ref, [data-theme="ucrania"] .welcome-brand .brand-heb, [data-theme="ucrania"] .welcome .welcome-heb, [data-theme="ucrania"] .brand-heb, [data-theme="ucrania"] #selection-info, [data-theme="ucrania"] .note-flag{color:var(--rubric) !important;}
+
+[data-theme="ucrania"] .btn.primary, [data-theme="ucrania"] .plan-mode-btn.active, [data-theme="ucrania"] .plan-order-btn.active{background:var(--gold);border-color:#E6C200;color:#0A1F3D;}
+
+[data-theme="ucrania"] .btn.primary:hover{background:#FFE44D;color:#0A1F3D;}
+
+[data-theme="ucrania"] #stage .jesus-words{color:#FFD700;}
+
+[data-theme="mexico"]{--parchment:#F8F5F0;--parchment-2:#EFE8DC;--ink:#1A2E1A;--ink-soft:#4A5C4A;--rubric:#006847;--rubric-soft:#2A8A62;--gold:#CE1126;--gold-soft:#F0C4C8;--line:#D4C9B8;--stage-bg:#0F1A12;--stage-text:#F0EDE6;--stage-accent:#CE1126;--stage-jump:#CE1126;--stage-jump-text:#fff;--card-bg:#ffffff;--jesus:#006847;--fav:#CE1126;}
+
+[data-theme="mexico"] #stage .jesus-words{color:#CE1126;}
+
+[data-theme="corea"]{--parchment:#FAF7F7;--parchment-2:#F0E8E8;--ink:#1A1520;--ink-soft:#5A4A55;--rubric:#CD2E3A;--rubric-soft:#E05A64;--gold:#0047A0;--gold-soft:#B8D0F0;--line:#E0D0D0;--stage-bg:#120A10;--stage-text:#F8F0F0;--stage-accent:#CD2E3A;--stage-jump:#0047A0;--stage-jump-text:#fff;--card-bg:#ffffff;--jesus:#CD2E3A;--fav:#CD2E3A;}
+
+[data-theme="corea"] #stage .jesus-words{color:#CD2E3A;}
+
+[data-theme="paz"] #stage .jesus-words{color:#5CB87A;}
+
+[data-theme="claro"] #stage .jesus-words{color:#CFCFCF;}
+
+[data-theme="amoled"] #stage .jesus-words{color:#FF8A80;}
+
+body.theme-glass #version-btn,
+body.theme-glass #version-menu{
+  background:rgba(245,248,252,0.92)!important;
+  border-color:rgba(255,255,255,0.85)!important;
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+}
+
+/* Buscador de palabras (spotlight): cristal mate como el buscador de versículos */
+
+body.theme-glass #word-search-bar{
+  background:rgba(245,248,252,0.92) !important;
+  border:1px solid rgba(255,255,255,0.85) !important;
+  border-radius:16px !important;
+  -webkit-backdrop-filter:saturate(160%) blur(20px) !important;
+  backdrop-filter:saturate(160%) blur(20px) !important;
+  box-shadow:0 1px 0 rgba(255,255,255,0.9) inset, 0 12px 40px rgba(30,60,120,0.14) !important;
+  overflow:hidden;
+}
+
+body.theme-glass #word-search-bar .ws-input-row{
+  background:transparent !important;
+  border-bottom:1px solid rgba(255,255,255,0.55) !important;
+}
+
+body.theme-glass #word-search-input{
+  background:transparent !important;
+  color:var(--ink) !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+}
+
+body.theme-glass #word-search-input::placeholder{
+  color:rgba(60,80,110,0.55) !important;
+}
+
+body.theme-glass #word-search-results{
+  background:rgba(250,252,255,0.88) !important;
+  -webkit-backdrop-filter:blur(14px) !important;
+  backdrop-filter:blur(14px) !important;
+}
+
+body.theme-glass #word-search-results .result-item:hover,
+body.theme-glass #word-search-results .ws-hit:hover{
+  background:rgba(10,132,255,0.08) !important;
+}
+
+body.theme-glass #mobile-word-search-wrap input{
+  background:rgba(245,248,252,0.92) !important;
+  border:1px solid rgba(255,255,255,0.85) !important;
+  -webkit-backdrop-filter:saturate(160%) blur(16px) !important;
+  backdrop-filter:saturate(160%) blur(16px) !important;
+  color:var(--ink) !important;
+}
+
+body.theme-glass #help-btn{
+  background:rgba(245,248,252,0.95) !important;
+  border:1px solid rgba(255,255,255,0.85) !important;
+  box-shadow:-8px 0 14px rgba(245,248,252,0.9) !important;
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
+}
+
+/* ===== GLASS v2: mate + blur, SIN agrandar UI ===== */
+
+body.theme-glass{
+  /* variables base opacas */
+}
+
+body.theme-glass #nav,
+body.theme-glass #topbar,
+body.theme-glass #reader-sticky-head,
+body.theme-glass .im-card,
+body.theme-glass #side,
+body.theme-glass .side-panel,
+body.theme-glass #sefer-tour-card,
+body.theme-glass #word-search-bar,
+body.theme-glass #ref-search-wrap,
+body.theme-glass #version-btn,
+body.theme-glass #version-menu,
+body.theme-glass #font-family-menu,
+body.theme-glass #project-sheet .ps-card,
+body.theme-glass #info-modal .im-card{
+  background:rgba(248,250,253,0.94) !important;
+  border-color:rgba(255,255,255,0.88) !important;
+  -webkit-backdrop-filter:saturate(150%) blur(18px) !important;
+  backdrop-filter:saturate(150%) blur(18px) !important;
+}
+
+body.theme-glass #reader-verses{
+  background:rgba(248,250,253,0.90) !important;
+  border:1px solid rgba(255,255,255,0.80) !important;
+  -webkit-backdrop-filter:blur(16px) !important;
+  backdrop-filter:blur(16px) !important;
+  /* sin márgenes extra que agranden el layout */
+  margin:0 !important;
+  border-radius:12px !important;
+  box-shadow:0 4px 16px rgba(30,60,120,0.06) !important;
+}
+
+body.theme-glass #book-list .book-item{
+  background:rgba(255,255,255,0.90) !important;
+  border:1px solid rgba(255,255,255,0.75) !important;
+  /* altura/padding iguales a otros temas */
+}
+
+body.theme-glass .tb-group{
+  /* solo borde/fondo, SIN padding/margin extra */
+  padding:0 !important;
+  margin:0 !important;
+  gap:inherit !important;
+  background:transparent !important;
+  border:none !important;
+  border-radius:0 !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+  box-shadow:none !important;
+}
+
+body.theme-glass .btn,
+body.theme-glass .btn-icon,
+body.theme-glass #help-btn{
+  /* no cambiar tamaño respecto a otros temas */
+  font-size:inherit !important;
+  padding:inherit !important;
+  min-width:unset !important;
+  min-height:unset !important;
+  border-radius:8px !important;
+  background:rgba(255,255,255,0.90) !important;
+  border:1px solid rgba(255,255,255,0.80) !important;
+  -webkit-backdrop-filter:blur(12px) !important;
+  backdrop-filter:blur(12px) !important;
+}
+
+body.theme-glass #nav-header-actions .nav-action-btn,
+body.theme-glass .theme-more-btn,
+body.theme-glass .random-verse-btn{
+  /* apariencia sin forzar width/height */
+  width:auto !important;
+  height:auto !important;
+  min-width:unset !important;
+  min-height:unset !important;
+  background:rgba(255,255,255,0.90) !important;
+  border:1px solid rgba(255,255,255,0.80) !important;
+  -webkit-backdrop-filter:blur(12px) !important;
+  backdrop-filter:blur(12px) !important;
+}
+
+body.theme-glass .chap-pill,
+body.theme-glass #book-list .chap-btn,
+body.theme-glass #book-list .chap-pill{
+  /* círculo visual pero mismo box que otros temas */
+  border-radius:50% !important;
+  background:rgba(255,255,255,0.90) !important;
+  border:1px solid rgba(255,255,255,0.80) !important;
+  -webkit-backdrop-filter:blur(8px) !important;
+  backdrop-filter:blur(8px) !important;
+  box-shadow:none !important;
+}
+
+body.theme-glass #reader{
+  padding-top:0 !important;
+}
+
+body.theme-glass #help-btn{
+  font-size:11px !important;
+  padding:5px 8px !important;
+  background:rgba(248,250,253,0.96) !important;
+}
+
+/* Glass: mismos tamaños de libro que el resto (solo color) */
+
+body.theme-glass #book-list .book-item,
+body.theme-glass .book-item{
+  padding:unset !important;
+  margin:0 !important;
+  line-height:inherit !important;
+  min-height:0 !important;
+  height:auto !important;
+  border-radius:6px !important;
+  background:rgba(255,255,255,0.90) !important;
+  border:1px solid rgba(255,255,255,0.75) !important;
+}
+
+body.theme-glass #book-list .book-item .book-name,
+body.theme-glass .book-item span,
+body.theme-glass #book-list .book-btn{
+  line-height:inherit !important;
+  padding-top:0 !important;
+  padding-bottom:0 !important;
+  font-size:inherit !important;
+}
+
+body.theme-glass .book-item,
+body.theme-glass #book-list .book-item{
+  min-height:var(--book-item-h) !important;
+  height:auto !important;
+  padding:var(--book-item-py) var(--book-item-px) !important;
+  width:auto !important;
+  margin:0 !important;
+}
+
+body.theme-glass .chap-pill,
+body.theme-glass #book-list .chap-btn,
+body.theme-glass #book-list .chap-pill{
+  width:var(--chapter-size) !important;
+  height:var(--chapter-size) !important;
+  min-width:var(--chapter-size) !important;
+  min-height:var(--chapter-size) !important;
+  max-width:var(--chapter-size) !important;
+  max-height:var(--chapter-size) !important;
+  padding:0 !important;
+  margin:0 !important;
+}
+
+
+/* Glass: apariencia only — no size changes */
+body.theme-glass .book-item,
+body.theme-glass #book-list .book-item{
+  min-height:var(--book-item-h) !important;
+  padding:var(--book-item-py) var(--book-item-px) !important;
+  font-size:12.5px !important;
+  width:auto !important;
+  height:auto !important;
+}
+body.theme-glass .chap-pill,
+body.theme-glass #book-list .chap-btn,
+body.theme-glass #book-list .chap-pill{
+  width:var(--chapter-size) !important;
+  height:var(--chapter-size) !important;
+  min-width:var(--chapter-size) !important;
+  min-height:var(--chapter-size) !important;
+  padding:0 !important;
+}
+
+
+/* Resaltar: siempre claro y acorde al tema */
+[data-theme="mexico"]{ --sefer-hl: rgba(255, 220, 140, 0.55); --sefer-hl-border: rgba(180, 120, 40, 0.3); }
+[data-theme="korea"], [data-theme="corea"]{ --sefer-hl: rgba(255, 200, 210, 0.5); --sefer-hl-border: rgba(180, 60, 80, 0.25); }
+[data-theme="ucrania"]{ --sefer-hl: rgba(255, 236, 150, 0.55); --sefer-hl-border: rgba(180, 150, 40, 0.3); }
+[data-theme="lwm-day"], [data-theme="day"]{ --sefer-hl: rgba(255, 236, 160, 0.55); --sefer-hl-border: rgba(160, 130, 40, 0.28); }
+[data-theme="lwm-night"], [data-theme="night"]{ --sefer-hl: rgba(255, 220, 120, 0.4); --sefer-hl-border: rgba(220, 180, 60, 0.35); }
+[data-theme="reino"]{ --sefer-hl: rgba(200, 230, 255, 0.5); --sefer-hl-border: rgba(60, 120, 180, 0.3); }
+[data-theme="eden"]{ --sefer-hl: rgba(190, 235, 190, 0.55); --sefer-hl-border: rgba(50, 130, 70, 0.28); }
+[data-theme="arena"]{ --sefer-hl: rgba(255, 228, 170, 0.55); --sefer-hl-border: rgba(160, 120, 50, 0.3); }
+[data-theme="sandalo"]{ --sefer-hl: rgba(255, 210, 140, 0.4); --sefer-hl-border: rgba(200, 140, 60, 0.35); }
+[data-theme="amoled"]{ --sefer-hl: rgba(180, 220, 255, 0.45); --sefer-hl-border: rgba(80, 150, 220, 0.35); }
+[data-theme="paz"]{ --sefer-hl: rgba(200, 235, 210, 0.55); --sefer-hl-border: rgba(50, 120, 70, 0.28); }
+[data-theme="claro"]{ --sefer-hl: rgba(255, 240, 160, 0.55); --sefer-hl-border: rgba(160, 140, 40, 0.3); }
+
+
+
+
+
+/* Capítulos en círculo (lote Glass) — medidas unificadas, solo forma */
+body.theme-glass .chap-pill,
+body.theme-glass #book-list .chap-btn,
+body.theme-glass #book-list .chap-pill{
+  border-radius: 50% !important;
+}
+body.theme-glass .btn,
+body.theme-glass .btn-icon,
+body.theme-glass .theme-dot{
+  border-radius: 12px !important;
+}
+body.theme-glass #nav,
+body.theme-glass #topbar,
+body.theme-glass .sticky-head,
+body.theme-glass #reader-sticky-head{
+  -webkit-backdrop-filter: saturate(180%) blur(18px) !important;
+  backdrop-filter: saturate(180%) blur(18px) !important;
+}
+
+
+/* ===== Glass FORZADO lote 2 (Night / Mex / Ukr / Kor + Day) ===== */
+body.theme-glass #nav,
+body.theme-glass #main,
+body.theme-glass #topbar,
+body.theme-glass #content-wrap,
+body.theme-glass .sticky-head,
+body.theme-glass #reader-sticky-head,
+body.theme-glass #side,
+body.theme-glass .im-card,
+body.theme-glass #ref-search-wrap{
+  -webkit-backdrop-filter: saturate(180%) blur(20px) !important;
+  backdrop-filter: saturate(180%) blur(20px) !important;
+  background-color: color-mix(in srgb, var(--parchment) 72%, transparent) !important;
+  border-color: color-mix(in srgb, var(--line) 70%, transparent) !important;
+}
+body.theme-glass #nav{
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--parchment) 78%, transparent), color-mix(in srgb, var(--parchment-2) 65%, transparent)) !important;
+}
+body.theme-glass .chap-pill,
+body.theme-glass #book-list .chap-btn,
+body.theme-glass #book-list .chap-pill,
+body.theme-glass .chap-btn{
+  border-radius: 50% !important;
+  background: color-mix(in srgb, var(--parchment) 55%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.35) !important;
+}
+body.theme-glass .btn,
+body.theme-glass .btn-icon,
+body.theme-glass .theme-dot,
+body.theme-glass .book-item{
+  border-radius: 12px !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  backdrop-filter: blur(8px) !important;
+}
+body.theme-glass .book-item{
+  background: color-mix(in srgb, var(--parchment) 60%, transparent) !important;
+}
+body.theme-glass #book-list .book-item:hover,
+body.theme-glass #book-list .book-item.active{
+  background: color-mix(in srgb, var(--gold-soft) 80%, transparent) !important;
+}
+body.theme-glass[data-theme="lwm-night"] #nav,
+body.theme-glass[data-theme="lwm-night"] #topbar{
+  background: rgba(20, 24, 32, 0.55) !important;
+}
