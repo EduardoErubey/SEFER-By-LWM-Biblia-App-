@@ -103,7 +103,7 @@ async function seferSetBibleVersion(id, opts){
     }
   }catch(err){
     console.error('[SEFER] versión', err);
-    alert('No se pudo cargar la versión seleccionada. ¿Subiste los archivos bible/bible-data-*.js en la carpeta bible/ del repositorio?\n\n'+err.message);
+    alert('No se pudo cargar la versión seleccionada. ¿Subiste los archivos archivos en la carpeta bible/ (bible-data-*.js, etc.)?\n\n'+err.message);
   }
 }
 
