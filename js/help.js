@@ -13,7 +13,7 @@ function openSeferHelp(){
   const isGlass = (typeof currentTheme !== 'undefined' && glassThemes.indexOf(currentTheme) >= 0);
 
   const ic = {
-    perfil: isGlass ? '👤' : '🏆',
+    perfil: '🏆',
     nube: '☁️',
     full: '⛶',
     reset: '↺',

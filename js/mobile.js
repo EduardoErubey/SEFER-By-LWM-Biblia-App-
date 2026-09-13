@@ -116,13 +116,13 @@
   };
 })();
 
-/* Iconos estilo Apple/macOS/iOS solo en tema Glass (amoled); el resto conserva los originales */
+/* Iconos estilo Apple/macOS/iOS solo en tema Glass (amoled); el resto conserva los originales.
+   SEFER FIX: 'btn-user-profile' (trofeo) y 'random-verse-btn' (dado) se quitaron de este
+   mapa a pedido — deben verse igual (🏆 y 🎲) en TODOS los temas, incluido Day Glass. */
 const SEFER_GLASS_ICONS = {
-  'btn-user-profile': '👤',
   'btn-login-google': '☁️',
   'fullscreen-btn': '⛶',
   'nav-toggle': '↺',
-  'random-verse-btn': '🔀',
   'easy-btn': '✨ Destacar',
   'meanings-btn': '📑 Significados',
   'notes-btn': '✏️ Notas',
@@ -137,9 +137,10 @@ const SEFER_GLASS_ICONS = {
 
 function seferUpdateDiceEmoji(){
   try{
-    const glass = (typeof currentTheme !== 'undefined' && currentTheme === 'amoled');
-    const emoji = glass ? '🔀' : '🎲';
-    const tip = glass ? 'Versículo al azar (barajar)' : 'Versículo aleatorio';
+    /* SEFER FIX: el dado siempre es 🎲, en todos los temas (antes cambiaba
+       a 🔀 en Day Glass). */
+    const emoji = '🎲';
+    const tip = 'Versículo aleatorio';
     const main = document.getElementById('random-verse-btn');
     if(main){
       main.textContent = emoji;
@@ -149,7 +150,7 @@ function seferUpdateDiceEmoji(){
     const stageDice = document.getElementById('stage-dice-btn');
     if(stageDice){
       stageDice.textContent = emoji;
-      stageDice.setAttribute('title', glass ? 'Otro al azar' : 'Otro versículo al azar');
+      stageDice.setAttribute('title', 'Otro versículo al azar');
     }
   }catch(e){}
 }
