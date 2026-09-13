@@ -1,3 +1,4 @@
+var lastCheckedVerse = null;
 /* SEFER module: selection.js — script clásico (sin import/export) */
 
 /* --- SEFER selection.js lines 995-1287 --- */
@@ -211,8 +212,7 @@ function renderReader(){
       }
     };
 
-    const sortedSel = (selectedVerses || []).map(String).sort((a,b)=> (+a) - (+b));
-    const isLastSelected = isSelected && sortedSel.length && String(sortedSel[sortedSel.length - 1]) === String(vnum);
+    const isLastSelected = isSelected && selectedVerses.length > 0 && String(lastCheckedVerse || selectedVerses[selectedVerses.length-1]) === String(vnum);
     if(detailVerse === vnum || isLastSelected){
       const actions = document.createElement('div');
       actions.className = 'verse-actions';
@@ -360,11 +360,23 @@ function setVerseSelected(vnum, on){
   const i = selectedVerses.indexOf(vnum);
   if(on && i === -1) selectedVerses.push(vnum);
   if(!on && i !== -1) selectedVerses.splice(i,1);
+  if(on){
+    lastCheckedVerse = String(vnum);
+    detailVerse = String(vnum); // Favorito, Nota y Copiar en el mismo versículo
+  } else {
+    if(String(lastCheckedVerse) === String(vnum)){
+      // pasar Copiar a la última casilla que siga marcada (orden de selección)
+      const rest = selectedVerses.map(String);
+      lastCheckedVerse = rest.length ? rest[rest.length - 1] : null;
+      detailVerse = lastCheckedVerse;
+    }
+  }
   if(selectedVerses.length === 0){
     if(clearSelBtn){ clearSelBtn.classList.remove('is-visible'); clearSelBtn.style.visibility = 'hidden'; }
     if(bar) bar.classList.remove('has-sel');
     if(easyBtn) easyBtn.style.display = '';
     selectionUIActive = false;
+    lastCheckedVerse = null;
   } else {
     if(clearSelBtn){ clearSelBtn.classList.add('is-visible'); clearSelBtn.style.visibility = 'visible'; }
     if(bar) bar.classList.add('has-sel');
