@@ -525,11 +525,9 @@ body.theme-glass .tb-group{
 body.theme-glass .btn,
 body.theme-glass .btn-icon,
 body.theme-glass #help-btn{
-  /* no cambiar tamaño respecto a otros temas */
-  font-size:inherit !important;
-  padding:inherit !important;
-  min-width:unset !important;
-  min-height:unset !important;
+  /* SEFER FIX: font-size/padding/min-width/min-height quedan SIN tocar aquí
+     (antes usaban "inherit"/"unset", lo que en la práctica sí cambiaba el
+     tamaño respecto a los temas clásicos). Solo apariencia. */
   border-radius:8px !important;
   background:rgba(255,255,255,0.90) !important;
   border:1px solid rgba(255,255,255,0.80) !important;
@@ -540,11 +538,9 @@ body.theme-glass #help-btn{
 body.theme-glass #nav-header-actions .nav-action-btn,
 body.theme-glass .theme-more-btn,
 body.theme-glass .random-verse-btn{
-  /* apariencia sin forzar width/height */
-  width:auto !important;
-  height:auto !important;
-  min-width:unset !important;
-  min-height:unset !important;
+  /* SEFER FIX: se quitó width/height/min-width/min-height (antes en
+     "auto"/"unset"), que rompía el tamaño fijo de 30px/28px de los temas
+     clásicos. Solo apariencia. */
   background:rgba(255,255,255,0.90) !important;
   border:1px solid rgba(255,255,255,0.80) !important;
   -webkit-backdrop-filter:blur(12px) !important;
