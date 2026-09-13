@@ -60,7 +60,7 @@ function renderReader(){
   ct.textContent = detailVerse ? ('Versículo ' + detailVerse) : ('Capítulo ' + currentChap);
   const hint = document.createElement('div');
   hint.id = 'select-hint';
-  hint.textContent = 'Toca un versículo para ver opciones (favorito o nota). Doble clic en una palabra para ver su significado. Marca la casilla para elegir varios versículos.';
+  hint.textContent = 'Toca un versículo: favorito o nota. Marca casillas para seleccionar. En la última casilla aparece Copiar (referencia y texto). Doble clic en una palabra: significado.';
   const titleRow = document.createElement('div');
   titleRow.id = 'reader-title-row';
   titleRow.className = 'reader-title-row';
@@ -158,16 +158,13 @@ function renderReader(){
 
     const activateVerse = (e)=>{
       if(e && (e.target.closest('.vaction') || e.target.closest('.note-box') || e.target.closest('.verse-check'))) return;
-      const sel = window.getSelection();
-      if(e && e.type === 'click' && sel && sel.toString().trim().length > 0) return;
+      try{ window.getSelection && window.getSelection().removeAllRanges(); }catch(_e){}
       if(e && e.target && e.target.classList && e.target.classList.contains('w')){
-        // Un clic en palabra solo abre el versículo (significado = doble clic)
         detailVerse = vnum;
         selectionUIActive = true;
         renderReader();
         return;
       }
-      // Clic en versículo: abre acciones y muestra casilla de ese versículo
       if(detailVerse === vnum){
         detailVerse = null;
         if(selectedVerses.length === 0) selectionUIActive = false;
@@ -177,7 +174,7 @@ function renderReader(){
       }
       renderReader();
       requestAnimationFrame(()=>{
-        const el = reader.querySelector(`.verse[data-vnum="${vnum}"]`);
+        const el = reader.querySelector('.verse[data-vnum="'+vnum+'"]');
         if(el) el.focus({preventScroll:true});
       });
     };
@@ -206,7 +203,6 @@ function renderReader(){
         const next = rows[i + (e.key === 'ArrowDown' ? 1 : -1)];
         if(next){ next.focus(); next.scrollIntoView({block:'nearest'}); }
       }
-      // Supr / Backspace: quitar favorito del versículo enfocado
       if((e.key === 'Delete' || e.key === 'Backspace') && favorites[id]){
         e.preventDefault();
         delete favorites[id];
@@ -215,86 +211,78 @@ function renderReader(){
       }
     };
 
-    if(detailVerse === vnum){
+    const sortedSel = (selectedVerses || []).map(String).sort((a,b)=> (+a) - (+b));
+    const isLastSelected = isSelected && sortedSel.length && String(sortedSel[sortedSel.length - 1]) === String(vnum);
+    if(detailVerse === vnum || isLastSelected){
       const actions = document.createElement('div');
       actions.className = 'verse-actions';
+      actions.style.display = 'flex';
 
-      const favBtn = document.createElement('div');
-      favBtn.className = 'vaction' + (favorites[id] ? ' on':'');
-      favBtn.textContent = favorites[id] ? '♥ Favorito' : '♡ Favorito';
-      favBtn.onclick = (e)=>{
-        e.stopPropagation();
-        if(favorites[id]) delete favorites[id];
-        else favorites[id] = true;
-        saveFavorites();
-        renderReader();
-      };
+      if(detailVerse === vnum){
+        const favBtn = document.createElement('div');
+        favBtn.className = 'vaction' + (favorites[id] ? ' on' : '');
+        favBtn.textContent = favorites[id] ? '♥ Favorito' : '♡ Favorito';
+        favBtn.onclick = (e)=>{
+          e.stopPropagation();
+          if(favorites[id]) delete favorites[id];
+          else favorites[id] = true;
+          saveFavorites();
+          renderReader();
+        };
+        const noteBtn = document.createElement('div');
+        noteBtn.className = 'vaction';
+        noteBtn.textContent = notes[id] ? 'Editar nota' : '+ Nota';
+        actions.appendChild(favBtn);
+        actions.appendChild(noteBtn);
 
-      const noteBtn = document.createElement('div');
-      noteBtn.className = 'vaction';
-      noteBtn.textContent = notes[id] ? 'Editar nota' : '+ Nota';
-
-      actions.appendChild(favBtn); actions.appendChild(noteBtn);
-
-      const noteBox = document.createElement('div');
-      noteBox.className = 'note-box';
-      noteBox.innerHTML = `
-        <div class="note-toolbar">
-          <button type="button" class="note-trash" title="Eliminar nota">🗑</button>
-          <button type="button" class="note-close" title="Cerrar (Esc)">❌</button>
-        </div>
-        <textarea placeholder="Escribe tu nota de exposición aquí…">${notes[id]||''}</textarea>
-        <div class="note-actions-row">
-          <button type="button" class="note-ok" title="Guardar (Ctrl+Enter)">💾</button>
-        </div>`;
-      const ta = noteBox.querySelector('textarea');
-      const closeNote = ()=>{
-        noteBox.classList.remove('open');
-        if(!(notes[id]||'').trim()){ delete notes[id]; saveNotes(); }
-      };
-      const saveAndCollapse = ()=>{
-        const val = ta.value;
-        if(val && val.trim()){
-          notes[id] = val;
-          saveNotes();
-        } else {
+        const noteBox = document.createElement('div');
+        noteBox.className = 'note-box';
+        noteBox.innerHTML =
+          '<div class="note-toolbar">' +
+          '<button type="button" class="note-trash" title="Eliminar nota">🗑</button>' +
+          '<button type="button" class="note-close" title="Cerrar (Esc)">❌</button>' +
+          '</div>' +
+          '<textarea placeholder="Escribe tu nota de exposición aquí…">' + (notes[id] || '') + '</textarea>' +
+          '<div class="note-actions-row">' +
+          '<button type="button" class="note-ok" title="Guardar (Ctrl+Enter)">💾</button>' +
+          '</div>';
+        const ta = noteBox.querySelector('textarea');
+        const closeNote = ()=>{ noteBox.classList.remove('open'); };
+        const saveAndCollapse = ()=>{ notes[id] = ta.value; saveNotes(); noteBox.classList.remove('open'); renderReader(); };
+        noteBox.querySelector('.note-close').onclick = (e)=>{ e.stopPropagation(); closeNote(); };
+        noteBox.querySelector('.note-ok').onclick = (e)=>{ e.stopPropagation(); saveAndCollapse(); };
+        noteBox.querySelector('.note-trash').onclick = (e)=>{
+          e.stopPropagation();
           delete notes[id];
           saveNotes();
-        }
-        // Contraer menú del versículo
-        detailVerse = null;
-        renderReader();
-      };
-      noteBox.querySelector('.note-close').onclick = (e)=>{ e.stopPropagation(); closeNote(); };
-      noteBox.querySelector('.note-ok').onclick = (e)=>{ e.stopPropagation(); saveAndCollapse(); };
-      noteBox.querySelector('.note-trash').onclick = (e)=>{
-        e.stopPropagation();
-        if(notes[id] && String(notes[id]).trim()){
-          if(!confirm('¿Eliminar esta nota? Se moverá a la papelera.')) return;
-          moveNoteToTrash(id);
-        } else {
-          delete notes[id];
-          saveNotes();
-        }
-        detailVerse = null;
-        renderReader();
-      };
-      // Guardar al escribir, pero no contraer hasta OK
-      ta.oninput = ()=>{ notes[id] = ta.value; saveNotes(); };
-      ta.onkeydown = (e)=>{
-        if(e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); closeNote(); }
-        if(e.key === 'Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); saveAndCollapse(); }
-      };
-      noteBtn.onclick = (e)=>{
-        e.stopPropagation();
-        const willOpen = !noteBox.classList.contains('open');
-        noteBox.classList.toggle('open');
-        if(willOpen) ta.focus();
-      };
-
-      const bodyEl = row.querySelector('.verse-body') || row;
-      bodyEl.appendChild(actions);
-      bodyEl.appendChild(noteBox);
+          renderReader();
+        };
+        ta.oninput = ()=>{ notes[id] = ta.value; saveNotes(); };
+        ta.onkeydown = (e)=>{
+          if(e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); closeNote(); }
+          if(e.key === 'Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); saveAndCollapse(); }
+        };
+        noteBtn.onclick = (e)=>{
+          e.stopPropagation();
+          const willOpen = !noteBox.classList.contains('open');
+          noteBox.classList.toggle('open');
+          if(willOpen) ta.focus();
+        };
+        const bodyEl = row.querySelector('.verse-body') || row;
+        bodyEl.appendChild(actions);
+        bodyEl.appendChild(noteBox);
+      } else {
+        const bodyEl = row.querySelector('.verse-body') || row;
+        bodyEl.appendChild(actions);
+      }
+      if(isLastSelected){
+        const copyBtn = document.createElement('div');
+        copyBtn.className = 'vaction vaction-copy';
+        copyBtn.textContent = '📋 Copiar';
+        copyBtn.title = 'Copiar referencia y texto de la selección';
+        copyBtn.onclick = (e)=>{ e.stopPropagation(); seferCopySelectedVerses(copyBtn); };
+        actions.appendChild(copyBtn);
+      }
     }
 
     verseParent.appendChild(row);
@@ -308,6 +296,65 @@ function renderReader(){
     }
   });
 }
+
+
+function seferFormatSelectedVersesForCopy(){
+  const nums = (selectedVerses || []).map(String).filter(Boolean)
+    .sort((a,b)=> (+a) - (+b));
+  if(!nums.length || !currentBook || !currentChap) return '';
+  const chapData = ((typeof BIBLE !== 'undefined' && BIBLE[currentBook]) || {})[currentChap] || {};
+  const clean = (s)=> String(s || '').replace(/\s+/g, ' ').trim();
+  if(nums.length === 1){
+    const v = nums[0];
+    return currentBook + ' ' + currentChap + ':' + v + ' "' + clean(chapData[v]) + '"';
+  }
+  let consecutive = true;
+  for(let i = 1; i < nums.length; i++){
+    if((+nums[i]) !== (+nums[i-1]) + 1){ consecutive = false; break; }
+  }
+  const ref = consecutive
+    ? (currentBook + ' ' + currentChap + ':' + nums[0] + '-' + nums[nums.length - 1])
+    : (currentBook + ' ' + currentChap + ':' + nums.join(','));
+  const lines = nums.map(function(v){
+    return v + ' "' + clean(chapData[v]) + '"';
+  });
+  return ref + '\n' + lines.join('\n');
+}
+
+function seferCopySelectedVerses(btn){
+  const text = seferFormatSelectedVersesForCopy();
+  if(!text) return;
+  const done = function(ok){
+    if(!btn) return;
+    const prev = btn.textContent;
+    btn.textContent = ok ? '✓ Copiado' : 'Error';
+    setTimeout(function(){ try{ btn.textContent = prev; }catch(e){} }, 1200);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){ done(true); }).catch(function(){
+      try{
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        done(true);
+      }catch(e){ done(false); }
+    });
+  } else {
+    try{
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      done(true);
+    }catch(e){ done(false); }
+  }
+}
+
 
 function setVerseSelected(vnum, on){
   const i = selectedVerses.indexOf(vnum);

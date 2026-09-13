@@ -100,6 +100,10 @@ function openSeferHelp(){
     <div class="im-block"><div class="im-label">4. Área de lectura</div>
     <div class="im-text">
     • Un clic en un versículo: opciones (favorito, nota) y casilla de selección.<br>
+    • Con casillas marcadas, en la <strong>última</strong> aparece <strong>📋 Copiar</strong>:<br>
+    &nbsp;&nbsp;un versículo → <em>Libro Cap:V "texto"</em>; varios seguidos → <em>Libro Cap:inicio-fin</em> y cada texto.<br>
+    • No se arrastra texto para copiar: usa las casillas y Copiar.<br>
+
     • Marca la casilla para elegir varios versículos (aparecen casillas en todos).<br>
     • Desmarca todas para ocultar las casillas otra vez.<br>
     • <strong>Doble clic</strong> en una palabra: significado (si está en el diccionario).<br>
@@ -111,7 +115,6 @@ function openSeferHelp(){
     <div class="im-text">
     De izquierda a derecha (resumen):<br><br>
     • <strong>Traducción</strong> (ej. RV60): cambia la versión del texto.<br>
-    • <strong>🧹 Limpiar</strong>: aparece cuando hay versículos marcados; quita las marcas.<br>
     • <strong>A− / A+</strong>: tamaño de letra.<br>
     • <strong>Aa</strong> (fuentes): tipografías modernas de fácil lectura.<br>
     • <strong>${ic.destacar}</strong>: marca nombres, lugares y palabras de Jesús.<br>

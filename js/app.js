@@ -41,7 +41,6 @@ window.seferBoot = seferBoot;
 if(document.readyState === 'loading'){
   document.addEventListener('DOMContentLoaded', seferBoot);
 } else {
-  seferBoot();
 }
 
 try{
@@ -50,3 +49,31 @@ try{
     document.body.classList.toggle('theme-glass', GLASS.includes(currentTheme));
   }
 }catch(e){}
+
+/* SEFER_WAIT_BIBLE_BOOT */
+(function(){
+  function syncBible(){
+    try{
+      if(window.BIBLE_DATA){
+        if(typeof BIBLE !== 'undefined') BIBLE = window.BIBLE_DATA;
+        window.BIBLE = window.BIBLE_DATA;
+      }
+    }catch(e){}
+  }
+  function start(){
+    syncBible();
+    try{
+      if(typeof seferBoot === 'function') seferBoot();
+    }catch(e){ console.error('[SEFER] boot', e); }
+    try{
+      if(typeof renderBookList === 'function') renderBookList();
+    }catch(e){}
+  }
+  if(window.__SEFER_BIBLE_READY && typeof window.__SEFER_BIBLE_READY.then === 'function'){
+    window.__SEFER_BIBLE_READY.then(start).catch(start);
+  } else {
+    // scripts clásicos síncronos
+    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+    else start();
+  }
+})();

@@ -83,3 +83,42 @@ body.yt-sidebar-active #book-list{flex:1 1 72% !important;max-height:72% !import
 #yt-iframe-box iframe{width:100% !important;height:100% !important;border:0 !important;display:block;}
 
 body.yt-sidebar-active #reader, body.yt-active-bl #reader, body.yt-active-br #reader, body.yt-active-tr #reader{padding-bottom:0 !important;padding-right:0 !important;padding-left:0 !important;}
+
+
+/* ✕ cerrar paneles — posición correcta */
+.side-close-btn,
+#side .side-close,
+.word-popup-close,
+#word-popup .close,
+.panel-close,
+#notes-panel .close,
+#favs-panel .close,
+#meanings-panel .close{
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  left: auto !important;
+  z-index: 5 !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: none !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+.side-panel,
+#side,
+.word-popup,
+#word-popup{
+  position: relative;
+}
+.side-panel .side-head,
+#side .side-head{
+  position: relative !important;
+  padding-right: 40px !important;
+}

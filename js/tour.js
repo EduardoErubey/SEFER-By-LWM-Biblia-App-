@@ -5,33 +5,32 @@
    TOUR INTERACTIVO + AYUDA ACTUALIZADA
    ========================================================= */
 const SEFER_TOUR_STEPS = [
-  { sel:'#nav-header .brand, #nav-header', title:'1. Marca SEFER', text:'Aquí a la izquierda está SEFER (ספר), de Life Word Mission Playa del Carmen. Recorremos de izquierda a derecha.' },
-  { sel:'#nav-header-actions', title:'2. Perfil y nube', text:'🏆 perfil y logros, ☁️ sincronizar con Google, ⛶ pantalla completa (Ctrl+Shift+F) y ↺ reiniciar navegación.' },
-  { sel:'#theme-switch, #theme-batch', title:'3. Temas', text:'Cinco temas visibles. +/− cambia de lote (10 en total). Ctrl+T pasa al tema siguiente y cambia de lote cuando hace falta.' },
-  { sel:'#random-verse-btn', title:'4. Versículo al azar', text:'Abre un versículo aleatorio en proyección. En temas normales el icono es 🎲; en Glass (cristal) es 🔀 para no confundirlo con ✨ Destacar.' },
-  { sel:'#ref-search-wrap, #ref-search', title:'5. Buscador de versículos', text:'Ejemplo: Juan 3:16. Rangos: 1:1-5. Dos libros: Juan 3:16 | Romanos 8:28 → proyección arriba/abajo. Atajo: Ctrl+Shift+V.' },
-  { sel:'#book-list', title:'6. Lista de libros', text:'Antiguo y Nuevo Testamento. Elige libro y capítulo. 📚 muestra la ficha del libro.' },
-  { sel:'#version-switch, #version-btn', title:'7. Traducción', text:'A la izquierda de la toolkit: botón corto (RV60, RV09, NVI…). Abre un menú compacto para cambiar la versión y recargar el capítulo. Atajo: Ctrl+Shift+T.' },
-  { sel:'#clear-selection-btn', title:'8. Limpiar selección', text:'🧹 Limpiar aparece cuando marcas versículos (casillas). Quita todas las marcas. El espacio queda reservado para que la barra no salte.' },
-  { sel:'#font-dec, #font-inc, #topbar-actions', title:'9. Tamaño del texto', text:'A− y A+ cambian el tamaño de los versículos (Ctrl+− / Ctrl++). Junto a ellos está la tipografía Aa.' },
-  { sel:'#easy-btn', title:'10. Destacar', text:'✨ Destacar (antes “Resaltar”) marca visualmente elementos del texto: nombres, ciudades y palabras de Jesús. Atajo: Ctrl+D.' },
-  { sel:'#meanings-btn', title:'11. Significados', text:'📚 Significados guardados. También: doble clic en una palabra del versículo. Atajo: Ctrl+S.' },
-  { sel:'#notes-btn', title:'12. Notas', text:'📝 Tus notas por versículo. Atajo: Ctrl+N.' },
-  { sel:'#favs-btn', title:'13. Favoritos', text:'❤️ Versículos favoritos. Atajo: Ctrl+F.' },
-  { sel:'#glossary-btn', title:'14. Glosario', text:'📖 Términos bíblicos. Atajo: Ctrl+G.' },
-  { sel:'#biography-btn', title:'15. Biografías', text:'👤 Personas de la Biblia. Atajo: Ctrl+B.' },
-  { sel:'#apocrifos-btn', title:'16. Apócrifos', text:'📜 Libros apócrifos: qué son y por qué no están en el canon protestante. Atajo: Ctrl+A.' },
-  { sel:'#plan-btn', title:'17. Plan 1 año', text:'📅 Plan de lectura en un año (órdenes y fecha de inicio). Atajo: Ctrl+P.' },
-  { sel:'#youtube-btn', title:'18. YouTube', text:'Sermón en la barra lateral mientras lees. Atajo: Ctrl+Y.' },
-  { sel:'#stage-highlight-btn, #project-btn', title:'19b. Resaltar en proyección', text:'En proyección, el botón 🖍️ Resaltar permite marcar palabras a mano. Se guardan y también se ven en el lector. No reemplaza a ❤️ Favoritos.' },
-  { sel:'#project-btn', title:'19. Proyectar', text:'Pantalla grande para culto. Comparar = dos traducciones izquierda/derecha (no en capítulo completo ni en buscador con |). Atajo: Ctrl+Enter.' },
-  { sel:'#help-btn', title:'20. Ayuda', text:'❓ Siempre al final de la toolkit. Guía, atajos y este tour. Atajo: Ctrl+H.' },
-  { sel:'#reader, #reader-sticky-head', title:'21. Área de lectura', text:'Clic en versículo: favorito, nota y casilla. Doble clic en palabra: significado. ✨ Destacar activa el realce visual.' },
-  { sel:'#random-verse-btn', title:'22. Dado y Glass', text:'Recuerda: 🎲 en la mayoría de temas y 🔀 en Glass. En proyección, el botón de “otro al azar” usa el mismo icono.' },
-  { sel:'#stage-highlight-btn, #project-btn', title:'22b. 🖍️ Resaltar', text:'En modo proyección, 🖍️ Resaltar marca palabras elegidas por ti. Quedan guardadas y se ven en el lector. No sustituye a ❤️ Favoritos.' },
-  { sel:'#help-btn', title:'23. Listo', text:'Ya conoces SEFER de izquierda a derecha. ¡Que la Palabra te acompañe!' }
+  { sel:'#nav-header-row, #nav-header .brand, #nav-header', title:'1. Marca SEFER', text:'Aquí ves SEFER ספר y BY LWM PDC (Life Word Mission Playa del Carmen). El tour va de izquierda a derecha, con calma.' },
+  { sel:'#nav-header-actions', title:'2. Acciones rápidas', text:'Perfil y logros, nube (sincronizar), pantalla completa y reiniciar la navegación de libros.' },
+  { sel:'#theme-batch-top, #theme-more-btn, #theme-batch', title:'3. Temas', text:'Cinco temas a la vez. El botón ＋/− cambia entre lote clásico y lote Glass. Life Word Mission es el predeterminado. Atajo: Ctrl+T.' },
+  { sel:'#random-verse-btn', title:'4. Dado', text:'El 🎲 abre un versículo al azar (en proyección). Siempre es un dado, en todos los temas.' },
+  { sel:'#ref-search-wrap, #ref-search', title:'5. Buscador', text:'Escribe por ejemplo Juan 3:16. También rangos (1:1-5) o dos pasajes con |. Tab completa el libro. Atajo: Ctrl+Shift+V.' },
+  { sel:'#book-list', title:'6. Libros', text:'Antiguo y Nuevo Testamento. Toca un libro y un número de capítulo. El icono 📚 abre la ficha del libro.' },
+  { sel:'#easy-btn', title:'7. Destacar', text:'✨ Destacar marca nombres, lugares y palabras de Jesús para leer más fácil. No pinta el versículo entero. Atajo: Ctrl+D.' },
+  { sel:'#font-dec, #font-inc', title:'8. Tamaño del texto', text:'A− hace la letra más pequeña y A+ más grande. Prueba ambos hasta leer con comodidad.' },
+  { sel:'#font-family-btn', title:'9. Tipografía', text:'Aa cambia la fuente de lectura (estilos claros y modernos). Elige la que mejor se lea en tu pantalla.' },
+  { sel:'#version-switch, #version-btn', title:'10. Traducción', text:'Cambia entre RV1960 (predeterminada), RV1909, RVA2015, NVI, NTV y TLA. Atajo: Ctrl+Shift+T.' },
+  { sel:'#meanings-btn', title:'11. Significados', text:'Lista de palabras con significado. También puedes dar doble clic a una palabra en el texto.' },
+  { sel:'#notes-btn', title:'12. Notas', text:'Tus notas por versículo. Puedes escribirlas desde el lector o desde la proyección.' },
+  { sel:'#favs-btn', title:'13. Favoritos', text:'Versículos que guardaste con ❤️.' },
+  { sel:'#glossary-btn', title:'14. Glosario', text:'Términos bíblicos difíciles explicados con palabras sencillas.' },
+  { sel:'#biography-btn', title:'15. Biografías', text:'Personas de la Biblia en forma de lista (indica si son del Antiguo o del Nuevo Testamento).' },
+  { sel:'#apocrifos-btn', title:'16. Apócrifos', text:'Información y curiosidades sobre libros apócrifos (no incluye el texto completo).' },
+  { sel:'#plan-btn', title:'17. Plan 1 año', text:'Plan de lectura anual: varios órdenes y la opción de empezar el 1 de enero o desde hoy.' },
+  { sel:'#youtube-btn', title:'18. YouTube', text:'Pega un enlace de sermón. El vídeo aparece en la barra izquierda solo cuando hay un enlace cargado.' },
+  { sel:'#project-btn', title:'19. Proyectar', text:'Abre el menú de proyección. Con el menú abierto puedes pulsar 1, 2 o 3 (según las opciones) sin usar el ratón. Atajo: Ctrl+Enter.' },
+  { sel:'#project-sheet, #project-btn', title:'20. Opciones al proyectar', text:'1 Versículo actual · 2 Selección (si hay casillas) · 3 Capítulo completo. Esc cierra menús y la proyección.' },
+  { sel:'#stage-nav, #project-btn', title:'21. Controles en proyección', text:'Dentro de la proyección: Anterior y Siguiente, Auto y velocidad (si el texto es largo). A la misma altura: ❤️ favorito, 📝 nota y 🖍️ resaltar. Esc sale de proyección.' },
+  { sel:'#stage-extra-btns, #stage-highlight-btn, #project-btn', title:'22. Resaltar (🖍️)', text:'Solo en proyección: activa 🖍️, selecciona un trozo de texto y se subraya en ese versículo. Para quitar, repite sobre lo marcado. No sustituye a favoritos.' },
+  { sel:'#help-btn', title:'23. Ayuda', text:'Este botón abre el manual completo. Desde ahí también puedes volver a lanzar el tour.' },
+  { sel:'#reader, #main', title:'24. Área de lectura', text:'Aquí se leen los versículos. Un clic: favorito o nota y casilla. Doble clic en una palabra: significado. Las casillas no mueven el texto.' },
+  { sel:'#nav-header .brand, #nav-header', title:'25. Listo', text:'Ya conoces lo esencial de SEFER. ¡Que la Palabra te acompañe!' }
 ];
-
 
 function seferTourFindEl(sel){
   if(!sel) return null;

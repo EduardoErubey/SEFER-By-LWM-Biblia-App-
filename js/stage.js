@@ -229,13 +229,47 @@ function stageStep(dir){
 function openProjectSheet(){
   const sheet = document.getElementById('project-sheet');
   const selOpt = document.getElementById('ps-opt-selection');
-  if(selOpt) selOpt.style.display = (selectedVerses && selectedVerses.length) ? '' : 'none';
-  if(sheet) sheet.classList.add('open');
+  const hasSel = !!(selectedVerses && selectedVerses.length);
+  if(selOpt) selOpt.style.display = hasSel ? '' : 'none';
+  const labels = {
+    current: '📄 Versículo actual',
+    selection: '☑️ Selección de versículos',
+    chapter: '📚 Capítulo completo'
+  };
+  let n = 0;
+  if(sheet){
+    sheet.querySelectorAll('.ps-opt').forEach(btn=>{
+      const proj = btn.getAttribute('data-proj');
+      if(proj === 'selection' && !hasSel){
+        btn.style.display = 'none';
+        btn.removeAttribute('data-ps-key');
+        return;
+      }
+      btn.style.display = '';
+      n += 1;
+      btn.setAttribute('data-ps-key', String(n));
+      btn.textContent = n + ' · ' + (labels[proj] || 'Opción');
+    });
+    sheet.classList.add('open');
+  }
 }
 function closeProjectSheet(){
   const sheet = document.getElementById('project-sheet');
   if(sheet) sheet.classList.remove('open');
 }
+function seferIsProjectSheetOpen(){
+  const sheet = document.getElementById('project-sheet');
+  return !!(sheet && sheet.classList.contains('open'));
+}
+function seferTriggerProjectKey(num){
+  if(!seferIsProjectSheetOpen()) return false;
+  const sheet = document.getElementById('project-sheet');
+  const btn = sheet && sheet.querySelector('.ps-opt[data-ps-key="'+num+'"]');
+  if(!btn || btn.style.display === 'none') return false;
+  btn.click();
+  return true;
+}
+
 const projectBtn = document.getElementById('project-btn');
 if(projectBtn) projectBtn.onclick = ()=> openProjectSheet();
 const psCancel = document.getElementById('ps-cancel');
@@ -640,3 +674,20 @@ window.seferApplyStageHighlightFromSelection = seferApplyStageHighlightFromSelec
     });
   }
 })();
+
+
+/* Atajos 1/2/3 con menú Proyectar abierto */
+document.addEventListener('keydown', function(e){
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(!e.key || !/^[1-3]$/.test(e.key)) return;
+  const t = e.target;
+  if(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+  try{
+    if(typeof seferIsProjectSheetOpen === 'function' && seferIsProjectSheetOpen()){
+      if(seferTriggerProjectKey(e.key)){
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }
+  }catch(err){}
+}, true);

@@ -97,7 +97,7 @@ function updateSelectionUI(){
   }
   updateProjectBtnVisibility();
 }
-clearSelBtn.onclick = ()=>{ selectedVerses = []; selectionUIActive = false; updateSelectionUI(); renderReader(); };
+if(clearSelBtn) clearSelBtn.onclick = ()=>{ selectedVerses = []; selectionUIActive = false; updateSelectionUI(); renderReader(); };
 
 function applyVerseFont(){
   try{

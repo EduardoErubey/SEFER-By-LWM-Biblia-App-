@@ -1148,3 +1148,24 @@ body[data-theme="lwm-night"] ::-webkit-scrollbar-thumb{
 body[data-theme="lwm-night"] ::-webkit-scrollbar-track{
   background: rgba(0,0,0,0.25) !important;
 }
+
+
+/* Nav actions (perfil, nube, fullscreen, reiniciar) — armonía Glass */
+body.theme-glass .nav-action-btn,
+body.theme-glass #nav-header-actions .nav-action-btn,
+body.theme-glass #btn-perfil,
+body.theme-glass #btn-sync,
+body.theme-glass #btn-fullscreen,
+body.theme-glass #btn-reset-nav,
+body.theme-glass button.nav-action-btn{
+  border-radius: 12px !important;
+  -webkit-backdrop-filter: blur(12px) saturate(160%) !important;
+  backdrop-filter: blur(12px) saturate(160%) !important;
+  background: color-mix(in srgb, var(--parchment) 55%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.35) !important;
+  color: var(--ink) !important;
+}
+body.theme-glass .nav-action-btn:hover{
+  background: color-mix(in srgb, var(--gold-soft) 70%, transparent) !important;
+}

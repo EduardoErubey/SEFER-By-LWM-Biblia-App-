@@ -348,3 +348,30 @@ body.sefer-hl-mode #stage .stage-verse-body{
   padding-left: 4px;
 }
 .verse{ margin: 2px 0; }
+
+
+/* Sin arrastrar texto en el cajón de versículos: la copia va por casillas + Copiar */
+#reader-verses .verse,
+#reader-verses .verse-body,
+#reader-verses .verse .w,
+#reader .verse,
+#reader .verse-body{
+  -webkit-user-select: none !important;
+  user-select: none !important;
+}
+#reader-verses textarea,
+#reader textarea{
+  -webkit-user-select: text !important;
+  user-select: text !important;
+}
+.verse-actions{
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.vaction-copy{
+  border-color: var(--rubric) !important;
+  color: var(--rubric) !important;
+  font-weight: 600;
+}

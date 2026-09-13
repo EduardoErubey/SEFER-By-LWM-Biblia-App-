@@ -80,9 +80,15 @@
         <div id="current-ref">—</div>
       </div>
       <div id="topbar-actions">
-        <button class="btn has-tip" id="clear-selection-btn" data-tooltip="Quitar marcas de versículos seleccionados">🧹 Limpiar</button>
-                <div id="version-switch" class="version-switch-toolkit">
-          <button type="button" id="version-btn" aria-haspopup="listbox" aria-expanded="false" title="Versión de la Biblia (Ctrl+Shift+T)">
+        <button class="btn has-tip" id="easy-btn" data-action="highlight" data-tooltip="Destacar nombres y lugares">✨ Destacar</button>
+        
+        
+        <span class="tb-group">
+          <button class="btn btn-icon" id="font-dec" data-tooltip="Texto más pequeño">A−</button>
+          <button class="btn btn-icon" id="font-inc" data-tooltip="Texto más grande">A+</button>
+          <button class="btn btn-icon has-tip" id="font-family-btn" data-tooltip="Tipografía">Aa</button>
+          <div id="version-switch" class="version-switch-toolkit">
+          <button type="button" id="version-btn" aria-haspopup="listbox" aria-expanded="false" title="Traducción" data-tooltip="Traducción">
             <span class="vb-label">RV1960</span>
           </button>
           <div id="version-menu" role="listbox" aria-label="Versiones de la Biblia">
@@ -98,29 +104,25 @@
             <button type="button" class="ver-item" data-version="tla" role="option">TLA</button>
           </div>
         </div>
-        <span class="tb-group">
-          <button class="btn btn-icon" id="font-dec" data-tooltip="Disminuir texto">A−</button>
-          <button class="btn btn-icon" id="font-inc" data-tooltip="Aumentar texto">A+</button>
-          <button class="btn btn-icon has-tip" id="font-family-btn" data-tooltip="Cambiar tipografía de lectura">Aa</button>
-          <button class="btn has-tip" id="easy-btn" data-action="highlight" data-tooltip="Destacar nombres, ciudades y palabras de Jesús">✨ Destacar</button>
+          
         </span>
         <span class="tb-group" title="Estudio">
-          <button class="btn has-tip" id="meanings-btn" data-tooltip="Significados de palabras guardados">📚 Significados</button>
-          <button class="btn has-tip" id="notes-btn" data-tooltip="Notas de exposición por versículo">📝 Notas</button>
-          <button class="btn fav-btn has-tip" id="favs-btn" data-tooltip="Versículos marcados como favoritos">❤️ Favoritos</button>
+          <button class="btn has-tip" id="meanings-btn" data-tooltip="Significados">📚 Significados</button>
+          <button class="btn has-tip" id="notes-btn" data-tooltip="Notas">📝 Notas</button>
+          <button class="btn fav-btn has-tip" id="favs-btn" data-tooltip="Favoritos">❤️ Favoritos</button>
         </span>
         <span class="tb-group" title="Consulta">
-          <button class="btn has-tip" id="glossary-btn" data-tooltip="Glosario de términos bíblicos">📖 Glosario</button>
-          <button class="btn has-tip" id="biography-btn" data-tooltip="Biografías de personas de la Biblia">👤 Biografía</button>
-          <button class="btn has-tip" id="apocrifos-btn" data-tooltip="Libros apócrifos: qué son y por qué no están en el canon protestante">📜 Apócrifos</button>
+          <button class="btn has-tip" id="glossary-btn" data-tooltip="Glosario">📖 Glosario</button>
+          <button class="btn has-tip" id="biography-btn" data-tooltip="Biografías">👤 Biografía</button>
+          <button class="btn has-tip" id="apocrifos-btn" data-tooltip="Apócrifos">📜 Apócrifos</button>
         </span>
         <span class="tb-group" title="Herramientas">
-          <button class="btn has-tip" id="plan-btn" data-tooltip="Plan de lectura de la Biblia en un año">📅 Plan 1 año</button>
+          <button class="btn has-tip" id="plan-btn" data-tooltip="Plan 1 año">📅 Plan 1 año</button>
           <span id="estado-nube" style="display:none;" aria-hidden="true"></span>
-          <button class="btn has-tip" id="youtube-btn" data-tooltip="Ver un sermón de YouTube mientras lees (solo el vídeo)"><svg class="yt-logo" viewBox="0 0 28 20" width="18" height="13" aria-hidden="true"><rect width="28" height="20" rx="4" fill="#FF0000"/><path d="M11 5.5v9l7.5-4.5L11 5.5z" fill="#fff"/></svg> YouTube</button>
-          <button class="btn primary has-tip" id="project-btn" data-tooltip="Proyectar selección o versículo en pantalla completa">🎬 Proyectar</button>
+          <button class="btn has-tip" id="youtube-btn" data-tooltip="YouTube"><svg class="yt-logo" viewBox="0 0 28 20" width="18" height="13" aria-hidden="true"><rect width="28" height="20" rx="4" fill="#FF0000"/><path d="M11 5.5v9l7.5-4.5L11 5.5z" fill="#fff"/></svg> YouTube</button>
+          <button class="btn primary has-tip" id="project-btn" data-tooltip="Proyectar">🎬 Proyectar</button>
         </span>
-        <button class="btn has-tip" id="help-btn" data-tooltip="Guía de uso y atajos de teclado">❓ Ayuda</button>
+        <button class="btn has-tip" id="help-btn" data-tooltip="Ayuda">❓ Ayuda</button>
       </div>
     </div>
     
@@ -150,9 +152,9 @@
 <div id="project-sheet">
   <div class="ps-card">
     <div class="ps-title">🎬 Proyectar</div>
-    <button type="button" class="ps-opt" data-proj="current">📄 Versículo actual</button>
-    <button type="button" class="ps-opt" data-proj="selection" id="ps-opt-selection">☑️ Selección de versículos</button>
-    <button type="button" class="ps-opt" data-proj="chapter">📚 Capítulo completo</button>
+    <button type="button" class="ps-opt" data-proj="current" data-ps-key="1">1 · 📄 Versículo actual</button>
+    <button type="button" class="ps-opt" data-proj="selection" id="ps-opt-selection" data-ps-key="2">2 · ☑️ Selección de versículos</button>
+    <button type="button" class="ps-opt" data-proj="chapter" data-ps-key="3">3 · 📚 Capítulo completo</button>
     <button type="button" class="ps-cancel" id="ps-cancel">Cancelar</button>
   </div>
 </div>
@@ -359,10 +361,46 @@
 
   <script src="https://apis.google.com/js/api.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="./bible/bible-data.js"></script>
-  <script src="./bible/bible-versions.js"></script>
-  <script src="./bible/book-info.js"></script>
-  <script src="./data/sefer-version.js"></script>
+  
+<script>
+/* SEFER — carga Biblia (prueba bible/ y raíz) */
+(function(){
+  function loadOne(file){
+    return new Promise(function(resolve, reject){
+      var tried = ['./bible/' + file, './' + file, 'bible/' + file, file];
+      var i = 0;
+      function next(){
+        if(i >= tried.length){ reject(new Error('No se pudo cargar ' + file)); return; }
+        var url = tried[i++];
+        var s = document.createElement('script');
+        s.src = url;
+        s.async = false;
+        s.onload = function(){ console.info('[SEFER] OK', url); resolve(url); };
+        s.onerror = function(){ next(); };
+        document.head.appendChild(s);
+      }
+      next();
+    });
+  }
+  window.__SEFER_BIBLE_READY = loadOne('bible-data.js')
+    .then(function(){ return loadOne('bible-versions.js'); })
+    .then(function(){ return loadOne('book-info.js'); })
+    .then(function(){
+      try{
+        if(window.BIBLE_DATA){ window.BIBLE = window.BIBLE_DATA; }
+      }catch(e){}
+      console.info('[SEFER] Biblia lista', Object.keys(window.BIBLE_DATA||{}).length, 'libros');
+    })
+    .catch(function(err){
+      console.error('[SEFER]', err);
+      try{
+        alert('No se cargó el texto bíblico. Necesitas en el repo:\n• bible/bible-data.js\n• bible/bible-versions.js\n• bible/book-info.js');
+      }catch(e){}
+    });
+})();
+</script>
+
+<script src="./data/sefer-version.js"></script>
   <script src="./data/dictionary.js"></script>
   <script src="./data/genealogy.js"></script>
   <script src="./data/apocrifos.js"></script>

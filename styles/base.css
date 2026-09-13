@@ -151,7 +151,7 @@ body.mobile-mode{}
 
 .welcome-sub{font-family:var(--font-ui);font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.8px;margin:0 0 18px;}
 
-.toast-logro{display:none;position:fixed;top:58px;right:12px;z-index:1450;width:min(320px, calc(100vw - 24px));background:var(--card-bg);color:var(--ink);border:1px solid var(--gold);border-radius:10px;padding:10px 12px;box-shadow:0 10px 28px rgba(0,0,0,0.22);font-family:var(--font-ui);transform:translateX(120%);opacity:0;pointer-events:none;}
+.toast-logro{display:none;position:fixed;bottom:16px;left:12px;top:auto;right:auto;z-index:1450;width:min(320px, calc(100vw - 24px));background:var(--card-bg);color:var(--ink);border:1px solid var(--gold);border-radius:10px;padding:10px 12px;box-shadow:0 10px 28px rgba(0,0,0,0.22);font-family:var(--font-ui);transform:translateX(-120%);opacity:0;pointer-events:none;}
 
 .toast-logro.show{display:flex;align-items:flex-start;gap:10px;pointer-events:auto;animation:toastIn 0.45s ease-out forwards;}
 
@@ -165,9 +165,9 @@ body.mobile-mode{}
 
 .toast-logro .tl-desc{font-size:12px;color:var(--ink-soft);line-height:1.4;margin:0;}
 
-@keyframes toastIn{from{transform:translateX(120%);opacity:0;}to{transform:translateX(0);opacity:1;}}
+@keyframes toastIn{from{transform:translateX(-120%);opacity:0;}to{transform:translateX(0);opacity:1;}}
 
-@keyframes toastOut{from{transform:translateX(0);opacity:1;}to{transform:translateX(120%);opacity:0;}}
+@keyframes toastOut{from{transform:translateX(0);opacity:1;}to{transform:translateX(-120%);opacity:0;}}
 
 #gene-detail .gd-name{font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--rubric);margin:0 0 8px;}
 

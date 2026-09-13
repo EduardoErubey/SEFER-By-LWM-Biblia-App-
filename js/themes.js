@@ -184,7 +184,7 @@ document.addEventListener('keydown', (e)=>{
     {t:'arena', tip:'Arena', html:'⏳'}
   ];
   const BATCH_B = [
-    {t:'amoled', tip:'Day Glass', html:'🫧'},
+    {t:'amoled', tip:'Day Glass', html:'☀️'},
     {t:'lwm-night', tip:'Night Glass', html:'🌙'},
     {t:'mexico', tip:'Mex Glass', html:flagMX},
     {t:'ucrania', tip:'Ukr Glass', html:flagUA},

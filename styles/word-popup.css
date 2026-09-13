@@ -77,3 +77,42 @@ body.mobile-mode #word-search-bar{width:min(96vw, 520px);}
 #word-popup .wp-loading{font-family:var(--font-ui);font-size:12.5px;color:var(--ink-soft);font-style:italic;}
 
 #word-popup .wp-source{font-size:10.5px;color:var(--ink-soft);margin-top:9px;font-style:italic;}
+
+
+/* ✕ cerrar paneles — posición correcta */
+.side-close-btn,
+#side .side-close,
+.word-popup-close,
+#word-popup .close,
+.panel-close,
+#notes-panel .close,
+#favs-panel .close,
+#meanings-panel .close{
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  left: auto !important;
+  z-index: 5 !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: none !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+.side-panel,
+#side,
+.word-popup,
+#word-popup{
+  position: relative;
+}
+.side-panel .side-head,
+#side .side-head{
+  position: relative !important;
+  padding-right: 40px !important;
+}

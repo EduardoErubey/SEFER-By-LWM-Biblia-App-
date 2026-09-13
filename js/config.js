@@ -12,7 +12,8 @@
    BIBLE_DATA y BOOK_ORDER se cargan desde bible-data.js
    (debe estar en la misma carpeta que este archivo).
    ========================================================= */
-let BIBLE = window.BIBLE_DATA || {};
+let BIBLE = window.BIBLE_DATA || window.BIBLE || {};
+try{ window.BIBLE = BIBLE; if(window.BIBLE_DATA) BIBLE = window.BIBLE_DATA; window.BIBLE = BIBLE; }catch(e){}
 const BOOK_ORDER = window.BOOK_ORDER || [];
 const BOOK_INFO = window.BOOK_INFO || { introduccion_testamentos: [], libros: [] };
 if(!window.BIBLE_DATA || !BOOK_ORDER.length){

@@ -17,3 +17,42 @@ body.mobile-mode #side{width:min(520px, 94vw) !important;max-width:94vw !importa
 #side.open{display:block;}
 
 #side h3{font-family:var(--font-display);font-size:15px;text-transform:none;letter-spacing:0.3px;color:var(--rubric);margin:0 28px 12px 0;font-weight:700;position:relative;}
+
+
+/* ✕ cerrar paneles — posición correcta */
+.side-close-btn,
+#side .side-close,
+.word-popup-close,
+#word-popup .close,
+.panel-close,
+#notes-panel .close,
+#favs-panel .close,
+#meanings-panel .close{
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  left: auto !important;
+  z-index: 5 !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: none !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+.side-panel,
+#side,
+.word-popup,
+#word-popup{
+  position: relative;
+}
+.side-panel .side-head,
+#side .side-head{
+  position: relative !important;
+  padding-right: 40px !important;
+}
