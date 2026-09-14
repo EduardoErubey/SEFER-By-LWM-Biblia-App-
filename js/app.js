@@ -54,9 +54,13 @@ try{
 (function(){
   function syncBible(){
     try{
-      if(window.BIBLE_DATA){
+      if(window.BIBLE_DATA && Object.keys(window.BIBLE_DATA).length){
         try{ BIBLE = window.BIBLE_DATA; }catch(e){}
         window.BIBLE = window.BIBLE_DATA;
+      } else if(window.BIBLE_DATA_RV1960){
+        try{ BIBLE = window.BIBLE_DATA_RV1960; }catch(e){}
+        window.BIBLE = window.BIBLE_DATA_RV1960;
+        window.BIBLE_DATA = window.BIBLE_DATA_RV1960;
       }
       if(typeof BOOK_ORDER !== 'undefined' && window.BOOK_ORDER && window.BOOK_ORDER.length){
         if(BOOK_ORDER.length !== window.BOOK_ORDER.length){

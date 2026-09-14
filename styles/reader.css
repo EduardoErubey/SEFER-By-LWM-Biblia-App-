@@ -375,3 +375,107 @@ body.sefer-hl-mode #stage .stage-verse-body{
   color: var(--rubric) !important;
   font-weight: 600;
 }
+
+
+/* FIX: bienvenida visible y centrada; lector con texto */
+#reader.welcome-fixed,
+#reader:has(.welcome),
+#reader:has(.welcome-mobile) {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow-y: auto !important;
+  min-height: 200px !important;
+  padding: 24px 32px !important;
+  writing-mode: horizontal-tb !important;
+}
+#reader .welcome,
+#reader .welcome-mobile {
+  max-width: 520px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+  writing-mode: horizontal-tb !important;
+  color: var(--ink) !important;
+  opacity: 1 !important;
+}
+#reader-verses {
+  display: block !important;
+  flex: 1 1 auto !important;
+  overflow-y: auto !important;
+  min-height: 120px !important;
+  color: var(--ink) !important;
+}
+#reader .verse,
+#reader-verses .verse {
+  color: var(--ink) !important;
+  opacity: 1 !important;
+  writing-mode: horizontal-tb !important;
+}
+#reader .empty-msg {
+  padding: 24px;
+  color: var(--ink-soft);
+  font-family: var(--font-ui);
+  text-align: center;
+}
+
+
+/* FIX layout: versículos a ancho completo del panel principal */
+#main {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+}
+#content-wrap {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+#reader {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+#reader-sticky-head,
+#reader .sticky-head {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+#reader-verses {
+  width: 100% !important;
+  max-width: 48rem !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  box-sizing: border-box !important;
+  text-align: left !important;
+}
+#reader .verse {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  text-align: left !important;
+  writing-mode: horizontal-tb !important;
+}
+
+
+/* Copiar: mostrar acciones en la última casilla marcada */
+.verse.has-copy-actions .verse-actions,
+.verse-actions.sefer-copy-actions {
+  display: flex !important;
+  visibility: visible !important;
+}
+.verse.active-detail .verse-actions,
+.verse.has-copy-actions .verse-actions {
+  display: flex !important;
+}

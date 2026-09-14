@@ -47,7 +47,11 @@ function renderReader(){
   }
   reader.classList.remove('welcome-fixed');
 
-  const chapData = (BIBLE[currentBook] || {})[currentChap];
+  const _bible = (typeof BIBLE !== 'undefined' && BIBLE && Object.keys(BIBLE).length)
+    ? BIBLE
+    : (window.BIBLE_DATA || window.BIBLE || window.BIBLE_DATA_RV1960 || {});
+  const _chapKey = String(currentChap);
+  const chapData = (_bible[currentBook] || {})[_chapKey] || (_bible[currentBook] || {})[currentChap];
   const meta = getBookMeta(currentBook);
 
   // Encabezado fijo (no se mueve al hacer scroll en los versículos)
@@ -213,79 +217,80 @@ function renderReader(){
     };
 
     const isLastSelected = isSelected && selectedVerses.length > 0 && String(lastCheckedVerse) === String(vnum);
-    if(detailVerse === vnum || isLastSelected){
+    // Última casilla marcada: siempre Favorito + Nota + Copiar
+    if(isLastSelected || detailVerse === vnum){
       const actions = document.createElement('div');
-      actions.className = 'verse-actions';
-      actions.style.display = 'flex';
+      actions.className = 'verse-actions' + (isLastSelected ? ' sefer-copy-actions' : '');
+      actions.style.setProperty('display', 'flex', 'important');
+      if(isLastSelected) row.classList.add('has-copy-actions');
 
-      if(detailVerse === vnum){
-        const favBtn = document.createElement('div');
-        favBtn.className = 'vaction' + (favorites[id] ? ' on' : '');
-        favBtn.textContent = favorites[id] ? '♥ Favorito' : '♡ Favorito';
-        favBtn.onclick = (e)=>{
-          e.stopPropagation();
-          if(favorites[id]) delete favorites[id];
-          else favorites[id] = true;
-          saveFavorites();
-          renderReader();
-        };
-        const noteBtn = document.createElement('div');
-        noteBtn.className = 'vaction';
-        noteBtn.textContent = notes[id] ? 'Editar nota' : '+ Nota';
-        actions.appendChild(favBtn);
-        actions.appendChild(noteBtn);
+      const favBtn = document.createElement('div');
+      favBtn.className = 'vaction' + (favorites[id] ? ' on' : '');
+      favBtn.textContent = favorites[id] ? '♥ Favorito' : '♡ Favorito';
+      favBtn.onclick = function(e){
+        e.stopPropagation();
+        if(favorites[id]) delete favorites[id];
+        else favorites[id] = true;
+        saveFavorites();
+        renderReader();
+      };
+      const noteBtn = document.createElement('div');
+      noteBtn.className = 'vaction';
+      noteBtn.textContent = notes[id] ? 'Editar nota' : '+ Nota';
+      actions.appendChild(favBtn);
+      actions.appendChild(noteBtn);
 
-        const noteBox = document.createElement('div');
-        noteBox.className = 'note-box';
-        noteBox.innerHTML =
-          '<div class="note-toolbar">' +
-          '<button type="button" class="note-trash" title="Eliminar nota">🗑</button>' +
-          '<button type="button" class="note-close" title="Cerrar (Esc)">❌</button>' +
-          '</div>' +
-          '<textarea placeholder="Escribe tu nota de exposición aquí…">' + (notes[id] || '') + '</textarea>' +
-          '<div class="note-actions-row">' +
-          '<button type="button" class="note-ok" title="Guardar (Ctrl+Enter)">💾</button>' +
-          '</div>';
-        const ta = noteBox.querySelector('textarea');
-        const closeNote = ()=>{ noteBox.classList.remove('open'); };
-        const saveAndCollapse = ()=>{ notes[id] = ta.value; saveNotes(); noteBox.classList.remove('open'); renderReader(); };
-        noteBox.querySelector('.note-close').onclick = (e)=>{ e.stopPropagation(); closeNote(); };
-        noteBox.querySelector('.note-ok').onclick = (e)=>{ e.stopPropagation(); saveAndCollapse(); };
-        noteBox.querySelector('.note-trash').onclick = (e)=>{
-          e.stopPropagation();
-          delete notes[id];
-          saveNotes();
-          renderReader();
-        };
-        ta.oninput = ()=>{ notes[id] = ta.value; saveNotes(); };
-        ta.onkeydown = (e)=>{
-          if(e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); closeNote(); }
-          if(e.key === 'Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); saveAndCollapse(); }
-        };
-        noteBtn.onclick = (e)=>{
-          e.stopPropagation();
-          const willOpen = !noteBox.classList.contains('open');
-          noteBox.classList.toggle('open');
-          if(willOpen) ta.focus();
-        };
-        const bodyEl = row.querySelector('.verse-body') || row;
-        bodyEl.appendChild(actions);
-        bodyEl.appendChild(noteBox);
-      } else {
-        const bodyEl = row.querySelector('.verse-body') || row;
-        bodyEl.appendChild(actions);
-      }
       if(isLastSelected){
         const copyBtn = document.createElement('div');
         copyBtn.className = 'vaction vaction-copy';
         copyBtn.textContent = '📋 Copiar';
         copyBtn.title = 'Copiar referencia y texto de la selección';
-        copyBtn.onclick = (e)=>{ e.stopPropagation(); seferCopySelectedVerses(copyBtn); };
+        copyBtn.onclick = function(e){
+          e.stopPropagation();
+          if(typeof seferCopySelectedVerses === 'function') seferCopySelectedVerses(copyBtn);
+        };
         actions.appendChild(copyBtn);
       }
+
+      const noteBox = document.createElement('div');
+      noteBox.className = 'note-box';
+      noteBox.innerHTML =
+        '<div class="note-toolbar">' +
+        '<button type="button" class="note-trash" title="Eliminar nota">🗑</button>' +
+        '<button type="button" class="note-close" title="Cerrar (Esc)">❌</button>' +
+        '</div>' +
+        '<textarea placeholder="Escribe tu nota de exposición aquí…">' + (notes[id] || '') + '</textarea>' +
+        '<div class="note-actions-row">' +
+        '<button type="button" class="note-ok" title="Guardar (Ctrl+Enter)">💾</button>' +
+        '</div>';
+      const ta = noteBox.querySelector('textarea');
+      const closeNote = function(){ noteBox.classList.remove('open'); };
+      const saveAndCollapse = function(){ notes[id] = ta.value; saveNotes(); noteBox.classList.remove('open'); renderReader(); };
+      noteBox.querySelector('.note-close').onclick = function(e){ e.stopPropagation(); closeNote(); };
+      noteBox.querySelector('.note-ok').onclick = function(e){ e.stopPropagation(); saveAndCollapse(); };
+      noteBox.querySelector('.note-trash').onclick = function(e){
+        e.stopPropagation();
+        delete notes[id];
+        saveNotes();
+        renderReader();
+      };
+      ta.oninput = function(){ notes[id] = ta.value; saveNotes(); };
+      ta.onkeydown = function(e){
+        if(e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); closeNote(); }
+        if(e.key === 'Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); saveAndCollapse(); }
+      };
+      noteBtn.onclick = function(e){
+        e.stopPropagation();
+        const willOpen = !noteBox.classList.contains('open');
+        noteBox.classList.toggle('open');
+        if(willOpen) ta.focus();
+      };
+      const bodyEl = row.querySelector('.verse-body') || row;
+      bodyEl.appendChild(actions);
+      bodyEl.appendChild(noteBox);
     }
 
-    verseParent.appendChild(row);
+        verseParent.appendChild(row);
   });
   // Restaurar scroll y re-montar flechas sobre #reader-verses
   requestAnimationFrame(()=>{
@@ -372,21 +377,26 @@ function setVerseSelected(vnum, on){
       detailVerse = lastCheckedVerse;
     }
   }
-  if(selectedVerses.length === 0){
-    if(clearSelBtn){ clearSelBtn.classList.remove('is-visible'); clearSelBtn.style.visibility = 'hidden'; }
-    if(bar) bar.classList.remove('has-sel');
-    if(easyBtn) easyBtn.style.display = '';
-    selectionUIActive = false;
-    lastCheckedVerse = null;
-  } else {
-    if(clearSelBtn){ clearSelBtn.classList.add('is-visible'); clearSelBtn.style.visibility = 'visible'; }
-    if(bar) bar.classList.add('has-sel');
-    if(easyBtn) easyBtn.style.display = '';
-    selectionUIActive = true;
-  }
-  updateSelectionUI();
-  renderReader();
+  try{
+    const bar = document.getElementById('selection-bar');
+    const clearSelBtn = document.getElementById('clear-selection-btn') || document.getElementById('reader-clear-sel');
+    const easyBtn = document.getElementById('easy-btn');
+    if(selectedVerses.length === 0){
+      if(clearSelBtn){ clearSelBtn.classList.remove('is-visible'); clearSelBtn.style.visibility = 'hidden'; }
+      if(bar) bar.classList.remove('has-sel');
+      selectionUIActive = false;
+      lastCheckedVerse = null;
+    } else {
+      if(clearSelBtn){ clearSelBtn.classList.add('is-visible'); clearSelBtn.style.visibility = 'visible'; }
+      if(bar) bar.classList.add('has-sel');
+      selectionUIActive = true;
+    }
+  }catch(e){}
+  try{ if(typeof updateSelectionUI==='function') updateSelectionUI(); }catch(e){}
+  try{ renderReader(); }catch(e){}
 }
+window.setVerseSelected = setVerseSelected;
+window.lastCheckedVerse = lastCheckedVerse;
 function toggleSelect(vnum){
   setVerseSelected(vnum, selectedVerses.indexOf(vnum) === -1);
 }

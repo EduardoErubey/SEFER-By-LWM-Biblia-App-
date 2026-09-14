@@ -271,3 +271,41 @@ if(_mb) _mb.onclick = ()=>{
   openMeaningsPanel();
 };
 
+
+
+/* Cerrar panel de estudio al abrir otros modales */
+(function(){
+  function wrapClose(id){
+    const el = document.getElementById(id);
+    if(!el || el.dataset.seferSideWrap) return;
+    el.dataset.seferSideWrap = '1';
+    el.addEventListener('click', function(){
+      try{ if(typeof closeSidePanel === 'function') closeSidePanel(); }catch(e){}
+    }, true);
+  }
+  ['glossary-btn','biography-btn','apocrifos-btn','plan-btn','youtube-btn','help-btn','project-btn'].forEach(wrapClose);
+})();
+
+
+/* SEFER_CLOSE_SIDE_ON_MODALS_V2 */
+(function(){
+  function closeStudyPanel(){
+    try{ if(typeof closeSidePanel==='function') closeSidePanel(); }catch(e){}
+    try{
+      const side = document.getElementById('side');
+      const bd = document.getElementById('side-backdrop');
+      if(side) side.classList.remove('open');
+      if(bd) bd.classList.remove('open');
+      document.getElementById('notes-btn')?.classList.remove('active-panel');
+      document.getElementById('favs-btn')?.classList.remove('active-panel');
+      document.getElementById('meanings-btn')?.classList.remove('active-panel');
+    }catch(e){}
+  }
+  window.seferCloseStudyPanel = closeStudyPanel;
+  ['glossary-btn','biography-btn','apocrifos-btn','plan-btn','youtube-btn','help-btn','project-btn'].forEach(function(id){
+    const el = document.getElementById(id);
+    if(!el || el.dataset.seferCloseSide2) return;
+    el.dataset.seferCloseSide2 = '1';
+    el.addEventListener('click', closeStudyPanel, true);
+  });
+})();

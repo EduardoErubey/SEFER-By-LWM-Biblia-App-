@@ -48,8 +48,10 @@
         </div>
       </div>
       <div id="theme-switch">
-        <div id="theme-batch" class="theme-batch"></div>
-        <button type="button" id="theme-more-btn" class="theme-more-btn" title="Más temas" data-tooltip="Cambiar lote de temas">＋</button>
+        <div class="theme-row-continuous">
+          <button type="button" id="theme-more-btn" class="theme-more-btn" title="Más temas" data-tooltip="Cambiar lote de temas (＋/−)">＋</button>
+          <div id="theme-batch" class="theme-batch"></div>
+        </div>
         <button type="button" id="random-verse-btn" class="random-verse-btn" title="Versículo aleatorio" data-tooltip="Ir a un versículo al azar">🎲</button>
       </div>
       <div id="ref-search-wrap">
@@ -82,49 +84,48 @@
         <div id="current-ref">—</div>
       </div>
       <div id="topbar-actions">
-        <button class="btn has-tip" id="easy-btn" data-action="highlight" data-tooltip="Destacar nombres, lugares y palabras de Jesús">✨ Destacar</button>
-        
-        
-        <span class="tb-group">
-          <button class="btn btn-icon" id="font-dec" data-tooltip="Reducir tamaño del texto">A−</button>
-          <button class="btn btn-icon" id="font-inc" data-tooltip="Aumentar tamaño del texto">A+</button>
+        <span class="tb-group" title="Texto" id="tb-group-font">
+          <button class="btn btn-icon has-tip" id="font-dec" data-tooltip="Reducir tamaño del texto">A−</button>
+          <button class="btn btn-icon has-tip" id="font-inc" data-tooltip="Aumentar tamaño del texto">A+</button>
           <button class="btn btn-icon has-tip" id="font-family-btn" data-tooltip="Elegir tipografía de lectura">Aa</button>
-          <div id="version-switch" class="version-switch-toolkit">
-          <button type="button" id="version-btn" class="btn has-tip" aria-haspopup="listbox" aria-expanded="false" title="Traducción" data-tooltip="Cambiar traducción bíblica">
-            <span class="vb-label">RV1960</span>
-          </button>
-          <div id="version-menu" role="listbox" aria-label="Versiones de la Biblia">
-            <div class="ver-group">Reina Valera</div>
-            <button type="button" class="ver-item" data-version="rv1909" role="option"><span class="ver-dot">•</span> 1909</button>
-            <button type="button" class="ver-item active" data-version="rv1960" role="option"><span class="ver-dot">•</span> 1960 <span class="ver-def">Predeterminado</span></button>
-            <button type="button" class="ver-item" data-version="rva2015" role="option"><span class="ver-dot">•</span> 2015</button>
-            <div class="ver-group">Nueva Versión Internacional</div>
-            <button type="button" class="ver-item" data-version="nvi" role="option">NVI (Español latino)</button>
-            <div class="ver-group">Nueva Traducción Viviente</div>
-            <button type="button" class="ver-item" data-version="ntv" role="option">NTV</button>
-            <div class="ver-group">Traducción en Lenguaje Actual</div>
-            <button type="button" class="ver-item" data-version="tla" role="option">TLA</button>
-          </div>
-        </div>
-          
         </span>
-        <span class="tb-group" title="Estudio">
+        <span class="tb-group" title="Lectura" id="tb-group-read">
+          <div id="version-switch" class="version-switch-toolkit">
+            <button type="button" id="version-btn" class="btn has-tip" aria-haspopup="listbox" aria-expanded="false" title="Traducción" data-tooltip="Cambiar traducción bíblica (RV1960, NVI…)">
+              <span class="vb-label">RV1960</span>
+            </button>
+            <div id="version-menu" role="listbox" aria-label="Versiones de la Biblia">
+              <div class="ver-group">Reina Valera</div>
+              <button type="button" class="ver-item" data-version="rv1909" role="option"><span class="ver-dot">•</span> 1909</button>
+              <button type="button" class="ver-item active" data-version="rv1960" role="option"><span class="ver-dot">•</span> 1960 <span class="ver-def">Predeterminado</span></button>
+              <button type="button" class="ver-item" data-version="rva2015" role="option"><span class="ver-dot">•</span> 2015</button>
+              <div class="ver-group">Nueva Versión Internacional</div>
+              <button type="button" class="ver-item" data-version="nvi" role="option">NVI (Español latino)</button>
+              <div class="ver-group">Nueva Traducción Viviente</div>
+              <button type="button" class="ver-item" data-version="ntv" role="option">NTV</button>
+              <div class="ver-group">Traducción en Lenguaje Actual</div>
+              <button type="button" class="ver-item" data-version="tla" role="option">TLA</button>
+            </div>
+          </div>
+          <button class="btn has-tip" id="easy-btn" data-action="highlight" data-tooltip="Destacar nombres, lugares y palabras de Jesús">✨ Destacar</button>
+          <button class="btn has-tip" id="plan-btn" data-tooltip="Plan de lectura de la Biblia en un año">📅 Plan 1 año</button>
+        </span>
+        <span class="tb-group" title="Estudio" id="tb-group-study">
           <button class="btn has-tip" id="meanings-btn" data-tooltip="Ver significados guardados">📚 Significados</button>
           <button class="btn has-tip" id="notes-btn" data-tooltip="Abrir tus notas por versículo">📝 Notas</button>
           <button class="btn fav-btn has-tip" id="favs-btn" data-tooltip="Ver versículos favoritos">❤️ Favoritos</button>
         </span>
-        <span class="tb-group" title="Consulta">
+        <span class="tb-group" title="Consulta" id="tb-group-consult">
           <button class="btn has-tip" id="glossary-btn" data-tooltip="Consultar términos bíblicos">📖 Glosario</button>
           <button class="btn has-tip" id="biography-btn" data-tooltip="Biografías de personas de la Biblia">👤 Biografía</button>
           <button class="btn has-tip" id="apocrifos-btn" data-tooltip="Información sobre libros apócrifos">📜 Apócrifos</button>
         </span>
-        <span class="tb-group" title="Herramientas">
-          <button class="btn has-tip" id="plan-btn" data-tooltip="Plan de lectura de la Biblia en un año">📅 Plan 1 año</button>
+        <span class="tb-group" title="Herramientas" id="tb-group-tools">
           <span id="estado-nube" style="display:none;" aria-hidden="true"></span>
           <button class="btn has-tip" id="youtube-btn" data-tooltip="Pegar un sermón de YouTube mientras lees"><svg class="yt-logo" viewBox="0 0 28 20" width="18" height="13" aria-hidden="true"><rect width="28" height="20" rx="4" fill="#FF0000"/><path d="M11 5.5v9l7.5-4.5L11 5.5z" fill="#fff"/></svg> YouTube</button>
           <button class="btn primary has-tip" id="project-btn" data-tooltip="Proyectar versículo, selección o capítulo">🎬 Proyectar</button>
+          <button class="btn has-tip" id="help-btn" data-tooltip="Manual de SEFER y tour guiado">❓ Ayuda</button>
         </span>
-        <button class="btn has-tip" id="help-btn" data-tooltip="Manual de SEFER y tour guiado">❓ Ayuda</button>
       </div>
     </div>
     

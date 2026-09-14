@@ -111,68 +111,75 @@ async function seferSetBibleVersion(id, opts){
 }
 
 function wireVersionSwitcher(){
-  if(wireVersionSwitcher._done) return;
-
   const btn = document.getElementById('version-btn');
   const menu = document.getElementById('version-menu');
   if(!btn || !menu){
-    console.warn('[SEFER] Falta #version-btn o #version-menu — reintento');
-    setTimeout(function(){ try{ wireVersionSwitcher(); }catch(e){} }, 200);
+    setTimeout(function(){ try{ wireVersionSwitcher(); }catch(e){} }, 250);
     return;
   }
-  wireVersionSwitcher._done = true;
+  if(btn.dataset.seferWired === '1') return;
+  btn.dataset.seferWired = '1';
 
-  // Dejar el menú junto al botón (no mover a body: más fiable)
   const host = document.getElementById('version-switch') || btn.parentElement;
-  if(host && menu.parentElement !== host){
-    host.appendChild(menu);
-  }
-
-  function showMenu(){
-    const r = btn.getBoundingClientRect();
-    menu.classList.add('open');
-    menu.style.setProperty('display', 'block', 'important');
-    menu.style.setProperty('position', 'fixed', 'important');
-    menu.style.setProperty('z-index', '2147483000', 'important');
-    menu.style.setProperty('width', 'max-content', 'important');
-    menu.style.setProperty('min-width', '160px', 'important');
-    menu.style.setProperty('max-width', 'min(320px, 92vw)', 'important');
-    menu.style.setProperty('visibility', 'visible', 'important');
-    menu.style.setProperty('opacity', '1', 'important');
-    menu.style.setProperty('pointer-events', 'auto', 'important');
-    menu.style.setProperty('background', 'var(--card-bg, #fff)', 'important');
-    menu.style.setProperty('border', '1px solid var(--line, #ccc)', 'important');
-    menu.style.setProperty('border-radius', '10px', 'important');
-    menu.style.setProperty('box-shadow', '0 12px 32px rgba(0,0,0,0.3)', 'important');
-    menu.style.setProperty('padding', '8px', 'important');
-    // medir
-    menu.style.left = '0px';
-    menu.style.top = '0px';
-    const mw = Math.max(menu.offsetWidth, 160);
-    const mh = menu.offsetHeight || 100;
-    let left = r.left;
-    let top = r.bottom + 4;
-    if(left + mw > window.innerWidth - 8) left = Math.max(8, window.innerWidth - mw - 8);
-    if(top + mh > window.innerHeight - 8) top = Math.max(8, r.top - mh - 4);
-    menu.style.left = left + 'px';
-    menu.style.top = top + 'px';
-    btn.setAttribute('aria-expanded', 'true');
-  }
+  if(host && menu.parentElement !== host) host.appendChild(menu);
 
   function hideMenu(){
     menu.classList.remove('open');
     menu.style.setProperty('display', 'none', 'important');
+    menu.style.setProperty('visibility', 'hidden', 'important');
     btn.setAttribute('aria-expanded', 'false');
   }
+  function showMenu(){
+    if(menu.parentElement !== document.body) document.body.appendChild(menu);
 
+    try{ document.querySelectorAll('#font-family-menu.open').forEach(function(m){ m.classList.remove('open'); }); }catch(e){}
+    const r = btn.getBoundingClientRect();
+    menu.classList.add('open');
+    menu.style.setProperty('display', 'block', 'important');
+    menu.style.setProperty('visibility', 'visible', 'important');
+    menu.style.setProperty('opacity', '1', 'important');
+    menu.style.setProperty('position', 'fixed', 'important');
+    menu.style.setProperty('z-index', '2147483646', 'important');
+    menu.style.setProperty('pointer-events', 'auto', 'important');
+    menu.style.setProperty('width', 'max-content', 'important');
+    menu.style.setProperty('min-width', '160px', 'important');
+    menu.style.setProperty('max-width', 'min(320px, 92vw)', 'important');
+    menu.style.setProperty('background', 'var(--card-bg, #1a1a1a)', 'important');
+    menu.style.setProperty('color', 'var(--ink, #eee)', 'important');
+    menu.style.setProperty('border', '1px solid var(--line, #666)', 'important');
+    menu.style.setProperty('border-radius', '10px', 'important');
+    menu.style.setProperty('box-shadow', '0 12px 36px rgba(0,0,0,0.45)', 'important');
+    menu.style.setProperty('padding', '8px', 'important');
+    menu.style.setProperty('backdrop-filter', 'none', 'important');
+    menu.style.setProperty('-webkit-backdrop-filter', 'none', 'important');
+    menu.style.setProperty('background', document.body.classList.contains('theme-glass') ? '#1a1a1a' : (getComputedStyle(document.body).getPropertyValue('--card-bg') || '#fff'), 'important');
+    menu.style.setProperty('opacity', '1', 'important');
+    menu.style.setProperty('-webkit-backdrop-filter', 'none', 'important');
+    menu.style.left = '0px';
+    menu.style.top = '0px';
+    const mw = Math.max(menu.offsetWidth || 0, 160);
+    const mh = menu.offsetHeight || 120;
+    let left = Math.max(8, r.left || r.x || 0);
+    let top = (r.bottom || (r.top + r.height) || 0) + 4;
+    if(!r.width && !r.height){
+      // botón sin geometría: centrar bajo la toolkit
+      const tb = document.getElementById('topbar-actions');
+      const tr = tb ? tb.getBoundingClientRect() : null;
+      if(tr){ left = tr.left; top = tr.bottom + 4; }
+    }
+    if(left + mw > window.innerWidth - 8) left = Math.max(8, window.innerWidth - mw - 8);
+    if(top + mh > window.innerHeight - 8) top = Math.max(8, (r.top || 40) - mh - 4);
+    menu.style.setProperty('left', left + 'px', 'important');
+    menu.style.setProperty('top', top + 'px', 'important');
+    btn.setAttribute('aria-expanded', 'true');
+  }
   function isOpen(){
-    return menu.classList.contains('open') && menu.style.display !== 'none';
+    return menu.classList.contains('open') && getComputedStyle(menu).display !== 'none';
   }
 
   btn.addEventListener('click', function(e){
     e.preventDefault();
     e.stopPropagation();
-    try{ document.querySelectorAll('#font-family-menu.open').forEach(function(m){ m.classList.remove('open'); }); }catch(err){}
     if(isOpen()) hideMenu();
     else showMenu();
   }, true);
@@ -183,7 +190,7 @@ function wireVersionSwitcher(){
       e.stopPropagation();
       const id = el.getAttribute('data-version');
       hideMenu();
-      if(id) seferSetBibleVersion(id);
+      if(id && typeof seferSetBibleVersion === 'function') seferSetBibleVersion(id);
     }, true);
   });
 
@@ -192,20 +199,15 @@ function wireVersionSwitcher(){
     if(btn.contains(e.target) || menu.contains(e.target)) return;
     hideMenu();
   });
-
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape' && isOpen()) hideMenu();
   });
+  window.addEventListener('resize', function(){ if(isOpen()) showMenu(); });
 
-  window.addEventListener('resize', function(){
-    if(isOpen()) showMenu();
-  });
-
-  seferUpdateVersionUI();
   hideMenu();
-
+  try{ seferUpdateVersionUI(); }catch(e){}
   try{
-    if(currentBibleVersion && currentBibleVersion !== 'rv1960'){
+    if(typeof currentBibleVersion !== 'undefined' && currentBibleVersion && currentBibleVersion !== 'rv1960'){
       seferSetBibleVersion(currentBibleVersion, {silent:true});
     } else if(window.BIBLE_DATA_RV1960){
       seferApplyBibleData(window.BIBLE_DATA_RV1960);
@@ -213,9 +215,6 @@ function wireVersionSwitcher(){
       seferApplyBibleData(window.BIBLE_DATA);
     }
   }catch(err){ console.warn('[SEFER] version init', err); }
-
-  console.info('[SEFER] wireVersionSwitcher listo');
+  console.info('[SEFER] traducción lista');
 }
-
-// Exponer por si el arranque es tardío
 window.wireVersionSwitcher = wireVersionSwitcher;

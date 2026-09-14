@@ -30,7 +30,7 @@ function formatBookHeading(book, chap, verse){
 function goTo(book, chap){
   try{ if(typeof trackBookRead==='function') trackBookRead(book); }catch(e){}
   showWelcome = false;
-  currentBook = book; currentChap = chap; detailVerse = null;
+  currentBook = book; currentChap = String(chap); detailVerse = null;
   selectedVerses = [];
   selectionUIActive = false;
   updateSelectionUI();
@@ -52,8 +52,9 @@ function goTo(book, chap){
 function updateProjectBtnVisibility(){
   const btn = document.getElementById('project-btn');
   if(!btn) return;
-  // Visible al leer, o en bienvenida solo durante el tour
-  btn.style.display = (showWelcome && !seferTourActive) ? 'none' : '';
+  // Siempre visible (también en bienvenida)
+  btn.style.display = '';
+  btn.style.visibility = 'visible';
 }
 function showWelcomeScreen(){
   showWelcome = true;
@@ -68,7 +69,9 @@ function showWelcomeScreen(){
 }
 
 function sortedVerseNums(book, chap){
-  return Object.keys((BIBLE[book]||{})[chap] || {}).sort((a,b)=>+a-+b);
+  const _b = (typeof BIBLE !== 'undefined' && BIBLE && Object.keys(BIBLE).length) ? BIBLE : (window.BIBLE_DATA||window.BIBLE||{});
+  const ch = (_b[book]||{})[String(chap)] || (_b[book]||{})[chap] || {};
+  return Object.keys(ch).sort((a,b)=>+a-+b);
 }
 
 function formatSelectionLabel(){

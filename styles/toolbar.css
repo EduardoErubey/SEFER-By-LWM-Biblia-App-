@@ -1050,3 +1050,89 @@ body > #version-menu.open,
   max-width: 6.5em !important;
   width: auto !important;
 }
+
+
+/* Grupos toolkit */
+#topbar-actions{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+#topbar-actions .tb-group{
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 2px 4px !important;
+  border-radius: 8px;
+  flex: 0 0 auto !important;
+}
+#version-switch, #version-btn{
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 50 !important;
+  opacity: 1 !important;
+}
+body.theme-glass #version-menu,
+body.theme-glass #version-menu.open,
+#version-menu.open{
+  background: var(--card-bg) !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+
+/* FIX orden toolkit: respetar DOM (sin order que reordena) */
+#topbar-actions #easy-btn,
+#topbar-actions #version-switch,
+#topbar-actions .tb-group,
+#topbar-actions #help-btn,
+#topbar-actions #project-btn {
+  order: 0 !important;
+}
+#topbar-actions {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 6px 8px !important;
+}
+#topbar-actions .tb-group {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+#project-btn {
+  display: inline-flex !important;
+  visibility: visible !important;
+}
+
+
+/* Menú traducción: opaco en TODOS los temas (incl. Glass) */
+#version-menu,
+#version-menu.open,
+body > #version-menu,
+body.theme-glass #version-menu,
+body.theme-glass #version-menu.open,
+body[data-theme="amoled"] #version-menu,
+body[data-theme="lwm-night"] #version-menu,
+body[data-theme="mexico"] #version-menu,
+body[data-theme="ucrania"] #version-menu,
+body[data-theme="corea"] #version-menu {
+  background: #1e1e1e !important;
+  color: #f0f0f0 !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.55) !important;
+  z-index: 2147483646 !important;
+}
+body:not(.theme-glass) #version-menu,
+body:not(.theme-glass) #version-menu.open {
+  background: var(--card-bg, #fff) !important;
+  color: var(--ink, #222) !important;
+}
+#version-menu .ver-item { opacity: 1 !important; }
+#version-menu .ver-group { opacity: 1 !important; color: inherit !important; }

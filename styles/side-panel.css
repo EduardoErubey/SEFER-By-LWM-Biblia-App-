@@ -59,3 +59,60 @@ body.mobile-mode #side{width:min(520px, 94vw) !important;max-width:94vw !importa
 
 #side.open{ z-index: 1400 !important; display: block !important; }
 #side-backdrop.open{ z-index: 1390 !important; display: block !important; }
+
+
+/* Panel de estudio centrado y opaco (como glosario) */
+#side{
+  display: none !important;
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 1400 !important;
+  width: min(520px, 92vw) !important;
+  max-height: 85vh !important;
+  overflow-y: auto !important;
+  padding: 18px 20px 16px !important;
+  background: var(--card-bg) !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.35) !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+#side.open{ display: block !important; }
+#side-backdrop{
+  z-index: 1390 !important;
+  background: rgba(0,0,0,0.45) !important;
+}
+
+
+/* Panel estudio siempre centrado y opaco */
+#side {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 1400 !important;
+  width: min(520px, 92vw) !important;
+  max-height: 85vh !important;
+  background: var(--card-bg) !important;
+  color: var(--ink) !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4) !important;
+}
+#side.open { display: block !important; }
+#side-backdrop.open {
+  display: block !important;
+  z-index: 1390 !important;
+  background: rgba(0,0,0,0.5) !important;
+}

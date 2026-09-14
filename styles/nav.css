@@ -448,3 +448,134 @@ body:not(.yt-sidebar-active) #yt-player-wrap{
   flex:0 0 0 !important;
   pointer-events:none !important;
 }
+
+
+/* 6 iconos continuos: lotes + 5 temas; dado separado */
+#theme-switch{
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px !important;
+  margin-top: 10px;
+}
+.theme-row-continuous{
+  display: inline-flex !important;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px !important;
+}
+.theme-row-continuous .theme-batch{
+  display: inline-flex !important;
+  gap: 6px !important;
+  margin: 0 !important;
+}
+#theme-more-btn, .theme-more-btn{
+  width: 30px !important;
+  height: 30px !important;
+  margin: 0 !important;
+  flex-shrink: 0;
+}
+#theme-more-spacer, .theme-more-spacer, #theme-batch-top, .theme-batch-top{
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  visibility: hidden !important;
+}
+#random-verse-btn{
+  margin-left: 4px !important;
+}
+
+
+/* ========== FIX CRÍTICO: panel de lectura a ancho completo ========== */
+#app {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100% !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  overflow: hidden !important;
+}
+#nav {
+  flex: 0 0 auto !important;
+  width: var(--nav-w, 280px) !important;
+  max-width: 40vw !important;
+}
+#main {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+#topbar {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+}
+#content-wrap {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+#reader {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  padding: 0 24px !important;
+}
+#reader-verses {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  max-width: 42rem !important;
+  min-width: 0 !important;
+  overflow-y: auto !important;
+  margin: 0 !important;
+  padding: 12px 0 40px !important;
+  box-sizing: border-box !important;
+}
+#reader .verse {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+
+/* Temas: 6 iconos en una sola fila continua */
+.theme-row-continuous {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+.theme-row-continuous #theme-more-btn,
+.theme-row-continuous .theme-more-btn {
+  order: 0 !important;
+  margin: 0 !important;
+}
+.theme-row-continuous #theme-batch,
+.theme-row-continuous .theme-batch {
+  display: inline-flex !important;
+  flex-wrap: nowrap !important;
+  gap: 6px !important;
+  margin: 0 !important;
+}
+#theme-switch {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
