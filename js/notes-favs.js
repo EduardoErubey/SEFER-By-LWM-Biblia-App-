@@ -21,7 +21,7 @@ function openSideChrome(){
 }
 document.getElementById('side-backdrop')?.addEventListener('click', ()=>{ if(typeof closeSidePanel==='function') closeSidePanel(); });
 function sidePanelHeader(titleHtml){
-  return `<h3><button type="button" class="side-close-btn" title="Cerrar panel">❌</button>${titleHtml}</h3>`;
+  return `<h3><button type="button" class="side-close-btn" title="Cerrar panel" aria-label="Cerrar">✕</button>${titleHtml}</h3>`;
 }
 function bindSideClose(){
   const btn = side.querySelector('.side-close-btn');

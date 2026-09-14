@@ -1109,30 +1109,90 @@ body.theme-glass #version-menu.open,
 }
 
 
-/* Menú traducción: opaco en TODOS los temas (incl. Glass) */
+
+
+/* Menú traducción: opaco, colores del tema activo (no negro fijo) */
 #version-menu,
 #version-menu.open,
-body > #version-menu,
-body.theme-glass #version-menu,
-body.theme-glass #version-menu.open,
-body[data-theme="amoled"] #version-menu,
-body[data-theme="lwm-night"] #version-menu,
-body[data-theme="mexico"] #version-menu,
-body[data-theme="ucrania"] #version-menu,
-body[data-theme="corea"] #version-menu {
-  background: #1e1e1e !important;
-  color: #f0f0f0 !important;
+body > #version-menu {
+  background: var(--card-bg) !important;
+  color: var(--ink) !important;
   opacity: 1 !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  border: 1px solid rgba(255,255,255,0.2) !important;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.55) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.35) !important;
   z-index: 2147483646 !important;
 }
-body:not(.theme-glass) #version-menu,
-body:not(.theme-glass) #version-menu.open {
-  background: var(--card-bg, #fff) !important;
-  color: var(--ink, #222) !important;
+body.theme-glass #version-menu,
+body.theme-glass #version-menu.open,
+body.theme-glass > #version-menu {
+  background: var(--card-bg) !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--line) !important;
+  /* sin negro forzado: usa paleta Glass del tema */
+  background-color: var(--card-bg) !important;
 }
-#version-menu .ver-item { opacity: 1 !important; }
-#version-menu .ver-group { opacity: 1 !important; color: inherit !important; }
+#version-menu .ver-item {
+  color: var(--ink) !important;
+  opacity: 1 !important;
+}
+#version-menu .ver-item:hover {
+  background: var(--gold-soft) !important;
+  color: var(--ink) !important;
+}
+#version-menu .ver-item.active {
+  background: color-mix(in srgb, var(--rubric) 18%, var(--card-bg)) !important;
+  color: var(--rubric) !important;
+}
+#version-menu .ver-group {
+  color: var(--ink-soft) !important;
+  opacity: 1 !important;
+}
+
+
+/* Tooltips de botones: siempre encima de nav y grupos */
+#topbar-actions .btn.has-tip,
+#topbar-actions .btn-icon.has-tip {
+  position: relative !important;
+  z-index: 20 !important;
+}
+#topbar-actions .btn.has-tip:hover,
+#topbar-actions .btn-icon.has-tip:hover,
+#topbar-actions .btn.has-tip:focus-visible,
+#topbar-actions .btn-icon.has-tip:focus-visible {
+  z-index: 10060 !important;
+}
+.btn-icon::after,
+.btn.has-tip::after {
+  z-index: 10070 !important;
+  /* Preferir abajo; si hay poco espacio el JS no aplica — CSS evita ir bajo el nav */
+  pointer-events: none !important;
+}
+/* Sin tooltip nativo del navegador en grupos */
+.tb-group {
+  position: relative;
+}
+.tb-group::after {
+  content: none !important;
+}
+/* Pie de grupo (etiqueta fija sutil, no tooltip) */
+.tb-group[data-label]::before {
+  content: attr(data-label);
+  position: absolute;
+  left: 50%;
+  bottom: -11px;
+  transform: translateX(-50%);
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  opacity: 0.75;
+  white-space: nowrap;
+  pointer-events: none;
+  line-height: 1;
+}
+#topbar {
+  padding-bottom: 14px !important;
+}

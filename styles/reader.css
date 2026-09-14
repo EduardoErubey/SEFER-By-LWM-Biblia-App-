@@ -452,7 +452,7 @@ body.sefer-hl-mode #stage .stage-verse-body{
 }
 #reader-verses {
   width: 100% !important;
-  max-width: 48rem !important;
+  max-width: none !important;
   margin-left: 0 !important;
   margin-right: auto !important;
   padding-left: 16px !important;
@@ -478,4 +478,42 @@ body.sefer-hl-mode #stage .stage-verse-body{
 .verse.active-detail .verse-actions,
 .verse.has-copy-actions .verse-actions {
   display: flex !important;
+}
+
+
+/* Cabecera y versículos: mismo ancho, alineados, más espacio horizontal */
+#reader {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  box-sizing: border-box !important;
+}
+#reader-sticky-head,
+#reader .sticky-head,
+#reader-title-row,
+#reader .book-title,
+#reader .chap-title {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+}
+#reader-verses {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  box-sizing: border-box !important;
+}
+#reader .verse {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+}
+/* Glass: mismo criterio */
+body.theme-glass #reader-verses,
+body.theme-glass #reader-sticky-head,
+body.theme-glass #reader .sticky-head {
+  width: 100% !important;
+  max-width: none !important;
 }

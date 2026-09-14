@@ -12,53 +12,60 @@ function seferTourPrepareStep(step){
     if(!step) return;
     const title = step.title || '';
     const n = parseInt(String(title).split('.')[0], 10) || 0;
-    const needMenu = (n === 21);
-    const needStage = (n >= 22 && n <= 25);
-    const needSpot = (n === 27);
-    if(!needStage && !needMenu){
+    const needMenu = (n === 16);
+    const needStageVerse = (n >= 17 && n <= 19);
+    const needStageChapter = (n === 20);
+    const needSpot = (n === 22);
+    if(n === 21 || n >= 22){
       try{ if(typeof closeProjectSheet==='function') closeProjectSheet(); }catch(e){}
       try{ if(typeof stage!=='undefined' && stage){ stage.classList.remove('open','stage-stack','stage-compare'); } }catch(e){}
     }
     if(needMenu){
       try{ if(typeof openProjectSheet==='function') openProjectSheet(); }catch(e){}
     }
-    if(needStage){
+    if(needStageVerse || needStageChapter){
       try{ if(typeof closeProjectSheet==='function') closeProjectSheet(); }catch(e){}
       try{
-        if(typeof openStage==='function'){
-          openStage((typeof currentBook!=='undefined'&&currentBook)||'Génesis', String((typeof currentChap!=='undefined'&&currentChap)||'1'), ['1'], 'single');
+        const book = (typeof currentBook!=='undefined'&&currentBook)||'Génesis';
+        const chap = String((typeof currentChap!=='undefined'&&currentChap)||'1');
+        if(needStageChapter && typeof openStage==='function'){
+          // Capítulo completo para explicar Auto y velocidad
+          const nums = (typeof sortedVerseNums==='function') ? sortedVerseNums(book, chap) : ['1','2','3'];
+          openStage(book, chap, nums.length ? nums : ['1'], 'chapter');
+        } else if(typeof openStage==='function'){
+          openStage(book, chap, ['1'], 'single');
         }
       }catch(e){}
     }
     if(needSpot){ try{ if(typeof openWordSearch==='function') openWordSearch(''); }catch(e){} }
-    else { try{ if(typeof closeWordSearch==='function') closeWordSearch(); }catch(e){} }
+    else if(n !== 20 && n < 21){ try{ if(typeof closeWordSearch==='function') closeWordSearch(); }catch(e){} }
   }catch(e){}
 }
 
 const SEFER_TOUR_STEPS = window.SEFER_TOUR_STEPS = [
   { sel:'.brand-block, #nav-header-row .brand-block', title:'1. Branding', text:'SEFER ספר y BY LWM PDC (Life Word Mission Playa del Carmen).' },
   { sel:'#nav-header-actions', title:'2. Acciones', text:'Perfil, nube, pantalla completa y reiniciar navegación.' },
-  { sel:'.theme-row-continuous, #theme-more-btn, #theme-batch, #theme-batch .theme-dot', title:'3. Temas', text:'Seis iconos juntos: el botón ＋/− de lotes y los cinco temas del lote activo. El Dado va aparte, a la derecha.' },
+  { sel:'.theme-row-continuous, #theme-more-btn, #theme-batch, #theme-batch .theme-dot', title:'3. Temas', text:'Seis iconos juntos: ＋/− de lotes y los cinco temas. El Dado va aparte.' },
   { sel:'#random-verse-btn', title:'4. Dado', text:'Abre un versículo al azar en modo proyección.' },
-  { sel:'#ref-search-wrap, #ref-search', title:'5. Buscador de versículos', text:'Escribe libro y referencia. Hasta 3 libros con | o /. Tab completa solo el último libro.' },
-  { sel:'#book-list', title:'6. Biblia', text:'Lista de libros. Toca un libro y un capítulo. 📚 muestra información del libro.' },
-  { sel:'#easy-btn', title:'7. Destacar', text:'Resalta nombres, lugares y palabras de Jesús en el texto.' },
-  { sel:'#tb-group-font, #font-dec, #font-inc, #font-family-btn', title:'8. Tamaño de texto', text:'A− reduce, A+ aumenta y Aa cambia la tipografía de lectura.' },
-  { sel:'#version-btn, #version-switch', title:'9. Traducción', text:'Cambia entre RV1960 (predeterminada), RV1909, RV2015, NVI, NTV y TLA.' },
-  { sel:'#plan-btn', title:'10. Plan 1 año', text:'Plan de lectura de la Biblia en un año (varios órdenes y fechas).' },
-  { sel:'#tb-group-study, #meanings-btn, #notes-btn, #favs-btn', title:'11. Estudio', text:'Significados, Notas y Favoritos (panel centrado en pantalla).' },
+  { sel:'#ref-search-wrap, #ref-search', title:'5. Buscador de versículos', text:'Libro y referencia. Hasta 3 libros con | o /. Tab completa el último libro.' },
+  { sel:'#book-list', title:'6. Biblia', text:'Lista de libros. Toca libro y capítulo. 📚 muestra información.' },
+  { sel:'#tb-group-font, #font-dec, #font-inc, #font-family-btn', title:'7. Tamaño de texto', text:'A− reduce, A+ aumenta y Aa cambia la tipografía.' },
+  { sel:'#version-btn, #version-switch', title:'8. Traducción', text:'RV1960 (predeterminada), RV1909, RV2015, NVI, NTV y TLA.' },
+  { sel:'#easy-btn', title:'9. Destacar', text:'Resalta nombres, lugares y palabras de Jesús en el texto.' },
+  { sel:'#plan-btn', title:'10. Plan 1 año', text:'Plan de lectura de la Biblia en un año.' },
+  { sel:'#tb-group-study, #meanings-btn, #notes-btn, #favs-btn', title:'11. Estudio', text:'Significados, Notas y Favoritos (panel centrado).' },
   { sel:'#tb-group-consult, #glossary-btn, #biography-btn, #apocrifos-btn', title:'12. Consulta', text:'Glosario, Biografía y Apócrifos.' },
-  { sel:'#youtube-btn', title:'13. YouTube', text:'Pega un sermón para verlo bajo la lista de libros mientras lees.' },
-  { sel:'#project-btn', title:'14. Proyectar', text:'Abre el menú para proyectar versículo, selección o capítulo (teclas 1, 2, 3).' },
-  { sel:'#tb-group-tools #help-btn, #help-btn', title:'20. Ayuda', text:'Manual completo de SEFER y acceso a este tour.' },
-  { sel:'#project-sheet, .ps-card', title:'21. Menú de proyección', text:'Elige: versículo actual, versículos marcados o capítulo completo.' },
-  { sel:'#stage', title:'22. Proyección', text:'Pantalla grande solo con el texto. Esc cierra la proyección.' },
-  { sel:'#stage-compare-btn', title:'23. Comparar', text:'1.er clic activa comparación de traducciones; 2.º clic la desactiva.' },
-  { sel:'#stage-nav, #stage-prev, #stage-next', title:'24. Controles', text:'Anterior y siguiente versículo dentro de la proyección.' },
-  { sel:'#stage-auto, #stage-speed, #stage-extra-btns', title:'25. Auto y velocidad', text:'Desplazamiento automático y botones de velocidad (0.03x, 0.05x…).' },
-  { sel:'#reader, #reader-verses', title:'26. Lector', text:'Aquí lees. Clic en versículo: favorito o nota. Casillas: selección. En la última casilla: Copiar. Doble clic en palabra: significado.' },
-  { sel:'#word-search-bar, #word-search-input', title:'27. Spotlight', text:'Escribe fuera de un campo para buscar palabras en toda la Biblia.' },
-  { sel:'.brand-block', title:'28. Listo', text:'¡Ya conoces SEFER. Que la Palabra te acompañe!' }
+  { sel:'#youtube-btn', title:'13. YouTube', text:'Pega un sermón bajo la lista de libros mientras lees.' },
+  { sel:'#project-btn', title:'14. Proyectar', text:'Menú para proyectar versículo, selección o capítulo (teclas 1, 2, 3).' },
+  { sel:'#help-btn', title:'15. Ayuda', text:'Manual de SEFER y este tour.' },
+  { sel:'#project-sheet, .ps-card', title:'16. Menú de proyección', text:'Versículo actual, selección marcada o capítulo completo.' },
+  { sel:'#stage', title:'17. Proyección', text:'Pantalla grande solo con el texto. Esc cierra.' },
+  { sel:'#stage-compare-btn', title:'18. Comparar', text:'1.er clic activa comparación de traducciones; 2.º clic la desactiva.' },
+  { sel:'#stage-nav, #stage-prev, #stage-next', title:'19. Controles', text:'Anterior y siguiente versículo.' },
+  { sel:'#stage-auto, #stage-speed, #stage-extra-btns', title:'20. Auto y velocidad', text:'En capítulo completo: desplazamiento automático y velocidades. Se cierra la proyección en el siguiente paso.' },
+  { sel:'#reader, #reader-verses', title:'21. Lector', text:'Clic en versículo: favorito o nota. Casillas + Copiar en la última. Doble clic en palabra: significado.' },
+  { sel:'#word-search-bar, #word-search-input', title:'22. Spotlight', text:'Escribe fuera de un campo para buscar palabras en la Biblia.' },
+  { sel:'.brand-block', title:'23. Listo', text:'¡Ya conoces SEFER. Que la Palabra te acompañe!' }
 ];
 
 
