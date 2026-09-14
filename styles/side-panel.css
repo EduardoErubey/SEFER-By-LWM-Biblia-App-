@@ -56,3 +56,6 @@ body.mobile-mode #side{width:min(520px, 94vw) !important;max-width:94vw !importa
   position: relative !important;
   padding-right: 40px !important;
 }
+
+#side.open{ z-index: 1400 !important; display: block !important; }
+#side-backdrop.open{ z-index: 1390 !important; display: block !important; }

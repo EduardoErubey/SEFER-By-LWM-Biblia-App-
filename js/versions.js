@@ -103,7 +103,7 @@ async function seferSetBibleVersion(id, opts){
     }
   }catch(err){
     console.error('[SEFER] versión', err);
-    alert('No se pudo cargar la versión seleccionada. ¿Subiste los archivos archivos en la carpeta bible/ (bible-data-*.js, etc.)?\n\n'+err.message);
+    alert('No se pudo cargar la versión seleccionada. ¿Subiste los archivos en la carpeta bible/ (bible-data-*.js, etc.)?\n\n'+err.message);
   }
 }
 
@@ -118,20 +118,28 @@ function wireVersionSwitcher(){
   seferUpdateVersionUI();
   function placeVersionMenu(){
     const r = btn.getBoundingClientRect();
-    const mw = Math.min(260, window.innerWidth - 12);
-    let left = r.left;
-    // Preferir alineado al botón; si se sale por la derecha, desplazar
-    if(left + mw > window.innerWidth - 6) left = Math.max(6, window.innerWidth - mw - 6);
-    // No empujar el menú sobre la barra de libros: si el botón está a la derecha del nav, ok
     menu.style.position = 'fixed';
-    menu.style.left = left + 'px';
-    menu.style.top = (r.bottom + 4) + 'px';
     menu.style.right = 'auto';
     menu.style.bottom = 'auto';
-    menu.style.minWidth = '180px';
-    menu.style.maxWidth = mw + 'px';
     menu.style.width = 'max-content';
+    menu.style.minWidth = '0';
+    menu.style.maxWidth = 'min(320px, 92vw)';
     menu.style.zIndex = '10060';
+    menu.style.boxSizing = 'border-box';
+    // medir ancho real del contenido
+    menu.style.visibility = 'hidden';
+    menu.classList.add('open');
+    menu.style.left = '0px';
+    menu.style.top = '0px';
+    const mw = Math.max(menu.offsetWidth || 0, 140);
+    const mh = menu.offsetHeight || 40;
+    let left = r.left;
+    let top = r.bottom + 4;
+    if(left + mw > window.innerWidth - 6) left = Math.max(6, window.innerWidth - mw - 6);
+    if(top + mh > window.innerHeight - 6) top = Math.max(6, r.top - mh - 4);
+    menu.style.left = left + 'px';
+    menu.style.top = top + 'px';
+    menu.style.visibility = '';
   }
   btn.onclick = function(e){
     e.preventDefault();

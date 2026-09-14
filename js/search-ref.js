@@ -301,8 +301,8 @@ function applyRefSuggestion(i){
   const val = refSearch.value;
   const dualPrefix = (refSearch._dualPrefix != null) ? refSearch._dualPrefix : '';
   let work = val;
-  if(val.indexOf('|') >= 0){
-    const parts = val.split('|');
+  if(/[|/]/.test(val)){
+    const parts = val.split(/[|/]/);
     work = parts.slice(1).join('|').replace(/^\s*/, '');
   }
   const m = work.match(/^(\s*)([^\d:]*?)(\s*)(\d.*)?$/);
@@ -328,8 +328,8 @@ function updateRefAutocomplete(){
   // Tras "|": autocompletar el segundo libro
   let prefix = '';
   let work = val;
-  if(val.indexOf('|') >= 0){
-    const parts = val.split('|');
+  if(/[|/]/.test(val)){
+    const parts = val.split(/[|/]/);
     prefix = parts[0] + '|';
     // conservar espacio tras | si el usuario lo escribió
     const after = parts.slice(1).join('|');
@@ -418,18 +418,15 @@ refSearch.addEventListener('keydown', (e)=>{
     }
     refSuggest.classList.remove('open');
     const rawVal = refSearch.value.trim();
-    // Dos libros: "Juan 3:16 | Romanos 8:28" → proyección arriba/abajo
-    if(rawVal.indexOf('|') >= 0){
-      const dual = parseDualBookQuery(rawVal);
-      if(dual){
-        openStageStack(
-          {book: dual.a.book, chap: dual.a.chap, verses: dual.a.verses || ['1']},
-          {book: dual.b.book, chap: dual.b.chap, verses: dual.b.verses || ['1']}
-        );
+    // 2–3 libros con | o / → proyección apilada
+    if(/[|\/]/.test(rawVal)){
+      const multi = parseMultiBookQuery(rawVal);
+      if(multi && multi.length >= 2){
+        if(typeof openStageStack === 'function') openStageStack.apply(null, multi);
         refSearch.blur();
         return;
       }
-      alert('Usa un solo | y dos libros distintos.\nEjemplo: Juan 3:16 | Romanos 8:28');
+      alert('Hasta 3 libros distintos, separados por | o /.\nEjemplos:\nJuan 3:16 | Romanos 8:28\nJuan 3:16 / Salmos 23:1 | Filipenses 4:13');
       return;
     }
     const parsed = parseRefQuery(rawVal);
@@ -442,32 +439,32 @@ refSearch.addEventListener('keydown', (e)=>{
   }
 });
 
-/** Parsea "LibroA cap:v | LibroB cap:v" (un solo |, dos libros distintos). */
+/** Parsea hasta 3 pasajes separados por | o /. Libros distintos. */
+function parseMultiBookQuery(raw){
+  const parts = String(raw||'').split(/[|/]/).map(function(s){ return s.trim(); }).filter(Boolean);
+  if(parts.length < 2 || parts.length > 3) return null;
+  const out = [];
+  const seen = {};
+  for(let i = 0; i < parts.length; i++){
+    const p = parseRefQuery(parts[i]);
+    if(!p || !p.book || !BIBLE[p.book]) return null;
+    if(seen[p.book]) return null;
+    seen[p.book] = true;
+    const chap = String(p.chap || '1');
+    if(!BIBLE[p.book][chap]) return null;
+    let verses = p.verses;
+    if(!verses || !verses.length){
+      const keys = Object.keys(BIBLE[p.book][chap]||{}).sort((x,y)=>+x-+y);
+      verses = keys.length ? [keys[0]] : ['1'];
+    }
+    out.push({book:p.book, chap:chap, verses: verses.map(String)});
+  }
+  return out;
+}
 function parseDualBookQuery(raw){
-  const parts = String(raw||'').split('|');
-  if(parts.length !== 2) return null;
-  const a = parseRefQuery(parts[0].trim());
-  const b = parseRefQuery(parts[1].trim());
-  if(!a || !b || !a.book || !b.book) return null;
-  if(a.book === b.book) return null;
-  if(!BIBLE[a.book] || !BIBLE[b.book]) return null;
-  const chapA = a.chap || '1';
-  const chapB = b.chap || '1';
-  if(!BIBLE[a.book][chapA] || !BIBLE[b.book][chapB]) return null;
-  let versesA = a.verses;
-  let versesB = b.verses;
-  if(!versesA || !versesA.length){
-    const keys = Object.keys(BIBLE[a.book][chapA]||{}).sort((x,y)=>+x-+y);
-    versesA = keys.length ? [keys[0]] : ['1'];
-  }
-  if(!versesB || !versesB.length){
-    const keys = Object.keys(BIBLE[b.book][chapB]||{}).sort((x,y)=>+x-+y);
-    versesB = keys.length ? [keys[0]] : ['1'];
-  }
-  return {
-    a: {book:a.book, chap:String(chapA), verses: versesA.map(String)},
-    b: {book:b.book, chap:String(chapB), verses: versesB.map(String)}
-  };
+  const m = parseMultiBookQuery(raw);
+  if(!m || m.length < 2) return null;
+  return { a: m[0], b: m[1], c: m[2] || null };
 }
 refSearch.addEventListener('blur', ()=>{
   // Retraso para permitir clic en sugerencia

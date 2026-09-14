@@ -16,6 +16,7 @@ var stageFromSearch = false; // proyección dual desde buscador (|)
 let stageCompareOn = false;
 let stageCompareVersion = 'nvi';
 let stageStackSecond = null; // {book,chap,verses} para proyección arriba/abajo
+let stageStackThird = null;
 let stageCompareData = null; // segundo corpus BIBLE para compare
 
 function openStage(book, chap, verses, mode){
@@ -23,6 +24,7 @@ function openStage(book, chap, verses, mode){
   stagePassages = [{book, chap, verses: [...verses].map(String).sort((a,b)=>+a-+b)}];
   stageIndex = 0;
   stageStackSecond = null;
+  stageStackThird = null;
   stageCompareOn = false;
   stageFromSearch = false;
   if(stage){ stage.classList.remove('stage-stack','stage-compare'); }
@@ -38,20 +40,41 @@ function openStage(book, chap, verses, mode){
 }
 
 /** Proyección de dos pasajes (libros distintos): arriba / abajo */
-function openStageStack(p1, p2){
+function openStageStack(p1, p2, p3){
+  // Acepta 2 o 3 pasajes (p3 opcional). También: openStageStack.apply(null, arr)
+  const list = [p1, p2, p3].filter(Boolean);
   stageMode = 'stack';
   stageFromDice = false;
   stageFromSearch = true;
   stageCompareOn = false;
-  stagePassages = [p1];
+  stagePassages = list.length ? [list[0]] : [];
   stageIndex = 0;
-  stageStackSecond = p2;
+  stageStackSecond = list[1] || null;
+  stageStackThird = list[2] || null;
   if(stage){
-    stage.classList.remove('stage-compare');
-    stage.classList.add('open','stage-stack');
+    stage.classList.remove('stage-compare', 'stage-stack-2', 'stage-stack-3');
+    stage.classList.add('open', 'stage-stack');
+    if(list.length >= 3) stage.classList.add('stage-stack-3');
+    else stage.classList.add('stage-stack-2');
   }
   const paneB = document.getElementById('stage-pane-b');
   if(paneB) paneB.style.display = '';
+  let paneC = document.getElementById('stage-pane-c');
+  if(list.length >= 3){
+    if(!paneC){
+      const body = document.getElementById('stage-body');
+      if(body){
+        paneC = document.createElement('div');
+        paneC.className = 'stage-pane';
+        paneC.id = 'stage-pane-c';
+        paneC.innerHTML = '<div class="stage-ref" id="stage-ref-c"></div><div class="stage-text" id="stage-text-c"></div>';
+        body.appendChild(paneC);
+      }
+    }
+    if(paneC) paneC.style.display = '';
+  } else if(paneC){
+    paneC.style.display = 'none';
+  }
   const sel = document.getElementById('stage-compare-sel');
   if(sel) sel.style.display = 'none';
   renderStage();
@@ -171,6 +194,15 @@ function renderStage(){
     try{
       fillStagePane(refB, textB, stageStackSecond.book, stageStackSecond.chap, stageStackSecond.verses, null, BIBLE);
     }catch(e){ console.warn(e); }
+    const paneC = document.getElementById('stage-pane-c');
+    const refC = document.getElementById('stage-ref-c');
+    const textC = document.getElementById('stage-text-c');
+    if(stageStackThird){
+      if(paneC) paneC.style.display = '';
+      try{ fillStagePane(refC, textC, stageStackThird.book, stageStackThird.chap, stageStackThird.verses, null, BIBLE); }catch(e){ console.warn(e); }
+    } else if(paneC){
+      paneC.style.display = 'none';
+    }
   } else if(stageMode === 'compare' && stageCompareOn){
     if(stage) stage.classList.add('stage-compare');
     if(paneB) paneB.style.display = '';
@@ -462,7 +494,7 @@ document.getElementById('stage-speed-btn')?.addEventListener('click', ()=>{
 updateSpeedBtnLabel();
 function closeStageProjection(){
   stopStageAuto();
-  if(stage) stage.classList.remove('open','stage-stack','stage-compare'); stageStackSecond=null; stageCompareOn=false;;
+  if(stage) stage.classList.remove('open','stage-stack','stage-stack-2','stage-stack-3','stage-compare'); stageStackSecond=null; stageStackThird=null; stageCompareOn=false;
   // NO salir de fullscreen del documento (solo cerrar proyección)
   // Restaurar scroll al versículo proyectado
   try{

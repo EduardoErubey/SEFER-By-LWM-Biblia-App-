@@ -14,6 +14,8 @@ function closeSidePanel(){
   document.getElementById('meanings-btn')?.classList.remove('active-panel');
 }
 function openSideChrome(){
+  if(typeof side === 'undefined' || !side){ try{ side = document.getElementById('side'); }catch(e){} }
+  if(!side) return;
   side.classList.add('open');
   document.getElementById('side-backdrop')?.classList.add('open');
 }
@@ -204,11 +206,13 @@ function openFavsPanel(){
   document.getElementById('meanings-btn')?.classList.remove('active-panel');
   focusSidePanel();
 }
-document.getElementById('notes-btn').onclick = ()=>{
+const _nb = document.getElementById('notes-btn');
+if(_nb) _nb.onclick = ()=>{
   if(sidePanel === 'notes' || sidePanel === 'trash'){ closeSidePanel(); return; }
   openNotesPanel();
 };
-document.getElementById('favs-btn').onclick = ()=>{
+const _fb = document.getElementById('favs-btn');
+if(_fb) _fb.onclick = ()=>{
   if(sidePanel === 'favs'){ closeSidePanel(); return; }
   openFavsPanel();
 };
@@ -261,7 +265,8 @@ function openMeaningsPanel(){
   document.getElementById('sermons-btn')?.classList.remove('active-panel');
   focusSidePanel();
 }
-document.getElementById('meanings-btn').onclick = ()=>{
+const _mb = document.getElementById('meanings-btn');
+if(_mb) _mb.onclick = ()=>{
   if(sidePanel === 'meanings'){ closeSidePanel(); return; }
   openMeaningsPanel();
 };

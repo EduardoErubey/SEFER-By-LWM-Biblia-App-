@@ -947,3 +947,50 @@ body.vp-narrow #topbar-actions .btn{padding:5px 8px;font-size:11.5px;}
 #topbar-actions #easy-btn{ order: -25 !important; }
 #topbar-actions #version-switch{ order: -5 !important; }
 #topbar-actions .tb-group:first-of-type{ order: -10 !important; }
+
+
+/* Menús compactos bajo el botón (traducción y tipografías) */
+#version-menu,
+body > #version-menu{
+  width: max-content !important;
+  min-width: 0 !important;
+  max-width: min(320px, 92vw) !important;
+  box-sizing: border-box !important;
+  z-index: 5000 !important;
+}
+#version-menu .ver-item{
+  width: auto !important;
+  white-space: nowrap !important;
+}
+#font-family-menu,
+body > #font-family-menu{
+  width: max-content !important;
+  min-width: 0 !important;
+  max-width: min(280px, 92vw) !important;
+  box-sizing: border-box !important;
+  z-index: 5000 !important;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.2);
+}
+#font-family-menu.open,
+body > #font-family-menu.open{
+  display: flex !important;
+}
+#font-family-menu button{
+  width: auto !important;
+  white-space: nowrap !important;
+  text-align: left;
+  border: none;
+  background: transparent;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--ink);
+  font-size: 13px;
+}
