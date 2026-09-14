@@ -108,76 +108,98 @@ async function seferSetBibleVersion(id, opts){
 }
 
 function wireVersionSwitcher(){
-  const btn = document.getElementById('version-btn');
-  let menu = document.getElementById('version-menu');
-  if(!btn || !menu){ console.warn('[SEFER] version-btn o version-menu no encontrados'); return; }
-  if(menu.parentElement !== document.body) document.body.appendChild(menu);
+  if(wireVersionSwitcher._done) return;
+  wireVersionSwitcher._done = true;
 
-  function placeVersionMenu(){
+  const btn = document.getElementById('version-btn');
+  const menu = document.getElementById('version-menu');
+  if(!btn || !menu){
+    console.warn('[SEFER] Falta #version-btn o #version-menu');
+    return;
+  }
+
+  // Dejar el menú junto al botón (no mover a body: más fiable)
+  const host = document.getElementById('version-switch') || btn.parentElement;
+  if(host && menu.parentElement !== host){
+    host.appendChild(menu);
+  }
+
+  function showMenu(){
     const r = btn.getBoundingClientRect();
-    menu.style.cssText = [
-      'position:fixed',
-      'z-index:10060',
-      'display:block',
-      'width:max-content',
-      'min-width:0',
-      'max-width:min(320px, 92vw)',
-      'box-sizing:border-box',
-      'right:auto',
-      'bottom:auto',
-      'visibility:hidden',
-      'left:0',
-      'top:0'
-    ].join(';');
     menu.classList.add('open');
-    const mw = Math.max(menu.offsetWidth || 0, 140);
-    const mh = menu.offsetHeight || 40;
+    menu.style.setProperty('display', 'block', 'important');
+    menu.style.setProperty('position', 'fixed', 'important');
+    menu.style.setProperty('z-index', '2147483000', 'important');
+    menu.style.setProperty('width', 'max-content', 'important');
+    menu.style.setProperty('min-width', '160px', 'important');
+    menu.style.setProperty('max-width', 'min(320px, 92vw)', 'important');
+    menu.style.setProperty('visibility', 'visible', 'important');
+    menu.style.setProperty('opacity', '1', 'important');
+    menu.style.setProperty('pointer-events', 'auto', 'important');
+    menu.style.setProperty('background', 'var(--card-bg, #fff)', 'important');
+    menu.style.setProperty('border', '1px solid var(--line, #ccc)', 'important');
+    menu.style.setProperty('border-radius', '10px', 'important');
+    menu.style.setProperty('box-shadow', '0 12px 32px rgba(0,0,0,0.3)', 'important');
+    menu.style.setProperty('padding', '8px', 'important');
+    // medir
+    menu.style.left = '0px';
+    menu.style.top = '0px';
+    const mw = Math.max(menu.offsetWidth, 160);
+    const mh = menu.offsetHeight || 100;
     let left = r.left;
     let top = r.bottom + 4;
-    if(left + mw > window.innerWidth - 6) left = Math.max(6, window.innerWidth - mw - 6);
-    if(top + mh > window.innerHeight - 6) top = Math.max(6, r.top - mh - 4);
+    if(left + mw > window.innerWidth - 8) left = Math.max(8, window.innerWidth - mw - 8);
+    if(top + mh > window.innerHeight - 8) top = Math.max(8, r.top - mh - 4);
     menu.style.left = left + 'px';
     menu.style.top = top + 'px';
-    menu.style.visibility = 'visible';
-  }
-  function closeVersionMenu(){
-    menu.classList.remove('open');
-    menu.style.display = 'none';
-    btn.setAttribute('aria-expanded', 'false');
-  }
-  function openVersionMenu(){
-    document.querySelectorAll('#font-family-menu.open').forEach(function(m){ m.classList.remove('open'); });
-    placeVersionMenu();
     btn.setAttribute('aria-expanded', 'true');
   }
-  function toggleVersionMenu(e){
-    if(e){ e.preventDefault(); e.stopPropagation(); }
-    if(menu.classList.contains('open') && menu.style.display !== 'none') closeVersionMenu();
-    else openVersionMenu();
+
+  function hideMenu(){
+    menu.classList.remove('open');
+    menu.style.setProperty('display', 'none', 'important');
+    btn.setAttribute('aria-expanded', 'false');
   }
 
-  seferUpdateVersionUI();
-  btn.onclick = toggleVersionMenu;
-  btn.onkeydown = function(e){
-    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleVersionMenu(e); }
-  };
+  function isOpen(){
+    return menu.classList.contains('open') && menu.style.display !== 'none';
+  }
+
+  btn.addEventListener('click', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    try{ document.querySelectorAll('#font-family-menu.open').forEach(function(m){ m.classList.remove('open'); }); }catch(err){}
+    if(isOpen()) hideMenu();
+    else showMenu();
+  }, true);
+
   menu.querySelectorAll('.ver-item').forEach(function(el){
-    el.onclick = function(e){
+    el.addEventListener('click', function(e){
       e.preventDefault();
       e.stopPropagation();
-      const id = el.getAttribute('data-version') || el.dataset.version;
-      closeVersionMenu();
+      const id = el.getAttribute('data-version');
+      hideMenu();
       if(id) seferSetBibleVersion(id);
-    };
+    }, true);
   });
+
   document.addEventListener('click', function(e){
-    if(!menu.classList.contains('open')) return;
-    if(menu.contains(e.target) || btn.contains(e.target)) return;
-    closeVersionMenu();
+    if(!isOpen()) return;
+    if(btn.contains(e.target) || menu.contains(e.target)) return;
+    hideMenu();
   });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && isOpen()) hideMenu();
+  });
+
   window.addEventListener('resize', function(){
-    if(menu.classList.contains('open')) placeVersionMenu();
+    if(isOpen()) showMenu();
   });
+
+  seferUpdateVersionUI();
+  hideMenu();
+
   try{
     if(currentBibleVersion && currentBibleVersion !== 'rv1960'){
       seferSetBibleVersion(currentBibleVersion, {silent:true});
@@ -187,4 +209,9 @@ function wireVersionSwitcher(){
       seferApplyBibleData(window.BIBLE_DATA);
     }
   }catch(err){ console.warn('[SEFER] version init', err); }
+
+  console.info('[SEFER] wireVersionSwitcher listo');
 }
+
+// Exponer por si el arranque es tardío
+window.wireVersionSwitcher = wireVersionSwitcher;

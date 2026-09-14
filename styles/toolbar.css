@@ -1035,3 +1035,18 @@ body > #version-menu.open,
   max-width: min(280px, 80vw) !important;
   box-shadow: 0 8px 24px rgba(0,0,0,0.4) !important;
 }
+
+
+/* Traducción: prioridad máxima */
+#version-switch, #version-btn {
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 600 !important;
+}
+#version-btn {
+  cursor: pointer !important;
+  min-width: 4.5em !important;
+  max-width: 6.5em !important;
+  width: auto !important;
+}
