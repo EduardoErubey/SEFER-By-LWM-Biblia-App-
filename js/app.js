@@ -55,32 +55,31 @@ try{
   function syncBible(){
     try{
       if(window.BIBLE_DATA){
-        if(typeof BIBLE !== 'undefined') BIBLE = window.BIBLE_DATA;
+        try{ BIBLE = window.BIBLE_DATA; }catch(e){}
         window.BIBLE = window.BIBLE_DATA;
       }
-      /* SEFER FIX: BOOK_ORDER/BOOK_INFO son const inicializadas antes de que
-         termine de cargar bible-data.js (carga asíncrona). Si llegaron vacías,
-         se rellenan aquí (mutando el mismo array/objeto, ya que son const) en
-         cuanto window.BOOK_ORDER / window.BOOK_INFO estén listos. */
-      if(typeof BOOK_ORDER !== 'undefined' && window.BOOK_ORDER && window.BOOK_ORDER.length && BOOK_ORDER.length !== window.BOOK_ORDER.length){
-        BOOK_ORDER.length = 0;
-        Array.prototype.push.apply(BOOK_ORDER, window.BOOK_ORDER);
+      if(typeof BOOK_ORDER !== 'undefined' && window.BOOK_ORDER && window.BOOK_ORDER.length){
+        if(BOOK_ORDER.length !== window.BOOK_ORDER.length){
+          BOOK_ORDER.length = 0;
+          Array.prototype.push.apply(BOOK_ORDER, window.BOOK_ORDER);
+        }
       }
-      if(typeof BOOK_INFO !== 'undefined' && window.BOOK_INFO && window.BOOK_INFO.libros && window.BOOK_INFO.libros.length && (!BOOK_INFO.libros || !BOOK_INFO.libros.length)){
+      if(typeof BOOK_INFO !== 'undefined' && window.BOOK_INFO && window.BOOK_INFO.libros && window.BOOK_INFO.libros.length){
         BOOK_INFO.libros = window.BOOK_INFO.libros;
-        BOOK_INFO.introduccion_testamentos = window.BOOK_INFO.introduccion_testamentos;
+        BOOK_INFO.introduccion_testamentos = window.BOOK_INFO.introduccion_testamentos || [];
         if(typeof BOOK_INFO_MAP !== 'undefined'){
           Object.keys(BOOK_INFO_MAP).forEach(k=>delete BOOK_INFO_MAP[k]);
-          BOOK_INFO.libros.forEach(b=>{ BOOK_INFO_MAP[b.libro] = b; });
+          BOOK_INFO.libros.forEach(function(b){ BOOK_INFO_MAP[b.libro] = b; });
         }
         if(typeof TESTAMENT_INFO !== 'undefined'){
-          (BOOK_INFO.introduccion_testamentos||[]).forEach(t=>{
+          (BOOK_INFO.introduccion_testamentos||[]).forEach(function(t){
             if(t.seccion && t.seccion.indexOf('Antiguo') >= 0) TESTAMENT_INFO.AT = t;
             if(t.seccion && t.seccion.indexOf('Nuevo') >= 0) TESTAMENT_INFO.NT = t;
           });
         }
       }
-    }catch(e){}
+      try{ if(typeof buildInfoNavList === 'function') buildInfoNavList(); }catch(e){}
+    }catch(e){ console.warn('[SEFER] syncBible', e); }
   }
   function start(){
     syncBible();

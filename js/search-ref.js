@@ -295,89 +295,95 @@ function renderRefSuggest(items, typedBook){
   });
 }
 
+function seferSplitRefSegments(val){
+  const seps = [];
+  const parts = [];
+  let last = 0;
+  const s = String(val || '');
+  for(let i = 0; i < s.length; i++){
+    if(s[i] === '|' || s[i] === '/'){
+      parts.push(s.slice(last, i));
+      seps.push(s[i]);
+      last = i + 1;
+    }
+  }
+  parts.push(s.slice(last));
+  return { parts: parts, seps: seps };
+}
+
 function applyRefSuggestion(i){
   if(i < 0 || i >= refSugItems.length) return;
   const name = refSugItems[i];
   const val = refSearch.value;
-  const dualPrefix = (refSearch._dualPrefix != null) ? refSearch._dualPrefix : '';
-  let work = val;
-  if(/[|/]/.test(val)){
-    const parts = val.split(/[|/]/);
-    work = parts.slice(1).join('|').replace(/^\s*/, '');
-  }
-  const m = work.match(/^(\s*)([^\d:]*?)(\s*)(\d.*)?$/);
-  let segment;
+  const split = seferSplitRefSegments(val);
+  const parts = split.parts.slice();
+  const seps = split.seps;
+  let lastSeg = parts[parts.length - 1] || '';
+  const m = lastSeg.match(/^(\s*)([^\d:]*?)(\s*)(\d[\s\S]*)?$/);
+  let newLast;
   if(m && m[4]){
-    segment = name + ' ' + m[4].trim();
+    newLast = (m[1] || '') + name + ' ' + m[4].trim();
   } else {
-    const restMatch = work.match(/(\d.*)$/);
-    segment = restMatch ? (name + ' ' + restMatch[1]) : (name + ' ');
+    const restMatch = lastSeg.match(/(\d[\s\S]*)$/);
+    newLast = restMatch ? (name + ' ' + restMatch[1]) : (name + ' ');
   }
-  refSearch.value = dualPrefix ? (dualPrefix + segment) : segment;
+  parts[parts.length - 1] = newLast;
+  let out = parts[0] || '';
+  for(let k = 0; k < seps.length; k++){
+    out += seps[k] + (parts[k + 1] != null ? parts[k + 1] : '');
+  }
+  refSearch.value = out;
   refSuggest.classList.remove('open');
   refSugItems = [];
   refSugIndex = -1;
   refSearch.focus();
-  // Colocar cursor al final
   const len = refSearch.value.length;
   refSearch.setSelectionRange(len, len);
+  try{ updateRefAutocomplete(); }catch(e){}
 }
 
 function updateRefAutocomplete(){
   const val = refSearch.value;
-  // Tras | o /: autocompletar 2.º o 3.º libro (máx. 3 segmentos)
-  let prefix = '';
-  let work = val;
-  if(/[|/]/.test(val)){
-    const seps = [];
-    const parts = [];
-    let last = 0;
-    for(let i = 0; i < val.length; i++){
-      if(val[i] === '|' || val[i] === '/'){
-        parts.push(val.slice(last, i));
-        seps.push(val[i]);
-        last = i + 1;
-      }
-    }
-    parts.push(val.slice(last));
-    // parts[0] done, parts[1] second book typing, parts[2] third...
-    if(parts.length > 3){
-      // demasiado: no sugerir
-      refSuggest.classList.remove('open');
-      return;
-    }
-    prefix = '';
-    for(let i = 0; i < parts.length - 1; i++){
-      prefix += parts[i] + (seps[i] || '|');
-    }
-    const after = parts[parts.length - 1] || '';
-    const leadSpace = /^(\s*)/.exec(after);
-    prefix += leadSpace ? leadSpace[1] : '';
-    work = after.replace(/^\s*/, '');
-    refSearch._dualSep = seps[seps.length - 1] || '|';
+  const split = seferSplitRefSegments(val);
+  const parts = split.parts;
+  const seps = split.seps;
+  if(parts.length > 3){
+    refSuggest.classList.remove('open');
+    return;
   }
-  // Si ya hay capítulo/versículo en el segmento activo, no sugerir libros
+  let prefix = '';
+  if(seps.length){
+    prefix = parts[0] || '';
+    for(let k = 0; k < seps.length - 1; k++){
+      prefix += seps[k] + (parts[k + 1] != null ? parts[k + 1] : '');
+    }
+    prefix += seps[seps.length - 1];
+  }
+  const lastSeg = parts[parts.length - 1] || '';
+  const lead = (lastSeg.match(/^(\s*)/) || ['',''])[1];
+  const work = lastSeg.replace(/^\s*/, '');
+  refSearch._dualPrefix = prefix + lead;
+
   if(/\d/.test(work) && /:/.test(work)){
     refSuggest.classList.remove('open');
     return;
   }
-  // Extraer posible nombre de libro (todo antes del primer dígito) en el segmento activo
-  const m = work.match(/^([^\d]*)/);
-  const bookPart = (m ? m[1] : work).trim();
+  const bm = work.match(/^([^\d]*)/);
+  const bookPart = (bm ? bm[1] : work).trim();
   if(bookPart.length < 1){
     refSuggest.classList.remove('open');
     return;
   }
-  // Si coincide exactamente con un libro y hay espacio, cerrar
   const exact = BOOK_ORDER.find(e => stripAccentsNav(e.name) === stripAccentsNav(bookPart));
   if(exact && /\s$/.test(work)){
     refSuggest.classList.remove('open');
     return;
   }
-  // Guardar prefijo para applyRefSuggestion
-  refSearch._dualPrefix = prefix;
   const items = getBookSuggestions(bookPart);
-  // No mostrar si solo hay una y es coincidencia exacta ya escrita
+  if(!items.length){
+    refSuggest.classList.remove('open');
+    return;
+  }
   if(items.length === 1 && stripAccentsNav(items[0]) === stripAccentsNav(bookPart)){
     refSuggest.classList.remove('open');
     return;
@@ -385,22 +391,29 @@ function updateRefAutocomplete(){
   renderRefSuggest(items, bookPart);
 }
 
-refSearch.addEventListener('input', updateRefAutocomplete);
 refSearch.addEventListener('keydown', (e)=>{
   if(e.key === 'Tab'){
-    // Autocompletar libro con Tab
-    if(refSuggest.classList.contains('open') && refSugItems.length){
-      e.preventDefault();
+    e.preventDefault();
+    const split = seferSplitRefSegments(refSearch.value);
+    const filled = split.parts.filter(function(p){ return (p||'').trim().length > 0; });
+    if(filled.length > 3){
+      refSuggest.classList.remove('open');
+      return;
+    }
+    try{ updateRefAutocomplete(); }catch(err){}
+    if(refSugItems && refSugItems.length){
       applyRefSuggestion(refSugIndex >= 0 ? refSugIndex : 0);
       return;
     }
-    // Sin lista visible: intentar completar prefijo del libro
-    const val = refSearch.value.trim();
-    const bookPart = val.replace(/\s+\d.*$/, '').trim();
+    const last = (split.parts[split.parts.length - 1] || '').trim();
+    const bookPart = last.replace(/\s+\d[\s\S]*$/, '').trim();
     if(bookPart && !/^\d/.test(bookPart)){
       const items = getBookSuggestions(bookPart);
       if(items.length){
-        e.preventDefault();
+        // no 4th book: if already 3 complete segments, stop
+        if(filled.length >= 3 && /\d/.test(last) && /:/.test(last)){
+          return;
+        }
         refSugItems = items;
         applyRefSuggestion(0);
       }

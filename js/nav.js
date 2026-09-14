@@ -115,8 +115,26 @@ function showTestamentInfo(testament){
   openInfoAt(idx >= 0 ? idx : 0);
 }
 function showBookInfo(bookName){
-  const idx = infoNavList.findIndex(x => x.type==='book' && x.id===bookName);
-  if(idx < 0){ alert('No hay información disponible para este libro.'); return; }
+  try{ if(typeof buildInfoNavList === 'function') buildInfoNavList(); }catch(e){}
+  let idx = infoNavList.findIndex(x => x.type==='book' && x.id===bookName);
+  if(idx < 0){
+    // Si el mapa tiene el libro, abrir modal directo
+    if(typeof BOOK_INFO_MAP !== 'undefined' && BOOK_INFO_MAP[bookName]){
+      infoNavEnabled = true;
+      infoNavIndex = Math.max(0, infoNavList.findIndex(x => x.type==='book' && x.id===bookName));
+      const item = {type:'book', id:bookName};
+      if(typeof renderInfoContent === 'function') renderInfoContent(item);
+      const modal = document.getElementById('info-modal');
+      if(modal){
+        modal.classList.add('open');
+        const nav = document.getElementById('im-nav');
+        if(nav) nav.style.display = '';
+      }
+      return;
+    }
+    alert('No hay información disponible para este libro.');
+    return;
+  }
   openInfoAt(idx);
 }
 function infoNavStep(delta){

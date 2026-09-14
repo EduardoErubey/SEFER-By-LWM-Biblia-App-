@@ -91,7 +91,10 @@ async function seferSetBibleVersion(id, opts){
     // Cerrar menú
     const menu = document.getElementById('version-menu');
     const btn = document.getElementById('version-btn');
-    if(menu) menu.classList.remove('open');
+    if(menu){
+      menu.classList.remove('open');
+      try{ menu.style.setProperty('display','none','important'); }catch(e){}
+    }
     if(btn) btn.setAttribute('aria-expanded','false');
     // Re-render capítulo actual si hay datos
     try{ if(typeof renderBookList === 'function') renderBookList(); }catch(e){}
@@ -109,14 +112,15 @@ async function seferSetBibleVersion(id, opts){
 
 function wireVersionSwitcher(){
   if(wireVersionSwitcher._done) return;
-  wireVersionSwitcher._done = true;
 
   const btn = document.getElementById('version-btn');
   const menu = document.getElementById('version-menu');
   if(!btn || !menu){
-    console.warn('[SEFER] Falta #version-btn o #version-menu');
+    console.warn('[SEFER] Falta #version-btn o #version-menu — reintento');
+    setTimeout(function(){ try{ wireVersionSwitcher(); }catch(e){} }, 200);
     return;
   }
+  wireVersionSwitcher._done = true;
 
   // Dejar el menú junto al botón (no mover a body: más fiable)
   const host = document.getElementById('version-switch') || btn.parentElement;
