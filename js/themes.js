@@ -194,76 +194,62 @@ document.addEventListener('keydown', (e)=>{
   const btn = document.getElementById('theme-more-btn');
   if(!batchEl || !btn) return;
 
-  // +/− encima del tema 1; reservar hueco antiguo con visibility:hidden
+  // Fila continua: ＋/− + 5 temas (sin hueco oculto)
   const themeSwitch = document.getElementById('theme-switch');
-  if(themeSwitch && btn && batchEl){
-    let topRow = document.getElementById('theme-batch-top');
-    if(!topRow){
-      topRow = document.createElement('div');
-      topRow.id = 'theme-batch-top';
-      topRow.className = 'theme-batch-top';
-      themeSwitch.insertBefore(topRow, batchEl);
-    }
-    if(btn.parentElement !== topRow) topRow.appendChild(btn);
-    let spacer = document.getElementById('theme-more-spacer');
-    if(!spacer){
-      spacer = document.createElement('span');
-      spacer.id = 'theme-more-spacer';
-      spacer.className = 'theme-more-spacer';
-      spacer.setAttribute('aria-hidden','true');
-      // colocar spacer donde estaba el botón (junto a dados/lote)
-      const dice = document.getElementById('random-verse-btn');
-      if(dice && dice.parentElement) dice.parentElement.insertBefore(spacer, dice);
-      else themeSwitch.appendChild(spacer);
-    }
+  const row = document.querySelector('.theme-row-continuous') || themeSwitch;
+  if(row && btn && batchEl){
+    if(btn.parentElement !== row) row.insertBefore(btn, batchEl);
+    const spacer = document.getElementById('theme-more-spacer');
+    if(spacer) spacer.remove();
+    const topRow = document.getElementById('theme-batch-top');
+    if(topRow) topRow.remove();
   }
-
-
-  let showB = !!store.get('bp_themes_more', false);
-  if(BATCH_B.some(x => x.t === currentTheme)) showB = true;
-  if(BATCH_A.some(x => x.t === currentTheme)) showB = false;
-
+  let showB = false;
+  try{ showB = !!store.get('bp_themes_more', false); }catch(e){}
   function bindDots(){
-    batchEl.querySelectorAll('.theme-dot').forEach(dot=>{
-      dot.tabIndex = 0;
-      dot.setAttribute('role','button');
-      dot.classList.toggle('active', dot.dataset.t === currentTheme);
-      const applyTheme = ()=>{
-        currentTheme = dot.dataset.t;
+    batchEl.querySelectorAll('.theme-dot').forEach(function(dot){
+      dot.onclick = function(){
+        const tname = dot.getAttribute('data-t');
+        if(!tname) return;
+        currentTheme = tname;
         document.body.setAttribute('data-theme', currentTheme);
         try{
           const GLASS = ['amoled','lwm-night','mexico','ucrania','corea'];
-          document.body.classList.toggle('theme-glass', GLASS.includes(currentTheme));
+          document.body.classList.toggle('theme-glass', GLASS.indexOf(currentTheme) >= 0);
         }catch(e){}
-        batchEl.querySelectorAll('.theme-dot').forEach(d=> d.classList.toggle('active', d.dataset.t===currentTheme));
-        store.set('bp_theme', currentTheme);
-        try{ applyThemeIcons(); }catch(e){}
-        if(typeof scheduleDriveSave==='function') scheduleDriveSave();
-        try{ if(typeof trackThemeTried==='function') trackThemeTried(currentTheme); }catch(e){}
-      };
-      dot.onclick = applyTheme;
-      dot.onkeydown = (e)=>{
-        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); applyTheme(); }
+        try{ store.set('bp_theme', currentTheme); }catch(e){}
+        batchEl.querySelectorAll('.theme-dot').forEach(function(d){
+          d.classList.toggle('active', d.getAttribute('data-t') === currentTheme);
+        });
+        try{ if(typeof applyThemeIcons==='function') applyThemeIcons(); }catch(e){}
+        try{ if(typeof seferUpdateDiceEmoji==='function') seferUpdateDiceEmoji(); }catch(e){}
+        try{ if(typeof scheduleDriveSave==='function') scheduleDriveSave(); }catch(e){}
       };
     });
   }
   function render(){
     const list = showB ? BATCH_B : BATCH_A;
-    batchEl.innerHTML = list.map(item =>
-      '<div class="theme-dot" data-t="'+item.t+'" data-tooltip="'+item.tip+'">'+item.html+'</div>'
-    ).join('');
+    batchEl.innerHTML = list.map(function(item){
+      return '<div class="theme-dot" data-t="'+item.t+'" data-tooltip="'+item.tip+'">'+item.html+'</div>';
+    }).join('');
     btn.classList.toggle('open', showB);
     btn.textContent = showB ? '−' : '＋';
     btn.title = showB ? 'Ver primer lote de temas' : 'Ver segundo lote de temas';
     bindDots();
+    try{
+      const cur = (typeof currentTheme !== 'undefined') ? currentTheme : (document.body.getAttribute('data-theme')||'');
+      batchEl.querySelectorAll('.theme-dot').forEach(function(d){
+        d.classList.toggle('active', d.getAttribute('data-t') === cur);
+      });
+    }catch(e){}
   }
-  btn.onclick = ()=>{
+  btn.onclick = function(){
     showB = !showB;
-    store.set('bp_themes_more', showB);
+    try{ store.set('bp_themes_more', showB); }catch(e){}
     render();
   };
   render();
-  try{ applyThemeIcons(); }catch(e){}
+  try{ if(typeof applyThemeIcons==='function') applyThemeIcons(); }catch(e){}
 })();
 
 

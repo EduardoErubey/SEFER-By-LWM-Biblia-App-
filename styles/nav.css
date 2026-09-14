@@ -448,3 +448,41 @@ body:not(.yt-sidebar-active) #yt-player-wrap{
   flex:0 0 0 !important;
   pointer-events:none !important;
 }
+
+
+/* 6 iconos continuos: lotes + 5 temas; dado separado */
+#theme-switch{
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px !important;
+  margin-top: 10px;
+}
+.theme-row-continuous{
+  display: inline-flex !important;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px !important;
+}
+.theme-row-continuous .theme-batch{
+  display: inline-flex !important;
+  gap: 6px !important;
+  margin: 0 !important;
+}
+#theme-more-btn, .theme-more-btn{
+  width: 30px !important;
+  height: 30px !important;
+  margin: 0 !important;
+  flex-shrink: 0;
+}
+#theme-more-spacer, .theme-more-spacer, #theme-batch-top, .theme-batch-top{
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  visibility: hidden !important;
+}
+#random-verse-btn{
+  margin-left: 4px !important;
+}

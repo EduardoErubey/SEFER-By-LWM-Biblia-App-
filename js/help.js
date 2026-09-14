@@ -75,7 +75,7 @@ function openSeferHelp(){
 
     <div class="im-block"><div class="im-label">3. Toolkit y Lector</div>
     <div class="im-text">
-    • <strong>Traducción</strong> (ej. <strong>RV1960</strong>): cambia la versión del texto.<br>
+    • <strong>Toolkit</strong> (grupos de 3): A− A+ Aa · Traducción Destacar Plan · Significados Notas Favoritos · Glosario Biografía Apócrifos · YouTube Proyectar Ayuda.<br>• <strong>Traducción</strong> (ej. <strong>RV1960</strong>): cambia la versión del texto.<br>
     • <strong>A− / A+</strong> y <strong>Aa</strong>: tamaño y tipografía.<br>
     • <strong>${ic.destacar}</strong>: nombres, lugares y palabras de Jesús.<br>
     • <strong>${ic.sig}</strong> · <strong>${ic.notas}</strong> · <strong>${ic.fav}</strong> → Panel de estudio.<br>
@@ -83,7 +83,7 @@ function openSeferHelp(){
     • <strong>${ic.plan}</strong> · <strong>${ic.yt}</strong> · <strong>${ic.proj}</strong> · <strong>${ic.help}</strong><br><br>
     En el <strong>Lector</strong>: un clic en un versículo (favorito/nota/casilla).<br>
     Doble clic en una palabra: significado.<br>
-    Casillas + <strong>📋 Copiar</strong> en la última marcada.
+    Casillas: en la <strong>última marcada</strong> aparecen Favorito, Nota y <strong>📋 Copiar</strong> en la última marcada.
     </div></div>
 
     <div class="im-block"><div class="im-label">4. Proyección</div>
@@ -91,7 +91,7 @@ function openSeferHelp(){
     Abre el <strong>Menú de proyección</strong> (botón Proyectar).<br>
     Con el menú abierto: teclas <strong>1</strong>, <strong>2</strong> o <strong>3</strong> según las opciones visibles.<br>
     <strong>Esc</strong> cierra menús y la proyección.<br>
-    <strong>Comparar</strong>: un clic activa la segunda traducción en paralelo; el segundo clic la desactiva.<br><br>
+    <strong>Comparar</strong> (1er clic activa, 2º clic desactiva): un clic activa la segunda traducción en paralelo; el segundo clic la desactiva.<br><br>
     <strong>🖍️ Resaltar</strong> (solo dentro de Proyección):<br>
     1) Activa 🖍️<br>
     2) Selecciona el texto<br>

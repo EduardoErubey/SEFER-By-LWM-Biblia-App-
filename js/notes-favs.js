@@ -271,3 +271,17 @@ if(_mb) _mb.onclick = ()=>{
   openMeaningsPanel();
 };
 
+
+
+/* Cerrar panel de estudio al abrir otros modales */
+(function(){
+  function wrapClose(id){
+    const el = document.getElementById(id);
+    if(!el || el.dataset.seferSideWrap) return;
+    el.dataset.seferSideWrap = '1';
+    el.addEventListener('click', function(){
+      try{ if(typeof closeSidePanel === 'function') closeSidePanel(); }catch(e){}
+    }, true);
+  }
+  ['glossary-btn','biography-btn','apocrifos-btn','plan-btn','youtube-btn','help-btn','project-btn'].forEach(wrapClose);
+})();
