@@ -11,67 +11,78 @@ function seferTourPrepareStep(step){
   try{
     if(!step) return;
     const title = step.title || '';
-    const needMenu = title.indexOf('14.') === 0;
-    const needStage = /^(15|16|17)\./.test(title);
-    const needSpot = title.indexOf('18.') === 0;
-    if(!needStage && !needMenu){
-      try{ if(typeof closeProjectSheet==='function') closeProjectSheet(); }catch(e){}
-      try{ if(typeof stage!=='undefined' && stage) stage.classList.remove('open','stage-stack','stage-compare'); }catch(e){}
-    }
-    if(needMenu){ try{ if(typeof openProjectSheet==='function') openProjectSheet(); }catch(e){} }
-    if(needStage){
-      try{ if(typeof closeProjectSheet==='function') closeProjectSheet(); }catch(e){}
+    const needStage = /^(21|22|23)\./.test(title);
+    const needMenu = /^20\./.test(title);
+    const needSpot = /^25\./.test(title) || ((step.sel||'').indexOf('word-search') >= 0);
+    if(!needStage){
+      try{ if(typeof closeProjectSheet === 'function') closeProjectSheet(); }catch(e){}
       try{
-        if(typeof openStage==='function'){
-          openStage((typeof currentBook!=='undefined'&&currentBook)||'Génesis', (typeof currentChap!=='undefined'&&currentChap)||'1', ['1'], 'single');
+        if(typeof stage !== 'undefined' && stage && stage.classList.contains('open')){
+          stage.classList.remove('open','stage-stack','stage-stack-2','stage-stack-3','stage-compare');
+          document.body.style.overflow = '';
         }
       }catch(e){}
     }
-    if(needSpot){ try{ if(typeof openWordSearch==='function') openWordSearch(''); }catch(e){} }
-    else { try{ if(typeof closeWordSearch==='function') closeWordSearch(); }catch(e){} }
-  }catch(e){}
+    if(needMenu){
+      try{ if(typeof openProjectSheet === 'function') openProjectSheet(); }catch(e){}
+    }
+    if(needStage){
+      try{ if(typeof closeProjectSheet === 'function') closeProjectSheet(); }catch(e){}
+      try{
+        if(typeof openStage === 'function'){
+          const b = (typeof currentBook !== 'undefined' && currentBook) ? currentBook : 'Génesis';
+          const c = (typeof currentChap !== 'undefined' && currentChap) ? currentChap : '1';
+          openStage(b, c, ['1'], 'single');
+        }
+      }catch(e){}
+    }
+    if(needSpot){
+      try{ if(typeof openWordSearch === 'function') openWordSearch(''); }catch(e){}
+    } else {
+      try{ if(typeof closeWordSearch === 'function') closeWordSearch(); }catch(e){}
+    }
+  }catch(e){ console.warn('[tour prepare]', e); }
 }
 
 const SEFER_TOUR_STEPS = [
-  { sel:'#nav-header-row .brand-block, .brand-block', title:'1. Branding', text:'SEFER ספר y BY LWM PDC (Life Word Mission Playa del Carmen).' },
-  { sel:'#nav-header-actions', title:'2. Acciones', text:'Perfil, nube, pantalla completa y reiniciar.' },
-  { sel:'.theme-row-continuous, #theme-batch, #theme-more-btn', title:'3. Temas', text:'Seis iconos seguidos: ＋/− de lotes y los 5 temas. El Dado va aparte.' },
-  { sel:'#random-verse-btn', title:'4. Dado', text:'Versículo al azar en proyección.' },
-  { sel:'#ref-search-wrap, #ref-search', title:'5. Buscador de versículos', text:'Referencias y hasta 3 libros con | o /. Tab completa solo el último libro.' },
-  { sel:'#book-list', title:'6. Biblia', text:'Lista de libros. 📚 abre la información del libro.' },
-  { sel:'#tb-group-font, #font-dec, #font-inc, #font-family-btn', title:'7. Texto', text:'A−, A+ y Aa: tamaño y tipografía.' },
-  { sel:'#tb-group-read, #version-btn, #easy-btn, #plan-btn', title:'8. Lectura', text:'Traducción, Destacar y Plan 1 año.' },
-  { sel:'#tb-group-study, #meanings-btn, #notes-btn, #favs-btn', title:'9. Estudio', text:'Significados, Notas y Favoritos (panel centrado).' },
-  { sel:'#tb-group-consult, #glossary-btn, #biography-btn, #apocrifos-btn', title:'10. Consulta', text:'Glosario, Biografía y Apócrifos.' },
-  { sel:'#tb-group-tools, #youtube-btn, #project-btn, #help-btn', title:'11. Herramientas', text:'YouTube, Proyectar y Ayuda.' },
-  { sel:'#reader, #main', title:'12. Lector', text:'Clic en versículo, casillas, Copiar en la última casilla, doble clic en palabra.' },
-  { sel:'#project-btn', title:'13. Proyectar', text:'Abre el menú de proyección (teclas 1/2/3).' },
-  { sel:'#project-sheet', title:'14. Menú de proyección', text:'Versículo actual, selección o capítulo completo.' },
-  { sel:'#stage', title:'15. Proyección', text:'Pantalla grande. Esc cierra.' },
-  { sel:'#stage-compare-btn', title:'16. Comparar', text:'1er clic activa la comparación de traducciones; 2º clic la desactiva.' },
-  { sel:'#stage-nav, #stage-extra-btns', title:'17. Controles en proyección', text:'Anterior/Siguiente, Auto, favorito, nota y Resaltar.' },
-  { sel:'#word-search-bar, #word-search-input', title:'18. Spotlight', text:'Escribe fuera de un campo de texto para buscar palabras en la Biblia.' },
-  { sel:'#help-btn', title:'19. Ayuda', text:'Manual completo y este tour.' },
-  { sel:'.brand-block', title:'20. Listo', text:'¡Que la Palabra te acompañe!' }
+  { sel:'#nav-header-row .brand-block, #nav-header-row', title:'1. Branding', text:'SEFER ספר y BY LWM PDC (Life Word Mission Playa del Carmen).' },
+  { sel:'#nav-header-actions', title:'2. Acciones', text:'Perfil, nube, pantalla completa y reiniciar navegación.' },
+  { sel:'#theme-batch, #theme-switch', title:'3. Temas', text:'Los 5 temas del lote actual y el botón ＋/− para cambiar de lote.' },
+  { sel:'#random-verse-btn', title:'4. Dado', text:'Abre un versículo al azar en proyección.' },
+  { sel:'#ref-search-wrap, #ref-search', title:'5. Buscador de versículos', text:'Ej.: Juan 3:16. Hasta 3 libros con | o /. Tab completa solo el último libro. Ctrl+Shift+V.' },
+  { sel:'#book-list', title:'6. Biblia', text:'Antiguo y Nuevo Testamento. El botón 📚 muestra la información del libro.' },
+  { sel:'#version-btn, #version-switch', title:'7. Traducción', text:'Cambia RV1960, RV1909, RV2015, NVI, NTV y TLA. Menú bajo el botón. Ctrl+Shift+T.' },
+  { sel:'.tb-group', title:'8. Tamaño del texto', text:'A− reduce y A+ aumenta el tamaño de la letra (ambos botones).' },
+  { sel:'#font-family-btn', title:'9. Tipografía', text:'Aa cambia la fuente de lectura.' },
+  { sel:'#easy-btn', title:'10. Destacar', text:'Resalta nombres, lugares y palabras de Jesús. Ctrl+D.' },
+  { sel:'#meanings-btn', title:'11. Significados', text:'Panel de significados guardados. Ctrl+S.' },
+  { sel:'#notes-btn', title:'12. Notas', text:'Notas por versículo. Ctrl+N.' },
+  { sel:'#favs-btn', title:'13. Favoritos', text:'Versículos marcados con corazón. Ctrl+F.' },
+  { sel:'#glossary-btn', title:'14. Glosario', text:'Términos bíblicos. Ctrl+G.' },
+  { sel:'#biography-btn', title:'15. Biografías', text:'Personas de la Biblia. Ctrl+B.' },
+  { sel:'#apocrifos-btn', title:'16. Apócrifos', text:'Información sobre libros apócrifos. Ctrl+A.' },
+  { sel:'#plan-btn', title:'17. Plan 1 año', text:'Plan de lectura anual. Ctrl+P.' },
+  { sel:'#youtube-btn', title:'18. Reproductor', text:'YouTube en la barra lateral. Ctrl+Y.' },
+  { sel:'#project-btn', title:'19. Proyectar', text:'Abre el menú de proyección. Ctrl+Enter.' },
+  { sel:'#project-sheet', title:'20. Menú de proyección', text:'Opciones 1 / 2 / 3. Con el menú abierto usa las teclas 1, 2 o 3.' },
+  { sel:'#stage', title:'21. Proyección', text:'Pantalla grande para el culto. Esc cierra la proyección.' },
+  { sel:'#stage-compare-btn, #stage-nav', title:'22. Comparar', text:'Un clic activa la comparación de traducciones; el segundo clic la desactiva.' },
+  { sel:'#stage-extra-btns, #stage-nav', title:'23. Controles en proyección', text:'Favorito, nota y Resaltar en la zona de controles de proyección.' },
+  { sel:'#reader, #main', title:'24. Lector', text:'Zona de lectura: clic, casillas, Copiar en la última casilla, doble clic en una palabra.' },
+  { sel:'#word-search-bar, #word-search-input', title:'25. Spotlight', text:'Buscador de palabras: escribe fuera de un campo de texto. Clic en un resultado para ir al versículo.' },
+  { sel:'#help-btn', title:'26. Ayuda', text:'Manual de SEFER y este tour. Ctrl+H.' },
+  { sel:'#nav-header-row .brand-block, #nav-header-row', title:'27. Listo', text:'Fin del recorrido. ¡Que la Palabra te acompañe!' }
 ];
 
 
 function seferTourFindEl(sel){
   if(!sel) return null;
   try{
-    const parts = String(sel).split(',').map(function(s){ return s.trim(); }).filter(Boolean);
-    const nodes = [];
-    parts.forEach(function(p){
-      try{
-        document.querySelectorAll(p).forEach(function(el){ if(el && nodes.indexOf(el)<0) nodes.push(el); });
-      }catch(e){}
-    });
-    if(!nodes.length) return null;
-    if(nodes.length === 1) return nodes[0];
-    // Envolver mentalmente: devolver el primero pero ampliar spotlight en placeCard via data
-    const first = nodes[0];
-    first.__seferTourGroup = nodes;
-    return first;
+    const parts = String(sel).split(',').map(s=>s.trim()).filter(Boolean);
+    for(const p of parts){
+      const el = document.querySelector(p);
+      if(el) return el;
+    }
   }catch(e){}
   return null;
 }

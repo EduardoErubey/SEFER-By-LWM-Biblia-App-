@@ -213,79 +213,79 @@ function renderReader(){
     };
 
     const isLastSelected = isSelected && selectedVerses.length > 0 && String(lastCheckedVerse) === String(vnum);
-    // Última casilla marcada: siempre Favorito + Nota + Copiar
-    if(isLastSelected || detailVerse === vnum){
+    if(detailVerse === vnum || isLastSelected){
       const actions = document.createElement('div');
       actions.className = 'verse-actions';
       actions.style.display = 'flex';
 
-      const favBtn = document.createElement('div');
-      favBtn.className = 'vaction' + (favorites[id] ? ' on' : '');
-      favBtn.textContent = favorites[id] ? '♥ Favorito' : '♡ Favorito';
-      favBtn.onclick = function(e){
-        e.stopPropagation();
-        if(favorites[id]) delete favorites[id];
-        else favorites[id] = true;
-        saveFavorites();
-        renderReader();
-      };
-      const noteBtn = document.createElement('div');
-      noteBtn.className = 'vaction';
-      noteBtn.textContent = notes[id] ? 'Editar nota' : '+ Nota';
-      actions.appendChild(favBtn);
-      actions.appendChild(noteBtn);
+      if(detailVerse === vnum){
+        const favBtn = document.createElement('div');
+        favBtn.className = 'vaction' + (favorites[id] ? ' on' : '');
+        favBtn.textContent = favorites[id] ? '♥ Favorito' : '♡ Favorito';
+        favBtn.onclick = (e)=>{
+          e.stopPropagation();
+          if(favorites[id]) delete favorites[id];
+          else favorites[id] = true;
+          saveFavorites();
+          renderReader();
+        };
+        const noteBtn = document.createElement('div');
+        noteBtn.className = 'vaction';
+        noteBtn.textContent = notes[id] ? 'Editar nota' : '+ Nota';
+        actions.appendChild(favBtn);
+        actions.appendChild(noteBtn);
 
+        const noteBox = document.createElement('div');
+        noteBox.className = 'note-box';
+        noteBox.innerHTML =
+          '<div class="note-toolbar">' +
+          '<button type="button" class="note-trash" title="Eliminar nota">🗑</button>' +
+          '<button type="button" class="note-close" title="Cerrar (Esc)">❌</button>' +
+          '</div>' +
+          '<textarea placeholder="Escribe tu nota de exposición aquí…">' + (notes[id] || '') + '</textarea>' +
+          '<div class="note-actions-row">' +
+          '<button type="button" class="note-ok" title="Guardar (Ctrl+Enter)">💾</button>' +
+          '</div>';
+        const ta = noteBox.querySelector('textarea');
+        const closeNote = ()=>{ noteBox.classList.remove('open'); };
+        const saveAndCollapse = ()=>{ notes[id] = ta.value; saveNotes(); noteBox.classList.remove('open'); renderReader(); };
+        noteBox.querySelector('.note-close').onclick = (e)=>{ e.stopPropagation(); closeNote(); };
+        noteBox.querySelector('.note-ok').onclick = (e)=>{ e.stopPropagation(); saveAndCollapse(); };
+        noteBox.querySelector('.note-trash').onclick = (e)=>{
+          e.stopPropagation();
+          delete notes[id];
+          saveNotes();
+          renderReader();
+        };
+        ta.oninput = ()=>{ notes[id] = ta.value; saveNotes(); };
+        ta.onkeydown = (e)=>{
+          if(e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); closeNote(); }
+          if(e.key === 'Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); saveAndCollapse(); }
+        };
+        noteBtn.onclick = (e)=>{
+          e.stopPropagation();
+          const willOpen = !noteBox.classList.contains('open');
+          noteBox.classList.toggle('open');
+          if(willOpen) ta.focus();
+        };
+        const bodyEl = row.querySelector('.verse-body') || row;
+        bodyEl.appendChild(actions);
+        bodyEl.appendChild(noteBox);
+      } else {
+        const bodyEl = row.querySelector('.verse-body') || row;
+        bodyEl.appendChild(actions);
+      }
       if(isLastSelected){
         const copyBtn = document.createElement('div');
         copyBtn.className = 'vaction vaction-copy';
         copyBtn.textContent = '📋 Copiar';
         copyBtn.title = 'Copiar referencia y texto de la selección';
-        copyBtn.onclick = function(e){
-          e.stopPropagation();
-          if(typeof seferCopySelectedVerses === 'function') seferCopySelectedVerses(copyBtn);
-        };
+        copyBtn.onclick = (e)=>{ e.stopPropagation(); seferCopySelectedVerses(copyBtn); };
         actions.appendChild(copyBtn);
       }
-
-      const noteBox = document.createElement('div');
-      noteBox.className = 'note-box';
-      noteBox.innerHTML =
-        '<div class="note-toolbar">' +
-        '<button type="button" class="note-trash" title="Eliminar nota">🗑</button>' +
-        '<button type="button" class="note-close" title="Cerrar (Esc)">❌</button>' +
-        '</div>' +
-        '<textarea placeholder="Escribe tu nota de exposición aquí…">' + (notes[id] || '') + '</textarea>' +
-        '<div class="note-actions-row">' +
-        '<button type="button" class="note-ok" title="Guardar (Ctrl+Enter)">💾</button>' +
-        '</div>';
-      const ta = noteBox.querySelector('textarea');
-      const closeNote = function(){ noteBox.classList.remove('open'); };
-      const saveAndCollapse = function(){ notes[id] = ta.value; saveNotes(); noteBox.classList.remove('open'); renderReader(); };
-      noteBox.querySelector('.note-close').onclick = function(e){ e.stopPropagation(); closeNote(); };
-      noteBox.querySelector('.note-ok').onclick = function(e){ e.stopPropagation(); saveAndCollapse(); };
-      noteBox.querySelector('.note-trash').onclick = function(e){
-        e.stopPropagation();
-        delete notes[id];
-        saveNotes();
-        renderReader();
-      };
-      ta.oninput = function(){ notes[id] = ta.value; saveNotes(); };
-      ta.onkeydown = function(e){
-        if(e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); closeNote(); }
-        if(e.key === 'Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); saveAndCollapse(); }
-      };
-      noteBtn.onclick = function(e){
-        e.stopPropagation();
-        const willOpen = !noteBox.classList.contains('open');
-        noteBox.classList.toggle('open');
-        if(willOpen) ta.focus();
-      };
-      const bodyEl = row.querySelector('.verse-body') || row;
-      bodyEl.appendChild(actions);
-      bodyEl.appendChild(noteBox);
     }
 
-        verseParent.appendChild(row);
+    verseParent.appendChild(row);
   });
   // Restaurar scroll y re-montar flechas sobre #reader-verses
   requestAnimationFrame(()=>{

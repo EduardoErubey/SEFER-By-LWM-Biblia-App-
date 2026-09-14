@@ -45,8 +45,9 @@ async function stageToggleCompare(){
 }
 
 function wireStageCompare(){
-  // El clic del botón se maneja UNA sola vez en stage.js (toggle 1º/2º clic)
+  const btn = document.getElementById('stage-compare-btn');
   const sel = document.getElementById('stage-compare-sel');
+  if(btn) btn.addEventListener('click', (e)=>{ e.stopPropagation(); stageToggleCompare(); });
   if(sel){
     // no listar la versión actual como única
     sel.addEventListener('change', async ()=>{

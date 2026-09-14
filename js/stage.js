@@ -667,54 +667,33 @@ window.seferApplyStageHighlightFromSelection = seferApplyStageHighlightFromSelec
     }catch(e){}
     return null;
   }
-  btn.addEventListener('click', async function(e){
+  btn.addEventListener('click', function(e){
     e.preventDefault();
     e.stopPropagation();
     if(stageFromSearch || stageMode === 'stack' || stageMode === 'chapter') return;
-    // Toggle: 1er clic activa, 2º clic desactiva
+    stageCompareOn = !stageCompareOn;
     if(stageCompareOn){
-      stageCompareOn = false;
+      stageMode = 'compare';
+      if(sel){
+        sel.style.display = '';
+        stageCompareVersion = sel.value || stageCompareVersion || 'nvi';
+      }
+      stageCompareData = loadCompareCorpus(stageCompareVersion);
+      if(!stageCompareData || !Object.keys(stageCompareData).length){
+        alert('No se pudo cargar la segunda traducción ('+stageCompareVersion+'). ¿Están los archivos bible-data de esa versión?');
+        stageCompareOn = false;
+        stageMode = 'single';
+        if(sel) sel.style.display = 'none';
+        stageCompareData = null;
+      }
+    } else {
       stageMode = (stagePassages[0] && stagePassages[0].verses && stagePassages[0].verses.length > 1) ? 'selection' : 'single';
       if(sel) sel.style.display = 'none';
       stageCompareData = null;
       try{ if(stage) stage.classList.remove('stage-compare'); }catch(err){}
       const paneB = document.getElementById('stage-pane-b');
       if(paneB) paneB.style.display = 'none';
-      try{ renderStage(); }catch(err){ console.error(err); }
-      try{ updateStageCompareVisibility(); }catch(err){}
-      btn.classList.remove('active');
-      return;
     }
-    stageCompareOn = true;
-    stageMode = 'compare';
-    let v = (sel && sel.value) || stageCompareVersion || 'nvi';
-    try{
-      if(typeof currentBibleVersion !== 'undefined' && v === currentBibleVersion){
-        const alts = ['nvi','rv1960','ntv','tla','rva2015','rv1909'].filter(function(x){ return x !== currentBibleVersion; });
-        v = alts[0] || 'nvi';
-        if(sel) sel.value = v;
-      }
-    }catch(err){}
-    stageCompareVersion = v;
-    if(sel){ sel.style.display = ''; sel.value = v; }
-    try{
-      if(typeof seferLoadBibleScript === 'function'){
-        stageCompareData = await seferLoadBibleScript(v);
-      } else {
-        stageCompareData = loadCompareCorpus(v);
-      }
-    }catch(err){ stageCompareData = loadCompareCorpus(v); }
-    if(!stageCompareData || !Object.keys(stageCompareData).length){
-      alert('No se pudo cargar la segunda traducción ('+v+').');
-      stageCompareOn = false;
-      stageMode = 'single';
-      if(sel) sel.style.display = 'none';
-      stageCompareData = null;
-      btn.classList.remove('active');
-      return;
-    }
-    try{ if(stage) stage.classList.add('stage-compare'); }catch(err){}
-    btn.classList.add('active');
     try{ renderStage(); }catch(err){ console.error(err); }
     try{ updateStageCompareVisibility(); }catch(err){}
   });

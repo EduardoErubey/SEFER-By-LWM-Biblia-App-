@@ -1165,14 +1165,3 @@ body.theme-glass button.nav-action-btn{
 body.theme-glass .nav-action-btn:hover{
   background: color-mix(in srgb, var(--gold-soft) 70%, transparent) !important;
 }
-
-body.theme-glass #version-menu,
-body[data-theme="amoled"] #version-menu,
-body[data-theme="lwm-night"] #version-menu,
-body[data-theme="mexico"] #version-menu,
-body[data-theme="ucrania"] #version-menu,
-body[data-theme="corea"] #version-menu{
-  background: var(--card-bg) !important;
-  opacity: 1 !important;
-  backdrop-filter: none !important;
-}

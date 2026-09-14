@@ -1,4 +1,3 @@
-try{ if(typeof closeSidePanel==='function'){ /* available */ } }catch(e){}
 /* SEFER module: glosario.js — script clásico (sin import/export) */
 
 /* --- SEFER glosario.js lines 4224-4278 --- */
@@ -38,7 +37,7 @@ function renderizarGlosario(filtro=''){
     lista.appendChild(more);
   }
 }
-function openGlosario(){ try{ if(typeof closeSidePanel==="function") closeSidePanel(); }catch(e){} 
+function openGlosario(){
   const m = document.getElementById('modal-glosario');
   if(!m) return;
   m.style.display = 'flex';

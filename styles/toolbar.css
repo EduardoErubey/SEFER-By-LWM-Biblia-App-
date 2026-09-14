@@ -1050,34 +1050,3 @@ body > #version-menu.open,
   max-width: 6.5em !important;
   width: auto !important;
 }
-
-
-/* Grupos toolkit */
-#topbar-actions{
-  display: flex !important;
-  flex-wrap: wrap !important;
-  align-items: center !important;
-  gap: 8px !important;
-}
-#topbar-actions .tb-group{
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 4px !important;
-  padding: 2px 4px !important;
-  border-radius: 8px;
-  flex: 0 0 auto !important;
-}
-#version-switch, #version-btn{
-  pointer-events: auto !important;
-  position: relative !important;
-  z-index: 50 !important;
-  opacity: 1 !important;
-}
-body.theme-glass #version-menu,
-body.theme-glass #version-menu.open,
-#version-menu.open{
-  background: var(--card-bg) !important;
-  opacity: 1 !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
