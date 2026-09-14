@@ -62,7 +62,8 @@ function seferLoadBibleScript(id){
 
 function seferApplyBibleData(data){
   if(!data || typeof data !== 'object') return;
-  BIBLE = data;
+  try{ BIBLE = data; }catch(e){ window.BIBLE = data; }
+  window.BIBLE = data;
   window.BIBLE_DATA = data;
 }
 
@@ -93,10 +94,9 @@ async function seferSetBibleVersion(id, opts){
     if(menu) menu.classList.remove('open');
     if(btn) btn.setAttribute('aria-expanded','false');
     // Re-render capítulo actual si hay datos
-    if(typeof renderReader === 'function' && currentBook && BIBLE[currentBook]){
+    try{ if(typeof renderBookList === 'function') renderBookList(); }catch(e){}
+    if(typeof renderReader === 'function' && currentBook && (BIBLE[currentBook] || (window.BIBLE||{})[currentBook])){
       try{ renderReader(); }catch(e){ console.warn(e); }
-    } else if(typeof renderBookList === 'function'){
-      try{ renderBookList(); }catch(e){}
     }
     if(!opts.silent && typeof setNubeStatus === 'function'){
       /* no spamear nube */
@@ -110,27 +110,26 @@ async function seferSetBibleVersion(id, opts){
 function wireVersionSwitcher(){
   const btn = document.getElementById('version-btn');
   let menu = document.getElementById('version-menu');
-  if(!btn || !menu) return;
-  // Mover menú a body para no quedar recortado por overflow de toolkit
-  if(menu.parentElement !== document.body){
-    document.body.appendChild(menu);
-  }
-  seferUpdateVersionUI();
+  if(!btn || !menu){ console.warn('[SEFER] version-btn o version-menu no encontrados'); return; }
+  if(menu.parentElement !== document.body) document.body.appendChild(menu);
+
   function placeVersionMenu(){
     const r = btn.getBoundingClientRect();
-    menu.style.position = 'fixed';
-    menu.style.right = 'auto';
-    menu.style.bottom = 'auto';
-    menu.style.width = 'max-content';
-    menu.style.minWidth = '0';
-    menu.style.maxWidth = 'min(320px, 92vw)';
-    menu.style.zIndex = '10060';
-    menu.style.boxSizing = 'border-box';
-    // medir ancho real del contenido
-    menu.style.visibility = 'hidden';
+    menu.style.cssText = [
+      'position:fixed',
+      'z-index:10060',
+      'display:block',
+      'width:max-content',
+      'min-width:0',
+      'max-width:min(320px, 92vw)',
+      'box-sizing:border-box',
+      'right:auto',
+      'bottom:auto',
+      'visibility:hidden',
+      'left:0',
+      'top:0'
+    ].join(';');
     menu.classList.add('open');
-    menu.style.left = '0px';
-    menu.style.top = '0px';
     const mw = Math.max(menu.offsetWidth || 0, 140);
     const mh = menu.offsetHeight || 40;
     let left = r.left;
@@ -139,37 +138,42 @@ function wireVersionSwitcher(){
     if(top + mh > window.innerHeight - 6) top = Math.max(6, r.top - mh - 4);
     menu.style.left = left + 'px';
     menu.style.top = top + 'px';
-    menu.style.visibility = '';
+    menu.style.visibility = 'visible';
   }
-  btn.onclick = function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    const open = !menu.classList.contains('open');
-    document.querySelectorAll('#font-family-menu.open').forEach(m=>m.classList.remove('open'));
-    if(open){
-      placeVersionMenu();
-      menu.classList.add('open');
-      btn.setAttribute('aria-expanded','true');
-    } else {
-      menu.classList.remove('open');
-      btn.setAttribute('aria-expanded','false');
-    }
+  function closeVersionMenu(){
+    menu.classList.remove('open');
+    menu.style.display = 'none';
+    btn.setAttribute('aria-expanded', 'false');
+  }
+  function openVersionMenu(){
+    document.querySelectorAll('#font-family-menu.open').forEach(function(m){ m.classList.remove('open'); });
+    placeVersionMenu();
+    btn.setAttribute('aria-expanded', 'true');
+  }
+  function toggleVersionMenu(e){
+    if(e){ e.preventDefault(); e.stopPropagation(); }
+    if(menu.classList.contains('open') && menu.style.display !== 'none') closeVersionMenu();
+    else openVersionMenu();
+  }
+
+  seferUpdateVersionUI();
+  btn.onclick = toggleVersionMenu;
+  btn.onkeydown = function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleVersionMenu(e); }
   };
-  menu.querySelectorAll('.ver-item').forEach(el=>{
+  menu.querySelectorAll('.ver-item').forEach(function(el){
     el.onclick = function(e){
       e.preventDefault();
       e.stopPropagation();
-      const id = el.dataset.version;
-      menu.classList.remove('open');
-      btn.setAttribute('aria-expanded','false');
+      const id = el.getAttribute('data-version') || el.dataset.version;
+      closeVersionMenu();
       if(id) seferSetBibleVersion(id);
     };
   });
   document.addEventListener('click', function(e){
     if(!menu.classList.contains('open')) return;
     if(menu.contains(e.target) || btn.contains(e.target)) return;
-    menu.classList.remove('open');
-    btn.setAttribute('aria-expanded','false');
+    closeVersionMenu();
   });
   window.addEventListener('resize', function(){
     if(menu.classList.contains('open')) placeVersionMenu();
@@ -184,4 +188,3 @@ function wireVersionSwitcher(){
     }
   }catch(err){ console.warn('[SEFER] version init', err); }
 }
-

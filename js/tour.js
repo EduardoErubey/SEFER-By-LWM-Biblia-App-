@@ -5,53 +5,72 @@
    TOUR INTERACTIVO + AYUDA ACTUALIZADA
    ========================================================= */
 
+
 function seferTourPrepareStep(step){
   try{
-    if(!step || !step.title) return;
-    const t = step.title || '';
-    if(t.indexOf('20.') === 0 || t.indexOf('Menú de proyección') >= 0){
-      if(typeof openProjectSheet === 'function') openProjectSheet();
+    if(!step) return;
+    const title = step.title || '';
+    // cerrar proyección salvo pasos 21-23
+    const needStage = /^(21|22|23)\./.test(title);
+    const needMenu = /^20\./.test(title);
+    if(!needStage && !needMenu){
+      try{ if(typeof closeProjectSheet==='function') closeProjectSheet(); }catch(e){}
+      try{
+        if(stage && stage.classList.contains('open') && typeof closeStage==='function') closeStage();
+        else if(stage && stage.classList.contains('open')){
+          stage.classList.remove('open','stage-stack','stage-compare');
+        }
+      }catch(e){}
     }
-    if(t.indexOf('21.') === 0 || t.indexOf('22.') === 0){
-      try{ if(typeof closeProjectSheet === 'function') closeProjectSheet(); }catch(e){}
-      if(typeof openStage === 'function' && typeof currentBook !== 'undefined' && currentBook){
-        openStage(currentBook, currentChap || '1', ['1'], 'single');
-      } else if(typeof openStage === 'function'){
-        openStage('Génesis', '1', ['1'], 'single');
-      }
+    if(needMenu){
+      try{ if(typeof openProjectSheet==='function') openProjectSheet(); }catch(e){}
     }
-    if(t.indexOf('7.') === 0 || (step.sel && step.sel.indexOf('word-search') >= 0)){
-      if(typeof openWordSearch === 'function') openWordSearch('');
+    if(needStage){
+      try{ if(typeof closeProjectSheet==='function') closeProjectSheet(); }catch(e){}
+      try{
+        if(typeof openStage==='function'){
+          const b = (typeof currentBook!=='undefined' && currentBook) ? currentBook : 'Génesis';
+          const c = (typeof currentChap!=='undefined' && currentChap) ? currentChap : '1';
+          openStage(b, c, ['1'], 'single');
+        }
+      }catch(e){}
+    }
+    if(/^25\./.test(title) || (step.sel||'').indexOf('word-search')>=0){
+      try{ if(typeof openWordSearch==='function') openWordSearch(''); }catch(e){}
+    } else {
+      try{ if(typeof closeWordSearch==='function') closeWordSearch(); }catch(e){}
     }
   }catch(e){ console.warn('[tour prepare]', e); }
 }
 
 const SEFER_TOUR_STEPS = [
-  { sel:'#nav-header-row, #nav-header .brand, #nav-header', title:'1. Branding', text:'Aquí está el branding completo: SEFER ספר y BY LWM PDC (Life Word Mission Playa del Carmen).' },
-  { sel:'#nav-header-actions', title:'2. Acciones', text:'Perfil, nube (sincronizar), pantalla completa y reiniciar la navegación de la Biblia.' },
-  { sel:'#theme-batch-top, #theme-more-btn, #theme-batch, #theme-switch', title:'3. Temas', text:'Los 5 temas visibles y el botón ＋/− de lotes (clásicos / Glass). El Dado es otro control, aparte.' },
-  { sel:'#random-verse-btn', title:'4. Dado', text:'El 🎲 abre un versículo al azar en proyección.' },
-  { sel:'#ref-search-wrap, #ref-search', title:'5. Buscador de versículos', text:'Ej.: Juan 3:16. Varios pasajes con | o / (máx. 3 libros). Tab completa el nombre del libro. Ctrl+Shift+V enfoca este buscador.' },
-  { sel:'#book-list', title:'6. Biblia', text:'Lista del Antiguo y Nuevo Testamento. Libro → capítulo. El icono 📚 abre la ficha del libro.' },
-  { sel:'#word-search-bar, #word-search-input', title:'7. Spotlight', text:'Buscador de palabras: escribe en el teclado (fuera de un cuadro de texto) y se abre. Muestra versículos que contienen la palabra. Clic en un resultado para ir a él.' },
-  { sel:'#version-switch, #version-btn', title:'8. Traducción', text:'Cambia entre RV1960 (predeterminada), RV1909, RV2015, NVI, NTV y TLA. El menú se abre justo debajo del botón. Atajo: Ctrl+Shift+T.' },
-  { sel:'#font-dec, #font-inc', title:'9. Tamaño del texto', text:'A− disminuye y A+ aumenta el tamaño de la letra en el Lector. Ambos botones forman esta pareja.' },
-  { sel:'#font-family-btn', title:'10. Tipografía', text:'Aa cambia la fuente de lectura. El menú es compacto y aparece bajo el botón.' },
-  { sel:'#easy-btn', title:'11. Destacar', text:'✨ Destacar marca nombres, lugares y palabras de Jesús. Atajo: Ctrl+D.' },
-  { sel:'#meanings-btn', title:'12. Significados', text:'Abre el Panel de estudio con significados guardados. También: doble clic en una palabra del Lector. Ctrl+S.' },
-  { sel:'#notes-btn', title:'13. Notas', text:'Tus notas por versículo (Panel de estudio). Ctrl+N.' },
-  { sel:'#favs-btn', title:'14. Favoritos', text:'Versículos guardados con ❤️. Ctrl+F.' },
-  { sel:'#glossary-btn', title:'15. Glosario', text:'Términos bíblicos explicados con palabras sencillas. Ctrl+G.' },
-  { sel:'#biography-btn', title:'16. Biografías', text:'Personas de la Biblia (indica AT o NT). Ctrl+B.' },
-  { sel:'#apocrifos-btn', title:'17. Apócrifos', text:'Datos y curiosidades (sin el texto completo de esos libros). Ctrl+A.' },
-  { sel:'#plan-btn', title:'18. Plan 1 año', text:'Plan de lectura anual. Ctrl+P.' },
-  { sel:'#youtube-btn', title:'19. Reproductor', text:'Pega un enlace de YouTube; el vídeo aparece en la barra cuando hay enlace cargado. Ctrl+Y.' },
-  { sel:'#project-btn, #project-sheet', title:'20. Menú de proyección', text:'Al proyectar se abre el menú. Opciones numeradas: 1, 2 o 3. Con el menú abierto puedes usar las teclas 1–3. Ctrl+Enter abre proyectar.' },
-  { sel:'#stage, #project-btn', title:'21. Proyección', text:'Pantalla grande para el culto. Anterior/Siguiente, Auto y velocidad cuando aplica. Esc cierra la proyección.' },
-  { sel:'#stage-extra-btns, #stage-highlight-btn, #project-btn', title:'22. Controles en proyección', text:'En la misma fila inferior: favorito, nota y 🖍️ Resaltar (subraya un trozo solo en ese versículo).' },
-  { sel:'#help-btn', title:'23. Ayuda', text:'Abre este manual y permite repetir el tour. Ctrl+H.' },
-  { sel:'#reader, #main', title:'24. Lector', text:'Zona de lectura. Clic: favorito/nota/casilla. Doble clic en palabra: significado. Casillas + Copiar en la última marcada.' },
-  { sel:'#nav-header-row, #nav-header .brand, #nav-header', title:'25. Listo', text:'Has recorrido el branding y lo esencial de SEFER. ¡Que la Palabra te acompañe!' }
+  { sel:'#nav-header .brand, .brand, #brand-title', title:'1. Branding', text:'Solo el branding: SEFER ספר y BY LWM PDC.' },
+  { sel:'#nav-header-actions', title:'2. Acciones', text:'Perfil, nube, pantalla completa y reiniciar.' },
+  { sel:'#theme-batch, #theme-switch, #theme-more-btn, #theme-batch-top', title:'3. Temas', text:'Los 5 temas del lote y el botón ＋/− para cambiar de lote. El Dado no forma parte de este paso.' },
+  { sel:'#random-verse-btn', title:'4. Dado', text:'Versículo al azar en proyección.' },
+  { sel:'#ref-search-wrap, #ref-search', title:'5. Buscador de versículos', text:'Referencias, rangos y hasta 3 libros con | o /. Tab completa el libro. Ctrl+Shift+V.' },
+  { sel:'#book-list', title:'6. Biblia', text:'Libros y capítulos del Antiguo y Nuevo Testamento.' },
+  { sel:'#version-btn, #version-switch', title:'7. Traducción', text:'Cambia RV1960, RV1909, RV2015, NVI, NTV, TLA. El menú se abre bajo el botón. Ctrl+Shift+T.' },
+  { sel:'#font-dec, #font-inc', title:'8. Tamaño del texto', text:'A− reduce y A+ aumenta el tamaño. Ambos botones juntos.' },
+  { sel:'#font-family-btn', title:'9. Tipografía', text:'Aa cambia la fuente del Lector.' },
+  { sel:'#easy-btn', title:'10. Destacar', text:'Marca nombres, lugares y palabras de Jesús. Ctrl+D.' },
+  { sel:'#meanings-btn', title:'11. Significados', text:'Panel de significados guardados. Ctrl+S.' },
+  { sel:'#notes-btn', title:'12. Notas', text:'Notas por versículo. Ctrl+N.' },
+  { sel:'#favs-btn', title:'13. Favoritos', text:'Versículos con corazón. Ctrl+F.' },
+  { sel:'#glossary-btn', title:'14. Glosario', text:'Términos bíblicos. Ctrl+G.' },
+  { sel:'#biography-btn', title:'15. Biografías', text:'Personas de la Biblia. Ctrl+B.' },
+  { sel:'#apocrifos-btn', title:'16. Apócrifos', text:'Información sobre libros apócrifos. Ctrl+A.' },
+  { sel:'#plan-btn', title:'17. Plan 1 año', text:'Plan de lectura anual. Ctrl+P.' },
+  { sel:'#youtube-btn', title:'18. Reproductor', text:'YouTube en la barra lateral. Ctrl+Y.' },
+  { sel:'#project-btn', title:'19. Proyectar', text:'Abre el menú de proyección. Ctrl+Enter.' },
+  { sel:'#project-sheet, #project-btn', title:'20. Menú de proyección', text:'Opciones 1 / 2 / 3. Con el menú abierto puedes usar las teclas 1, 2 o 3.' },
+  { sel:'#stage, #stage-body', title:'21. Proyección', text:'Pantalla grande. Aquí se ven los controles inferiores.' },
+  { sel:'#stage-compare-btn, #stage-nav, #stage', title:'22. Comparar', text:'Un clic en Comparar activa otra traducción en paralelo; un segundo clic la desactiva.' },
+  { sel:'#stage-extra-btns, #stage-highlight-btn, #stage', title:'23. Controles en proyección', text:'Favorito, nota y Resaltar (🖍️) en la misma fila que Anterior/Siguiente cuando aplica.' },
+  { sel:'#reader, #main', title:'24. Lector', text:'Zona de lectura: clic, casillas, Copiar en la última casilla, doble clic en palabra.' },
+  { sel:'#word-search-bar, #word-search-input', title:'25. Spotlight', text:'Buscador de palabras: escribe fuera de un campo de texto y se abre. Clic en un resultado para ir al versículo.' },
+  { sel:'#help-btn', title:'26. Ayuda', text:'Manual completo y de nuevo el tour. Ctrl+H.' },
+  { sel:'#nav-header .brand, .brand', title:'27. Listo', text:'Fin del tour. ¡Que la Palabra te acompañe!' }
 ];
 
 function seferTourFindEl(sel){

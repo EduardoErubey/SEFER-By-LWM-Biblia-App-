@@ -325,17 +325,36 @@ function applyRefSuggestion(i){
 
 function updateRefAutocomplete(){
   const val = refSearch.value;
-  // Tras "|": autocompletar el segundo libro
+  // Tras | o /: autocompletar 2.º o 3.º libro (máx. 3 segmentos)
   let prefix = '';
   let work = val;
   if(/[|/]/.test(val)){
-    const parts = val.split(/[|/]/);
-    prefix = parts[0] + '|';
-    // conservar espacio tras | si el usuario lo escribió
-    const after = parts.slice(1).join('|');
+    const seps = [];
+    const parts = [];
+    let last = 0;
+    for(let i = 0; i < val.length; i++){
+      if(val[i] === '|' || val[i] === '/'){
+        parts.push(val.slice(last, i));
+        seps.push(val[i]);
+        last = i + 1;
+      }
+    }
+    parts.push(val.slice(last));
+    // parts[0] done, parts[1] second book typing, parts[2] third...
+    if(parts.length > 3){
+      // demasiado: no sugerir
+      refSuggest.classList.remove('open');
+      return;
+    }
+    prefix = '';
+    for(let i = 0; i < parts.length - 1; i++){
+      prefix += parts[i] + (seps[i] || '|');
+    }
+    const after = parts[parts.length - 1] || '';
     const leadSpace = /^(\s*)/.exec(after);
     prefix += leadSpace ? leadSpace[1] : '';
     work = after.replace(/^\s*/, '');
+    refSearch._dualSep = seps[seps.length - 1] || '|';
   }
   // Si ya hay capítulo/versículo en el segmento activo, no sugerir libros
   if(/\d/.test(work) && /:/.test(work)){

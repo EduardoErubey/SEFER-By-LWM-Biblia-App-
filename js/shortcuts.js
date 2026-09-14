@@ -159,12 +159,7 @@ function wireSeferShortcuts(){
     if(e.shiftKey && k === 't'){
       e.preventDefault();
       const btn = document.getElementById('version-btn');
-      const menu = document.getElementById('version-menu');
-      if(btn && menu){
-        menu.classList.add('open');
-        btn.setAttribute('aria-expanded','true');
-        btn.focus();
-      }
+      if(btn) btn.click();
       return;
     }
     // Ctrl+Shift+F → fullscreen app

@@ -90,7 +90,8 @@ function openSeferHelp(){
     <div class="im-text">
     Abre el <strong>Menú de proyección</strong> (botón Proyectar).<br>
     Con el menú abierto: teclas <strong>1</strong>, <strong>2</strong> o <strong>3</strong> según las opciones visibles.<br>
-    <strong>Esc</strong> cierra menús y la proyección.<br><br>
+    <strong>Esc</strong> cierra menús y la proyección.<br>
+    <strong>Comparar</strong>: un clic activa la segunda traducción en paralelo; el segundo clic la desactiva.<br><br>
     <strong>🖍️ Resaltar</strong> (solo dentro de Proyección):<br>
     1) Activa 🖍️<br>
     2) Selecciona el texto<br>

@@ -105,7 +105,7 @@ function renderReader(){
   sortedVerseNums(currentBook, currentChap).forEach(vnum=>{
     const text = chapData[vnum];
     const id = vid(currentBook, currentChap, vnum);
-    const isSelected = selectedVerses.includes(vnum);
+    const isSelected = selectedVerses.map(String).includes(String(vnum));
     const showCheck = selectionUIActive && (selectedVerses.length > 0 || detailVerse === vnum);
     const row = document.createElement('div');
     row.className = 'verse'
@@ -212,7 +212,7 @@ function renderReader(){
       }
     };
 
-    const isLastSelected = isSelected && selectedVerses.length > 0 && String(lastCheckedVerse || selectedVerses[selectedVerses.length-1]) === String(vnum);
+    const isLastSelected = isSelected && selectedVerses.length > 0 && String(lastCheckedVerse) === String(vnum);
     if(detailVerse === vnum || isLastSelected){
       const actions = document.createElement('div');
       actions.className = 'verse-actions';
@@ -357,17 +357,18 @@ function seferCopySelectedVerses(btn){
 
 
 function setVerseSelected(vnum, on){
+  vnum = String(vnum);
+  selectedVerses = (selectedVerses || []).map(String);
   const i = selectedVerses.indexOf(vnum);
   if(on && i === -1) selectedVerses.push(vnum);
   if(!on && i !== -1) selectedVerses.splice(i,1);
   if(on){
     lastCheckedVerse = String(vnum);
-    detailVerse = String(vnum); // Favorito, Nota y Copiar en el mismo versículo
+    detailVerse = String(vnum);
   } else {
-    if(String(lastCheckedVerse) === String(vnum)){
-      // pasar Copiar a la última casilla que siga marcada (orden de selección)
+    if(String(lastCheckedVerse) === String(vnum) || String(detailVerse) === String(vnum)){
       const rest = selectedVerses.map(String);
-      lastCheckedVerse = rest.length ? rest[rest.length - 1] : null;
+      lastCheckedVerse = rest.length ? String(rest[rest.length - 1]) : null;
       detailVerse = lastCheckedVerse;
     }
   }
