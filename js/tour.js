@@ -12,16 +12,14 @@ function seferTourPrepareStep(step){
     if(!step) return;
     const title = step.title || '';
     const n = parseInt(String(title).split('.')[0], 10) || 0;
-    const needMenu = (n === 16);
-    const needStage = (n === 17 || n === 18);
-    const needSpot = (n === 21);
-    if(n >= 19){
+    const needMenu = (n === 12);
+    const needStage = (n === 13);
+    const needSpot = (n === 16);
+    if(n >= 14){
       try{ if(typeof closeProjectSheet==='function') closeProjectSheet(); }catch(e){}
       try{ if(typeof stage!=='undefined' && stage){ stage.classList.remove('open','stage-stack','stage-compare'); } }catch(e){}
     }
-    if(needMenu){
-      try{ if(typeof openProjectSheet==='function') openProjectSheet(); }catch(e){}
-    }
+    if(needMenu){ try{ if(typeof openProjectSheet==='function') openProjectSheet(); }catch(e){} }
     if(needStage){
       try{ if(typeof closeProjectSheet==='function') closeProjectSheet(); }catch(e){}
       try{
@@ -31,33 +29,28 @@ function seferTourPrepareStep(step){
       }catch(e){}
     }
     if(needSpot){ try{ if(typeof openWordSearch==='function') openWordSearch(''); }catch(e){} }
-    else if(n < 21){ try{ if(typeof closeWordSearch==='function') closeWordSearch(); }catch(e){} }
+    else if(n < 16){ try{ if(typeof closeWordSearch==='function') closeWordSearch(); }catch(e){} }
   }catch(e){}
 }
 
 const SEFER_TOUR_STEPS = window.SEFER_TOUR_STEPS = [
-  { sel:'.brand-block, #nav-header-row .brand-block', title:'1. Branding', text:'Aquí está el nombre SEFER y la firma BY LWM PDC.' },
-  { sel:'#nav-header-actions', title:'2. Acciones', text:'Zona de perfil, nube, pantalla completa y reiniciar.' },
-  { sel:'.theme-row-continuous, #theme-more-btn, #theme-batch', title:'3. Temas', text:'Cambio de lote y los cinco temas visibles. El dado va aparte.' },
-  { sel:'#random-verse-btn', title:'4. Dado', text:'Atajo a un versículo al azar.' },
-  { sel:'#ref-search-wrap, #ref-search', title:'5. Buscador de versículos', text:'Campo para ir a una referencia bíblica.' },
-  { sel:'#book-list', title:'6. Biblioteca', text:'Lista de libros del Antiguo y Nuevo Testamento.' },
-  { sel:'#tb-group-font, #font-dec, #font-inc, #font-family-btn', title:'7. Toolkit · Texto', text:'Grupo de tamaño y tipografía en la barra de herramientas.' },
-  { sel:'#version-btn, #version-switch', title:'8. Toolkit · Traducción', text:'Selector de versión bíblica.' },
-  { sel:'#easy-btn', title:'9. Toolkit · Destacar', text:'Botón de resaltado automático de nombres y lugares.' },
-  { sel:'#plan-btn', title:'10. Toolkit · Plan', text:'Acceso al plan de lectura anual.' },
-  { sel:'#tb-group-study', title:'11. Toolkit · Estudio', text:'Significados, notas y favoritos.' },
-  { sel:'#tb-group-consult', title:'12. Toolkit · Consulta', text:'Glosario, biografía y apócrifos.' },
-  { sel:'#youtube-btn', title:'13. Toolkit · YouTube', text:'Reproductor de sermones junto a la biblioteca.' },
-  { sel:'#project-btn', title:'14. Toolkit · Proyectar', text:'Abre el menú de proyección.' },
-  { sel:'#help-btn', title:'15. Toolkit · Ayuda', text:'Manual completo de SEFER (aquí están las funciones en detalle).' },
-  { sel:'#project-sheet, .ps-card', title:'16. Menú de proyección', text:'Opciones para elegir qué se proyecta.' },
-  { sel:'#stage', title:'17. Proyección', text:'Pantalla grande de culto o estudio.' },
-  { sel:'#stage-compare-btn, #stage-nav, #stage-auto, #stage-speed, #stage-extra-btns', title:'18. Controles de proyección', text:'Comparar, navegar, auto y velocidad.' },
-  { sel:'#reader-sticky-head, .sticky-head', title:'19. Cabecera del lector', text:'Libro, capítulo e indicaciones breves.' },
-  { sel:'#reader-verses, #reader', title:'20. Lector', text:'Área donde se leen los versículos.' },
-  { sel:'#word-search-bar, #word-search-input', title:'21. Spotlight', text:'Búsqueda de palabras en toda la Biblia.' },
-  { sel:'.brand-block', title:'22. Listo', text:'Estas son las zonas de SEFER. El detalle de cada botón está en Ayuda.' }
+  { sel:'.brand-block, #nav-header-row .brand-block', title:'1. SEFER', text:'Marca SEFER ספר. Debajo está la FIRMA (BY LWM PDC).' },
+  { sel:'#nav-header-actions', title:'2. BARRA DE ACCIONES', text:'Perfil, nube, pantalla completa y reiniciar.' },
+  { sel:'#nav-header-row, #nav-header', title:'3. CABECERA PRINCIPAL', text:'SEFER + FIRMA + BARRA DE ACCIONES.' },
+  { sel:'.theme-row-continuous, #theme-more-btn, #theme-batch', title:'4. TEMAS y SELECTOR DE LOTE', text:'Lote (＋/−) y los cinco temas visibles.' },
+  { sel:'#random-verse-btn', title:'5. ALEATORIO', text:'Dado: versículo al azar.' },
+  { sel:'#ref-search-wrap, #ref-search', title:'6. VERSE FINDER', text:'Buscador de referencias. Las SUGERENCIAS aparecen al escribir.' },
+  { sel:'#book-list', title:'7. BIBLIOTECA', text:'Libros del Antiguo y Nuevo Testamento. BOOK ABOUT abre la info del libro.' },
+  { sel:'#topbar-actions', title:'8. TOOLKIT', text:'Barra de herramientas. Abajo: TOOLKIT FOOTER (nombres de grupo).' },
+  { sel:'#tb-group-font, #font-dec, #font-inc, #font-family-btn', title:'9. TOOLKIT · Texto', text:'Tamaño y FONT MENU (Aa).' },
+  { sel:'#version-btn, #version-switch', title:'10. VERSION MENU', text:'Selector de traducción bíblica.' },
+  { sel:'#tb-group-study, #tb-group-consult, #plan-btn, #youtube-btn, #project-btn, #help-btn', title:'11. TOOLKIT · resto', text:'Estudio (STUDY PANEL), CONSULTA, PLAN, REPRODUCTOR, proyección y AYUDA.' },
+  { sel:'#project-btn', title:'12. MENÚ DE PROYECCIÓN', text:'Se abre desde Proyectar.' },
+  { sel:'#stage', title:'13. PROYECCIÓN', text:'Pantalla grande. Incluye STAGE CONTROLS y COMPARE.' },
+  { sel:'#reader-sticky-head, .sticky-head', title:'14. CABECERA DEL LECTOR', text:'Libro, capítulo e indicaciones.' },
+  { sel:'#reader-verses, #reader', title:'15. LECTOR', text:'Versículos. CASILLAS DE SELECCIÓN y VERSE ACTIONS viven aquí. WORD POPUP al doble clic.' },
+  { sel:'#word-search-bar, #word-search-input', title:'16. SPOTLIGHT', text:'Búsqueda de palabras en toda la Biblia.' },
+  { sel:'.brand-block', title:'17. Listo', text:'Mapa de zonas de SEFER. Detalle de cada botón: AYUDA. Historial: HISTORIAL DE VERSIONES.' }
 ];
 
 

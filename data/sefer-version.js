@@ -1,15 +1,27 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.3-stable";
-const SEFER_VERSION_NAME = "Night Glass paneles, Day Glass menú opaco, tour por zonas";
+const SEFER_VERSION = "2.5.4-stable";
+const SEFER_VERSION_NAME = "Night Glass Spotlight + Toolkit Footer; mapa de zonas";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.4-stable",
+    name: "Night Glass Spotlight + Toolkit Footer; mapa de zonas",
+    date: "2026-09-15",
+    current: true,
+    changes: [
+      "Night Glass: SPOTLIGHT con fondo/texto legibles (sin transparencia rota)",
+      "Night Glass: TOOLKIT FOOTER sin recuadros en grupos de botones",
+      "Tour actualizado con nombres oficiales de zonas SEFER",
+      "Mapa de zonas completo (STAGE CONTROLS, COMPARE, WORD POPUP, PLAN, etc.)"
+    ]
+  },
+  {
     id: "2.5.3-stable",
     name: "Night Glass paneles, Day Glass menú opaco, tour por zonas",
     date: "2026-09-15",
-    current: true,
+    current: false,
     changes: [
       "Night Glass: menú proyectar, spotlight y ayuda sin aplastar colores de títulos/textos",
       "Day Glass: menú de traducciones fondo sólido #f0f4fa (sin transparencia)",

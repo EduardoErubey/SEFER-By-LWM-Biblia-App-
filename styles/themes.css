@@ -1112,9 +1112,13 @@ body[data-theme="lwm-night"] #easy-btn.easy-on{
   border-color: #5BA3E0 !important;
   color: #fff !important;
 }
-body[data-theme="lwm-night"] .tb-group{
-  background: rgba(14,26,42,0.6) !important;
-  border: 1px solid rgba(91,163,224,0.15) !important;
+body[data-theme="lwm-night"] .tb-group,
+body.theme-glass[data-theme="lwm-night"] .tb-group{
+  /* TOOLKIT FOOTER: sin recuadro — solo agrupa botones */
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 /* Menús desplegables */
@@ -1354,4 +1358,74 @@ body.theme-glass[data-theme="amoled"] #version-menu .ver-item.active,
 body[data-theme="amoled"] #version-menu .ver-item.active {
   background: rgba(10, 132, 255, 0.18) !important;
   color: #0a84ff !important;
+}
+
+
+/* =========================================================
+   Night Glass — SPOTLIGHT legible (sin transparencia rota)
+   ========================================================= */
+body[data-theme="lwm-night"] #word-search-bar,
+body.theme-glass[data-theme="lwm-night"] #word-search-bar {
+  background: #0f1a2a !important;
+  background-color: #0f1a2a !important;
+  border: 1px solid rgba(91,163,224,0.35) !important;
+  color: #E8F0F8 !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.55) !important;
+}
+body[data-theme="lwm-night"] #word-search-bar .ws-title,
+body[data-theme="lwm-night"] #word-search-bar label {
+  color: #6BB0E8 !important;
+}
+body[data-theme="lwm-night"] #word-search-input,
+body.theme-glass[data-theme="lwm-night"] #word-search-input {
+  background: #152538 !important;
+  background-color: #152538 !important;
+  color: #E8F0F8 !important;
+  border: 1px solid rgba(91,163,224,0.4) !important;
+  opacity: 1 !important;
+  caret-color: #6BB0E8 !important;
+}
+body[data-theme="lwm-night"] #word-search-input::placeholder {
+  color: #8AA0B5 !important;
+  opacity: 1 !important;
+}
+body[data-theme="lwm-night"] #word-search-results,
+body.theme-glass[data-theme="lwm-night"] #word-search-results {
+  background: #0f1a2a !important;
+  color: #E8F0F8 !important;
+  border-color: rgba(91,163,224,0.25) !important;
+}
+body[data-theme="lwm-night"] #word-search-results .result-item,
+body[data-theme="lwm-night"] #word-search-results .ws-hit,
+body[data-theme="lwm-night"] #word-search-results .result-ref {
+  color: #6BB0E8 !important;
+  background: transparent !important;
+}
+body[data-theme="lwm-night"] #word-search-results .result-text {
+  color: #D0DCE8 !important;
+}
+body[data-theme="lwm-night"] #word-search-results .result-item:hover,
+body[data-theme="lwm-night"] #word-search-results .ws-hit:hover {
+  background: rgba(91,163,224,0.15) !important;
+}
+body[data-theme="lwm-night"] #word-search-bar .ws-close,
+body[data-theme="lwm-night"] #word-search-bar button {
+  color: #E8F0F8 !important;
+  background: rgba(18,34,54,0.9) !important;
+  border: 1px solid rgba(91,163,224,0.3) !important;
+}
+
+/* Night Glass: cualquier resto de recuadro en grupos toolkit */
+body[data-theme="lwm-night"] #topbar-actions .tb-group,
+body.theme-glass[data-theme="lwm-night"] #topbar-actions .tb-group {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+body[data-theme="lwm-night"] .tb-group[data-label]::before {
+  color: #8AA0B5 !important;
+  opacity: 0.85 !important;
 }
