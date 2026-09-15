@@ -1,15 +1,26 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.5b-stable";
-const SEFER_VERSION_NAME = "Toolkit una sola línea; sin footer; grupos separados";
+const SEFER_VERSION = "2.5.5c-stable";
+const SEFER_VERSION_NAME = "Toolkit completa visible (A− A+ … Ayuda) sin scroll";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.5c-stable",
+    name: "Toolkit completa visible (A− A+ … Ayuda) sin scroll",
+    date: "2026-09-15",
+    current: true,
+    changes: [
+      "Eliminado overflow-x:auto que ocultaba A− y A+ a la izquierda",
+      "Toolkit completa en una línea sin barra de desplazamiento",
+      "Botones compactos; A− A+ Aa siempre visibles"
+    ]
+  },
+  {
     id: "2.5.5b-stable",
     name: "Toolkit una sola línea; sin footer; grupos separados",
     date: "2026-09-15",
-    current: true,
+    current: false,
     changes: [
       "Toolkit de nuevo en UNA sola línea (nowrap)",
       "Sin TOOLKIT FOOTER",
