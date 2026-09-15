@@ -102,3 +102,29 @@ try{
     else start();
   }
 })();
+
+
+/* Ajusta la toolkit si aún no caben todos los botones */
+function seferFitToolkit(){
+  try{
+    var bar = document.getElementById('topbar');
+    var actions = document.getElementById('topbar-actions');
+    if(!bar || !actions) return;
+    actions.style.transform = 'none';
+    var avail = bar.clientWidth - 8;
+    var need = actions.scrollWidth;
+    if(need > avail && avail > 40){
+      var s = Math.max(0.72, avail / need);
+      actions.style.transformOrigin = 'right center';
+      actions.style.transform = 'scale(' + s + ')';
+    }
+  }catch(e){}
+}
+window.seferFitToolkit = seferFitToolkit;
+window.addEventListener('resize', function(){ seferFitToolkit(); });
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(seferFitToolkit, 50); setTimeout(seferFitToolkit, 300); });
+} else {
+  setTimeout(seferFitToolkit, 50);
+  setTimeout(seferFitToolkit, 300);
+}

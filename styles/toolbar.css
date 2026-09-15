@@ -1215,67 +1215,61 @@ body > #version-menu {
 
 
 
+
+
 /* =========================================================
-   TOOLKIT 2.5.5e — tamaños 2.5.4; A− A+ Aa NUNCA recortados
-   (flex-end + overflow escondía el inicio de la barra)
+   TOOLKIT 2.5.6 — todos los botones caben en una línea
+   (tamaño reducido de forma uniforme; sin recortar izq/der)
    ========================================================= */
 #topbar {
   display: flex !important;
   flex-wrap: nowrap !important;
   align-items: center !important;
-  justify-content: flex-start !important; /* el bloque se empuja con margin-left:auto */
-  overflow: hidden !important; /* si no cabe, recorta la DERECHA, no la izquierda */
-  padding: 8px 12px !important;
-  min-height: 44px !important;
+  justify-content: flex-start !important;
+  overflow: hidden !important;
+  padding: 6px 8px !important;
+  min-height: 40px !important;
   box-sizing: border-box !important;
   width: 100% !important;
 }
 #topbar-actions {
   display: flex !important;
-  flex-direction: row !important;
   flex-wrap: nowrap !important;
   align-items: center !important;
-  justify-content: flex-start !important; /* orden natural: A− primero */
-  gap: 6px !important;
+  justify-content: flex-start !important;
+  gap: 4px !important;
+  margin: 0 0 0 auto !important;
   padding: 0 !important;
-  margin: 0 0 0 auto !important; /* pegado a la derecha como bloque */
   overflow: visible !important;
+  flex: 0 1 auto !important;
   max-width: 100% !important;
   min-width: 0 !important;
-  flex: 0 1 auto !important; /* puede encoger el contenedor, no reordenar */
-  scrollbar-width: none !important;
+  transform-origin: right center;
 }
-#topbar-actions::-webkit-scrollbar { display: none !important; }
-
 .tb-group::before,
 .tb-group[data-label]::before {
   content: none !important;
   display: none !important;
 }
-
 #topbar-actions .tb-group {
   display: inline-flex !important;
   flex-wrap: nowrap !important;
   align-items: center !important;
-  gap: 6px !important;
-  padding: 0 4px !important;
+  gap: 3px !important;
+  padding: 0 3px !important;
   margin: 0 !important;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
   flex: 0 0 auto !important;
 }
-/* Primer grupo (A− A+ Aa) siempre al inicio visual */
-#topbar-actions #tb-group-font {
-  order: 0 !important;
-}
 #topbar-actions .tb-group + .tb-group {
   border-left: 1px solid var(--line) !important;
-  padding-left: 10px !important;
-  margin-left: 2px !important;
+  padding-left: 6px !important;
+  margin-left: 1px !important;
 }
 
-/* Tamaños 2.5.4 */
+/* Tamaño uniforme reducido para que quepan TODOS */
 #topbar-actions .btn,
 #topbar-actions .btn-icon,
 #topbar-actions #version-btn,
@@ -1299,32 +1293,36 @@ body > #version-menu {
   height: auto !important;
   min-height: 0 !important;
   max-height: none !important;
-  font-size: 12px !important;
+  font-size: 11px !important;
   font-weight: 600 !important;
-  padding: 7px 9px !important;
-  line-height: 1.2 !important;
+  padding: 5px 7px !important;
+  line-height: 1.15 !important;
   align-items: center !important;
   justify-content: center !important;
   box-sizing: border-box !important;
   border-radius: 6px !important;
   white-space: nowrap !important;
   flex: 0 0 auto !important;
-  order: 0 !important; /* anular orders viejos que reordenaban */
+  order: 0 !important;
 }
 #topbar-actions .btn-icon,
 #topbar-actions #font-dec,
 #topbar-actions #font-inc,
 #topbar-actions #font-family-btn {
-  min-width: 2.1em !important;
-  padding: 7px 9px !important;
+  min-width: 1.85em !important;
+  padding: 5px 6px !important;
 }
-#topbar-actions #version-btn,
-#topbar-actions #version-switch {
-  min-width: 4.2em !important;
-  order: 0 !important;
+#topbar-actions #version-btn {
+  min-width: 3.6em !important;
+  max-width: 5em !important;
+  padding: 5px 6px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
 }
-
-/* Anular rules antiguas que ponían order negativo a Destacar/traducción */
+#topbar-actions #youtube-btn .yt-logo {
+  width: 14px !important;
+  height: 10px !important;
+}
 #topbar-actions #easy-btn,
 #topbar-actions #version-switch,
 #topbar-actions #version-btn,
@@ -1332,6 +1330,29 @@ body > #version-menu {
 #topbar-actions #help-btn,
 #topbar-actions #project-btn {
   order: 0 !important;
+}
+
+/* Pantallas más estrechas: aún más compacto */
+@media (max-width: 1366px) {
+  #topbar-actions .btn,
+  #topbar-actions .btn-icon {
+    font-size: 10.5px !important;
+    padding: 4px 5px !important;
+  }
+  #topbar-actions .tb-group {
+    gap: 2px !important;
+    padding: 0 2px !important;
+  }
+  #topbar-actions .tb-group + .tb-group {
+    padding-left: 5px !important;
+  }
+}
+@media (max-width: 1100px) {
+  #topbar-actions .btn,
+  #topbar-actions .btn-icon {
+    font-size: 10px !important;
+    padding: 4px 4px !important;
+  }
 }
 
 body.theme-glass #topbar-actions .tb-group,
