@@ -1,50 +1,15 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.5c-stable";
-const SEFER_VERSION_NAME = "Toolkit completa visible (A− A+ … Ayuda) sin scroll";
+const SEFER_VERSION = "2.5.4b-stable";
+const SEFER_VERSION_NAME = "Toolkit Footer etiquetas dentro de la barra";
 
 
 const SEFER_VERSION_HISTORY = [
   {
-    id: "2.5.5c-stable",
-    name: "Toolkit completa visible (A− A+ … Ayuda) sin scroll",
-    date: "2026-09-15",
-    current: true,
-    changes: [
-      "Eliminado overflow-x:auto que ocultaba A− y A+ a la izquierda",
-      "Toolkit completa en una línea sin barra de desplazamiento",
-      "Botones compactos; A− A+ Aa siempre visibles"
-    ]
-  },
-  {
-    id: "2.5.5b-stable",
-    name: "Toolkit una sola línea; sin footer; grupos separados",
-    date: "2026-09-15",
-    current: false,
-    changes: [
-      "Toolkit de nuevo en UNA sola línea (nowrap)",
-      "Sin TOOLKIT FOOTER",
-      "Botones compactos uniformes (30px)",
-      "Separación de grupos con divisor vertical; sin cajas"
-    ]
-  },
-  {
-    id: "2.5.5-stable",
-    name: "Toolkit sin footer; botones armónicos; grupos separados",
-    date: "2026-09-15",
-    current: false,
-    changes: [
-      "Eliminado TOOLKIT FOOTER (Texto/Lectura/Estudio/Consulta/Herramientas)",
-      "Altura compacta de la toolkit",
-      "Botones con misma altura (32px) y ritmo visual",
-      "Separación de grupos con divisor vertical sutil"
-    ]
-  },
-  {
     id: "2.5.4b-stable",
     name: "Toolkit Footer etiquetas dentro de la barra",
     date: "2026-09-15",
-    current: false,
+    current: true,
     changes: [
       "TOOLKIT FOOTER: Texto/Lectura/Estudio/Consulta/Herramientas dentro del padding del grupo (ya no a medias sobre el Lector)",
       "overflow visible en #topbar; sin recorte de pies de grupo"

@@ -1176,6 +1176,23 @@ body.theme-glass > #version-menu {
 .tb-group::after {
   content: none !important;
 }
+/* Pie de grupo (etiqueta fija sutil, no tooltip) */
+.tb-group[data-label]::before {
+  content: attr(data-label);
+  position: absolute;
+  left: 50%;
+  bottom: -11px;
+  transform: translateX(-50%);
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  opacity: 0.75;
+  white-space: nowrap;
+  pointer-events: none;
+  line-height: 1;
+}
 #topbar {
   padding-bottom: 14px !important;
 }
@@ -1192,6 +1209,12 @@ body.theme-glass > #version-menu {
   padding-bottom: 4px !important;
   row-gap: 10px !important;
 }
+.tb-group[data-label]::before {
+  bottom: -13px !important;
+  font-size: 8px !important;
+  opacity: 0.7 !important;
+  z-index: 1 !important;
+}
 /* Menú traducción: sólido siempre */
 #version-menu,
 #version-menu.open,
@@ -1205,135 +1228,68 @@ body > #version-menu {
 }
 
 
-
-
-
-
-
-
 /* =========================================================
-   TOOLKIT 2.5.5c — todo visible, una línea, SIN scroll
-   (flex-end + overflow-x:auto escondía A− A+ a la izquierda)
+   TOOLKIT FOOTER — etiquetas DENTRO de la barra (no a medias
+   sobre el lector). Aplica a todos los temas.
    ========================================================= */
 #topbar {
   overflow: visible !important;
-  padding: 6px 8px !important;
-  min-height: 38px !important;
-  align-items: center !important;
-  flex-wrap: nowrap !important;
+  padding-top: 8px !important;
+  padding-bottom: 6px !important;
+  min-height: 0 !important;
+  align-items: flex-start !important;
   box-sizing: border-box !important;
 }
 #topbar-actions {
+  overflow: visible !important;
   display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  align-items: center !important;
+  flex-wrap: wrap !important;
+  align-items: flex-start !important;
   justify-content: flex-end !important;
-  gap: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  overflow: visible !important; /* NO auto-scroll */
-  max-width: 100% !important;
-  min-width: 0 !important;
-  flex: 1 1 auto !important;
-  scrollbar-width: none !important;
+  /* espacio inferior para pies de grupo */
+  padding-bottom: 16px !important;
+  row-gap: 8px !important;
+  box-sizing: border-box !important;
 }
-#topbar-actions::-webkit-scrollbar { display: none !important; height: 0 !important; }
-
-.tb-group::before,
-.tb-group[data-label]::before {
-  content: none !important;
-  display: none !important;
+#topbar-actions .tb-group,
+.tb-group[data-label] {
+  position: relative !important;
+  overflow: visible !important;
+  /* reserva altura para la etiqueta dentro del flujo */
+  padding-bottom: 14px !important;
+  margin-bottom: 0 !important;
+  box-sizing: border-box !important;
 }
-
-#topbar-actions .tb-group {
-  display: inline-flex !important;
-  flex-wrap: nowrap !important;
-  align-items: center !important;
-  gap: 2px !important;
-  padding: 0 5px !important;
-  margin: 0 !important;
+/* Etiqueta anclada al padding inferior del grupo (no cuelga fuera) */
+.tb-group[data-label]::before,
+#topbar-actions .tb-group[data-label]::before {
+  content: attr(data-label) !important;
+  position: absolute !important;
+  left: 50% !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: 1px !important;
+  transform: translateX(-50%) !important;
+  font-size: 8px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  color: var(--ink-soft) !important;
+  opacity: 0.85 !important;
+  white-space: nowrap !important;
+  pointer-events: none !important;
+  line-height: 1 !important;
+  z-index: 2 !important;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  flex: 0 0 auto !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
-#topbar-actions .tb-group + .tb-group {
-  border-left: 1px solid var(--line) !important;
-  padding-left: 6px !important;
-  margin-left: 1px !important;
+body.mobile-mode #topbar-actions .tb-group[data-label] {
+  padding-bottom: 0 !important;
 }
-
-#topbar-actions .btn,
-#topbar-actions .btn-icon,
-#topbar-actions #version-btn,
-#topbar-actions #easy-btn,
-#topbar-actions #plan-btn,
-#topbar-actions #project-btn,
-#topbar-actions #help-btn,
-#topbar-actions #youtube-btn,
-#topbar-actions #font-dec,
-#topbar-actions #font-inc,
-#topbar-actions #font-family-btn {
-  display: inline-flex !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  height: 28px !important;
-  min-height: 28px !important;
-  max-height: 28px !important;
-  padding: 0 7px !important;
-  font-size: 11px !important;
-  line-height: 1 !important;
-  align-items: center !important;
-  justify-content: center !important;
-  box-sizing: border-box !important;
-  border-radius: 6px !important;
-  white-space: nowrap !important;
-  flex: 0 0 auto !important;
-}
-#topbar-actions .btn-icon,
-#topbar-actions #font-dec,
-#topbar-actions #font-inc,
-#topbar-actions #font-family-btn {
-  width: 28px !important;
-  min-width: 28px !important;
-  padding: 0 !important;
-}
-#topbar-actions #version-btn {
-  min-width: 3.6em !important;
-  max-width: 5em !important;
-  padding: 0 5px !important;
-  font-size: 10.5px !important;
-  font-weight: 700 !important;
-}
-
-/* Pantallas medianas: compactar un poco más sin ocultar botones */
-@media (max-width: 1280px) {
-  #topbar-actions .btn,
-  #topbar-actions .btn-icon {
-    height: 26px !important;
-    min-height: 26px !important;
-    font-size: 10.5px !important;
-    padding: 0 5px !important;
-  }
-  #topbar-actions .btn-icon,
-  #topbar-actions #font-dec,
-  #topbar-actions #font-inc,
-  #topbar-actions #font-family-btn {
-    width: 26px !important;
-    min-width: 26px !important;
-  }
-  #topbar-actions .tb-group {
-    padding: 0 3px !important;
-    gap: 1px !important;
-  }
-}
-
-body.theme-glass #topbar-actions .tb-group,
-body[data-theme="lwm-night"] #topbar-actions .tb-group {
-  background: transparent !important;
-  box-shadow: none !important;
-}
-body[data-theme="lwm-night"] #topbar-actions .tb-group + .tb-group {
-  border-left-color: rgba(91,163,224,0.3) !important;
+body.mobile-mode .tb-group[data-label]::before {
+  display: none !important;
 }
