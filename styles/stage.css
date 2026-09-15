@@ -40,7 +40,21 @@ body.mobile-mode #stage-exit{top:14px;right:14px;font-size:11px;padding:5px 10px
 
 .btn, .nav-action-btn, .theme-more-btn, .stage-btn, .ps-opt, .ps-cancel, .yt-bar-btn, .gd-ref, .chap-pill, .info-btn, .vaction, .side-close-btn{transition:transform .15s ease, background .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease;}
 
-.btn:hover, .nav-action-btn:hover, .theme-more-btn:hover, .stage-btn:hover, .ps-opt:hover, .ps-cancel:hover, .yt-bar-btn:hover, .gd-ref:hover, .chap-pill:hover, .info-btn:hover, .vaction:hover{transform:scale(1.06);}
+.nav-action-btn:hover, .theme-more-btn:hover, .stage-btn:hover, .ps-opt:hover, .ps-cancel:hover, .yt-bar-btn:hover, .gd-ref:hover, .chap-pill:hover, .info-btn:hover, .vaction:hover{transform:scale(1.06);}
+/* .btn:hover sin scale global: evita scroll horizontal en modales (tour, plan, ayuda) */
+#topbar-actions .btn:hover,
+#topbar-actions .btn-icon:hover,
+.theme-dot:hover,
+.random-verse-btn:hover{ /* scale solo donde no rompe layout de modales */ }
+.btn:hover{ /* color/borde ya en toolbar; sin transform de ancho */ }
+#info-modal .btn:hover,
+#modal-plan-lectura .btn:hover,
+.plan-order-btn:hover,
+.plan-mode-btn:hover,
+.tour-start-btn:hover{
+  transform: none !important;
+}
+
 
 .btn:active, .nav-action-btn:active, .theme-more-btn:active, .stage-btn:active, .ps-opt:active, .chap-pill:active, .vaction:active{transform:scale(0.96);}
 

@@ -141,7 +141,17 @@ body.mobile-mode{}
 
 .help-flag{display:inline-block;vertical-align:middle;margin:0 2px 2px 0;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,0.12);}
 
-.plan-order-row{flex-wrap:nowrap !important;align-items:center;}
+.plan-order-row{flex-wrap:nowrap !important;align-items:center;overflow-x:hidden !important;max-width:100%;}
+.plan-order-btn, .plan-mode-btn{
+  transform: none !important;
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+}
+.plan-order-btn:hover, .plan-mode-btn:hover{
+  transform: none !important;
+  /* solo color, no agrandar */
+}
+
 
 .plan-order-row .plan-order-btn{flex:1 1 0;white-space:nowrap;font-size:11px;padding:5px 6px;min-width:0;}
 

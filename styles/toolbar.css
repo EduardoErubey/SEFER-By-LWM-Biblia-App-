@@ -1365,3 +1365,14 @@ body[data-theme="lwm-night"] #topbar-actions .tb-group {
 body[data-theme="lwm-night"] #topbar-actions .tb-group + .tb-group {
   border-left-color: rgba(91,163,224,0.3) !important;
 }
+
+
+/* Toolkit siempre interactiva (incluso con modal abierto) */
+#topbar {
+  z-index: 1600 !important;
+  position: relative !important;
+}
+#topbar-actions .btn,
+#topbar-actions .btn-icon {
+  cursor: pointer !important;
+}

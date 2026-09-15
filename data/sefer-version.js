@@ -1,15 +1,29 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.6b-stable";
-const SEFER_VERSION_NAME = "Toolkit: incluye Ayuda; botones compactos una línea";
+const SEFER_VERSION = "2.5.7-stable";
+const SEFER_VERSION_NAME = "Tour por zonas; Ayuda 2.5.7; toolkit sobre modales";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.7-stable",
+    name: "Tour por zonas; Ayuda 2.5.7; toolkit sobre modales",
+    date: "2026-09-15",
+    current: true,
+    changes: [
+      "Tour 14 pasos con nombres oficiales (SEFER … Listo)",
+      "Ayuda reestructurada: bienvenida, mapa, primeros pasos, toolkit/lector, proyección, atajos",
+      "Toolkit: listado completo de botones; Panel de estudio; SVG YouTube",
+      "Sin frase «todos con Ctrl» en atajos",
+      "Hover sin scale en tour/plan (sin scroll horizontal)",
+      "Toolkit por encima del oscurecido de modales; cursor mano siempre"
+    ]
+  },
+  {
     id: "2.5.6b-stable",
     name: "Toolkit: incluye Ayuda; botones compactos una línea",
     date: "2026-09-15",
-    current: true,
+    current: false,
     changes: [
       "Ajuste extra de tamaño para que ❓ Ayuda quepa en la misma línea",
       "Escala automática un poco más agresiva si hace falta",

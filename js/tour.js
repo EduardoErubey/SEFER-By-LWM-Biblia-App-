@@ -12,10 +12,10 @@ function seferTourPrepareStep(step){
     if(!step) return;
     const title = step.title || '';
     const n = parseInt(String(title).split('.')[0], 10) || 0;
-    const needMenu = (n === 12);
-    const needStage = (n === 13);
-    const needSpot = (n === 16);
-    if(n >= 14){
+    const needMenu = (n === 9);
+    const needStage = (n === 10);
+    const needSpot = (n === 13);
+    if(n >= 11){
       try{ if(typeof closeProjectSheet==='function') closeProjectSheet(); }catch(e){}
       try{ if(typeof stage!=='undefined' && stage){ stage.classList.remove('open','stage-stack','stage-compare'); } }catch(e){}
     }
@@ -29,28 +29,25 @@ function seferTourPrepareStep(step){
       }catch(e){}
     }
     if(needSpot){ try{ if(typeof openWordSearch==='function') openWordSearch(''); }catch(e){} }
-    else if(n < 16){ try{ if(typeof closeWordSearch==='function') closeWordSearch(); }catch(e){} }
+    else if(n < 13){ try{ if(typeof closeWordSearch==='function') closeWordSearch(); }catch(e){} }
   }catch(e){}
 }
 
 const SEFER_TOUR_STEPS = window.SEFER_TOUR_STEPS = [
-  { sel:'.brand-block, #nav-header-row .brand-block', title:'1. SEFER', text:'Marca SEFER ספר. Debajo está la FIRMA (BY LWM PDC).' },
-  { sel:'#nav-header-actions', title:'2. BARRA DE ACCIONES', text:'Perfil, nube, pantalla completa y reiniciar.' },
-  { sel:'#nav-header-row, #nav-header', title:'3. CABECERA PRINCIPAL', text:'SEFER + FIRMA + BARRA DE ACCIONES.' },
-  { sel:'.theme-row-continuous, #theme-more-btn, #theme-batch', title:'4. TEMAS y SELECTOR DE LOTE', text:'Lote (＋/−) y los cinco temas visibles.' },
-  { sel:'#random-verse-btn', title:'5. ALEATORIO', text:'Dado: versículo al azar.' },
-  { sel:'#ref-search-wrap, #ref-search', title:'6. VERSE FINDER', text:'Buscador de referencias. Las SUGERENCIAS aparecen al escribir.' },
-  { sel:'#book-list', title:'7. BIBLIOTECA', text:'Libros del Antiguo y Nuevo Testamento. BOOK ABOUT abre la info del libro.' },
-  { sel:'#topbar-actions', title:'8. TOOLKIT', text:'Barra de herramientas. Abajo: TOOLKIT FOOTER (nombres de grupo).' },
-  { sel:'#tb-group-font, #font-dec, #font-inc, #font-family-btn', title:'9. TOOLKIT · Texto', text:'Tamaño y FONT MENU (Aa).' },
-  { sel:'#version-btn, #version-switch', title:'10. VERSION MENU', text:'Selector de traducción bíblica.' },
-  { sel:'#tb-group-study, #tb-group-consult, #plan-btn, #youtube-btn, #project-btn, #help-btn', title:'11. TOOLKIT · resto', text:'Estudio (STUDY PANEL), CONSULTA, PLAN, REPRODUCTOR, proyección y AYUDA.' },
-  { sel:'#project-btn', title:'12. MENÚ DE PROYECCIÓN', text:'Se abre desde Proyectar.' },
-  { sel:'#stage', title:'13. PROYECCIÓN', text:'Pantalla grande. Incluye STAGE CONTROLS y COMPARE.' },
-  { sel:'#reader-sticky-head, .sticky-head', title:'14. CABECERA DEL LECTOR', text:'Libro, capítulo e indicaciones.' },
-  { sel:'#reader-verses, #reader', title:'15. LECTOR', text:'Versículos. CASILLAS DE SELECCIÓN y VERSE ACTIONS viven aquí. WORD POPUP al doble clic.' },
-  { sel:'#word-search-bar, #word-search-input', title:'16. SPOTLIGHT', text:'Búsqueda de palabras en toda la Biblia.' },
-  { sel:'.brand-block', title:'17. Listo', text:'Mapa de zonas de SEFER. Detalle de cada botón: AYUDA. Historial: HISTORIAL DE VERSIONES.' }
+  { sel:'.brand-block, #nav-header-row .brand-block', title:'1. SEFER', text:'Marca SEFER ספר y la firma BY LWM PDC.' },
+  { sel:'#nav-header-actions', title:'2. Barra de acciones', text:'Perfil, nube, pantalla completa y reiniciar.' },
+  { sel:'#nav-header-row, #nav-header', title:'3. Cabecera principal', text:'SEFER, firma y barra de acciones juntos.' },
+  { sel:'.theme-row-continuous, #theme-more-btn, #theme-batch', title:'4. Lotes de temas', text:'Botón ＋/− de lote y los cinco temas visibles.' },
+  { sel:'#random-verse-btn', title:'5. Aleatorio', text:'Dado: versículo al azar.' },
+  { sel:'#ref-search-wrap, #ref-search', title:'6. Buscador de versículos', text:'Campo para ir a una referencia bíblica.' },
+  { sel:'#book-list', title:'7. Biblia', text:'Lista de libros del Antiguo y Nuevo Testamento.' },
+  { sel:'#topbar-actions', title:'8. Toolkit', text:'Barra de herramientas superior. El detalle de cada botón está en Ayuda.' },
+  { sel:'#project-sheet, .ps-card', title:'9. Menú de proyección', text:'Opciones para elegir qué se proyecta.' },
+  { sel:'#stage', title:'10. Proyección', text:'Pantalla grande de culto o estudio.' },
+  { sel:'#reader-sticky-head, .sticky-head', title:'11. Cabecera del lector', text:'Libro, capítulo e indicaciones.' },
+  { sel:'#reader-verses, #reader', title:'12. Lector', text:'Área donde se leen los versículos.' },
+  { sel:'#word-search-bar, #word-search-input', title:'13. Spotlight', text:'Búsqueda de palabras en toda la Biblia.' },
+  { sel:'.brand-block', title:'14. Listo', text:'Estas son las zonas de SEFER. Para el detalle de cada botón, abre Ayuda.' }
 ];
 
 

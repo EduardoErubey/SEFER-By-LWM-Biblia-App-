@@ -122,3 +122,53 @@ body.yt-sidebar-active #reader, body.yt-active-bl #reader, body.yt-active-br #re
   position: relative !important;
   padding-right: 40px !important;
 }
+
+
+/* Toolkit por encima del oscurecido de modales; cursor mano intacto */
+#topbar,
+#topbar-actions {
+  z-index: 1600 !important;
+  position: relative !important;
+  pointer-events: auto !important;
+}
+#topbar-actions .btn,
+#topbar-actions .btn-icon {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+/* Backdrop de modales bajo la toolkit */
+#info-modal,
+#modal-plan-lectura,
+#modal-glosario,
+#modal-genealogia,
+#modal-apocrifos,
+#modal-youtube,
+#modal-perfil {
+  z-index: 1300 !important;
+}
+#info-modal .im-card,
+#modal-plan-lectura .im-card,
+#modal-glosario .im-card,
+#modal-genealogia .im-card,
+#modal-apocrifos .im-card,
+#modal-youtube .im-card,
+#modal-perfil .im-card {
+  position: relative;
+  z-index: 1301;
+  pointer-events: auto;
+}
+/* Hover en modales: no agrandar botones */
+#info-modal .btn,
+#modal-plan-lectura .btn,
+.plan-order-btn,
+.plan-mode-btn,
+.tour-start-btn {
+  transform: none !important;
+}
+#info-modal .btn:hover,
+#modal-plan-lectura .btn:hover,
+.plan-order-btn:hover,
+.plan-mode-btn:hover,
+.tour-start-btn:hover {
+  transform: none !important;
+}

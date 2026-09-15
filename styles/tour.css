@@ -40,3 +40,20 @@
 #sefer-tour-overlay{ z-index:2000 !important; pointer-events:none !important; background:transparent !important; }
 #sefer-tour-spot{ z-index:2001 !important; pointer-events:none !important; }
 #sefer-tour-card{ z-index:2002 !important; pointer-events:auto !important; position:fixed !important; }
+
+
+.tour-start-btn{
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+  transform: none !important;
+}
+.tour-start-btn:hover{
+  transform: none !important;
+  /* sin scale: evita barra horizontal en el modal de ayuda */
+}
+#info-modal .im-scroll,
+#info-modal .im-card{
+  overflow-x: hidden !important;
+}
