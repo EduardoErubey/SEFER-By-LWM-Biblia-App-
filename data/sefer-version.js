@@ -1,15 +1,27 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.5-stable";
-const SEFER_VERSION_NAME = "Toolkit sin footer; botones armónicos; grupos separados";
+const SEFER_VERSION = "2.5.5b-stable";
+const SEFER_VERSION_NAME = "Toolkit una sola línea; sin footer; grupos separados";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.5b-stable",
+    name: "Toolkit una sola línea; sin footer; grupos separados",
+    date: "2026-09-15",
+    current: true,
+    changes: [
+      "Toolkit de nuevo en UNA sola línea (nowrap)",
+      "Sin TOOLKIT FOOTER",
+      "Botones compactos uniformes (30px)",
+      "Separación de grupos con divisor vertical; sin cajas"
+    ]
+  },
+  {
     id: "2.5.5-stable",
     name: "Toolkit sin footer; botones armónicos; grupos separados",
     date: "2026-09-15",
-    current: true,
+    current: false,
     changes: [
       "Eliminado TOOLKIT FOOTER (Texto/Lectura/Estudio/Consulta/Herramientas)",
       "Altura compacta de la toolkit",

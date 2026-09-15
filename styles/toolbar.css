@@ -1207,108 +1207,112 @@ body > #version-menu {
 
 
 
+
+
 /* =========================================================
-   TOOLKIT — sin footer; altura compacta; botones armónicos;
-   separación visible entre grupos
+   TOOLKIT 2.5.5b — una sola línea, sin footer, grupos separados
    ========================================================= */
 #topbar {
   overflow: visible !important;
-  padding: 8px 12px !important;
-  min-height: 44px !important;
+  padding: 6px 10px !important;
+  min-height: 40px !important;
   height: auto !important;
   align-items: center !important;
+  flex-wrap: nowrap !important;
   box-sizing: border-box !important;
 }
 #topbar-actions {
   display: flex !important;
-  flex-wrap: wrap !important;
+  flex-wrap: nowrap !important; /* UNA línea */
   align-items: center !important;
   justify-content: flex-end !important;
-  gap: 0 !important; /* el gap lo dan los grupos */
-  padding-bottom: 0 !important;
-  padding-top: 0 !important;
-  row-gap: 6px !important;
-  overflow: visible !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow-x: auto !important; /* si no cabe, scroll horizontal sutil */
+  overflow-y: hidden !important;
+  scrollbar-width: thin;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
 }
 
-/* Sin etiquetas de footer */
+/* Sin footers */
+.tb-group::before,
 .tb-group[data-label]::before,
-#topbar-actions .tb-group[data-label]::before,
-.tb-group::before {
+#topbar-actions .tb-group[data-label]::before {
   content: none !important;
   display: none !important;
 }
 
-/* Grupos: separación clara, sin caja pesada */
+/* Grupos en línea */
 #topbar-actions .tb-group,
 .tb-group {
-  position: relative !important;
   display: inline-flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
   align-items: center !important;
-  gap: 4px !important;
-  padding: 0 8px !important;
+  gap: 3px !important;
+  padding: 0 6px !important;
   margin: 0 !important;
-  padding-bottom: 0 !important;
   background: transparent !important;
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  overflow: visible !important;
+  flex: 0 0 auto !important;
 }
-/* Divisor vertical entre grupos (excepto el primero) */
 #topbar-actions .tb-group + .tb-group {
   border-left: 1px solid var(--line) !important;
+  padding-left: 8px !important;
   margin-left: 2px !important;
-  padding-left: 10px !important;
 }
 
-/* Botones: mismo alto y ritmo */
+/* Botones compactos y uniformes — sin forzar wrap */
 #topbar-actions .btn,
 #topbar-actions .btn-icon,
 #topbar-actions #version-btn,
 #topbar-actions #easy-btn,
 #topbar-actions #plan-btn,
 #topbar-actions #project-btn,
-#topbar-actions #help-btn {
-  height: 32px !important;
-  min-height: 32px !important;
-  max-height: 32px !important;
-  padding: 0 10px !important;
-  font-size: 12px !important;
+#topbar-actions #help-btn,
+#topbar-actions #youtube-btn {
+  height: 30px !important;
+  min-height: 30px !important;
+  max-height: 30px !important;
+  padding: 0 8px !important;
+  font-size: 11.5px !important;
   line-height: 1 !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   box-sizing: border-box !important;
-  border-radius: 8px !important;
+  border-radius: 7px !important;
   white-space: nowrap !important;
-  vertical-align: middle !important;
+  flex: 0 0 auto !important;
 }
 #topbar-actions .btn-icon {
-  width: 32px !important;
-  min-width: 32px !important;
+  width: 30px !important;
+  min-width: 30px !important;
   padding: 0 !important;
 }
 #topbar-actions #version-btn {
-  min-width: 4.5em !important;
-  max-width: 6.5em !important;
-  padding: 0 8px !important;
-  font-size: 11.5px !important;
+  min-width: 3.8em !important;
+  max-width: 5.5em !important;
+  padding: 0 6px !important;
+  font-size: 11px !important;
   font-weight: 700 !important;
 }
 
-/* Night / glass: divisores legibles, sin recuadros de grupo */
-body[data-theme="lwm-night"] #topbar-actions .tb-group,
-body.theme-glass #topbar-actions .tb-group {
+/* Night / glass: solo divisor, sin cajas */
+body.theme-glass #topbar-actions .tb-group,
+body[data-theme="lwm-night"] #topbar-actions .tb-group {
   background: transparent !important;
-  border-top: none !important;
-  border-right: none !important;
-  border-bottom: none !important;
   box-shadow: none !important;
+  backdrop-filter: none !important;
 }
 body[data-theme="lwm-night"] #topbar-actions .tb-group + .tb-group {
-  border-left-color: rgba(91,163,224,0.28) !important;
+  border-left-color: rgba(91,163,224,0.3) !important;
 }
 body.theme-glass:not([data-theme="lwm-night"]) #topbar-actions .tb-group + .tb-group {
-  border-left-color: rgba(0,0,0,0.12) !important;
+  border-left-color: rgba(0,0,0,0.14) !important;
 }
