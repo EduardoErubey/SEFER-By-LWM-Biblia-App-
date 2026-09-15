@@ -1429,3 +1429,14 @@ body[data-theme="lwm-night"] .tb-group[data-label]::before {
   color: #8AA0B5 !important;
   opacity: 0.85 !important;
 }
+
+
+/* Night Glass: footer labels visibles, sin recortar */
+body[data-theme="lwm-night"] #topbar,
+body.theme-glass[data-theme="lwm-night"] #topbar {
+  overflow: visible !important;
+}
+body[data-theme="lwm-night"] .tb-group[data-label]::before {
+  color: #9BB0C4 !important;
+  opacity: 0.9 !important;
+}
