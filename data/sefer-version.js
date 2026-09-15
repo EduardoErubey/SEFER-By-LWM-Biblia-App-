@@ -1,15 +1,27 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.4b-stable";
-const SEFER_VERSION_NAME = "Toolkit Footer etiquetas dentro de la barra";
+const SEFER_VERSION = "2.5.5-stable";
+const SEFER_VERSION_NAME = "Toolkit sin footer; botones armónicos; grupos separados";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.5-stable",
+    name: "Toolkit sin footer; botones armónicos; grupos separados",
+    date: "2026-09-15",
+    current: true,
+    changes: [
+      "Eliminado TOOLKIT FOOTER (Texto/Lectura/Estudio/Consulta/Herramientas)",
+      "Altura compacta de la toolkit",
+      "Botones con misma altura (32px) y ritmo visual",
+      "Separación de grupos con divisor vertical sutil"
+    ]
+  },
+  {
     id: "2.5.4b-stable",
     name: "Toolkit Footer etiquetas dentro de la barra",
     date: "2026-09-15",
-    current: true,
+    current: false,
     changes: [
       "TOOLKIT FOOTER: Texto/Lectura/Estudio/Consulta/Herramientas dentro del padding del grupo (ya no a medias sobre el Lector)",
       "overflow visible en #topbar; sin recorte de pies de grupo"
