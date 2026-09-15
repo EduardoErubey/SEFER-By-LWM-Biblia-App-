@@ -1213,34 +1213,39 @@ body > #version-menu {
 
 
 
+
+
 /* =========================================================
-   TOOLKIT 2.5.5d — tamaños como 2.5.4; una línea; sin footer;
-   sin scroll (A− A+ visibles); separación de grupos
+   TOOLKIT 2.5.5e — tamaños 2.5.4; A− A+ Aa NUNCA recortados
+   (flex-end + overflow escondía el inicio de la barra)
    ========================================================= */
 #topbar {
-  overflow: visible !important;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important; /* el bloque se empuja con margin-left:auto */
+  overflow: hidden !important; /* si no cabe, recorta la DERECHA, no la izquierda */
   padding: 8px 12px !important;
   min-height: 44px !important;
-  align-items: center !important;
-  flex-wrap: nowrap !important;
   box-sizing: border-box !important;
+  width: 100% !important;
 }
 #topbar-actions {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
   align-items: center !important;
-  justify-content: flex-end !important;
+  justify-content: flex-start !important; /* orden natural: A− primero */
   gap: 6px !important;
   padding: 0 !important;
-  margin: 0 !important;
+  margin: 0 0 0 auto !important; /* pegado a la derecha como bloque */
   overflow: visible !important;
   max-width: 100% !important;
   min-width: 0 !important;
-  flex: 1 1 auto !important;
+  flex: 0 1 auto !important; /* puede encoger el contenedor, no reordenar */
   scrollbar-width: none !important;
 }
-#topbar-actions::-webkit-scrollbar { display: none !important; height: 0 !important; }
+#topbar-actions::-webkit-scrollbar { display: none !important; }
 
 .tb-group::before,
 .tb-group[data-label]::before {
@@ -1260,13 +1265,17 @@ body > #version-menu {
   box-shadow: none !important;
   flex: 0 0 auto !important;
 }
+/* Primer grupo (A− A+ Aa) siempre al inicio visual */
+#topbar-actions #tb-group-font {
+  order: 0 !important;
+}
 #topbar-actions .tb-group + .tb-group {
   border-left: 1px solid var(--line) !important;
   padding-left: 10px !important;
   margin-left: 2px !important;
 }
 
-/* Tamaños como 2.5.4 — sin height fijo agresivo */
+/* Tamaños 2.5.4 */
 #topbar-actions .btn,
 #topbar-actions .btn-icon,
 #topbar-actions #version-btn,
@@ -1277,7 +1286,13 @@ body > #version-menu {
 #topbar-actions #youtube-btn,
 #topbar-actions #font-dec,
 #topbar-actions #font-inc,
-#topbar-actions #font-family-btn {
+#topbar-actions #font-family-btn,
+#topbar-actions #meanings-btn,
+#topbar-actions #notes-btn,
+#topbar-actions #favs-btn,
+#topbar-actions #glossary-btn,
+#topbar-actions #biography-btn,
+#topbar-actions #apocrifos-btn {
   display: inline-flex !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -1294,21 +1309,29 @@ body > #version-menu {
   border-radius: 6px !important;
   white-space: nowrap !important;
   flex: 0 0 auto !important;
+  order: 0 !important; /* anular orders viejos que reordenaban */
 }
 #topbar-actions .btn-icon,
 #topbar-actions #font-dec,
 #topbar-actions #font-inc,
 #topbar-actions #font-family-btn {
-  width: auto !important;
   min-width: 2.1em !important;
   padding: 7px 9px !important;
 }
-#topbar-actions #version-btn {
+#topbar-actions #version-btn,
+#topbar-actions #version-switch {
   min-width: 4.2em !important;
-  max-width: 6em !important;
-  padding: 7px 9px !important;
-  font-size: 12px !important;
-  font-weight: 700 !important;
+  order: 0 !important;
+}
+
+/* Anular rules antiguas que ponían order negativo a Destacar/traducción */
+#topbar-actions #easy-btn,
+#topbar-actions #version-switch,
+#topbar-actions #version-btn,
+#topbar-actions .tb-group,
+#topbar-actions #help-btn,
+#topbar-actions #project-btn {
+  order: 0 !important;
 }
 
 body.theme-glass #topbar-actions .tb-group,

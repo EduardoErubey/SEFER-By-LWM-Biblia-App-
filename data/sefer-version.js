@@ -1,15 +1,27 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.5d-stable";
-const SEFER_VERSION_NAME = "Toolkit tamaños 2.5.4; sin footer; una línea";
+const SEFER_VERSION = "2.5.5e-stable";
+const SEFER_VERSION_NAME = "A− A+ visibles; tamaños 2.5.4; sin recorte izquierdo";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.5e-stable",
+    name: "A− A+ visibles; tamaños 2.5.4; sin recorte izquierdo",
+    date: "2026-09-15",
+    current: true,
+    changes: [
+      "Si la toolkit no cabe, se recorta por la derecha (no se pierden A− A+ Aa)",
+      "margin-left:auto + justify flex-start evita el bug de flex-end",
+      "order:0 en todos los botones (anula reordenaciones viejas)",
+      "Tamaños 2.5.4 en todos los botones de la toolkit"
+    ]
+  },
+  {
     id: "2.5.5d-stable",
     name: "Toolkit tamaños 2.5.4; sin footer; una línea",
     date: "2026-09-15",
-    current: true,
+    current: false,
     changes: [
       "Tamaño de botones toolkit como en 2.5.4 (12px, padding 7px 9px)",
       "Sin height fijo 28/30px",
