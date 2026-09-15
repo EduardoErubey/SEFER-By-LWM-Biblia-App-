@@ -1217,9 +1217,10 @@ body > #version-menu {
 
 
 
+
+
 /* =========================================================
-   TOOLKIT 2.5.6 — todos los botones caben en una línea
-   (tamaño reducido de forma uniforme; sin recortar izq/der)
+   TOOLKIT 2.5.6b — cabe también ❓ Ayuda
    ========================================================= */
 #topbar {
   display: flex !important;
@@ -1227,8 +1228,8 @@ body > #version-menu {
   align-items: center !important;
   justify-content: flex-start !important;
   overflow: hidden !important;
-  padding: 6px 8px !important;
-  min-height: 40px !important;
+  padding: 5px 6px !important;
+  min-height: 38px !important;
   box-sizing: border-box !important;
   width: 100% !important;
 }
@@ -1237,14 +1238,14 @@ body > #version-menu {
   flex-wrap: nowrap !important;
   align-items: center !important;
   justify-content: flex-start !important;
-  gap: 4px !important;
+  gap: 3px !important;
   margin: 0 0 0 auto !important;
-  padding: 0 !important;
+  padding: 0 2px 0 0 !important;
   overflow: visible !important;
   flex: 0 1 auto !important;
   max-width: 100% !important;
   min-width: 0 !important;
-  transform-origin: right center;
+  transform-origin: right center !important;
 }
 .tb-group::before,
 .tb-group[data-label]::before {
@@ -1255,8 +1256,8 @@ body > #version-menu {
   display: inline-flex !important;
   flex-wrap: nowrap !important;
   align-items: center !important;
-  gap: 3px !important;
-  padding: 0 3px !important;
+  gap: 2px !important;
+  padding: 0 2px !important;
   margin: 0 !important;
   background: transparent !important;
   border: none !important;
@@ -1265,11 +1266,10 @@ body > #version-menu {
 }
 #topbar-actions .tb-group + .tb-group {
   border-left: 1px solid var(--line) !important;
-  padding-left: 6px !important;
+  padding-left: 5px !important;
   margin-left: 1px !important;
 }
 
-/* Tamaño uniforme reducido para que quepan TODOS */
 #topbar-actions .btn,
 #topbar-actions .btn-icon,
 #topbar-actions #version-btn,
@@ -1291,11 +1291,9 @@ body > #version-menu {
   visibility: visible !important;
   opacity: 1 !important;
   height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  font-size: 11px !important;
+  font-size: 10.5px !important;
   font-weight: 600 !important;
-  padding: 5px 7px !important;
+  padding: 4px 6px !important;
   line-height: 1.15 !important;
   align-items: center !important;
   justify-content: center !important;
@@ -1309,49 +1307,53 @@ body > #version-menu {
 #topbar-actions #font-dec,
 #topbar-actions #font-inc,
 #topbar-actions #font-family-btn {
-  min-width: 1.85em !important;
-  padding: 5px 6px !important;
+  min-width: 1.7em !important;
+  padding: 4px 5px !important;
 }
 #topbar-actions #version-btn {
-  min-width: 3.6em !important;
-  max-width: 5em !important;
-  padding: 5px 6px !important;
-  font-size: 11px !important;
+  min-width: 3.4em !important;
+  max-width: 4.8em !important;
+  padding: 4px 5px !important;
+  font-size: 10.5px !important;
   font-weight: 700 !important;
 }
 #topbar-actions #youtube-btn .yt-logo {
-  width: 14px !important;
-  height: 10px !important;
+  width: 13px !important;
+  height: 9px !important;
+  margin-right: 2px !important;
+}
+/* Ayuda siempre al final y visible */
+#topbar-actions #help-btn {
+  order: 999 !important;
+  flex: 0 0 auto !important;
+  margin-right: 0 !important;
 }
 #topbar-actions #easy-btn,
 #topbar-actions #version-switch,
 #topbar-actions #version-btn,
 #topbar-actions .tb-group,
-#topbar-actions #help-btn,
 #topbar-actions #project-btn {
   order: 0 !important;
 }
-
-/* Pantallas más estrechas: aún más compacto */
-@media (max-width: 1366px) {
-  #topbar-actions .btn,
-  #topbar-actions .btn-icon {
-    font-size: 10.5px !important;
-    padding: 4px 5px !important;
-  }
-  #topbar-actions .tb-group {
-    gap: 2px !important;
-    padding: 0 2px !important;
-  }
-  #topbar-actions .tb-group + .tb-group {
-    padding-left: 5px !important;
-  }
+#topbar-actions #tb-group-tools {
+  order: 1 !important;
 }
-@media (max-width: 1100px) {
+
+@media (max-width: 1366px) {
   #topbar-actions .btn,
   #topbar-actions .btn-icon {
     font-size: 10px !important;
     padding: 4px 4px !important;
+  }
+  #topbar-actions .tb-group + .tb-group {
+    padding-left: 4px !important;
+  }
+}
+@media (max-width: 1200px) {
+  #topbar-actions .btn,
+  #topbar-actions .btn-icon {
+    font-size: 9.5px !important;
+    padding: 3px 4px !important;
   }
 }
 

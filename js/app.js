@@ -111,11 +111,12 @@ function seferFitToolkit(){
     var actions = document.getElementById('topbar-actions');
     if(!bar || !actions) return;
     actions.style.transform = 'none';
-    var avail = bar.clientWidth - 8;
+    actions.style.transformOrigin = 'right center';
+    /* medir con un frame libre de transform */
+    var avail = Math.max(40, bar.clientWidth - 4);
     var need = actions.scrollWidth;
-    if(need > avail && avail > 40){
-      var s = Math.max(0.72, avail / need);
-      actions.style.transformOrigin = 'right center';
+    if(need > avail){
+      var s = Math.max(0.68, (avail / need) * 0.98);
       actions.style.transform = 'scale(' + s + ')';
     }
   }catch(e){}

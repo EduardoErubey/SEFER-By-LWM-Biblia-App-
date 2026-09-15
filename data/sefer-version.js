@@ -1,15 +1,26 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.6-stable";
-const SEFER_VERSION_NAME = "Toolkit: botones más pequeños para caber todos en una línea";
+const SEFER_VERSION = "2.5.6b-stable";
+const SEFER_VERSION_NAME = "Toolkit: incluye Ayuda; botones compactos una línea";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.6b-stable",
+    name: "Toolkit: incluye Ayuda; botones compactos una línea",
+    date: "2026-09-15",
+    current: true,
+    changes: [
+      "Ajuste extra de tamaño para que ❓ Ayuda quepa en la misma línea",
+      "Escala automática un poco más agresiva si hace falta",
+      "help-btn order al final del toolkit"
+    ]
+  },
+  {
     id: "2.5.6-stable",
     name: "Toolkit: botones más pequeños para caber todos en una línea",
     date: "2026-09-15",
-    current: true,
+    current: false,
     changes: [
       "Botones toolkit reducidos de forma uniforme (11px / padding 5–7px)",
       "Todos visibles en una línea: A− … Ayuda",
