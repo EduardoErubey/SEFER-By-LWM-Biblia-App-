@@ -150,6 +150,7 @@ function wireVersionSwitcher(){
     // Si card-bg es rgba semitransparente, forzar sólido claro
     if(/^rgba\(/i.test(solid) && solid.indexOf(',0.')>=0) solid = '#f0f4fa';
     if(document.body.getAttribute('data-theme')==='lwm-night') solid = (getComputedStyle(document.body).getPropertyValue('--menu-solid-bg')||'#152538').trim() || '#152538';
+    if(document.body.getAttribute('data-theme')==='amoled') solid = '#f0f4fa';
     menu.style.setProperty('background', solid, 'important');
     menu.style.setProperty('background-color', solid, 'important');
     menu.style.setProperty('color', 'var(--ink, #eee)', 'important');
@@ -165,6 +166,7 @@ function wireVersionSwitcher(){
     // Si card-bg es rgba semitransparente, forzar sólido claro
     if(/^rgba\(/i.test(solid) && solid.indexOf(',0.')>=0) solid = '#f0f4fa';
     if(document.body.getAttribute('data-theme')==='lwm-night') solid = (getComputedStyle(document.body).getPropertyValue('--menu-solid-bg')||'#152538').trim() || '#152538';
+    if(document.body.getAttribute('data-theme')==='amoled') solid = '#f0f4fa';
     menu.style.setProperty('background', solid, 'important');
     menu.style.setProperty('background-color', solid, 'important');
     menu.style.setProperty('color', (getComputedStyle(document.body).getPropertyValue('--ink') || '#222').trim() || '#222', 'important');

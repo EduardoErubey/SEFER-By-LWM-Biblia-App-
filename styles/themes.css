@@ -1262,3 +1262,96 @@ body[data-theme="lwm-night"] #reader-verses {
   border-color: rgba(91,163,224,0.25) !important;
   box-shadow: 0 4px 18px rgba(0,0,0,0.35) !important;
 }
+
+
+/* =========================================================
+   Night Glass — paneles/modales: no aplastar colores internos
+   (menú proyectar, spotlight, ayuda, info, historial)
+   ========================================================= */
+body[data-theme="lwm-night"] #project-sheet .ps-card,
+body.theme-glass[data-theme="lwm-night"] #project-sheet .ps-card,
+body[data-theme="lwm-night"] #word-search-bar,
+body.theme-glass[data-theme="lwm-night"] #word-search-bar,
+body[data-theme="lwm-night"] #sefer-help-modal,
+body[data-theme="lwm-night"] #sefer-help-modal .help-card,
+body[data-theme="lwm-night"] .help-modal,
+body[data-theme="lwm-night"] #help-modal,
+body[data-theme="lwm-night"] #modal-help,
+body[data-theme="lwm-night"] #info-modal .im-card,
+body[data-theme="lwm-night"] .im-card,
+body[data-theme="lwm-night"] #sefer-tour-card {
+  background: rgba(12, 24, 40, 0.96) !important;
+  border: 1px solid rgba(91, 163, 224, 0.32) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  /* SIN color:!important global — los hijos usan --rubric / --gold / --ink */
+}
+
+body[data-theme="lwm-night"] #project-sheet .ps-card h3,
+body[data-theme="lwm-night"] #project-sheet .ps-title,
+body[data-theme="lwm-night"] #info-modal .im-title,
+body[data-theme="lwm-night"] .im-card .im-title,
+body[data-theme="lwm-night"] #sefer-help-modal h2,
+body[data-theme="lwm-night"] #sefer-help-modal .help-title,
+body[data-theme="lwm-night"] #word-search-bar .ws-title {
+  color: var(--rubric, #6BB0E8) !important;
+}
+
+body[data-theme="lwm-night"] #project-sheet .ps-card .ps-opt,
+body[data-theme="lwm-night"] #project-sheet .ps-card button,
+body[data-theme="lwm-night"] #project-sheet .ps-card p,
+body[data-theme="lwm-night"] #info-modal .im-text,
+body[data-theme="lwm-night"] .im-card .im-text,
+body[data-theme="lwm-night"] #sefer-help-modal,
+body[data-theme="lwm-night"] #sefer-help-modal p,
+body[data-theme="lwm-night"] #sefer-help-modal li,
+body[data-theme="lwm-night"] #word-search-results,
+body[data-theme="lwm-night"] #word-search-results .result-text {
+  color: var(--ink, #E8F0F8) !important;
+}
+
+body[data-theme="lwm-night"] #info-modal .im-sub,
+body[data-theme="lwm-night"] #info-modal .im-label,
+body[data-theme="lwm-night"] .im-card .im-sub,
+body[data-theme="lwm-night"] .im-card .im-label,
+body[data-theme="lwm-night"] #project-sheet .ps-hint,
+body[data-theme="lwm-night"] #sefer-help-modal h3,
+body[data-theme="lwm-night"] #sefer-help-modal .help-section-title {
+  color: var(--gold, #5BA3E0) !important;
+}
+
+body[data-theme="lwm-night"] #word-search-input {
+  background: rgba(18, 34, 54, 0.95) !important;
+  color: #E8F0F8 !important;
+  border: 1px solid rgba(91, 163, 224, 0.35) !important;
+}
+
+/* Day Glass — menú traducciones 100% opaco */
+body.theme-glass[data-theme="amoled"] #version-menu,
+body.theme-glass[data-theme="amoled"] #version-menu.open,
+body[data-theme="amoled"] #version-menu,
+body[data-theme="amoled"] #version-menu.open,
+body.theme-glass[data-theme="amoled"] > #version-menu {
+  background: #f0f4fa !important;
+  background-color: #f0f4fa !important;
+  color: #1a2332 !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgba(10, 132, 255, 0.25) !important;
+  box-shadow: 0 12px 36px rgba(30, 60, 120, 0.25) !important;
+}
+body.theme-glass[data-theme="amoled"] #version-menu .ver-item,
+body[data-theme="amoled"] #version-menu .ver-item {
+  color: #1a2332 !important;
+  background: transparent !important;
+}
+body.theme-glass[data-theme="amoled"] #version-menu .ver-item:hover,
+body[data-theme="amoled"] #version-menu .ver-item:hover {
+  background: rgba(10, 132, 255, 0.12) !important;
+}
+body.theme-glass[data-theme="amoled"] #version-menu .ver-item.active,
+body[data-theme="amoled"] #version-menu .ver-item.active {
+  background: rgba(10, 132, 255, 0.18) !important;
+  color: #0a84ff !important;
+}

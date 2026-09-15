@@ -1,15 +1,26 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.2-stable";
-const SEFER_VERSION_NAME = "Glass alineado, Destacar sin fondos, menú sólido, tour 1–23";
+const SEFER_VERSION = "2.5.3-stable";
+const SEFER_VERSION_NAME = "Night Glass paneles, Day Glass menú opaco, tour por zonas";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.3-stable",
+    name: "Night Glass paneles, Day Glass menú opaco, tour por zonas",
+    date: "2026-09-15",
+    current: true,
+    changes: [
+      "Night Glass: menú proyectar, spotlight y ayuda sin aplastar colores de títulos/textos",
+      "Day Glass: menú de traducciones fondo sólido #f0f4fa (sin transparencia)",
+      "Tour reducido a presentación de zonas (detalle de funciones solo en Ayuda)"
+    ]
+  },
+  {
     id: "2.5.2-stable",
     name: "Glass alineado, Destacar sin fondos, menú sólido, tour 1–23",
     date: "2026-09-14",
-    current: true,
+    current: false,
     changes: [
       "Lector Glass: cabecera y versículos mismo ancho y estilo",
       "Destacar solo aplica negrita/énfasis; no cambia fondo de versículos ni casillas",
