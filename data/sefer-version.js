@@ -1,15 +1,72 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.4-stable";
-const SEFER_VERSION_NAME = "Night Glass Spotlight + Toolkit Footer; mapa de zonas";
+const SEFER_VERSION = "2.5.5d-stable";
+const SEFER_VERSION_NAME = "Toolkit tamaños 2.5.4; sin footer; una línea";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.5d-stable",
+    name: "Toolkit tamaños 2.5.4; sin footer; una línea",
+    date: "2026-09-15",
+    current: true,
+    changes: [
+      "Tamaño de botones toolkit como en 2.5.4 (12px, padding 7px 9px)",
+      "Sin height fijo 28/30px",
+      "Sin footer; una línea; sin scroll que oculte A− A+",
+      "Separación de grupos con divisor vertical"
+    ]
+  },
+  {
+    id: "2.5.5c-stable",
+    name: "Toolkit completa visible (A− A+ … Ayuda) sin scroll",
+    date: "2026-09-15",
+    current: false,
+    changes: [
+      "Eliminado overflow-x:auto que ocultaba A− y A+ a la izquierda",
+      "Toolkit completa en una línea sin barra de desplazamiento",
+      "Botones compactos; A− A+ Aa siempre visibles"
+    ]
+  },
+  {
+    id: "2.5.5b-stable",
+    name: "Toolkit una sola línea; sin footer; grupos separados",
+    date: "2026-09-15",
+    current: false,
+    changes: [
+      "Toolkit de nuevo en UNA sola línea (nowrap)",
+      "Sin TOOLKIT FOOTER",
+      "Botones compactos uniformes (30px)",
+      "Separación de grupos con divisor vertical; sin cajas"
+    ]
+  },
+  {
+    id: "2.5.5-stable",
+    name: "Toolkit sin footer; botones armónicos; grupos separados",
+    date: "2026-09-15",
+    current: false,
+    changes: [
+      "Eliminado TOOLKIT FOOTER (Texto/Lectura/Estudio/Consulta/Herramientas)",
+      "Altura compacta de la toolkit",
+      "Botones con misma altura (32px) y ritmo visual",
+      "Separación de grupos con divisor vertical sutil"
+    ]
+  },
+  {
+    id: "2.5.4b-stable",
+    name: "Toolkit Footer etiquetas dentro de la barra",
+    date: "2026-09-15",
+    current: false,
+    changes: [
+      "TOOLKIT FOOTER: Texto/Lectura/Estudio/Consulta/Herramientas dentro del padding del grupo (ya no a medias sobre el Lector)",
+      "overflow visible en #topbar; sin recorte de pies de grupo"
+    ]
+  },
+  {
     id: "2.5.4-stable",
     name: "Night Glass Spotlight + Toolkit Footer; mapa de zonas",
     date: "2026-09-15",
-    current: true,
+    current: false,
     changes: [
       "Night Glass: SPOTLIGHT con fondo/texto legibles (sin transparencia rota)",
       "Night Glass: TOOLKIT FOOTER sin recuadros en grupos de botones",
