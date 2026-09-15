@@ -250,14 +250,20 @@ body.vp-medium #reader{padding:24px 28px 50px;}
 
 /* Resaltar (antes Resaltar) */
 
-#reader.highlight-mode .verse,
-#reader-verses.highlight-mode .verse,
-.highlight-mode .verse{
-  /* Destacar NO pinta el versículo completo */
-  background: transparent !important;
-  border-left: none !important;
-  box-shadow: none !important;
+/* Destacar = solo negrita/énfasis en palabras; NO cambia fondo de versículos */
+#reader.highlight-mode .verse:not(.selected):not(.active-detail),
+#reader-verses.highlight-mode .verse:not(.selected):not(.active-detail),
+.highlight-mode .verse:not(.selected):not(.active-detail){
+  /* no forzar background transparente (borra el de casillas) */
+  border-left: none;
 }
+#reader.highlight-mode .verse.selected,
+#reader-verses.highlight-mode .verse.selected,
+.highlight-mode .verse.selected{
+  /* conservar fondo de selección */
+  background: var(--gold-soft) !important;
+}
+
 
 #easy-btn.easy-on,
 #easy-btn.highlight-on{

@@ -11,6 +11,7 @@
 /* Liquid Glass (antes AMOLED) — estilo macOS Tahoe */
 
 [data-theme="amoled"]{
+  --menu-solid-bg: #f4f7fb;
   --parchment:#dce8f6;
   --parchment-2:rgba(255,255,255,0.52);
   --ink:#1a2332;
@@ -707,6 +708,7 @@ body.theme-glass .im-card{
 
 /* Day Glass — ya tiene vars amoled; refuerzo cristal */
 body.theme-glass[data-theme="amoled"]{
+  --menu-solid-bg: #f4f7fb;
   background:
     radial-gradient(900px 500px at 10% 0%, rgba(255,255,255,0.9), transparent 55%),
     radial-gradient(700px 400px at 95% 15%, rgba(120,180,255,0.45), transparent 50%),
@@ -919,10 +921,28 @@ body[data-theme="lwm-night"] .side-panel,
 body[data-theme="lwm-night"] #sefer-tour-card,
 body[data-theme="lwm-night"] #version-menu,
 body[data-theme="lwm-night"] #font-family-menu{
-  background: rgba(12,24,40,0.92) !important;
-  color: #E8F0F8 !important;
+  background: rgba(12,24,40,0.96) !important;
   border-color: rgba(91,163,224,0.3) !important;
+  /* NO color:!important aquí — deja var(--rubric)/(--gold)/(--ink) en títulos y bloques */
 }
+body[data-theme="lwm-night"] .im-card .im-title,
+body[data-theme="lwm-night"] #info-modal .im-title{
+  color: var(--rubric) !important;
+}
+body[data-theme="lwm-night"] .im-card .im-sub,
+body[data-theme="lwm-night"] .im-card .im-label,
+body[data-theme="lwm-night"] #info-modal .im-sub,
+body[data-theme="lwm-night"] #info-modal .im-label{
+  color: var(--gold) !important;
+}
+body[data-theme="lwm-night"] .im-card .im-text,
+body[data-theme="lwm-night"] #info-modal .im-text{
+  color: var(--ink) !important;
+}
+body[data-theme="lwm-night"] .im-card .im-text strong{
+  color: var(--rubric) !important;
+}
+
 body[data-theme="lwm-night"] #ref-search,
 body[data-theme="lwm-night"] #ref-ph-anim{
   color: #E8F0F8 !important;
@@ -1175,4 +1195,70 @@ body[data-theme="corea"] #version-menu{
   background: var(--card-bg) !important;
   opacity: 1 !important;
   backdrop-filter: none !important;
+}
+
+
+/* Menús desplegables Glass: fondo sólido (legible, sin transparencia) */
+body.theme-glass {
+  --menu-solid-bg: #f2f5fa;
+}
+body.theme-glass[data-theme="lwm-night"],
+body[data-theme="lwm-night"] {
+  --menu-solid-bg: #152538;
+}
+body.theme-glass[data-theme="mexico"] { --menu-solid-bg: #f7faf7; }
+body.theme-glass[data-theme="ucrania"] { --menu-solid-bg: #f5f8fc; }
+body.theme-glass[data-theme="corea"] { --menu-solid-bg: #faf8f8; }
+body.theme-glass[data-theme="amoled"] { --menu-solid-bg: #f0f4fa; }
+
+body.theme-glass #version-menu,
+body.theme-glass #version-menu.open,
+body.theme-glass > #version-menu,
+body[data-theme="amoled"] #version-menu,
+body[data-theme="amoled"] #version-menu.open,
+#version-menu.open {
+  background: var(--menu-solid-bg, var(--card-bg)) !important;
+  background-color: var(--menu-solid-bg, #f0f4fa) !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Glass: alinear cabecera de lectura y caja de versículos */
+body.theme-glass #reader {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  gap: 10px !important;
+}
+body.theme-glass #reader-sticky-head,
+body.theme-glass .sticky-head,
+body.theme-glass #reader-verses {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+  border-radius: 14px !important;
+}
+body.theme-glass #reader-sticky-head,
+body.theme-glass .sticky-head {
+  padding: 14px 16px 10px !important;
+  background: rgba(248,250,253,0.94) !important;
+  border: 1px solid rgba(255,255,255,0.85) !important;
+  box-shadow: 0 4px 16px rgba(30,60,120,0.06) !important;
+}
+body.theme-glass #reader-verses {
+  padding: 12px 16px 40px !important;
+  background: rgba(248,250,253,0.94) !important;
+  border: 1px solid rgba(255,255,255,0.85) !important;
+  box-shadow: 0 4px 16px rgba(30,60,120,0.06) !important;
+}
+body.theme-glass[data-theme="lwm-night"] #reader-sticky-head,
+body.theme-glass[data-theme="lwm-night"] .sticky-head,
+body.theme-glass[data-theme="lwm-night"] #reader-verses,
+body[data-theme="lwm-night"] #reader-sticky-head,
+body[data-theme="lwm-night"] #reader-verses {
+  background: rgba(12,24,40,0.92) !important;
+  border-color: rgba(91,163,224,0.25) !important;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35) !important;
 }

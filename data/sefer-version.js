@@ -1,15 +1,30 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.1-stable";
-const SEFER_VERSION_NAME = "Proyección y buscador dual; toolkit en una línea";
+const SEFER_VERSION = "2.5.2-stable";
+const SEFER_VERSION_NAME = "Glass alineado, Destacar sin fondos, menú sólido, tour 1–23";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.2-stable",
+    name: "Glass alineado, Destacar sin fondos, menú sólido, tour 1–23",
+    date: "2026-09-14",
+    current: true,
+    changes: [
+      "Lector Glass: cabecera y versículos mismo ancho y estilo",
+      "Destacar solo aplica negrita/énfasis; no cambia fondo de versículos ni casillas",
+      "Menú de traducciones opaco en Day Glass (--menu-solid-bg)",
+      "Night Glass: Información e Historial recuperan colores de título/fecha/detalle",
+      "Toolkit más alta; pies de grupo sin solaparse con el área de lectura",
+      "Tour renumerado 1–23 (Tamaño→Traducción→Destacar; Ayuda 15; Auto en capítulo completo)",
+      "Copiar en última casilla; paneles estudio centrados; ✕ más visible"
+    ]
+  },
+  {
     id: "2.5.1-stable",
     name: "Proyección y buscador dual; toolkit en una línea",
     date: "2026-09-10",
-    current: true,
+    current: false,
     changes: [
       "Comparar traducción oculto en proyección desde buscador (|) y en capítulo completo",
       "Autocompletado del segundo libro después de | en el buscador de versículos",

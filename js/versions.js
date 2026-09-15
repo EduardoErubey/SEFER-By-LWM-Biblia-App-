@@ -144,7 +144,14 @@ function wireVersionSwitcher(){
     menu.style.setProperty('width', 'max-content', 'important');
     menu.style.setProperty('min-width', '160px', 'important');
     menu.style.setProperty('max-width', 'min(320px, 92vw)', 'important');
-    menu.style.setProperty('background', (getComputedStyle(document.body).getPropertyValue('--card-bg') || '#f5f5f5').trim() || '#f5f5f5', 'important');
+    var solid = (getComputedStyle(document.body).getPropertyValue('--menu-solid-bg') || '').trim()
+      || (getComputedStyle(document.body).getPropertyValue('--card-bg') || '').trim()
+      || '#f0f4fa';
+    // Si card-bg es rgba semitransparente, forzar sólido claro
+    if(/^rgba\(/i.test(solid) && solid.indexOf(',0.')>=0) solid = '#f0f4fa';
+    if(document.body.getAttribute('data-theme')==='lwm-night') solid = (getComputedStyle(document.body).getPropertyValue('--menu-solid-bg')||'#152538').trim() || '#152538';
+    menu.style.setProperty('background', solid, 'important');
+    menu.style.setProperty('background-color', solid, 'important');
     menu.style.setProperty('color', 'var(--ink, #eee)', 'important');
     menu.style.setProperty('border', '1px solid var(--line, #666)', 'important');
     menu.style.setProperty('border-radius', '10px', 'important');
@@ -152,7 +159,14 @@ function wireVersionSwitcher(){
     menu.style.setProperty('padding', '8px', 'important');
     menu.style.setProperty('backdrop-filter', 'none', 'important');
     menu.style.setProperty('-webkit-backdrop-filter', 'none', 'important');
-    menu.style.setProperty('background', (getComputedStyle(document.body).getPropertyValue('--card-bg') || '#f5f5f5').trim() || '#f5f5f5', 'important');
+    var solid = (getComputedStyle(document.body).getPropertyValue('--menu-solid-bg') || '').trim()
+      || (getComputedStyle(document.body).getPropertyValue('--card-bg') || '').trim()
+      || '#f0f4fa';
+    // Si card-bg es rgba semitransparente, forzar sólido claro
+    if(/^rgba\(/i.test(solid) && solid.indexOf(',0.')>=0) solid = '#f0f4fa';
+    if(document.body.getAttribute('data-theme')==='lwm-night') solid = (getComputedStyle(document.body).getPropertyValue('--menu-solid-bg')||'#152538').trim() || '#152538';
+    menu.style.setProperty('background', solid, 'important');
+    menu.style.setProperty('background-color', solid, 'important');
     menu.style.setProperty('color', (getComputedStyle(document.body).getPropertyValue('--ink') || '#222').trim() || '#222', 'important');
     menu.style.setProperty('opacity', '1', 'important');
     menu.style.setProperty('-webkit-backdrop-filter', 'none', 'important');
