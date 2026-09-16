@@ -1,10 +1,22 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.14-stable";
-const SEFER_VERSION_NAME = "Significados/Notas/Favoritos cierran otras ventanas; Plan blindado";
+const SEFER_VERSION = "2.5.15-stable";
+const SEFER_VERSION_NAME = "Reiniciar navegación desde la marca SEFER";
 
 
 const SEFER_VERSION_HISTORY = [
+  {
+    id: "2.5.15-stable",
+    name: "Reiniciar navegación desde la marca SEFER",
+    date: "2026-09-16",
+    current: true,
+    changes: [
+      "Se quitó el botón ↺ 'Reiniciar navegación' de la barra de acciones",
+      "Esa misma acción (contraer todo, reiniciar tamaño de texto, limpiar buscador, cerrar paneles) ahora se dispara al hacer clic en la marca 'SEFER ספר / BY LWM PDC'",
+      "La marca ahora es enfocable con teclado (Tab) y responde a Enter/Espacio además del clic, para no perder accesibilidad",
+      "Actualizados el tour guiado y la Ayuda para reflejar el cambio"
+    ]
+  },
   {
     id: "2.5.14-stable",
     name: "Significados/Notas/Favoritos cierran otras ventanas; Plan blindado",
