@@ -1,15 +1,27 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.17-stable";
-const SEFER_VERSION_NAME = "Copiar aparece también en selección por búsqueda";
+const SEFER_VERSION = "2.5.18-stable";
+const SEFER_VERSION_NAME = "Tour: Cabecera secundaria; Ayuda buscador de versículos";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.18-stable",
+    name: "Tour: Cabecera secundaria; Ayuda buscador de versículos",
+    date: "2026-09-16",
+    current: true,
+    changes: [
+      "Tour: nuevo paso 6 «Cabecera secundaria» (lotes de temas + aleatorio)",
+      "Tour: pasos posteriores renumerados (7–15)",
+      "Ayuda: texto del buscador de versículos con saltos de línea claros",
+      "Ayuda: máximo 3 libros; usar | o / sin combinar; Tab completa el libro"
+    ]
+  },
+  {
     id: "2.5.17-stable",
     name: "Copiar aparece también en selección por búsqueda",
     date: "2026-09-16",
-    current: true,
+    current: false,
     changes: [
       "Corregido que el botón 📋 Copiar no apareciera al buscar una referencia con rango (ej. 'Juan 20:11-16'): las casillas quedaban marcadas correctamente, pero Copiar solo se muestra en la ÚLTIMA casilla marcada (lastCheckedVerse), y ese valor solo se actualizaba al marcar una casilla a mano, nunca al seleccionar versículos por búsqueda",
       "Mismo ajuste aplicado en el buscador de referencias (goToRef), el versículo aleatorio (dado) y el resultado de clic en el Spotlight (búsqueda de palabras): los tres marcan selectedVerses directamente, así que ahora también fijan lastCheckedVerse al último versículo seleccionado",
