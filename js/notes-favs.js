@@ -309,3 +309,30 @@ if(_mb) _mb.onclick = ()=>{
     el.addEventListener('click', closeStudyPanel, true);
   });
 })();
+
+
+/* SEFER_MODAL_EXCLUSIVITY_V1 — evita que las ventanas del toolkit se apilen.
+   Antes de abrir Plan / Glosario / Biografía / Apócrifos / YouTube / Ayuda / Perfil
+   / Proyectar, se cierra primero cualquier otra de estas ventanas que siga abierta.
+   Se engancha en fase de captura y este archivo carga antes que plan.js, glosario.js,
+   genealogia.js, apocrifos.js, youtube.js, logros.js y help.js — así este cierre
+   siempre corre ANTES que el "open..." propio de cada botón (sin tocar esas funciones). */
+(function(){
+  function closeAllSeferToolkitModals(){
+    try{ if(typeof closePlanModal === 'function') closePlanModal(); }catch(e){}
+    try{ if(typeof closeGlosario === 'function') closeGlosario(); }catch(e){}
+    try{ if(typeof closeGenealogia === 'function') closeGenealogia(); }catch(e){}
+    try{ if(typeof closeApocrifos === 'function') closeApocrifos(); }catch(e){}
+    try{ if(typeof closeYoutubeModal === 'function') closeYoutubeModal(); }catch(e){}
+    try{ if(typeof closePerfilModal === 'function') closePerfilModal(); }catch(e){}
+    try{ document.getElementById('info-modal')?.classList.remove('open'); }catch(e){}
+    try{ document.getElementById('project-sheet')?.classList.remove('open'); }catch(e){}
+  }
+  window.seferCloseAllToolkitModals = closeAllSeferToolkitModals;
+  ['glossary-btn','biography-btn','apocrifos-btn','plan-btn','youtube-btn','help-btn','btn-user-profile','project-btn'].forEach(function(id){
+    const el = document.getElementById(id);
+    if(!el || el.dataset.seferModalExcl) return;
+    el.dataset.seferModalExcl = '1';
+    el.addEventListener('click', closeAllSeferToolkitModals, true);
+  });
+})();
