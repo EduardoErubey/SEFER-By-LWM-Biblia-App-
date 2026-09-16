@@ -1,15 +1,25 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.15-stable";
-const SEFER_VERSION_NAME = "Reiniciar navegación desde la marca SEFER";
+const SEFER_VERSION = "2.5.16-stable";
+const SEFER_VERSION_NAME = "Plan desde hoy por defecto + tour por encima de la proyección";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.16-stable",
+    name: "Plan desde hoy por defecto + tour por encima de la proyección",
+    date: "2026-09-16",
+    current: true,
+    changes: [
+      "Plan de Lectura en 1 Año: la selección automática y predeterminada ahora es Canónico AT→NT + 'Desde hoy (365 días)' (antes era 1 ene–31 dic), mostrando de una vez los capítulos correspondientes a partir de la fecha actual; si el usuario prefiere otro orden o el año calendario, lo cambia manualmente y esa elección queda guardada",
+      "Corregido el tour guiado en el paso 10 (Proyección): #stage subió a z-index:3000 en el fix 2.5.13, pero el overlay/recuadro/tarjeta del tour se quedaron con tope 2000/2001/2002 !important, así que la proyección los tapaba por completo y el paso se veía 'sin superposición explicativa'. Se sube el tope del tour a 9500/9501/9502, por encima de la proyección y de los menús de la toolkit"
+    ]
+  },
+  {
     id: "2.5.15-stable",
     name: "Reiniciar navegación desde la marca SEFER",
     date: "2026-09-16",
-    current: true,
+    current: false,
     changes: [
       "Se quitó el botón ↺ 'Reiniciar navegación' de la barra de acciones",
       "Esa misma acción (contraer todo, reiniciar tamaño de texto, limpiar buscador, cerrar paneles) ahora se dispara al hacer clic en la marca 'SEFER ספר / BY LWM PDC'",
