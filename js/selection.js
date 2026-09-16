@@ -19,7 +19,7 @@ function renderReader(){
     if(isMob){
       w.className = 'welcome-mobile';
       w.innerHTML = `
-        <h1 class="welcome-brand">Sifriá<span class="brand-heb">סִפְרִיָּה</span></h1>
+        <h1 class="welcome-brand">SIFRIÁ<span class="brand-heb">סִפְרִיָּה</span></h1>
         <p class="welcome-sub"><strong>BY LIFE WORD MISSION PLAYA DEL CARMEN</strong></p>
         <p><strong>Tu Biblia para estudiar y proyectar la Palabra.</strong></p>
         <div class="wm-list">
@@ -35,7 +35,7 @@ function renderReader(){
     } else {
       w.className = 'welcome';
       w.innerHTML = `
-        <h1 class="welcome-brand">Sifriá<span class="brand-heb">סִפְרִיָּה</span></h1>
+        <h1 class="welcome-brand">SIFRIÁ<span class="brand-heb">סִפְרִיָּה</span></h1>
         <p class="welcome-sub"><strong>BY LIFE WORD MISSION PLAYA DEL CARMEN</strong></p>
         <p>Bienvenido a tu herramienta de estudio y proyección bíblica.
         Elige un libro en el panel izquierdo, busca una referencia o escribe una palabra para comenzar.</p>
