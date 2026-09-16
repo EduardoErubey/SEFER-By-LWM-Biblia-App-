@@ -50,7 +50,11 @@ function closeGlosario(){
   const m = document.getElementById('modal-glosario');
   if(m) m.style.display = 'none';
 }
-document.getElementById('glossary-btn')?.addEventListener('click', openGlosario);
+document.getElementById('glossary-btn')?.addEventListener('click', function(){
+  const m = document.getElementById('modal-glosario');
+  if(m && m.style.display === 'flex') closeGlosario();
+  else openGlosario();
+});
 document.getElementById('cerrar-glosario')?.addEventListener('click', closeGlosario);
 document.getElementById('buscador-glosario')?.addEventListener('input', (e)=> renderizarGlosario(e.target.value));
 document.getElementById('modal-glosario')?.addEventListener('click', (e)=>{

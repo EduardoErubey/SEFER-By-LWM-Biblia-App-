@@ -42,9 +42,9 @@ function seferTourPrepareStep(step){
 }
 
 const SEFER_TOUR_STEPS = window.SEFER_TOUR_STEPS = [
-  { sel:'.brand-block, #nav-header-row .brand-block', title:'1. SEFER', text:'Marca SEFER ספר y la firma BY LWM PDC.' },
+  { sel:'.brand-block, #nav-header-row .brand-block', title:'1. Sifriá', text:'Marca Sifriá סִפְרִיָּה y la firma BY LWM PDC.' },
   { sel:'#nav-header-actions', title:'2. Barra de acciones', text:'Perfil, nube, pantalla completa y reiniciar.' },
-  { sel:'#nav-header-row, #nav-header', title:'3. Cabecera principal', text:'SEFER, firma y barra de acciones juntos.' },
+  { sel:'#nav-header-row, #nav-header', title:'3. Cabecera principal', text:'Sifriá, firma y barra de acciones juntos.' },
   { sel:'.theme-row-continuous, #theme-more-btn, #theme-batch', title:'4. Lotes de temas', text:'Botón ＋/− de lote y los cinco temas visibles.' },
   { sel:'#random-verse-btn', title:'5. Aleatorio', text:'Dado: versículo al azar.' },
   { sel:'#theme-switch', title:'6. Cabecera secundaria', text:'Lotes de temas y aleatorio en la misma franja.' },
@@ -56,7 +56,7 @@ const SEFER_TOUR_STEPS = window.SEFER_TOUR_STEPS = [
   { sel:'#reader-sticky-head, .sticky-head', title:'12. Cabecera del lector', text:'Libro, capítulo e indicaciones.' },
   { sel:'#reader-verses, #reader', title:'13. Lector', text:'Área donde se leen los versículos.' },
   { sel:'#word-search-bar, #word-search-input', title:'14. Spotlight', text:'Búsqueda de palabras en toda la Biblia.' },
-  { sel:'.brand-block', title:'15. Listo', text:'Estas son las zonas de SEFER. Para el detalle de cada botón, abre Ayuda.' }
+  { sel:'.brand-block', title:'15. Listo', text:'Estas son las zonas de Sifriá. Para el detalle de cada botón, abre Ayuda.' }
 ];
 
 

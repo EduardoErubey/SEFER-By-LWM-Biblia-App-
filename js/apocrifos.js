@@ -12,12 +12,24 @@ function closeApocrifos(){
   const m = document.getElementById('modal-apocrifos');
   if(m) m.style.display = 'none';
 }
-document.getElementById('apocrifos-btn')?.addEventListener('click', openApocrifos);
+document.getElementById('apocrifos-btn')?.addEventListener('click', function(){
+  const m = document.getElementById('modal-apocrifos');
+  if(m && m.style.display === 'flex') closeApocrifos();
+  else openApocrifos();
+});
 document.getElementById('cerrar-apocrifos')?.addEventListener('click', closeApocrifos);
 document.getElementById('modal-apocrifos')?.addEventListener('click', (e)=>{ if(e.target.id==='modal-apocrifos') closeApocrifos(); });
 
-document.getElementById('biography-btn')?.addEventListener('click', openGenealogia);
-document.getElementById('genealogy-btn')?.addEventListener('click', openGenealogia);
+document.getElementById('biography-btn')?.addEventListener('click', function(){
+  const m = document.getElementById('modal-genealogia');
+  if(m && m.style.display === 'flex') closeGenealogia();
+  else openGenealogia();
+});
+document.getElementById('genealogy-btn')?.addEventListener('click', function(){
+  const m = document.getElementById('modal-genealogia');
+  if(m && m.style.display === 'flex') closeGenealogia();
+  else openGenealogia();
+});
 document.getElementById('cerrar-genealogia')?.addEventListener('click', closeGenealogia);
 document.getElementById('modal-genealogia')?.addEventListener('click', (e)=>{
   if(e.target.id === 'modal-genealogia') closeGenealogia();

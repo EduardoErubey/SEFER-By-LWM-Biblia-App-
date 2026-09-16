@@ -1,6 +1,6 @@
-# SEFER ספר
+# Sifriá סִפְרִיָּה
 
-**SEFER** (ספר = “libro” en hebreo) es una aplicación web de estudio y proyección bíblica  
+**Sifriá** (סִפְרִיָּה) es una aplicación web de estudio y proyección bíblica  
 desarrollada para **Life Word Mission · Playa del Carmen**.
 
 Lee, busca, anota, proyecta y estudia la Biblia desde el navegador — sin instalar nada.

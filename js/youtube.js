@@ -154,7 +154,11 @@ function loadYoutubeFromUrl(raw){
   closeYoutubeModal();
   return true;
 }
-document.getElementById('youtube-btn')?.addEventListener('click', ()=> openYoutubeModal());
+document.getElementById('youtube-btn')?.addEventListener('click', function(){
+  const m = document.getElementById('modal-youtube');
+  if(m && m.style.display === 'flex') closeYoutubeModal();
+  else openYoutubeModal();
+});
 document.getElementById('cerrar-youtube-modal')?.addEventListener('click', closeYoutubeModal);
 document.getElementById('modal-youtube')?.addEventListener('click', (e)=>{
   if(e.target.id === 'modal-youtube') closeYoutubeModal();

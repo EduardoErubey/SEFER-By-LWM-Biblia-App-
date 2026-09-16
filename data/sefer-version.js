@@ -1,20 +1,29 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.18-stable";
-const SEFER_VERSION_NAME = "Tour: Cabecera secundaria; Ayuda buscador de versículos";
+const SEFER_VERSION = "2.5.19-stable";
+const SEFER_VERSION_NAME = "Sifriá; toggle Plan/Glosario/Bio/Apócrifos/YT/Ayuda";
 
 
 const SEFER_VERSION_HISTORY = [
   {
-    id: "2.5.18-stable",
-    name: "Tour: Cabecera secundaria; Ayuda buscador de versículos",
+    id: "2.5.19-stable",
+    name: "Sifriá; toggle Plan/Glosario/Bio/Apócrifos/YT/Ayuda",
     date: "2026-09-16",
     current: true,
     changes: [
-      "Tour: nuevo paso 6 «Cabecera secundaria» (lotes de temas + aleatorio)",
-      "Tour: pasos posteriores renumerados (7–15)",
-      "Ayuda: texto del buscador de versículos con saltos de línea claros",
-      "Ayuda: máximo 3 libros; usar | o / sin combinar; Tab completa el libro"
+      "Nombre de la app: Sifriá סִפְרִיָּה (ya no SEFER ספר) en marca, bienvenida, título, ayuda, tour y README",
+      "Toggle: 1.er clic abre y 2.º clic cierra — Plan, Glosario, Biografía, Apócrifos, YouTube y Ayuda",
+      "Incluye cambios de 2.5.18: tour paso 6 Cabecera secundaria; ayuda buscador de versículos"
+    ]
+  },
+  {
+    id: "2.5.18-stable",
+    name: "Tour: Cabecera secundaria; Ayuda buscador de versículos",
+    date: "2026-09-16",
+    current: false,
+    changes: [
+      "Tour: paso 6 Cabecera secundaria; pasos 7–15 renumerados",
+      "Ayuda: buscador de versículos con saltos de línea"
     ]
   },
   {

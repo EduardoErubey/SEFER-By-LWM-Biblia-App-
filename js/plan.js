@@ -227,7 +227,11 @@ function closePlanModal(){
   const m = document.getElementById('modal-plan-lectura');
   if(m) m.style.display = 'none';
 }
-document.getElementById('plan-btn')?.addEventListener('click', openPlanModal);
+document.getElementById('plan-btn')?.addEventListener('click', function(){
+  const m = document.getElementById('modal-plan-lectura');
+  if(m && m.style.display === 'flex') closePlanModal();
+  else openPlanModal();
+});
 document.getElementById('cerrar-plan')?.addEventListener('click', closePlanModal);
 document.getElementById('plan-prev-day')?.addEventListener('click', ()=>{
   const d = Math.max(1, (planViewDay||obtenerDiaDelAno())-1);

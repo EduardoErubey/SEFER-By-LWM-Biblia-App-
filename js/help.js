@@ -1,11 +1,11 @@
-/* SEFER module: help.js — script clásico (sin import/export) */
+/* Sifriá module: help.js — script clásico (sin import/export) */
 
 function openSeferHelp(){
   infoNavEnabled = false;
   const nav = document.getElementById('im-nav');
   if(nav) nav.style.display = 'none';
   const title = document.getElementById('im-title');
-  if(title) title.textContent = 'Ayuda de SEFER';
+  if(title) title.textContent = 'Ayuda de Sifriá';
   const sub = document.getElementById('im-sub');
   if(sub) sub.textContent = 'Life Word Mission · Playa del Carmen';
 
@@ -34,16 +34,16 @@ function openSeferHelp(){
 
     <div class="im-block"><div class="im-label">1. Bienvenida + tour</div>
     <div class="im-text">
-    <strong>SEFER</strong> (ספר = libro) es tu herramienta para <strong>leer</strong>, <strong>estudiar</strong> y <strong>proyectar</strong> la Biblia.<br><br>
+    <strong>Sifriá</strong> (סִפְרִיָּה) es tu herramienta para <strong>leer</strong>, <strong>estudiar</strong> y <strong>proyectar</strong> la Biblia.<br><br>
     Texto predeterminado: <strong>Reina-Valera 1960</strong>. También: RV1909, RV2015, NVI, NTV y TLA.<br><br>
     Si es tu primera vez, pulsa <strong>Iniciar tour interactivo</strong> para conocer las zonas de la app.
     </div></div>
 
-    <div class="im-block"><div class="im-label">2. Mapa de SEFER</div>
+    <div class="im-block"><div class="im-label">2. Mapa de Sifriá</div>
     <div class="im-text">
-    • <strong>SEFER</strong> — marca y título<br>
+    • <strong>Sifriá</strong> — marca y título<br>
     • <strong>Barra de acciones</strong> — perfil, nube, pantalla completa, reiniciar<br>
-    • <strong>Cabecera principal</strong> — SEFER + firma + acciones<br>
+    • <strong>Cabecera principal</strong> — Sifriá + firma + acciones<br>
     • <strong>Lotes de temas</strong> — ＋/− y los cinco temas del lote<br>
     • <strong>Aleatorio</strong> — dado (versículo al azar)<br>
     • <strong>Buscador de versículos</strong> — referencias (ej. Juan 3:16)<br>
@@ -152,5 +152,16 @@ function openSeferHelp(){
   });
 }
 
+function closeSeferHelp(){
+  const modal = document.getElementById('info-modal');
+  if(modal) modal.classList.remove('open');
+}
+function toggleSeferHelp(){
+  const modal = document.getElementById('info-modal');
+  if(modal && modal.classList.contains('open')) closeSeferHelp();
+  else openSeferHelp();
+}
 const helpBtn = document.getElementById('help-btn');
-if(helpBtn) helpBtn.onclick = openSeferHelp;
+if(helpBtn) helpBtn.onclick = toggleSeferHelp;
+const mtHelp = document.getElementById('mt-help');
+if(mtHelp) mtHelp.onclick = toggleSeferHelp;
