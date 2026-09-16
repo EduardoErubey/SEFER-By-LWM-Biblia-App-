@@ -1,15 +1,26 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.8-stable";
-const SEFER_VERSION_NAME = "Ayuda textos; un libro; | o /; YT sin franja; cursor toolkit";
+const SEFER_VERSION = "2.5.8b-stable";
+const SEFER_VERSION_NAME = "YT: sin hueco (quita max-height 72% de Biblia)";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.8b-stable",
+    name: "YT: sin hueco (quita max-height 72% de Biblia)",
+    date: "2026-09-16",
+    current: true,
+    changes: [
+      "Causa del hueco: body.yt-sidebar-active #book-list max-height:72%",
+      "Biblia flex 1 hasta el borde superior del reproductor",
+      "YouTube altura natural (16:9), sin porcentajes que dejen franja vacía"
+    ]
+  },
+  {
     id: "2.5.8-stable",
     name: "Ayuda textos; un libro; | o /; YT sin franja; cursor toolkit",
     date: "2026-09-15",
-    current: true,
+    current: false,
     changes: [
       "Ayuda: Comparar y Resaltar con textos definitivos; YouTube debajo + SVG",
       "Tour 9: spotlight en .ps-card; pasos 11–12 abren un capítulo",

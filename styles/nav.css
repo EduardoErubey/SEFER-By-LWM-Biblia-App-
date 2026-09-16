@@ -624,3 +624,70 @@ body.yt-sidebar-active #yt-iframe-box {
   max-height: min(28vh, 220px) !important;
   height: auto !important;
 }
+
+
+/* === 2.5.8b: Biblia hasta el borde del YouTube (sin hueco) === */
+#nav {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  gap: 0 !important;
+}
+#nav-header,
+#theme-switch,
+#ref-search-wrap {
+  flex: 0 0 auto !important;
+}
+#book-list {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding-bottom: 6px !important;
+  overflow-y: auto !important;
+}
+body.yt-sidebar-active #book-list {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  max-height: none !important; /* NO 72% — eso dejaba franja vacía */
+  margin: 0 !important;
+  padding-bottom: 4px !important;
+}
+body.yt-sidebar-active #yt-player-wrap,
+body.yt-sidebar-active #yt-player-wrap.yt-sidebar {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 0 0 auto !important;
+  height: auto !important;
+  max-height: none !important; /* alto natural del vídeo, no % que deje hueco */
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 4px 6px 6px !important;
+  gap: 2px !important;
+  border-top: 1px solid var(--line) !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+body.yt-sidebar-active #yt-player-bar {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  padding: 2px 0 4px !important;
+}
+body.yt-sidebar-active #yt-iframe-box {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  aspect-ratio: 16 / 9 !important;
+  height: auto !important;
+  max-height: 240px !important;
+}
+body.yt-sidebar-active #yt-iframe-box iframe {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+}

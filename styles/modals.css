@@ -74,7 +74,7 @@ body.mobile-mode #info-modal .im-card{max-height:80vh;}
 
 body.yt-sidebar-active #yt-player-wrap, body.yt-sidebar-active #yt-player-wrap.yt-sidebar{display:flex !important;}
 
-body.yt-sidebar-active #book-list{flex:1 1 72% !important;max-height:72% !important;}
+body.yt-sidebar-active #book-list{flex:1 1 auto !important;max-height:none !important;}
 
 #yt-player-bar{flex:0 0 auto;padding:5px 8px;}
 
