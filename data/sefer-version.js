@@ -1,15 +1,26 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.16-stable";
-const SEFER_VERSION_NAME = "Plan desde hoy por defecto + tour por encima de la proyección";
+const SEFER_VERSION = "2.5.17-stable";
+const SEFER_VERSION_NAME = "Copiar aparece también en selección por búsqueda";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.17-stable",
+    name: "Copiar aparece también en selección por búsqueda",
+    date: "2026-09-16",
+    current: true,
+    changes: [
+      "Corregido que el botón 📋 Copiar no apareciera al buscar una referencia con rango (ej. 'Juan 20:11-16'): las casillas quedaban marcadas correctamente, pero Copiar solo se muestra en la ÚLTIMA casilla marcada (lastCheckedVerse), y ese valor solo se actualizaba al marcar una casilla a mano, nunca al seleccionar versículos por búsqueda",
+      "Mismo ajuste aplicado en el buscador de referencias (goToRef), el versículo aleatorio (dado) y el resultado de clic en el Spotlight (búsqueda de palabras): los tres marcan selectedVerses directamente, así que ahora también fijan lastCheckedVerse al último versículo seleccionado",
+      "De paso, lastCheckedVerse se limpia junto con selectedVerses al cambiar de capítulo/libro y al pulsar 'limpiar selección', para que nunca quede un valor de una selección anterior"
+    ]
+  },
+  {
     id: "2.5.16-stable",
     name: "Plan desde hoy por defecto + tour por encima de la proyección",
     date: "2026-09-16",
-    current: true,
+    current: false,
     changes: [
       "Plan de Lectura en 1 Año: la selección automática y predeterminada ahora es Canónico AT→NT + 'Desde hoy (365 días)' (antes era 1 ene–31 dic), mostrando de una vez los capítulos correspondientes a partir de la fecha actual; si el usuario prefiere otro orden o el año calendario, lo cambia manualmente y esa elección queda guardada",
       "Corregido el tour guiado en el paso 10 (Proyección): #stage subió a z-index:3000 en el fix 2.5.13, pero el overlay/recuadro/tarjeta del tour se quedaron con tope 2000/2001/2002 !important, así que la proyección los tapaba por completo y el paso se veía 'sin superposición explicativa'. Se sube el tope del tour a 9500/9501/9502, por encima de la proyección y de los menús de la toolkit"
