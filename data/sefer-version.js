@@ -1,15 +1,26 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.10-stable";
-const SEFER_VERSION_NAME = "Toolkit y cabecera realmente por encima de los modales";
+const SEFER_VERSION = "2.5.11-stable";
+const SEFER_VERSION_NAME = "RV1960 sin recorte en el botón de traducción";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.11-stable",
+    name: "RV1960 sin recorte en el botón de traducción",
+    date: "2026-09-16",
+    current: true,
+    changes: [
+      "Corregido que el último dígito (ej. el '0' de RV1960) se viera cortado en el botón de traducciones",
+      "Causa real: el fix anterior (2.5.8c) solo le quitó el recorte al botón, pero el texto vive en un span interno (.vb-label) que seguía con overflow:hidden y max-width angosto",
+      "Pendiente de confirmar: reporte de cursor/oscurecido en la toolkit con modales abiertos — necesito el zip actualizado (con el fix 2.5.10 ya aplicado) para verificar si sigue ocurriendo"
+    ]
+  },
+  {
     id: "2.5.10-stable",
     name: "Toolkit y cabecera realmente por encima de los modales",
     date: "2026-09-16",
-    current: true,
+    current: false,
     changes: [
       "Corregida la causa real de que la toolkit se viera oscurecida y sin cursor de mano con Plan/Glosario/Biografía/Apócrifos/YouTube/Ayuda abiertos",
       "#main tenía su propio contexto de apilamiento (position:relative + z-index:1) que atrapaba a la toolkit por debajo del fondo oscuro de los modales, aunque ya tuviera z-index alto",
