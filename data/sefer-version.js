@@ -1,15 +1,27 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.11-stable";
-const SEFER_VERSION_NAME = "RV1960 sin recorte en el botón de traducción";
+const SEFER_VERSION = "2.5.12-stable";
+const SEFER_VERSION_NAME = "Toolkit sin cruces: cristal corregido y ventanas exclusivas";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.12-stable",
+    name: "Toolkit sin cruces: cristal corregido y ventanas exclusivas",
+    date: "2026-09-16",
+    current: true,
+    changes: [
+      "Corregido que en el lote de temas 'cristal' (Glass, AMOLED, México, Ucrania, Corea, Night) la toolkit siguiera oscurecida y sin cursor de mano al abrir Plan/Glosario/Biografía/Apócrifos/YouTube/Ayuda",
+      "Causa: body.theme-glass #topbar (themes.css) es más específica que la regla #topbar de modals.css, así que su z-index:500 ganaba la cascada y le devolvía a la toolkit un techo de apilamiento por debajo del fondo oscuro (1300). Se igualó a z-index:2000, el mismo valor ya usado para la toolkit",
+      "Ahora, al presionar un botón de la toolkit (Plan/Glosario/Biografía/Apócrifos/YouTube/Ayuda/Perfil/Proyectar) mientras otra de esas ventanas está abierta, esa ventana anterior se cierra automáticamente antes de abrir la nueva — ya no queda una detrás de otra",
+      "No se modificó ninguna función de apertura/cierre existente; el cierre previo se agregó como una capa adicional en notes-favs.js"
+    ]
+  },
+  {
     id: "2.5.11-stable",
     name: "RV1960 sin recorte en el botón de traducción",
     date: "2026-09-16",
-    current: true,
+    current: false,
     changes: [
       "Corregido que el último dígito (ej. el '0' de RV1960) se viera cortado en el botón de traducciones",
       "Causa real: el fix anterior (2.5.8c) solo le quitó el recorte al botón, pero el texto vive en un span interno (.vb-label) que seguía con overflow:hidden y max-width angosto",
