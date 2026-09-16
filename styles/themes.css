@@ -62,7 +62,13 @@ body.theme-glass #topbar{
   border-bottom:1px solid rgba(255,255,255,0.58);
   box-shadow:0 1px 0 rgba(255,255,255,0.45) inset, 0 4px 16px rgba(30,60,120,0.05);
   position:relative !important;
-  z-index:500 !important;
+  /* SEFER FIX 2.5.11: esta regla es MÁS ESPECÍFICA que "#topbar{z-index:2000!important}"
+     de modals.css (agrega la clase .theme-glass), así que siempre ganaba en la cascada
+     y le devolvía a la toolkit un techo de apilamiento de solo 500 — por debajo del
+     backdrop de los modales (1300). Por eso el arreglo del cursor/oscurecido no se
+     notaba en el lote de temas "cristal" (glass/amoled/mexico/ucrania/corea/lwm-night).
+     Se iguala aquí al mismo valor ya usado para la toolkit en modals.css. */
+  z-index:2000 !important;
 }
 
 /* Encabezado del capítulo: tarjeta cristal con curvas, debajo de la toolkit (no debajo en z-index) */
