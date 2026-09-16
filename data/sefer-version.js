@@ -1,7 +1,7 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.8b-stable";
-const SEFER_VERSION_NAME = "YT: sin hueco (quita max-height 72% de Biblia)";
+const SEFER_VERSION = "2.5.8c-stable";
+const SEFER_VERSION_NAME = "Botón traducción: texto sin cortar";
 
 
 const SEFER_VERSION_HISTORY = [

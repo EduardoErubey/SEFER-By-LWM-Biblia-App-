@@ -1390,3 +1390,21 @@ body[data-theme="lwm-night"] #topbar-actions .tb-group + .tb-group {
   cursor: pointer !important;
   pointer-events: auto !important;
 }
+
+
+/* 2.5.8c — RV1960 legible, sin cortar el último dígito */
+#topbar-actions #version-btn,
+#topbar-actions #version-switch #version-btn,
+#version-btn {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  padding: 4px 7px !important;
+  min-width: 4.2em !important;
+  max-width: none !important;
+  width: auto !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+}
