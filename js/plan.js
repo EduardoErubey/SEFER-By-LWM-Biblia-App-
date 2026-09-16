@@ -79,9 +79,20 @@ if(['canonical','inverse','parallel','chrono'].indexOf(planOrder) === -1) planOr
 let PLAN_ANUAL = buildPlanByOrder(planOrder);
 
 let planViewDay = null;
-let planMode = store.get('bp_plan_mode', 'calendar'); // 'calendar' | 'today'
-if(planMode !== 'calendar' && planMode !== 'today') planMode = 'calendar'; // valor corrupto/desconocido → default
+/* SEFER FIX 2.5.16: la selección automática y predeterminada del Plan de
+   Lectura en 1 Año debe ser "canónico" (ya era el default de planOrder,
+   arriba) + "inicio de plan desde hoy" (no año calendario), mostrando de
+   una vez los capítulos correspondientes a partir de la fecha de hoy. Si el
+   usuario prefiere otro orden o el año calendario, lo cambia manualmente y
+   esa elección queda guardada (store) para la próxima vez. */
+let planMode = store.get('bp_plan_mode', 'today'); // 'calendar' | 'today' — default: desde hoy
+if(planMode !== 'calendar' && planMode !== 'today') planMode = 'today'; // valor corrupto/desconocido → default
 let planStartDate = store.get('bp_plan_start', null); // ISO date string when mode=today
+if(planMode === 'today' && !planStartDate){
+  // Primera vez en modo "hoy": fijar el inicio a la fecha actual.
+  planStartDate = new Date().toISOString().slice(0,10);
+  store.set('bp_plan_start', planStartDate);
+}
 
 function obtenerDiaDelAno(date){
   const hoy = date || new Date();
