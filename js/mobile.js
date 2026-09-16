@@ -122,7 +122,6 @@
 const SEFER_GLASS_ICONS = {
   'btn-login-google': '☁️',
   'fullscreen-btn': '⛶',
-  'nav-toggle': '↺',
   'easy-btn': '✨ Destacar',
   'meanings-btn': '📑 Significados',
   'notes-btn': '✏️ Notas',
