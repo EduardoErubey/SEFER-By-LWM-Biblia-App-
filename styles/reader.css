@@ -243,7 +243,17 @@ body.vp-medium #reader{padding:24px 28px 50px;}
 
 /* Si el tooltip queda bajo el borde inferior de la barra, que pinte sobre el área de lectura */
 
-#main, #content-wrap, #reader, #reader-sticky-head{
+/* SEFER FIX: se quitó "#main" de esta regla. #main tenía position:relative
+   + z-index:1, lo que sin querer creaba su propio "techo" de apilamiento:
+   todo lo de adentro (incluida #topbar con z-index:2000 !important en
+   modals.css) quedaba atrapado por debajo de ese techo bajísimo frente a
+   cualquier elemento de FUERA de #main — como los fondos oscuros de los
+   modales (z-index 1300+), que son hermanos de #app, no hijos de #main.
+   Por eso la toolkit se veía oscurecida y sin cursor de mano aunque ya
+   tuviera z-index alto: nunca lograba "salir" de #main. #content-wrap,
+   #reader y #reader-sticky-head se quedan igual (relación interna con
+   los tooltips, sin relación con este bug). */
+#content-wrap, #reader, #reader-sticky-head{
   position:relative;
   z-index:1;
 }
