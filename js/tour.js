@@ -12,11 +12,11 @@ function seferTourPrepareStep(step){
     if(!step) return;
     const title = step.title || '';
     const n = parseInt(String(title).split('.')[0], 10) || 0;
-    const needMenu = (n === 9);
-    const needStage = (n === 10);
-    const needReader = (n === 11 || n === 12);
-    const needSpot = (n === 13);
-    if(n >= 11){
+    const needMenu = (n === 10);
+    const needStage = (n === 11);
+    const needReader = (n === 12 || n === 13);
+    const needSpot = (n === 14);
+    if(n >= 12){
       try{ if(typeof closeProjectSheet==='function') closeProjectSheet(); }catch(e){}
       try{ if(typeof stage!=='undefined' && stage){ stage.classList.remove('open','stage-stack','stage-compare'); } }catch(e){}
     }
@@ -37,7 +37,7 @@ function seferTourPrepareStep(step){
       }catch(e){}
     }
     if(needSpot){ try{ if(typeof openWordSearch==='function') openWordSearch(''); }catch(e){} }
-    else if(n < 13){ try{ if(typeof closeWordSearch==='function') closeWordSearch(); }catch(e){} }
+    else if(n < 14){ try{ if(typeof closeWordSearch==='function') closeWordSearch(); }catch(e){} }
   }catch(e){}
 }
 
@@ -47,15 +47,16 @@ const SEFER_TOUR_STEPS = window.SEFER_TOUR_STEPS = [
   { sel:'#nav-header-row, #nav-header', title:'3. Cabecera principal', text:'SEFER, firma y barra de acciones juntos.' },
   { sel:'.theme-row-continuous, #theme-more-btn, #theme-batch', title:'4. Lotes de temas', text:'Botón ＋/− de lote y los cinco temas visibles.' },
   { sel:'#random-verse-btn', title:'5. Aleatorio', text:'Dado: versículo al azar.' },
-  { sel:'#ref-search-wrap, #ref-search', title:'6. Buscador de versículos', text:'Campo para ir a una referencia bíblica.' },
-  { sel:'#book-list', title:'7. Biblia', text:'Lista de libros del Antiguo y Nuevo Testamento.' },
-  { sel:'#topbar-actions', title:'8. Toolkit', text:'Barra de herramientas superior. El detalle de cada botón está en Ayuda.' },
-  { sel:'#project-sheet.open .ps-card, #project-sheet .ps-card', title:'9. Menú de proyección', text:'Ventana con las opciones de proyección.' },
-  { sel:'#stage', title:'10. Proyección', text:'Pantalla grande de culto o estudio.' },
-  { sel:'#reader-sticky-head, .sticky-head', title:'11. Cabecera del lector', text:'Libro, capítulo e indicaciones.' },
-  { sel:'#reader-verses, #reader', title:'12. Lector', text:'Área donde se leen los versículos.' },
-  { sel:'#word-search-bar, #word-search-input', title:'13. Spotlight', text:'Búsqueda de palabras en toda la Biblia.' },
-  { sel:'.brand-block', title:'14. Listo', text:'Estas son las zonas de SEFER. Para el detalle de cada botón, abre Ayuda.' }
+  { sel:'#theme-switch', title:'6. Cabecera secundaria', text:'Lotes de temas y aleatorio en la misma franja.' },
+  { sel:'#ref-search-wrap, #ref-search', title:'7. Buscador de versículos', text:'Campo para ir a una referencia bíblica.' },
+  { sel:'#book-list', title:'8. Biblia', text:'Lista de libros del Antiguo y Nuevo Testamento.' },
+  { sel:'#topbar-actions', title:'9. Toolkit', text:'Barra de herramientas superior. El detalle de cada botón está en Ayuda.' },
+  { sel:'#project-sheet.open .ps-card, #project-sheet .ps-card', title:'10. Menú de proyección', text:'Ventana con las opciones de proyección.' },
+  { sel:'#stage', title:'11. Proyección', text:'Pantalla grande de culto o estudio.' },
+  { sel:'#reader-sticky-head, .sticky-head', title:'12. Cabecera del lector', text:'Libro, capítulo e indicaciones.' },
+  { sel:'#reader-verses, #reader', title:'13. Lector', text:'Área donde se leen los versículos.' },
+  { sel:'#word-search-bar, #word-search-input', title:'14. Spotlight', text:'Búsqueda de palabras en toda la Biblia.' },
+  { sel:'.brand-block', title:'15. Listo', text:'Estas son las zonas de SEFER. Para el detalle de cada botón, abre Ayuda.' }
 ];
 
 

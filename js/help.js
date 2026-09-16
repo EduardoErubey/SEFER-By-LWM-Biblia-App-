@@ -41,8 +41,8 @@ function openSeferHelp(){
 
     <div class="im-block"><div class="im-label">2. Mapa de SEFER</div>
     <div class="im-text">
-    • <strong>SEFER</strong> — marca y título; haz clic para reiniciar la navegación (contraer todo)<br>
-    • <strong>Barra de acciones</strong> — perfil, nube, pantalla completa<br>
+    • <strong>SEFER</strong> — marca y título<br>
+    • <strong>Barra de acciones</strong> — perfil, nube, pantalla completa, reiniciar<br>
     • <strong>Cabecera principal</strong> — SEFER + firma + acciones<br>
     • <strong>Lotes de temas</strong> — ＋/− y los cinco temas del lote<br>
     • <strong>Aleatorio</strong> — dado (versículo al azar)<br>
@@ -67,7 +67,9 @@ function openSeferHelp(){
     • <em>Juan 3:16</em><br>
     • <em>Génesis 1:1-3,5-6</em><br>
     • Dos o tres pasajes: <em>Juan 3:16 | Romanos 8:28</em> (también con /)<br>
-    Máximo <strong>3 libros</strong>. Usa <strong>|</strong> o <strong>/</strong> (no los combines en la misma búsqueda). <strong>Tab</strong> completa el nombre del libro.<br><br>
+    Máximo <strong>3 libros</strong>.<br>
+    Usa <strong>|</strong> o <strong>/</strong> (no los combines en la misma búsqueda).<br>
+    <strong>Tab</strong> completa el nombre del libro.<br><br>
     <strong>Spotlight</strong><br>
     Escribe fuera de un campo de texto para buscar palabras en toda la Biblia.
     </div></div>
