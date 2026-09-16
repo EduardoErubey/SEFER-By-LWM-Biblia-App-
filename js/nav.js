@@ -5,7 +5,7 @@
    NAV — expandir/contraer por clic; botón reiniciar
    ========================================================= */
 /* dom ref hoisted */
-const navToggleBtn = document.getElementById('nav-toggle');
+const navToggleBtn = document.getElementById('brand-reset-btn');
 
 // Testamentos y libros abiertos (persistidos)
 let openTestaments = new Set(store.get('bp_open_testaments', ['AT','NT']));
@@ -35,6 +35,14 @@ navToggleBtn.onclick = ()=>{
   if(typeof closeWordSearch === 'function') closeWordSearch();
   showWelcomeScreen();
 };
+// SEFER: el reinicio ahora vive en la marca (div con role="button"), que no
+// dispara "click" con teclado por sí sola — se agrega soporte Enter/Espacio.
+navToggleBtn.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter' || e.key === ' '){
+    e.preventDefault();
+    navToggleBtn.click();
+  }
+});
 
 /** Lista ordenada para navegar ? : AT → libros AT → NT → libros NT */
 let infoNavList = [];
