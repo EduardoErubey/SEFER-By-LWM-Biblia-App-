@@ -1408,3 +1408,15 @@ body[data-theme="lwm-night"] #topbar-actions .tb-group + .tb-group {
   white-space: nowrap !important;
   box-sizing: border-box !important;
 }
+
+
+/* 2.5.11 — el "0" de RV1960 se recortaba porque .vb-label (el span de
+   texto DE ADENTRO del botón) seguía con overflow:hidden y max-width
+   angosto en reglas anteriores; el fix 2.5.8c solo había tocado el
+   botón (#version-btn), no este span. */
+#version-btn .vb-label {
+  max-width: none !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: nowrap !important;
+}
