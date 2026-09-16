@@ -41,8 +41,8 @@ function openSeferHelp(){
 
     <div class="im-block"><div class="im-label">2. Mapa de SEFER</div>
     <div class="im-text">
-    • <strong>SEFER</strong> — marca y título<br>
-    • <strong>Barra de acciones</strong> — perfil, nube, pantalla completa, reiniciar<br>
+    • <strong>SEFER</strong> — marca y título; haz clic para reiniciar la navegación (contraer todo)<br>
+    • <strong>Barra de acciones</strong> — perfil, nube, pantalla completa<br>
     • <strong>Cabecera principal</strong> — SEFER + firma + acciones<br>
     • <strong>Lotes de temas</strong> — ＋/− y los cinco temas del lote<br>
     • <strong>Aleatorio</strong> — dado (versículo al azar)<br>
