@@ -83,7 +83,7 @@ function renderReader(){
     clr.className = 'btn';
     clr.id = 'reader-clear-sel';
     clr.textContent = 'Quitar marcas';
-    clr.onclick = ()=>{ selectedVerses = []; selectionUIActive = false; updateSelectionUI(); renderReader(); };
+    clr.onclick = ()=>{ selectedVerses = []; lastCheckedVerse = null; selectionUIActive = false; updateSelectionUI(); renderReader(); };
     selWrap.appendChild(clr);
   }
   titleRow.appendChild(selWrap);

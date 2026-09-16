@@ -139,6 +139,7 @@ function runWordSearch(q){
       goTo(r.book, r.ch);
       detailVerse = r.v;
       selectedVerses = [r.v];
+      lastCheckedVerse = String(r.v); // SEFER FIX 2.5.17: mismo caso que goToRef — sin esto no aparece 📋 Copiar
       updateSelectionUI();
       renderReader();
       renderBookList();

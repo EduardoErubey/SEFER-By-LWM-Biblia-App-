@@ -82,6 +82,7 @@ function goToRandomVerse(){
   detailVerse = String(v);
   selectionUIActive = false;
   selectedVerses = [String(v)];
+  lastCheckedVerse = String(v); // SEFER FIX 2.5.17: mismo caso que goToRef — sin esto no aparece 📋 Copiar
   updateSelectionUI();
   renderReader();
   renderBookList();
@@ -242,6 +243,11 @@ function goToRef(parsed){
     const existing = verses.map(String).filter(v => BIBLE[book][useChap][v]);
     if(existing.length){
       selectedVerses = existing;
+      // SEFER FIX 2.5.17: sin esto, lastCheckedVerse se queda en su valor
+      // anterior (o null) y el botón 📋 Copiar —que solo aparece en la
+      // ÚLTIMA casilla marcada— nunca se mostraba en resultados de búsqueda
+      // de referencias, aunque las casillas sí quedaran marcadas.
+      lastCheckedVerse = existing[existing.length - 1];
       detailVerse = existing.length === 1 ? existing[0] : null;
       updateSelectionUI();
       renderReader();

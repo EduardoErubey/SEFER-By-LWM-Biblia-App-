@@ -32,6 +32,7 @@ function goTo(book, chap){
   showWelcome = false;
   currentBook = book; currentChap = String(chap); detailVerse = null;
   selectedVerses = [];
+  lastCheckedVerse = null;
   selectionUIActive = false;
   updateSelectionUI();
   updateProjectBtnVisibility();
@@ -60,6 +61,7 @@ function showWelcomeScreen(){
   showWelcome = true;
   detailVerse = null;
   selectedVerses = [];
+  lastCheckedVerse = null;
   selectionUIActive = false;
   updateSelectionUI();
   updateProjectBtnVisibility();
@@ -100,7 +102,7 @@ function updateSelectionUI(){
   }
   updateProjectBtnVisibility();
 }
-if(clearSelBtn) clearSelBtn.onclick = ()=>{ selectedVerses = []; selectionUIActive = false; updateSelectionUI(); renderReader(); };
+if(clearSelBtn) clearSelBtn.onclick = ()=>{ selectedVerses = []; lastCheckedVerse = null; selectionUIActive = false; updateSelectionUI(); renderReader(); };
 
 function applyVerseFont(){
   try{
