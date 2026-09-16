@@ -1376,3 +1376,17 @@ body[data-theme="lwm-night"] #topbar-actions .tb-group + .tb-group {
 #topbar-actions .btn-icon {
   cursor: pointer !important;
 }
+
+
+/* 2.5.8 — toolkit siempre encima y con cursor mano */
+#topbar {
+  z-index: 2000 !important;
+  position: relative !important;
+  pointer-events: auto !important;
+}
+#topbar-actions,
+#topbar-actions .btn,
+#topbar-actions .btn-icon {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}

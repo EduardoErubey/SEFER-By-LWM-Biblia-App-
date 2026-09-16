@@ -68,7 +68,7 @@ function goToRandomVerse(){
   const verses = Object.keys(BIBLE[book][chap]);
   const v = verses[Math.floor(Math.random()*verses.length)];
   openTestaments.add(BOOK_ORDER.find(e=>e.name===book)?.testament || 'AT');
-  openBooks.add(book);
+  try{ openBooks.clear(); openBooks.add(book); }catch(e){}
   saveNavState();
   // Evitar scroll del documento (franja negra)
   try{
@@ -235,7 +235,7 @@ function goToRef(parsed){
   const useChap = (BIBLE[book][chap] ? chap : Object.keys(BIBLE[book]).sort((a,b)=>+a-+b)[0]);
   if(!useChap) return false;
   openTestaments.add(BOOK_ORDER.find(e=>e.name===book)?.testament || 'AT');
-  openBooks.add(book);
+  try{ openBooks.clear(); openBooks.add(book); }catch(e){}
   saveNavState();
   goTo(book, useChap);
   if(verses && verses.length && BIBLE[book][useChap]){
@@ -458,7 +458,7 @@ refSearch.addEventListener('keydown', (e)=>{
         refSearch.blur();
         return;
       }
-      alert('Hasta 3 libros distintos, separados por | o /.\nEjemplos:\nJuan 3:16 | Romanos 8:28\nJuan 3:16 / Salmos 23:1 | Filipenses 4:13');
+      alert('Hasta 3 libros distintos.\nUsa solo | o solo / (no los combines).\nEjemplos:\nJuan 3:16 | Romanos 8:28\nJuan 3:16 / Salmos 23:1 / Filipenses 4:13');
       return;
     }
     const parsed = parseRefQuery(rawVal);
@@ -473,7 +473,12 @@ refSearch.addEventListener('keydown', (e)=>{
 
 /** Parsea hasta 3 pasajes separados por | o /. Libros distintos. */
 function parseMultiBookQuery(raw){
-  const parts = String(raw||'').split(/[|/]/).map(function(s){ return s.trim(); }).filter(Boolean);
+  const rawS = String(raw||'');
+  const hasPipe = rawS.indexOf('|') >= 0;
+  const hasSlash = rawS.indexOf('/') >= 0;
+  /* No combinar | y / en la misma búsqueda */
+  if(hasPipe && hasSlash) return null;
+  const parts = rawS.split(hasPipe ? '|' : '/').map(function(s){ return s.trim(); }).filter(Boolean);
   if(parts.length < 2 || parts.length > 3) return null;
   const out = [];
   const seen = {};

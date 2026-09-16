@@ -46,7 +46,7 @@ function goTo(book, chap){
   // Mantener el libro visible en la navegación
   const entry = BOOK_ORDER.find(e=>e.name===book);
   if(entry) openTestaments.add(entry.testament);
-  openBooks.add(book);
+  try{ if(typeof openBooks!=="undefined"&&openBooks){ openBooks.clear(); try{ openBooks.clear(); openBooks.add(book); }catch(e){} } }catch(e){ try{ try{ openBooks.clear(); openBooks.add(book); }catch(e){} }catch(_e){} }
   renderReader();
 }
 function updateProjectBtnVisibility(){

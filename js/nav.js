@@ -229,6 +229,8 @@ function renderBookList(){
         renderBookList();
         return;
       }
+      /* Solo un libro con capítulos desplegados a la vez (AT y NT pueden estar expandidos) */
+      openBooks.clear();
       openBooks.add(book);
       const chaps = Object.keys(BIBLE[book]).sort((a,b)=>+a-+b);
       const chap = (book === currentBook && chaps.includes(String(currentChap))) ? currentChap : chaps[0];

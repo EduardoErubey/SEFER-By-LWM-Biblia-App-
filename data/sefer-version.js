@@ -1,15 +1,29 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.7-stable";
-const SEFER_VERSION_NAME = "Tour por zonas; Ayuda 2.5.7; toolkit sobre modales";
+const SEFER_VERSION = "2.5.8-stable";
+const SEFER_VERSION_NAME = "Ayuda textos; un libro; | o /; YT sin franja; cursor toolkit";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.8-stable",
+    name: "Ayuda textos; un libro; | o /; YT sin franja; cursor toolkit",
+    date: "2026-09-15",
+    current: true,
+    changes: [
+      "Ayuda: Comparar y Resaltar con textos definitivos; YouTube debajo + SVG",
+      "Tour 9: spotlight en .ps-card; pasos 11–12 abren un capítulo",
+      "Solo un libro con capítulos desplegados a la vez (AT/NT sí juntos)",
+      "Buscador: | o / sin combinar en la misma búsqueda",
+      "Toolkit z-index 2000 y cursor pointer con modales abiertos",
+      "Sin franja vacía encima del reproductor YouTube"
+    ]
+  },
+  {
     id: "2.5.7-stable",
     name: "Tour por zonas; Ayuda 2.5.7; toolkit sobre modales",
     date: "2026-09-15",
-    current: true,
+    current: false,
     changes: [
       "Tour 14 pasos con nombres oficiales (SEFER … Listo)",
       "Ayuda reestructurada: bienvenida, mapa, primeros pasos, toolkit/lector, proyección, atajos",

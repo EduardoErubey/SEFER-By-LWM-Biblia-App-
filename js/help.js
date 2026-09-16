@@ -67,7 +67,7 @@ function openSeferHelp(){
     • <em>Juan 3:16</em><br>
     • <em>Génesis 1:1-3,5-6</em><br>
     • Dos o tres pasajes: <em>Juan 3:16 | Romanos 8:28</em> (también con /)<br>
-    Máximo <strong>3 libros</strong>. <strong>Tab</strong> completa el nombre del libro.<br><br>
+    Máximo <strong>3 libros</strong>. Usa <strong>|</strong> o <strong>/</strong> (no los combines en la misma búsqueda). <strong>Tab</strong> completa el nombre del libro.<br><br>
     <strong>Spotlight</strong><br>
     Escribe fuera de un campo de texto para buscar palabras en toda la Biblia.
     </div></div>
@@ -86,7 +86,7 @@ function openSeferHelp(){
     • <strong>${ic.glos}</strong> — consulta de términos bíblicos<br>
     • <strong>${ic.bio}</strong> — biografías de personas de la Biblia<br>
     • <strong>${ic.apo}</strong> — información sobre libros apócrifos<br>
-    • <strong>${ytSvg}YouTube</strong> — pega un sermón; el reproductor aparece junto a la Biblia<br>
+    • <strong>${ytSvg}YouTube</strong> — pega un sermón; el reproductor aparece debajo de la Biblia<br>
     • <strong>${ic.proj}</strong> — abre el menú de proyección<br>
     • <strong>${ic.help}</strong> — este manual y el tour<br><br>
     <strong>Lector</strong><br>
@@ -99,11 +99,19 @@ function openSeferHelp(){
     <div class="im-text">
     Abre el <strong>Menú de proyección</strong> (botón Proyectar).<br>
     Con el menú abierto: teclas <strong>1</strong>, <strong>2</strong> o <strong>3</strong> según las opciones.<br>
-    <strong>Esc</strong> cierra menús y la proyección.<br>
-    <strong>Comparar</strong>: 1.er clic activa la segunda traducción en paralelo; 2.º clic la desactiva.<br><br>
-    <strong>🖍️ Resaltar</strong> (solo en Proyección):<br>
-    1) Activa 🖍️ &nbsp; 2) Selecciona el texto &nbsp; 3) Se subraya y se apaga el botón.<br>
-    Para quitar: activa 🖍️ y selecciona otra vez lo marcado. No sustituye a los favoritos ❤️.
+    <strong>Esc</strong> cierra menús y la proyección.<br><br>
+    <strong>Comparar</strong><br>
+    1. Primer clic → activa la segunda traducción en paralelo<br>
+    2. Segundo clic → desactiva la segunda traducción en paralelo<br><br>
+    <strong>🖍️ Resaltar</strong> (disponible solo en Modo Proyección)<br>
+    Para aplicar «Resaltar» en texto:<br>
+    1) Activa 🖍️<br>
+    2) Selecciona el texto<br>
+    3) Se subraya y se apaga el botón.<br>
+    Para revertir «Resaltar» en texto:<br>
+    1) Activa 🖍️<br>
+    2) Selecciona el texto previamente resaltado<br>
+    No sustituye a los favoritos ❤️.
     </div></div>
 
     <div class="im-block"><div class="im-label">6. Atajos</div>

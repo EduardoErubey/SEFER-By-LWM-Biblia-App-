@@ -172,3 +172,41 @@ body.yt-sidebar-active #reader, body.yt-active-bl #reader, body.yt-active-br #re
 .tour-start-btn:hover {
   transform: none !important;
 }
+
+
+/* === 2.5.8 Toolkit usable con modal abierto (cursor mano) === */
+#topbar,
+#topbar-actions {
+  z-index: 2000 !important;
+  position: relative !important;
+  pointer-events: auto !important;
+}
+#topbar-actions .btn,
+#topbar-actions .btn-icon,
+#topbar-actions button {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 2001 !important;
+}
+/* Overlay: clics pasan fuera de la tarjeta; la tarjeta sí captura */
+#info-modal.open,
+#modal-plan-lectura[style*="flex"],
+#modal-glosario[style*="flex"],
+#modal-genealogia[style*="flex"],
+#modal-apocrifos[style*="flex"],
+#modal-youtube[style*="flex"],
+#modal-perfil[style*="flex"] {
+  /* el fondo oscurece pero no bloquea la toolkit (z-index menor) */
+}
+#info-modal {
+  z-index: 1300 !important;
+}
+#info-modal.open {
+  pointer-events: auto;
+}
+#info-modal.open .im-card {
+  pointer-events: auto;
+  position: relative;
+  z-index: 1;
+}

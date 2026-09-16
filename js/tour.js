@@ -14,6 +14,7 @@ function seferTourPrepareStep(step){
     const n = parseInt(String(title).split('.')[0], 10) || 0;
     const needMenu = (n === 9);
     const needStage = (n === 10);
+    const needReader = (n === 11 || n === 12);
     const needSpot = (n === 13);
     if(n >= 11){
       try{ if(typeof closeProjectSheet==='function') closeProjectSheet(); }catch(e){}
@@ -26,6 +27,13 @@ function seferTourPrepareStep(step){
         const book = (typeof currentBook!=='undefined'&&currentBook)||'Génesis';
         const chap = String((typeof currentChap!=='undefined'&&currentChap)||'1');
         if(typeof openStage==='function') openStage(book, chap, ['1'], 'single');
+      }catch(e){}
+    }
+    if(needReader){
+      try{
+        const book = (typeof currentBook!=='undefined'&&currentBook)||'Génesis';
+        const chap = String((typeof currentChap!=='undefined'&&currentChap)||'1');
+        if(typeof goTo==='function') goTo(book, chap);
       }catch(e){}
     }
     if(needSpot){ try{ if(typeof openWordSearch==='function') openWordSearch(''); }catch(e){} }
@@ -42,7 +50,7 @@ const SEFER_TOUR_STEPS = window.SEFER_TOUR_STEPS = [
   { sel:'#ref-search-wrap, #ref-search', title:'6. Buscador de versículos', text:'Campo para ir a una referencia bíblica.' },
   { sel:'#book-list', title:'7. Biblia', text:'Lista de libros del Antiguo y Nuevo Testamento.' },
   { sel:'#topbar-actions', title:'8. Toolkit', text:'Barra de herramientas superior. El detalle de cada botón está en Ayuda.' },
-  { sel:'#project-sheet, .ps-card', title:'9. Menú de proyección', text:'Opciones para elegir qué se proyecta.' },
+  { sel:'#project-sheet.open .ps-card, #project-sheet .ps-card', title:'9. Menú de proyección', text:'Ventana con las opciones de proyección.' },
   { sel:'#stage', title:'10. Proyección', text:'Pantalla grande de culto o estudio.' },
   { sel:'#reader-sticky-head, .sticky-head', title:'11. Cabecera del lector', text:'Libro, capítulo e indicaciones.' },
   { sel:'#reader-verses, #reader', title:'12. Lector', text:'Área donde se leen los versículos.' },
@@ -62,8 +70,9 @@ function seferTourFindEl(sel){
       }catch(e){}
     });
     if(!nodes.length) return null;
+    const cards = nodes.filter(function(el){ return el.classList && el.classList.contains('ps-card'); });
+    if(cards.length){ return cards[0]; }
     if(nodes.length === 1) return nodes[0];
-    // Envolver mentalmente: devolver el primero pero ampliar spotlight en placeCard via data
     const first = nodes[0];
     first.__seferTourGroup = nodes;
     return first;

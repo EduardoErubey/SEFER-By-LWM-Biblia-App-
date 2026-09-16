@@ -579,3 +579,48 @@ body:not(.yt-sidebar-active) #yt-player-wrap{
   align-items: center !important;
   gap: 8px !important;
 }
+
+
+/* 2.5.8 — sin franja vacía encima del reproductor YouTube */
+#nav {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+#book-list {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 8px !important;
+}
+body.yt-sidebar-active #book-list {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  padding-bottom: 4px !important;
+  margin-bottom: 0 !important;
+}
+body.yt-sidebar-active #yt-player-wrap,
+body.yt-sidebar-active #yt-player-wrap.yt-sidebar {
+  flex: 0 0 auto !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  gap: 2px !important;
+  border-top: 1px solid var(--line) !important;
+  max-height: 36% !important;
+}
+body.yt-sidebar-active #yt-player-bar {
+  margin: 0 !important;
+  padding: 2px 0 2px 0 !important;
+  min-height: 0 !important;
+}
+body.yt-sidebar-active #yt-iframe-box {
+  margin: 0 !important;
+  padding: 0 !important;
+  /* alto por ancho de barra, sin huecos extra */
+  aspect-ratio: 16 / 9 !important;
+  max-height: min(28vh, 220px) !important;
+  height: auto !important;
+}
