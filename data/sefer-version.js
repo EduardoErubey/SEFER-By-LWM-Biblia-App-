@@ -1,15 +1,35 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.9-stable";
-const SEFER_VERSION_NAME = "YT gap=0 verificado (sin max-height %)";
+const SEFER_VERSION = "2.5.10-stable";
+const SEFER_VERSION_NAME = "Toolkit y cabecera realmente por encima de los modales";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.10-stable",
+    name: "Toolkit y cabecera realmente por encima de los modales",
+    date: "2026-09-16",
+    current: true,
+    changes: [
+      "Corregida la causa real de que la toolkit se viera oscurecida y sin cursor de mano con Plan/Glosario/Biografía/Apócrifos/YouTube/Ayuda abiertos",
+      "#main tenía su propio contexto de apilamiento (position:relative + z-index:1) que atrapaba a la toolkit por debajo del fondo oscuro de los modales, aunque ya tuviera z-index alto",
+      "El lector sigue atenuándose igual que antes; solo la toolkit queda usable mientras el modal está abierto"
+    ]
+  },
+  {
+    id: "2.5.9-stable",
+    name: "YT gap=0 verificado (sin max-height %)",
+    date: "2026-09-16",
+    current: false,
+    changes: [
+      "Verificación adicional de que YouTube no deja espacio en blanco (gap=0)"
+    ]
+  },
+  {
     id: "2.5.8b-stable",
     name: "YT: sin hueco (quita max-height 72% de Biblia)",
     date: "2026-09-16",
-    current: true,
+    current: false,
     changes: [
       "Causa del hueco: body.yt-sidebar-active #book-list max-height:72%",
       "Biblia flex 1 hasta el borde superior del reproductor",
