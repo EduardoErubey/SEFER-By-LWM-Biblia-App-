@@ -1,7 +1,7 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.8c-stable";
-const SEFER_VERSION_NAME = "Botón traducción: texto sin cortar";
+const SEFER_VERSION = "2.5.9-stable";
+const SEFER_VERSION_NAME = "YT gap=0 verificado (sin max-height %)";
 
 
 const SEFER_VERSION_HISTORY = [

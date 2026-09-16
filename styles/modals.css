@@ -74,11 +74,11 @@ body.mobile-mode #info-modal .im-card{max-height:80vh;}
 
 body.yt-sidebar-active #yt-player-wrap, body.yt-sidebar-active #yt-player-wrap.yt-sidebar{display:flex !important;}
 
-body.yt-sidebar-active #book-list{flex:1 1 auto !important;max-height:none !important;}
+body.yt-sidebar-active #book-list{flex:1 1 0 !important;max-height:none !important;min-height:0 !important;}
 
 #yt-player-bar{flex:0 0 auto;padding:5px 8px;}
 
-#yt-iframe-box{width:100% !important;max-width:100% !important;aspect-ratio:16 / 9;height:auto !important;max-height:26vh;background:#000;flex:0 0 auto;line-height:0;}
+#yt-iframe-box{width:100% !important;max-width:100% !important;aspect-ratio:16 / 9;height:auto !important;max-height:220px;background:#000;flex:0 0 auto;line-height:0;}
 
 #yt-iframe-box iframe{width:100% !important;height:100% !important;border:0 !important;display:block;}
 

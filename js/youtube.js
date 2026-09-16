@@ -60,8 +60,11 @@ function setYoutubeLayoutActive(active){
   if(active){
     document.body.classList.add('yt-sidebar-active');
     if(wrap){
+      /* limpiar inline que dejaba huecos (height/max-height/flex de cierres previos) */
+      wrap.style.cssText = '';
       wrap.style.display = 'flex';
       wrap.setAttribute('aria-hidden', 'false');
+      wrap.classList.add('yt-sidebar');
     }
   } else {
     if(wrap){

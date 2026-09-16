@@ -367,7 +367,7 @@ body.yt-sidebar-active #yt-player-wrap{
   flex-direction: column !important;
   flex: 0 0 auto !important;
   height: auto !important;
-  max-height: 40% !important;
+  max-height: none !important;
   min-height: 0 !important;
   margin: 0 !important;
   padding: 4px 6px 6px !important;
@@ -394,7 +394,7 @@ body.yt-sidebar-active #yt-player-title{
   white-space: nowrap;
 }
 body.yt-sidebar-active #yt-iframe-box{
-  flex: 1 1 auto !important;
+  flex: 0 0 auto !important;
   min-height: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -609,7 +609,7 @@ body.yt-sidebar-active #yt-player-wrap.yt-sidebar {
   padding-bottom: 4px !important;
   gap: 2px !important;
   border-top: 1px solid var(--line) !important;
-  max-height: 36% !important;
+  max-height: none !important;
 }
 body.yt-sidebar-active #yt-player-bar {
   margin: 0 !important;
@@ -684,6 +684,93 @@ body.yt-sidebar-active #yt-iframe-box {
   aspect-ratio: 16 / 9 !important;
   height: auto !important;
   max-height: 240px !important;
+}
+body.yt-sidebar-active #yt-iframe-box iframe {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+}
+
+
+/* =========================================================
+   YT LAYOUT DEFINITIVO (probado: gap = 0)
+   Biblia flex 1 1 0; YouTube flex 0 0 auto; sin max-height %
+   ========================================================= */
+#nav {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  gap: 0 !important;
+}
+#nav-header,
+#theme-switch,
+#ref-search-wrap {
+  flex: 0 0 auto !important;
+}
+#book-list {
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding-bottom: 4px !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+body.yt-sidebar-active #book-list {
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding-bottom: 4px !important;
+}
+body:not(.yt-sidebar-active) #yt-player-wrap,
+body:not(.yt-sidebar-active) #yt-player-wrap.yt-sidebar {
+  display: none !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  flex: 0 0 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+body.yt-sidebar-active #yt-player-wrap,
+body.yt-sidebar-active #yt-player-wrap.yt-sidebar {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 0 0 auto !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 4px 6px 6px !important;
+  gap: 2px !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  border-top: 1px solid var(--line) !important;
+  width: 100% !important;
+}
+body.yt-sidebar-active #yt-player-bar {
+  display: flex !important;
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  padding: 2px 0 4px !important;
+  min-height: 0 !important;
+}
+body.yt-sidebar-active #yt-iframe-box {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  aspect-ratio: 16 / 9 !important;
+  height: auto !important;
+  max-height: 220px !important;
+  line-height: 0 !important;
+  background: #000 !important;
 }
 body.yt-sidebar-active #yt-iframe-box iframe {
   display: block !important;
