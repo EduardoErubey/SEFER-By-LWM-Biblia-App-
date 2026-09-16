@@ -1,10 +1,20 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.13-stable";
-const SEFER_VERSION_NAME = "Proyección siempre por encima de la toolkit";
+const SEFER_VERSION = "2.5.14-stable";
+const SEFER_VERSION_NAME = "Significados/Notas/Favoritos cierran otras ventanas; Plan blindado";
 
 
 const SEFER_VERSION_HISTORY = [
+  {
+    id: "2.5.14-stable",
+    name: "Significados/Notas/Favoritos cierran otras ventanas; Plan blindado",
+    date: "2026-09-16",
+    current: true,
+    changes: [
+      "Significados, Notas y Favoritos ahora también cierran cualquier otra ventana del toolkit que siga abierta (Plan/Glosario/Biografía/Apócrifos/YouTube/Ayuda/Perfil/Proyectar) antes de abrirse — antes solo lo hacían en sentido contrario",
+      "Revisado Plan de Lectura en 1 Año: el código ya defaultea a Canónico AT→NT + 1 ene–31 dic cuando no hay una elección guardada, y respeta la elección manual del usuario si la cambia; se agregó una validación defensiva que ignora cualquier valor guardado corrupto o desconocido y vuelve a ese default"
+    ]
+  },
   {
     id: "2.5.13-stable",
     name: "Proyección siempre por encima de la toolkit",
