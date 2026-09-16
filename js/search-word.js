@@ -25,6 +25,25 @@ function closeWordSearch(){
   wordSearchResults.innerHTML = '';
 }
 
+/** Prefijo de nombre de versión en historial:
+ *  sifriá_v… desde 2.5.19 (rename), sefer_v… en versiones anteriores. */
+function seferVersionSlug(id){
+  const raw = String(id||'').replace(/^v/i,'').trim();
+  const m = raw.match(/^(\d+)\.(\d+)(?:\.(\d+))?/);
+  let prefix = 'sefer';
+  if(m){
+    const major = parseInt(m[1],10)||0;
+    const minor = parseInt(m[2],10)||0;
+    const patch = parseInt(m[3],10)||0;
+    // 2.5.19+ = Sifriá
+    if(major > 2 || (major === 2 && minor > 5) || (major === 2 && minor === 5 && patch >= 19)){
+      prefix = 'sifriá';
+    }
+  } else if(/sifri/i.test(raw)){
+    prefix = 'sifriá';
+  }
+  return prefix + '_v' + raw;
+}
 function openVersionsHistory(){
   const m = document.getElementById('modal-versions');
   const body = document.getElementById('versions-body');
@@ -35,7 +54,7 @@ function openVersionsHistory(){
     : [{id: (typeof SEFER_VERSION!=='undefined'?SEFER_VERSION:'?'), name: (typeof SEFER_VERSION_NAME!=='undefined'?SEFER_VERSION_NAME:''), date:'', current:true, changes:['Sin historial detallado cargado.']}];
   if(lab){
     const cur = hist.find(v=>v.current) || hist[0];
-    lab.textContent = 'Versión en uso: v' + (cur.id||'') + (cur.name ? ' — ' + cur.name : '');
+    lab.textContent = 'Versión en uso: ' + seferVersionSlug(cur.id||'') + (cur.name ? ' — ' + cur.name : '');
   }
   body.innerHTML = hist.map((v,i)=>{
     const badge = v.current
@@ -44,12 +63,13 @@ function openVersionsHistory(){
     const prev = hist[i+1];
     let delta = '';
     if(prev){
-      delta = '<div style="font-size:11px;color:var(--ink-soft);margin:4px 0 6px;font-style:italic;">Respecto a v'+prev.id+': se añadieron o cambiaron los puntos de abajo.</div>';
+      delta = '<div style="font-size:11px;color:var(--ink-soft);margin:4px 0 6px;font-style:italic;">Respecto a '+seferVersionSlug(prev.id)+': se añadieron o cambiaron los puntos de abajo.</div>';
     }
     const lis = (v.changes||[]).map(c=>'<li style="margin:0 0 4px;">'+c+'</li>').join('');
     const dateStr = (v.date && String(v.date).trim()) ? String(v.date).trim() : '—';
+    const slug = seferVersionSlug(v.id);
     return '<div style="margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line);">'
-      + '<div style="font-weight:700;color:var(--rubric);font-size:14px;">v'+v.id+' '+badge+'</div>'
+      + '<div style="font-weight:700;color:var(--rubric);font-size:14px;">'+slug+' '+badge+'</div>'
       + '<div style="font-size:12px;color:var(--gold);margin:2px 0 2px;">'+(v.name||'')+'</div>'
       + '<div style="font-size:12px;font-weight:600;color:var(--ink-soft);margin:0 0 6px;">📅 '+dateStr+'</div>'
       + delta
@@ -71,7 +91,7 @@ document.addEventListener('keydown', (e)=>{
 });
 function isVersionsHistoryQuery(q){
   const n = String(q||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'');
-  return n === 'versionshistory' || n === 'versionhistory' || n === 'historialversiones' || n === 'historialdeversiones' || n === 'seferversions';
+  return n === 'versionshistory' || n === 'versionhistory' || n === 'historialversiones' || n === 'historialdeversiones' || n === 'seferversions' || n === 'sifriaversions' || n === 'sifriaversion';
 }
 
 function runWordSearch(q){
@@ -84,8 +104,8 @@ function runWordSearch(q){
       if(wordSearchResults){
         wordSearchResults.innerHTML = '<div class="ws-hit" style="cursor:pointer;padding:10px 12px;" id="ws-open-versions">'
           + '<div style="font-weight:700;color:var(--rubric);">📋 Historial de versiones SEFER</div>'
-          + '<div style="font-size:12px;color:var(--ink-soft);margin-top:4px;">Versión actual: v'
-          + (cur && cur.id ? cur.id : (typeof SEFER_VERSION!=='undefined'?SEFER_VERSION:'?'))
+          + '<div style="font-size:12px;color:var(--ink-soft);margin-top:4px;">Versión actual: '
+          + seferVersionSlug(cur && cur.id ? cur.id : (typeof SEFER_VERSION!=='undefined'?SEFER_VERSION:'?'))
           + (cur && cur.name ? ' — ' + cur.name : '')
           + '</div>'
           + '<div style="font-size:12px;margin-top:6px;color:var(--ink);">Clic para ver todas las versiones y cambios (fechas y lista detallada).</div>'

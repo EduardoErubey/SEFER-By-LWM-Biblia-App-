@@ -1,7 +1,7 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.19-stable";
-const SEFER_VERSION_NAME = "Sifriá; toggle Plan/Glosario/Bio/Apócrifos/YT/Ayuda";
+const SEFER_VERSION = "2.5.20-stable";
+const SEFER_VERSION_NAME = "Historial: sifriá_v / sefer_v";
 
 
 const SEFER_VERSION_HISTORY = [
