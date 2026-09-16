@@ -1,10 +1,21 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.12-stable";
-const SEFER_VERSION_NAME = "Toolkit sin cruces: cristal corregido y ventanas exclusivas";
+const SEFER_VERSION = "2.5.13-stable";
+const SEFER_VERSION_NAME = "Proyección siempre por encima de la toolkit";
 
 
 const SEFER_VERSION_HISTORY = [
+  {
+    id: "2.5.13-stable",
+    name: "Proyección siempre por encima de la toolkit",
+    date: "2026-09-16",
+    current: true,
+    changes: [
+      "Corregido que la toolkit (y hasta un modal abierto) se vieran por encima de la proyección (#stage) en vez de quedar tapados por ella",
+      "Causa: #stage tenía z-index:999 desde antes; al subir la toolkit a 2000/2001 (fix del cursor) y los modales a 1300/1301, la proyección quedó por debajo de ambos sin que nadie la hubiera vuelto a subir",
+      "Se sube #stage a z-index:3000, por encima de toolkit y modales, sin tocar los menús propios de la toolkit (5000+) que solo aplican mientras la toolkit está visible"
+    ]
+  },
   {
     id: "2.5.12-stable",
     name: "Toolkit sin cruces: cristal corregido y ventanas exclusivas",
