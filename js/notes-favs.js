@@ -329,7 +329,7 @@ if(_mb) _mb.onclick = ()=>{
     try{ document.getElementById('project-sheet')?.classList.remove('open'); }catch(e){}
   }
   window.seferCloseAllToolkitModals = closeAllSeferToolkitModals;
-  ['glossary-btn','biography-btn','apocrifos-btn','plan-btn','youtube-btn','help-btn','btn-user-profile','project-btn'].forEach(function(id){
+  ['glossary-btn','biography-btn','apocrifos-btn','plan-btn','youtube-btn','help-btn','btn-user-profile','project-btn','notes-btn','favs-btn','meanings-btn'].forEach(function(id){
     const el = document.getElementById(id);
     if(!el || el.dataset.seferModalExcl) return;
     el.dataset.seferModalExcl = '1';

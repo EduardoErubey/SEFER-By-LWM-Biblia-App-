@@ -75,10 +75,12 @@ function buildPlanByOrder(order){
 }
 
 let planOrder = store.get('bp_plan_order', 'canonical'); // canonical | inverse | parallel | chrono
+if(['canonical','inverse','parallel','chrono'].indexOf(planOrder) === -1) planOrder = 'canonical'; // valor corrupto/desconocido → default
 let PLAN_ANUAL = buildPlanByOrder(planOrder);
 
 let planViewDay = null;
 let planMode = store.get('bp_plan_mode', 'calendar'); // 'calendar' | 'today'
+if(planMode !== 'calendar' && planMode !== 'today') planMode = 'calendar'; // valor corrupto/desconocido → default
 let planStartDate = store.get('bp_plan_start', null); // ISO date string when mode=today
 
 function obtenerDiaDelAno(date){
