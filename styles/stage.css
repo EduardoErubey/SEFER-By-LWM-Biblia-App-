@@ -12,7 +12,14 @@ body.mobile-mode #stage-exit{top:14px;right:14px;font-size:11px;padding:5px 10px
 
 #stage .jesus-words{color:#E8B4B4;font-style:italic;}
 
-#stage{display:none;position:fixed;inset:0;background:var(--stage-bg);z-index:999;flex-direction:column;align-items:center;justify-content:center;padding:60px;}
+#stage{display:none;position:fixed;inset:0;background:var(--stage-bg);
+  /* SEFER FIX 2.5.13: la proyección debe quedar SIEMPRE por encima de todo —
+     toolkit incluida. Antes tenía z-index:999, mientras que #topbar llegó a
+     2000/2001 (fix 2.5.8 del cursor) y los modales a 1300/1301 (fix 2.5.10).
+     Por eso la toolkit (y hasta un modal abierto) se veían sobre la proyección
+     en vez de quedar tapados por ella. */
+  z-index:3000 !important;
+  flex-direction:column;align-items:center;justify-content:center;padding:60px;}
 
 #stage.open{display:flex;}
 
