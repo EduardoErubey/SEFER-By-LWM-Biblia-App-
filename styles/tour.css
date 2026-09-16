@@ -1,12 +1,12 @@
 /* SEFER — extracted from index.html (no rule changes) */
 
-#sefer-tour-overlay{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.55);pointer-events:auto;}
+#sefer-tour-overlay{display:none;position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,0.55);pointer-events:auto;}
 
 #sefer-tour-overlay.open{display:block;}
 
-#sefer-tour-spot{position:fixed;z-index:2001;border:2px solid var(--gold, #c9a227);border-radius:10px;box-shadow:0 0 0 9999px rgba(0,0,0,0.55), 0 0 0 4px rgba(201,162,39,0.35);pointer-events:none;transition:top .2s, left .2s, width .2s, height .2s;}
+#sefer-tour-spot{position:fixed;z-index:9501;border:2px solid var(--gold, #c9a227);border-radius:10px;box-shadow:0 0 0 9999px rgba(0,0,0,0.55), 0 0 0 4px rgba(201,162,39,0.35);pointer-events:none;transition:top .2s, left .2s, width .2s, height .2s;}
 
-#sefer-tour-card{position:fixed;z-index:2002;width:min(340px, calc(100vw - 24px));background:var(--card-bg, #fff);color:var(--ink, #222);border:1px solid var(--line, #ccc);border-radius:12px;padding:14px 16px 12px;box-shadow:0 16px 40px rgba(0,0,0,0.3);font-family:var(--font-ui, system-ui);}
+#sefer-tour-card{position:fixed;z-index:9502;width:min(340px, calc(100vw - 24px));background:var(--card-bg, #fff);color:var(--ink, #222);border:1px solid var(--line, #ccc);border-radius:12px;padding:14px 16px 12px;box-shadow:0 16px 40px rgba(0,0,0,0.3);font-family:var(--font-ui, system-ui);}
 
 #sefer-tour-card h4{margin:0 0 6px;font-family:var(--font-display, system-ui);font-size:16px;color:var(--rubric, #8b1e1e);}
 
@@ -21,25 +21,33 @@
 .tour-start-btn{width:100%;margin-bottom:12px;}
 
 
+/* SEFER FIX 2.5.16: el tour debe quedar SIEMPRE por encima de todo lo que
+   explica, incluida la proyección (#stage, z-index:3000 !important desde el
+   fix 2.5.13). Antes el overlay/spot/card del tour tenían tope 2000/2001/2002
+   !important, por debajo de #stage: al llegar al paso 10 ("Proyección") la
+   pantalla grande se abría pero tapaba por completo el recuadro dorado y la
+   tarjeta explicativa del tour, dando la impresión de que "no había
+   superposición". Se sube el tope a 9500/9501/9502 — por encima de #stage
+   (3000) y de los menús propios de la toolkit que llegan a 5000. */
 #sefer-tour-overlay{
-  z-index:2000 !important;
+  z-index:9500 !important;
   pointer-events:none !important;
   background:transparent !important;
 }
 #sefer-tour-spot{
-  z-index:2001 !important;
+  z-index:9501 !important;
   pointer-events:none !important;
 }
 #sefer-tour-card{
-  z-index:2002 !important;
+  z-index:9502 !important;
   pointer-events:auto !important;
 }
 
 
 /* Tour clickability — forced */
-#sefer-tour-overlay{ z-index:2000 !important; pointer-events:none !important; background:transparent !important; }
-#sefer-tour-spot{ z-index:2001 !important; pointer-events:none !important; }
-#sefer-tour-card{ z-index:2002 !important; pointer-events:auto !important; position:fixed !important; }
+#sefer-tour-overlay{ z-index:9500 !important; pointer-events:none !important; background:transparent !important; }
+#sefer-tour-spot{ z-index:9501 !important; pointer-events:none !important; }
+#sefer-tour-card{ z-index:9502 !important; pointer-events:auto !important; position:fixed !important; }
 
 
 .tour-start-btn{
