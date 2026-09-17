@@ -49,11 +49,33 @@ function openVersionsHistory(){
   const body = document.getElementById('versions-body');
   const lab = document.getElementById('versions-current-label');
   if(!m || !body) return;
-  const hist = (typeof SEFER_VERSION_HISTORY !== 'undefined' && SEFER_VERSION_HISTORY.length)
-    ? SEFER_VERSION_HISTORY
-    : [{id: (typeof SEFER_VERSION!=='undefined'?SEFER_VERSION:'?'), name: (typeof SEFER_VERSION_NAME!=='undefined'?SEFER_VERSION_NAME:''), date:'', current:true, changes:['Sin historial detallado cargado.']}];
+  let hist = (typeof SEFER_VERSION_HISTORY !== 'undefined' && SEFER_VERSION_HISTORY.length)
+    ? SEFER_VERSION_HISTORY.slice()
+    : [];
+  const liveId = (typeof SEFER_VERSION !== 'undefined' && SEFER_VERSION) ? String(SEFER_VERSION) : '';
+  const liveName = (typeof SEFER_VERSION_NAME !== 'undefined' && SEFER_VERSION_NAME) ? String(SEFER_VERSION_NAME) : '';
+  // Sincronizar "actual" con SEFER_VERSION (por si el flag current quedó desfasado)
+  if(liveId){
+    let found = false;
+    hist = hist.map(function(v){
+      const isCur = String(v.id) === liveId || String(v.id) === liveId.replace(/^v/,'');
+      if(isCur) found = true;
+      return Object.assign({}, v, { current: isCur });
+    });
+    if(!found){
+      hist.unshift({
+        id: liveId,
+        name: liveName || liveId,
+        date: new Date().toISOString().slice(0,10),
+        current: true,
+        changes: ['Versión en uso (añadida automáticamente al historial).']
+      });
+    }
+  } else if(!hist.length){
+    hist = [{id:'?', name:'', date:'', current:true, changes:['Sin historial detallado cargado.']}];
+  }
   if(lab){
-    const cur = hist.find(v=>v.current) || hist[0];
+    const cur = hist.find(function(v){ return v.current; }) || hist[0];
     lab.textContent = 'Versión en uso: ' + seferVersionSlug(cur.id||'') + (cur.name ? ' — ' + cur.name : '');
   }
   body.innerHTML = hist.map((v,i)=>{
@@ -100,13 +122,15 @@ function runWordSearch(q){
     // Spotlight de resultados + modal de historial (misma fuente SEFER_VERSION_HISTORY)
     try{
       const hist = (typeof SEFER_VERSION_HISTORY !== 'undefined' && SEFER_VERSION_HISTORY.length) ? SEFER_VERSION_HISTORY : [];
-      const cur = hist.find(v=>v.current) || hist[0];
+      const liveId = (typeof SEFER_VERSION!=='undefined' && SEFER_VERSION) ? String(SEFER_VERSION) : '';
+      const liveName = (typeof SEFER_VERSION_NAME!=='undefined' && SEFER_VERSION_NAME) ? String(SEFER_VERSION_NAME) : '';
+      const cur = hist.find(function(v){ return String(v.id) === liveId; }) || hist.find(function(v){ return v.current; }) || hist[0] || {id: liveId, name: liveName};
       if(wordSearchResults){
         wordSearchResults.innerHTML = '<div class="ws-hit" style="cursor:pointer;padding:10px 12px;" id="ws-open-versions">'
           + '<div style="font-weight:700;color:var(--rubric);">📋 Historial de versiones SIFRIÁ</div>'
           + '<div style="font-size:12px;color:var(--ink-soft);margin-top:4px;">Versión actual: '
-          + seferVersionSlug(cur && cur.id ? cur.id : (typeof SEFER_VERSION!=='undefined'?SEFER_VERSION:'?'))
-          + (cur && cur.name ? ' — ' + cur.name : '')
+          + seferVersionSlug(liveId || (cur && cur.id) || '?')
+          + (liveName ? ' — ' + liveName : (cur && cur.name ? ' — ' + cur.name : ''))
           + '</div>'
           + '<div style="font-size:12px;margin-top:6px;color:var(--ink);">Clic para ver todas las versiones y cambios (fechas y lista detallada).</div>'
           + '</div>';

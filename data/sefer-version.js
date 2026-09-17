@@ -6,6 +6,46 @@ const SEFER_VERSION_NAME = "Buscador: scroll al escribir referencias largas";
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.23-stable",
+    name: "Buscador: scroll al escribir referencias largas",
+    date: "2026-09-17",
+    current: true,
+    changes: [
+      "Buscador de versículos: al escribir, el campo se desplaza para mostrar el cursor y el final del texto",
+      "Útil con 2–3 pasajes unidos por | o /"
+    ]
+  },
+  {
+    id: "2.5.22-stable",
+    name: "Hebreo סִפְרִיָּה bicolor (homenaje a SEFER)",
+    date: "2026-09-17",
+    current: false,
+    changes: [
+      "סִפְרִיָּה en dos colores según el tema: סִפְרִ (--rubric) + יָּה (--gold)",
+      "Homenaje a SEFER; aplica en marca y bienvenida"
+    ]
+  },
+  {
+    id: "2.5.21-stable",
+    name: "Nombre SIFRIÁ completo (solo sefer_v en historial antiguo)",
+    date: "2026-09-17",
+    current: false,
+    changes: [
+      "Nombre visible unificado a SIFRIÁ סִפְרִיָּה",
+      "Eliminado tour.js huérfano; sefer_v solo en versiones anteriores al rename"
+    ]
+  },
+  {
+    id: "2.5.20-stable",
+    name: "Historial: sifriá_v / sefer_v",
+    date: "2026-09-16",
+    current: false,
+    changes: [
+      "Historial con prefijos sifriá_v (desde 2.5.19) y sefer_v (anteriores)",
+      "Formato: nombre, título, fecha, «Respecto a…» y lista de cambios"
+    ]
+  },
+  {
     id: "2.5.19-stable",
     name: "Sifriá; toggle Plan/Glosario/Bio/Apócrifos/YT/Ayuda",
     date: "2026-09-16",
