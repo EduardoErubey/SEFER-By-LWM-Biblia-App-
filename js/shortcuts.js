@@ -206,7 +206,7 @@ function wireSeferShortcuts(){
 
 try{ wireStageCompare(); }catch(e){}
 try{ wireSeferShortcuts(); }catch(e){}
-try{ wireVersionSwitcher(); }catch(e){ console.warn('[SEFER] version switcher', e); }
+try{ wireVersionSwitcher(); }catch(e){ console.warn('[SIFRIÁ] version switcher', e); }
 try{ seferUpdateDiceEmoji(); }catch(e){}
 try{ updateEasyBtn(); }catch(e){}
 renderBookList();

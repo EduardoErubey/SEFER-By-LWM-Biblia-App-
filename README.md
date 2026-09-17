@@ -1,6 +1,6 @@
-# Sifriá סִפְרִיָּה
+# SIFRIÁ סִפְרִיָּה
 
-**Sifriá** (סִפְרִיָּה) es una aplicación web de estudio y proyección bíblica  
+**SIFRIÁ** (סִפְרִיָּה) es una aplicación web de estudio y proyección bíblica  
 desarrollada para **Life Word Mission · Playa del Carmen**.
 
 Lee, busca, anota, proyecta y estudia la Biblia desde el navegador — sin instalar nada.

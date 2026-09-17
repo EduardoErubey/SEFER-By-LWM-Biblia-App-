@@ -105,7 +105,7 @@ async function seferSetBibleVersion(id, opts){
       /* no spamear nube */
     }
   }catch(err){
-    console.error('[SEFER] versión', err);
+    console.error('[SIFRIÁ] versión', err);
     alert('No se pudo cargar la versión seleccionada. ¿Subiste los archivos en la carpeta bible/ (bible-data-*.js, etc.)?\n\n'+err.message);
   }
 }
@@ -231,7 +231,7 @@ function wireVersionSwitcher(){
     } else if(window.BIBLE_DATA){
       seferApplyBibleData(window.BIBLE_DATA);
     }
-  }catch(err){ console.warn('[SEFER] version init', err); }
-  console.info('[SEFER] traducción lista');
+  }catch(err){ console.warn('[SIFRIÁ] version init', err); }
+  console.info('[SIFRIÁ] traducción lista');
 }
 window.wireVersionSwitcher = wireVersionSwitcher;

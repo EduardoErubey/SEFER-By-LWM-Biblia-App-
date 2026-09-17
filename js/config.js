@@ -17,7 +17,7 @@ try{ window.BIBLE = BIBLE; if(window.BIBLE_DATA) BIBLE = window.BIBLE_DATA; wind
 const BOOK_ORDER = window.BOOK_ORDER || [];
 const BOOK_INFO = window.BOOK_INFO || { introduccion_testamentos: [], libros: [] };
 if(!window.BIBLE_DATA || !BOOK_ORDER.length){
-  console.info('[SEFER] Esperando bible-data.js (carga asíncrona)…');
+  console.info('[SIFRIÁ] Esperando bible-data.js (carga asíncrona)…');
 }
 
 /* DOM refs tempranos (evita TDZ / ReferenceError) */

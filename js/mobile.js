@@ -93,7 +93,7 @@
     const nav = document.getElementById('im-nav');
     if(nav) nav.style.display = 'none';
     document.getElementById('im-title').textContent = 'Guía rápida (móvil)';
-    document.getElementById('im-sub').textContent = 'Sifriá · BY LIFE WORD MISSION';
+    document.getElementById('im-sub').textContent = 'SIFRIÁ · BY LIFE WORD MISSION';
     document.getElementById('im-body').innerHTML = `
       <div class="im-block"><div class="im-label">Lectura</div>
       <div class="im-text">• Haz clic en un versículo para seleccionarlo, marcar favorito, añadir nota o proyectar.<br>

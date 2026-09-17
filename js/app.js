@@ -35,7 +35,7 @@ function seferBoot(){
   try{ if(typeof bootGoogle==='function') bootGoogle(); }catch(e){}
   try{ if(typeof renderBookList==='function') renderBookList(); }catch(e){}
   try{ if(typeof showWelcomeScreen==='function' && typeof showWelcome!=='undefined' && showWelcome) showWelcomeScreen(); }catch(e){}
-  console.info('[SEFER] boot OK', typeof SEFER_VERSION!=='undefined'?SEFER_VERSION:'');
+  console.info('[SIFRIÁ] boot OK', typeof SEFER_VERSION!=='undefined'?SEFER_VERSION:'');
 }
 window.seferBoot = seferBoot;
 if(document.readyState === 'loading'){
@@ -83,13 +83,13 @@ try{
         }
       }
       try{ if(typeof buildInfoNavList === 'function') buildInfoNavList(); }catch(e){}
-    }catch(e){ console.warn('[SEFER] syncBible', e); }
+    }catch(e){ console.warn('[SIFRIÁ] syncBible', e); }
   }
   function start(){
     syncBible();
     try{
       if(typeof seferBoot === 'function') seferBoot();
-    }catch(e){ console.error('[SEFER] boot', e); }
+    }catch(e){ console.error('[SIFRIÁ] boot', e); }
     try{
       if(typeof renderBookList === 'function') renderBookList();
     }catch(e){}

@@ -1,7 +1,7 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.20-stable";
-const SEFER_VERSION_NAME = "Historial: sifriá_v / sefer_v";
+const SEFER_VERSION = "2.5.21-stable";
+const SEFER_VERSION_NAME = "Nombre SIFRIÁ completo (solo sefer_v en historial antiguo)";
 
 
 const SEFER_VERSION_HISTORY = [
@@ -9,7 +9,7 @@ const SEFER_VERSION_HISTORY = [
     id: "2.5.19-stable",
     name: "Sifriá; toggle Plan/Glosario/Bio/Apócrifos/YT/Ayuda",
     date: "2026-09-16",
-    current: true,
+    current: false,
     changes: [
       "Nombre de la app: Sifriá סִפְרִיָּה (ya no SEFER ספר) en marca, bienvenida, título, ayuda, tour y README",
       "Toggle: 1.er clic abre y 2.º clic cierra — Plan, Glosario, Biografía, Apócrifos, YouTube y Ayuda",
@@ -63,7 +63,7 @@ const SEFER_VERSION_HISTORY = [
     id: "2.5.14-stable",
     name: "Significados/Notas/Favoritos cierran otras ventanas; Plan blindado",
     date: "2026-09-16",
-    current: true,
+    current: false,
     changes: [
       "Significados, Notas y Favoritos ahora también cierran cualquier otra ventana del toolkit que siga abierta (Plan/Glosario/Biografía/Apócrifos/YouTube/Ayuda/Perfil/Proyectar) antes de abrirse — antes solo lo hacían en sentido contrario",
       "Revisado Plan de Lectura en 1 Año: el código ya defaultea a Canónico AT→NT + 1 ene–31 dic cuando no hay una elección guardada, y respeta la elección manual del usuario si la cambia; se agregó una validación defensiva que ignora cualquier valor guardado corrupto o desconocido y vuelve a ese default"
@@ -73,7 +73,7 @@ const SEFER_VERSION_HISTORY = [
     id: "2.5.13-stable",
     name: "Proyección siempre por encima de la toolkit",
     date: "2026-09-16",
-    current: true,
+    current: false,
     changes: [
       "Corregido que la toolkit (y hasta un modal abierto) se vieran por encima de la proyección (#stage) en vez de quedar tapados por ella",
       "Causa: #stage tenía z-index:999 desde antes; al subir la toolkit a 2000/2001 (fix del cursor) y los modales a 1300/1301, la proyección quedó por debajo de ambos sin que nadie la hubiera vuelto a subir",
@@ -84,7 +84,7 @@ const SEFER_VERSION_HISTORY = [
     id: "2.5.12-stable",
     name: "Toolkit sin cruces: cristal corregido y ventanas exclusivas",
     date: "2026-09-16",
-    current: true,
+    current: false,
     changes: [
       "Corregido que en el lote de temas 'cristal' (Glass, AMOLED, México, Ucrania, Corea, Night) la toolkit siguiera oscurecida y sin cursor de mano al abrir Plan/Glosario/Biografía/Apócrifos/YouTube/Ayuda",
       "Causa: body.theme-glass #topbar (themes.css) es más específica que la regla #topbar de modals.css, así que su z-index:500 ganaba la cascada y le devolvía a la toolkit un techo de apilamiento por debajo del fondo oscuro (1300). Se igualó a z-index:2000, el mismo valor ya usado para la toolkit",

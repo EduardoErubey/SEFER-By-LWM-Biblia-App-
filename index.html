@@ -365,7 +365,7 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   
 <script>
-/* SEFER — carga Biblia (prueba bible/ y raíz) */
+/* SIFRIÁ — carga Biblia (prueba bible/ y raíz) */
 (function(){
   function loadOne(file){
     return new Promise(function(resolve, reject){
@@ -377,7 +377,7 @@
         var s = document.createElement('script');
         s.src = url;
         s.async = false;
-        s.onload = function(){ console.info('[SEFER] OK', url); resolve(url); };
+        s.onload = function(){ console.info('[SIFRIÁ] OK', url); resolve(url); };
         s.onerror = function(){ next(); };
         document.head.appendChild(s);
       }
@@ -391,10 +391,10 @@
       try{
         if(window.BIBLE_DATA){ window.BIBLE = window.BIBLE_DATA; }
       }catch(e){}
-      console.info('[SEFER] Biblia lista', Object.keys(window.BIBLE_DATA||{}).length, 'libros');
+      console.info('[SIFRIÁ] Biblia lista', Object.keys(window.BIBLE_DATA||{}).length, 'libros');
     })
     .catch(function(err){
-      console.error('[SEFER]', err);
+      console.error('[SIFRIÁ]', err);
       try{
         alert('No se cargó el texto bíblico. Necesitas en el repo:\n• bible/bible-data.js\n• bible/bible-versions.js\n• bible/book-info.js');
       }catch(e){}

@@ -622,7 +622,7 @@ function lookupBiblical(word){
   if(!exact) return null;
   // Coincidencia exacta siempre gana (Dios ≠ dio)
   if(DICT_NORM[exact]){
-    return { term: DICT_NORM[exact].term, def: DICT_NORM[exact].def, source: 'Diccionario bíblico de SEFER' };
+    return { term: DICT_NORM[exact].term, def: DICT_NORM[exact].def, source: 'Diccionario bíblico de SIFRIÁ' };
   }
   const keys = dictLookupKeys(word)
     .filter(k => k && k !== exact)
@@ -630,7 +630,7 @@ function lookupBiblical(word){
   for(const k of keys){
     if(!DICT_NORM[k]) continue;
     if((exact === k + 's' || exact === k + 'es') && DICT_SHORT_VERBS.has(k)) continue;
-    return { term: DICT_NORM[k].term, def: DICT_NORM[k].def, source: 'Diccionario bíblico de SEFER' };
+    return { term: DICT_NORM[k].term, def: DICT_NORM[k].def, source: 'Diccionario bíblico de SIFRIÁ' };
   }
   return null;
 }

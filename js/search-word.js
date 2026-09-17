@@ -103,7 +103,7 @@ function runWordSearch(q){
       const cur = hist.find(v=>v.current) || hist[0];
       if(wordSearchResults){
         wordSearchResults.innerHTML = '<div class="ws-hit" style="cursor:pointer;padding:10px 12px;" id="ws-open-versions">'
-          + '<div style="font-weight:700;color:var(--rubric);">📋 Historial de versiones SEFER</div>'
+          + '<div style="font-weight:700;color:var(--rubric);">📋 Historial de versiones SIFRIÁ</div>'
           + '<div style="font-size:12px;color:var(--ink-soft);margin-top:4px;">Versión actual: '
           + seferVersionSlug(cur && cur.id ? cur.id : (typeof SEFER_VERSION!=='undefined'?SEFER_VERSION:'?'))
           + (cur && cur.name ? ' — ' + cur.name : '')

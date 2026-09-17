@@ -139,7 +139,7 @@ function selectGenePerson(id, fromBack){
 
   let bioHtml = rich
     ? '<p class="gd-bio">'+p.bio+'</p>'
-    : '<p class="gd-empty">'+(p.bio && p.bio.trim() ? p.bio : 'No hay biografía detallada de esta persona en SEFER. Solo se conoce lo que mencionan brevemente las Escrituras.')+'</p>';
+    : '<p class="gd-empty">'+(p.bio && p.bio.trim() ? p.bio : 'No hay biografía detallada de esta persona en SIFRIÁ. Solo se conoce lo que mencionan brevemente las Escrituras.')+'</p>';
 
   let family = '';
   if(parent){

@@ -137,7 +137,7 @@ function showWordPopup(word, x, y){
   // Diccionario local → mostrar
   const hit = lookupBiblical(word);
   if(hit){
-    openWordPopupAt(word, x, y, hit.def, hit.source || 'Diccionario bíblico de SEFER');
+    openWordPopupAt(word, x, y, hit.def, hit.source || 'Diccionario bíblico de SIFRIÁ');
     return;
   }
 

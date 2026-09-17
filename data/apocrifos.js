@@ -27,6 +27,6 @@ const APOCRIFOS_INFO = [
   {t:'Protoevangelio de Santiago', d:'Relata el nacimiento y la infancia de María, y el nacimiento de Jesús. Curiosidad: aunque no es Escritura para nadie, influyó bastante en el arte y las tradiciones marianas posteriores.'},
   {t:'Hechos apócrifos (Pablo, Pedro, Juan, Andrés, Tomás)', d:'Relatos legendarios de viajes, milagros y martirios de los apóstoles, escritos entre los siglos II–III. Curiosidad: de aquí vienen tradiciones populares como la crucifixión de Pedro cabeza abajo.'},
   {t:'Nota aparte: Padres Apostólicos', d:'El Pastor de Hermas, la Epístola de Bernabé y la Didaché a veces se mencionan junto a los «apócrifos», pero no lo son: son escritos cristianos de enseñanza (no narran hechos atribuidos a figuras bíblicas) y algunas comunidades antiguas incluso los leían en el culto.'},
-  {t:'Nota para SEFER', d:'Esta sección es solo educativa. El texto bíblico de la app es el de los 66 libros de la Reina-Valera 1960.'}
+  {t:'Nota para SIFRIÁ', d:'Esta sección es solo educativa. El texto bíblico de la app es el de los 66 libros de la Reina-Valera 1960.'}
 ];
 window.APOCRIFOS_INFO = APOCRIFOS_INFO;
