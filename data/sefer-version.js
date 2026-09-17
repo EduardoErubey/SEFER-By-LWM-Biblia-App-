@@ -1,7 +1,7 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.22-stable";
-const SEFER_VERSION_NAME = "Hebreo סִפְרִיָּה bicolor (homenaje a SEFER)";
+const SEFER_VERSION = "2.5.23-stable";
+const SEFER_VERSION_NAME = "Buscador: scroll al escribir referencias largas";
 
 
 const SEFER_VERSION_HISTORY = [

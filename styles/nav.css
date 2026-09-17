@@ -791,3 +791,11 @@ body.yt-sidebar-active #yt-iframe-box iframe {
 .brand-heb .brand-heb-b,
 .welcome-brand .brand-heb-b,
 .welcome .brand-heb-b { color: var(--gold) !important; }
+
+
+/* Buscador de versículos: scroll horizontal al escribir referencias largas */
+#ref-search {
+  overflow-x: auto !important;
+  white-space: nowrap !important;
+  text-overflow: clip !important;
+}

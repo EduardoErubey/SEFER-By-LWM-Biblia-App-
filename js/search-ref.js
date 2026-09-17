@@ -7,6 +7,32 @@
 /* dom ref hoisted */
 const refSearch = document.getElementById('ref-search');
 const refSearchWrap = document.getElementById('ref-search-wrap');
+
+/** Mantiene visible el final del texto / el cursor en el buscador de versículos */
+function seferScrollRefSearchCaret(){
+  try{
+    const el = document.getElementById('ref-search');
+    if(!el) return;
+    // Al final: scroll máximo a la derecha
+    const atEnd = (typeof el.selectionStart === 'number')
+      ? el.selectionStart >= (el.value||'').length
+      : true;
+    if(atEnd){
+      el.scrollLeft = el.scrollWidth;
+    } else if(typeof el.selectionStart === 'number'){
+      // Aproximar posición del caret (ancho medio de carácter)
+      const style = window.getComputedStyle(el);
+      const cs = parseFloat(style.fontSize) || 12.5;
+      // factor ~0.55 del font-size en UI mono/proporcional
+      const approx = el.selectionStart * cs * 0.55;
+      const pad = 24;
+      const view = el.clientWidth;
+      if(approx - pad < el.scrollLeft) el.scrollLeft = Math.max(0, approx - pad);
+      else if(approx + pad > el.scrollLeft + view) el.scrollLeft = approx + pad - view;
+    }
+  }catch(e){}
+}
+
 const refPhAnim = document.getElementById('ref-ph-anim');
 
 /* Placeholder animado del buscador */
@@ -53,7 +79,13 @@ if(refSearch){
     refSearchWrap?.classList.remove('focused');
     updateRefPhVisibility();
   });
-  refSearch.addEventListener('input', updateRefPhVisibility);
+  refSearch.addEventListener('input', function(){
+    updateRefPhVisibility();
+    seferScrollRefSearchCaret();
+  });
+  refSearch.addEventListener('keyup', seferScrollRefSearchCaret);
+  refSearch.addEventListener('click', seferScrollRefSearchCaret);
+  refSearch.addEventListener('select', seferScrollRefSearchCaret);
   updateRefPhVisibility();
   startRefPhCycle();
 }
@@ -345,6 +377,7 @@ function applyRefSuggestion(i){
   refSearch.focus();
   const len = refSearch.value.length;
   refSearch.setSelectionRange(len, len);
+  seferScrollRefSearchCaret();
   try{ updateRefAutocomplete(); }catch(e){}
 }
 
