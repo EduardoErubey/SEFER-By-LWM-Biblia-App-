@@ -38,7 +38,9 @@ body.mobile-mode #mobile-footer-search #ref-search-wrap{margin-top:0;}
 
 #nav-header-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
 
-.brand-heb{font-size:15px;color:var(--gold);margin-left:4px;font-weight:400;}
+.brand-heb{font-size:15px;margin-left:4px;font-weight:400;display:inline;}
+.brand-heb-a{color:var(--rubric);} /* raíz סִפְרִ — homenaje a SEFER */
+.brand-heb-b{color:var(--gold);}  /* יָּה */
 
 #nav-header-actions .nav-action-btn{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;border:1px solid var(--line);background:var(--parchment);color:var(--ink-soft);border-radius:6px;width:30px;height:30px;min-width:30px;min-height:30px;padding:0;margin:0;font-family:var(--font-ui);font-size:14px;font-weight:600;line-height:1;cursor:pointer;flex-shrink:0;transition:border-color .15s, color .15s, background .15s;}
 
@@ -134,7 +136,9 @@ body.mobile-mode #mobile-footer-search #ref-search-wrap{margin-top:0;}
 
 .theme-dot .flag-svg{display:block;width:20px;height:14px;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,0.12);}
 
-.welcome-brand .brand-heb{font-size:22px;color:var(--gold);margin-left:6px;font-weight:400;font-family:inherit;}
+.welcome-brand .brand-heb{font-size:22px;margin-left:6px;font-weight:400;font-family:inherit;}
+.welcome-brand .brand-heb-a{color:var(--rubric);}
+.welcome-brand .brand-heb-b{color:var(--gold);}
 
 body.vp-narrow #nav{--nav-w:280px;width:220px;min-width:220px;}
 
@@ -778,3 +782,12 @@ body.yt-sidebar-active #yt-iframe-box iframe {
   height: 100% !important;
   border: 0 !important;
 }
+
+
+/* SIFRIÁ hebreo bicolor (todos los temas usan --rubric / --gold del tema) */
+.brand-heb .brand-heb-a,
+.welcome-brand .brand-heb-a,
+.welcome .brand-heb-a { color: var(--rubric) !important; }
+.brand-heb .brand-heb-b,
+.welcome-brand .brand-heb-b,
+.welcome .brand-heb-b { color: var(--gold) !important; }

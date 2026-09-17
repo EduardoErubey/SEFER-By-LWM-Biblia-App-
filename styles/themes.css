@@ -1471,3 +1471,16 @@ body[data-theme="lwm-night"] #topbar-actions .tb-group + .tb-group {
 body[data-theme="lwm-night"] #topbar-actions .tb-group + .tb-group {
   border-left-color: rgba(91,163,224,0.3) !important;
 }
+
+
+/* SIFRIÁ — hebreo bicolor respeta variables del tema activo */
+[data-theme] .brand-heb .brand-heb-a,
+[data-theme] .welcome-brand .brand-heb-a,
+[data-theme] .welcome .brand-heb-a {
+  color: var(--rubric) !important;
+}
+[data-theme] .brand-heb .brand-heb-b,
+[data-theme] .welcome-brand .brand-heb-b,
+[data-theme] .welcome .brand-heb-b {
+  color: var(--gold) !important;
+}
