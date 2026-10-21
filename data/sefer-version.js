@@ -1,15 +1,27 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.33-stable";
-const SEFER_VERSION_NAME = "Toolkit estable en 2.º monitor / TV";
+const SEFER_VERSION = "2.5.34-stable";
+const SEFER_VERSION_NAME = "Dado: un solo versículo en proyección";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.34-stable",
+    name: "Dado: un solo versículo en proyección",
+    date: "2026-10-21",
+    current: true,
+    changes: [
+      "El dado proyecta exactamente un versículo",
+      "Se limpian paneles de stack/compare residuales al usar el dado",
+      "CSS: panel B oculto fuera de modos stack/compare"
+    ]
+  },
+
+  {
     id: "2.5.33-stable",
     name: "Toolkit estable en 2.º monitor / TV",
     date: "2026-10-20",
-    current: true,
+    current: false,
     changes: [
       "Corrección de botones desacomodados en monitor secundario / TV",
       "Se deja de usar transform:scale en la toolkit (provocaba desalineación)",

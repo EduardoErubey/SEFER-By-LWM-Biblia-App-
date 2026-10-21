@@ -204,3 +204,10 @@ body.mobile-mode #stage-exit{top:14px;right:14px;font-size:11px;padding:5px 10px
   align-items: center;
 }
 #stage.stage-stack .stage-pane{ width: 100%; }
+
+/* Dado / single: el panel B no debe verse nunca fuera de stack/compare */
+#stage:not(.stage-stack):not(.stage-compare) #stage-pane-b,
+#stage:not(.stage-stack):not(.stage-compare) #stage-pane-c{
+  display:none !important;
+  visibility:hidden !important;
+}

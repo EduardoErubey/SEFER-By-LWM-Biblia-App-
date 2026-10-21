@@ -97,12 +97,15 @@ function goToRandomVerse(){
   const chaps = Object.keys(BIBLE[book]).filter(c=>BIBLE[book][c] && Object.keys(BIBLE[book][c]).length);
   if(!chaps.length) return;
   const chap = chaps[Math.floor(Math.random()*chaps.length)];
-  const verses = Object.keys(BIBLE[book][chap]);
-  const v = verses[Math.floor(Math.random()*verses.length)];
+  /* Solo claves de versículo numéricas (evita basura o rangos) */
+  const verses = Object.keys(BIBLE[book][chap]).filter(function(k){
+    return /^\d+$/.test(String(k)) && (BIBLE[book][chap][k] || BIBLE[book][chap][String(k)]);
+  });
+  if(!verses.length) return;
+  const v = String(verses[Math.floor(Math.random()*verses.length)]);
   openTestaments.add(BOOK_ORDER.find(e=>e.name===book)?.testament || 'AT');
   try{ openBooks.clear(); openBooks.add(book); }catch(e){}
   saveNavState();
-  // Evitar scroll del documento (franja negra)
   try{
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
@@ -111,18 +114,34 @@ function goToRandomVerse(){
     document.body.style.overflow = 'hidden';
   }catch(e){}
   goTo(book, chap);
-  detailVerse = String(v);
+  detailVerse = v;
   selectionUIActive = false;
-  selectedVerses = [String(v)];
-  lastCheckedVerse = String(v); // SEFER FIX 2.5.17: mismo caso que goToRef — sin esto no aparece 📋 Copiar
+  selectedVerses = [v];
+  lastCheckedVerse = v;
   updateSelectionUI();
   renderReader();
   renderBookList();
-  // Mostrar en modo proyectar
+  /* Un solo versículo en proyección; limpiar modo stack/compare residual */
   stageFromDice = true;
   stageFromSearch = false;
+  try{
+    if(typeof stageStackSecond !== 'undefined') stageStackSecond = null;
+    if(typeof stageStackThird !== 'undefined') stageStackThird = null;
+    if(typeof stageCompareOn !== 'undefined') stageCompareOn = false;
+    if(typeof stageCompareData !== 'undefined') stageCompareData = null;
+    var st = document.getElementById('stage');
+    if(st){ st.classList.remove('stage-stack','stage-stack-2','stage-stack-3','stage-compare'); }
+    var paneB = document.getElementById('stage-pane-b');
+    if(paneB){ paneB.style.display = 'none'; paneB.style.visibility = 'hidden'; }
+    var paneC = document.getElementById('stage-pane-c');
+    if(paneC){ paneC.style.display = 'none'; }
+    var tb = document.getElementById('stage-text-b');
+    if(tb) tb.innerHTML = '';
+    var rb = document.getElementById('stage-ref-b');
+    if(rb) rb.textContent = '';
+  }catch(e){}
   if(typeof openStage === 'function'){
-    openStage(book, chap, [String(v)], 'single');
+    openStage(book, chap, [v], 'single');
   }
   try{ updateStageExtraBtns(); }catch(e){}
   try{ updateStageCompareVisibility(); }catch(e){}

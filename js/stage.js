@@ -20,16 +20,32 @@ let stageStackThird = null;
 let stageCompareData = null; // segundo corpus BIBLE para compare
 
 function openStage(book, chap, verses, mode){
-  stageMode = mode || (verses && verses.length > 1 ? 'selection' : 'single');
-  stagePassages = [{book, chap, verses: [...verses].map(String).sort((a,b)=>+a-+b)}];
+  var vlist = (verses && verses.length) ? [...verses].map(String) : [];
+  stageMode = mode || (vlist.length > 1 ? 'selection' : 'single');
+  /* Si es single (p. ej. dado), forzar exactamente un versículo */
+  if(stageMode === 'single' && vlist.length > 1) vlist = [vlist[0]];
+  if(stageMode === 'single' && vlist.length === 0) return;
+  stagePassages = [{book, chap, verses: vlist.slice().sort((a,b)=>+a-+b)}];
   stageIndex = 0;
   stageStackSecond = null;
   stageStackThird = null;
   stageCompareOn = false;
+  stageCompareData = null;
   stageFromSearch = false;
-  if(stage){ stage.classList.remove('stage-stack','stage-compare'); }
+  if(stage){
+    stage.classList.remove('stage-stack','stage-stack-2','stage-stack-3','stage-compare');
+  }
   const paneB = document.getElementById('stage-pane-b');
-  if(paneB) paneB.style.display = 'none';
+  if(paneB){
+    paneB.style.display = 'none';
+    paneB.style.visibility = 'hidden';
+  }
+  const paneC = document.getElementById('stage-pane-c');
+  if(paneC) paneC.style.display = 'none';
+  const textB = document.getElementById('stage-text-b');
+  if(textB) textB.innerHTML = '';
+  const refB = document.getElementById('stage-ref-b');
+  if(refB) refB.textContent = '';
   const sel = document.getElementById('stage-compare-sel');
   if(sel) sel.style.display = 'none';
   renderStage();
@@ -218,8 +234,10 @@ function renderStage(){
       if(base && base.indexOf('·') < 0) stageRef.textContent = metaA.short + ' · ' + base;
     }
   } else {
-    if(stage){ stage.classList.remove('stage-stack','stage-compare'); }
-    if(paneB) paneB.style.display = 'none';
+    if(stage){ stage.classList.remove('stage-stack','stage-stack-2','stage-stack-3','stage-compare'); }
+    if(paneB){ paneB.style.display = 'none'; paneB.style.visibility = 'hidden'; }
+    const _tc = document.getElementById('stage-pane-c');
+    if(_tc) _tc.style.display = 'none';
   }
 
   // Anterior/Siguiente: ocultos en capítulo completo o stack multi-libro
