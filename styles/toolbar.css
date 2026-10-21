@@ -1420,3 +1420,69 @@ body[data-theme="lwm-night"] #topbar-actions .tb-group + .tb-group {
   text-overflow: clip !important;
   white-space: nowrap !important;
 }
+
+
+/* ===== Toolkit density (2.º monitor / TV / ventanas estrechas) =====
+   Evita transform:scale (desacomoda botones). Compacta tipografía y padding. */
+#topbar.tk-density-1 #topbar-actions{ gap:3px 4px !important; }
+#topbar.tk-density-1 #topbar-actions .btn,
+#topbar.tk-density-1 #help-btn{
+  font-size:10px !important;
+  padding:3px 5px !important;
+}
+#topbar.tk-density-1 #topbar-actions .btn-icon{
+  padding:3px 5px !important;
+  min-width:26px !important;
+}
+#topbar.tk-density-1 .version-switch-toolkit,
+#topbar.tk-density-1 #version-btn{
+  font-size:10px !important;
+  max-width:4.6em !important;
+  padding:3px 4px !important;
+}
+
+#topbar.tk-density-2 #topbar-actions{ gap:2px 3px !important; }
+#topbar.tk-density-2 #topbar-actions .btn,
+#topbar.tk-density-2 #help-btn{
+  font-size:9.5px !important;
+  padding:2px 4px !important;
+}
+#topbar.tk-density-2 #topbar-actions .btn-icon{
+  padding:2px 4px !important;
+  min-width:24px !important;
+}
+#topbar.tk-density-2 .version-switch-toolkit,
+#topbar.tk-density-2 #version-btn{
+  font-size:9.5px !important;
+  max-width:4.2em !important;
+}
+
+#topbar.tk-density-3 #topbar-actions{ gap:2px !important; }
+#topbar.tk-density-3 #topbar-actions .btn,
+#topbar.tk-density-3 #help-btn{
+  font-size:9px !important;
+  padding:2px 3px !important;
+}
+#topbar.tk-density-3 #topbar-actions .btn-icon{
+  padding:2px 3px !important;
+  min-width:22px !important;
+}
+#topbar.tk-density-3 .tb-group{ gap:2px !important; }
+
+/* Solo si aún no cabe: una segunda fila ordenada, no botones sueltos */
+#topbar.tk-density-wrap{
+  flex-wrap:wrap !important;
+  overflow:visible !important;
+  align-content:flex-start !important;
+}
+#topbar.tk-density-wrap #topbar-actions{
+  flex-wrap:wrap !important;
+  justify-content:flex-end !important;
+  max-width:100% !important;
+}
+
+/* Contenedor app: altura estable en pantallas externas */
+#app, #main, #content-wrap{
+  max-width:100vw;
+  box-sizing:border-box;
+}

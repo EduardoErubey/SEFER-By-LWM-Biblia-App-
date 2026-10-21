@@ -49,7 +49,7 @@ body.mobile-mode #mobile-footer-search{flex:1 1 150px;min-width:150px;}
 
 body.mobile-mode .welcome-mobile{max-width:340px;margin:0 auto;text-align:center;padding:16px 12px;}
 
-body.mobile-mode .welcome-mobile h1{font-family:var(--font-display);font-size:24px;font-weight:600;color:var(--rubric);margin:0 0 4px;}
+body.mobile-mode .welcome-mobile h1{font-family:Georgia,"Times New Roman",serif;font-size:24px;font-weight:600;color:var(--rubric);margin:0 0 4px;}
 
 body.mobile-mode .welcome-mobile .welcome-heb{font-size:18px;color:var(--gold);margin-bottom:10px;}
 
@@ -65,7 +65,7 @@ body.mobile-mode .welcome-mobile .welcome-hint{font-size:12px;font-style:italic;
 
 #notes-btn.active-panel{background:var(--rubric);border-color:var(--rubric);color:var(--parchment);}
 
-#current-ref{font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink);white-space:nowrap;line-height:1.35;}
+#current-ref{font-family:Georgia,"Times New Roman",serif;font-size:15px;font-weight:600;color:var(--ink);white-space:nowrap;line-height:1.35;}
 
 #selection-info{font-family:var(--font-ui);font-size:11.5px;color:var(--gold);font-weight:600;line-height:1.35;white-space:normal;word-break:break-word;display:inline-block;text-align:right;max-width:100%;}
 
@@ -107,7 +107,7 @@ body.mobile-mode .welcome-mobile .welcome-hint{font-size:12px;font-style:italic;
 
 .welcome{max-width:560px;margin:48px auto;text-align:center !important;padding:24px;}
 
-.welcome h1{font-family:var(--font-display);font-size:28px;font-weight:600;color:var(--rubric);margin:0 0 8px;}
+.welcome h1{font-family:Georgia,"Times New Roman",serif;font-size:28px;font-weight:600;color:var(--rubric);margin:0 0 8px;}
 
 .welcome .welcome-heb{font-size:22px;color:var(--gold);margin-bottom:18px;}
 
@@ -157,7 +157,7 @@ body.mobile-mode{}
 
 .plan-order-btn.active, .plan-mode-btn.active{background:var(--rubric);border-color:var(--rubric);color:#fff;}
 
-.welcome-brand, .welcome h1.welcome-brand{font-family:var(--font-display);font-weight:600;font-size:28px;color:var(--rubric);letter-spacing:0.2px;margin:0 0 8px;}
+.welcome-brand,.welcome h1.welcome-brand{font-family:Georgia,"Times New Roman",serif;font-weight:600;font-size:28px;color:var(--rubric);letter-spacing:0.04em;margin:0 0 8px;}
 
 .welcome-sub{font-family:var(--font-ui);font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.8px;margin:0 0 18px;}
 
@@ -179,7 +179,7 @@ body.mobile-mode{}
 
 @keyframes toastOut{from{transform:translateX(0);opacity:1;}to{transform:translateX(-120%);opacity:0;}}
 
-#gene-detail .gd-name{font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--rubric);margin:0 0 8px;}
+#gene-detail .gd-name{font-family:Georgia,"Times New Roman",serif;font-size:24px;font-weight:700;color:var(--rubric);margin:0 0 8px;}
 
 #gene-detail .gd-bio{font-size:15px;line-height:1.65;margin:0 0 14px;}
 

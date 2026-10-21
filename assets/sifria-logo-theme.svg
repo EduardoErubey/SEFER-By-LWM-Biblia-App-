@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 420" role="img" aria-label="SIFRIÁ סִפְרִיָּה">
+  <title>SIFRIÁ</title>
+  <!-- Colores fijos del logo original; en HTML se puede sobrescribir con CSS si se inline -->
+  <path class="logo-page-l" fill="#5BB4E5" d="M200 95 C168 88,120 95,78 118 C70 122,62 138,58 158 L52 210 C48 235,55 250,78 255 C110 262,155 258,195 248 L200 245 Z"/>
+  <path class="logo-page-r" fill="#4BA3D9" d="M200 95 C232 88,280 95,322 118 C330 122,338 138,342 158 L348 210 C352 235,345 250,322 255 C290 262,245 258,205 248 L200 245 Z"/>
+  <path class="logo-base" fill="#2E6B9E" d="M58 200 C50 230,55 268,90 278 C130 290,170 285,200 278 C230 285,270 290,310 278 C345 268,350 230,342 200 L348 215 C352 250,340 285,305 295 C265 308,230 300,200 292 C170 300,135 308,95 295 C60 285,48 250,52 215 Z"/>
+  <path class="logo-base-dark" fill="#1E4A72" d="M70 255 C60 275,75 300,110 308 C145 318,175 312,200 305 C225 312,255 318,290 308 C325 300,340 275,330 255 L335 268 C340 295,320 318,280 325 C245 333,220 325,200 318 C180 325,155 333,120 325 C80 318,60 295,65 268 Z"/>
+  <ellipse cx="200" cy="318" rx="28" ry="10" fill="#163A5C"/>
+  <path fill="#FFFFFF" opacity="0.95" d="M200 100 L175 250 L225 250 Z"/>
+  <circle cx="200" cy="230" r="7" fill="#E8B82E"/>
+  <circle cx="200" cy="205" r="4.5" fill="#E8B82E"/>
+  <circle cx="200" cy="185" r="3.5" fill="#E8B82E"/>
+  <circle cx="200" cy="168" r="3" fill="#E8B82E"/>
+  <circle cx="200" cy="152" r="2.5" fill="#E8B82E"/>
+  <circle cx="200" cy="138" r="2" fill="#E8B82E"/>
+  <circle cx="200" cy="126" r="1.8" fill="#E8B82E"/>
+  <circle cx="200" cy="116" r="1.5" fill="#E8B82E"/>
+  <rect x="193" y="48" width="14" height="52" rx="2" fill="#E8B82E"/>
+  <rect x="175" y="58" width="50" height="12" rx="2" fill="#E8B82E"/>
+  <text x="200" y="370" text-anchor="middle" font-family="Georgia, serif" font-size="56" font-weight="600" letter-spacing="0.04em">
+    <tspan fill="#5BB4E5">SIFRI</tspan><tspan fill="#E8B82E">Á</tspan>
+  </text>
+  <text x="200" y="405" text-anchor="middle" direction="rtl" font-family="Georgia, 'Noto Serif Hebrew', serif" font-size="28" font-weight="600">
+    <tspan fill="#5BB4E5">סִפְרִ</tspan><tspan fill="#E8B82E">יָּה</tspan>
+  </text>
+</svg>

@@ -84,6 +84,7 @@ function applyViewportLayout(){
   const h = window.innerHeight || document.documentElement.clientHeight || 800;
   document.body.classList.remove('vp-narrow', 'vp-medium', 'vp-wide');
   if(w < 1100) document.body.classList.add('vp-narrow');
+  /* applyViewportClass alias */
   else if(w < 1400) document.body.classList.add('vp-medium');
   else document.body.classList.add('vp-wide');
   document.documentElement.style.setProperty('--vp-w', w + 'px');
@@ -177,7 +178,7 @@ document.addEventListener('keydown', (e)=>{
   const flagMX = '<svg class="flag-svg" viewBox="0 0 36 24" width="20" height="14" aria-hidden="true"><rect width="12" height="24" x="0" fill="#006847"/><rect width="12" height="24" x="12" fill="#fff"/><rect width="12" height="24" x="24" fill="#CE1126"/><circle cx="18" cy="12" r="3.2" fill="#006847"/></svg>';
   const flagKR = '<svg class="flag-svg" viewBox="0 0 36 24" width="20" height="14" aria-hidden="true"><rect width="36" height="24" fill="#fff" stroke="#ddd" stroke-width="0.5"/><circle cx="18" cy="12" r="5" fill="#CD2E3A"/><path d="M18 12a5 5 0 0 1 0-0.01 2.5 2.5 0 1 0 0 0.01z" fill="#0047A0"/><g fill="#000"><rect x="6" y="4" width="5" height="1.2"/><rect x="6" y="6" width="2" height="1.2"/><rect x="9" y="6" width="2" height="1.2"/><rect x="6" y="8" width="5" height="1.2"/><rect x="25" y="4" width="5" height="1.2"/><rect x="25" y="6.6" width="5" height="1.2"/><rect x="25" y="9.2" width="5" height="1.2"/><rect x="6" y="14.5" width="5" height="1.2"/><rect x="6" y="17.1" width="2" height="1.2"/><rect x="9" y="17.1" width="2" height="1.2"/><rect x="6" y="19.7" width="5" height="1.2"/><rect x="25" y="14.5" width="2" height="1.2"/><rect x="28" y="14.5" width="2" height="1.2"/><rect x="25" y="17.1" width="5" height="1.2"/><rect x="25" y="19.7" width="2" height="1.2"/><rect x="28" y="19.7" width="2" height="1.2"/></g></svg>';
   const BATCH_A = [
-    {t:'lwm-day', tip:'Life Word Mission', html:'🕊️'},
+    {t:'lwm-day', tip:'Día', html:'🕊️'},
     {t:'eden', tip:'Edén', html:'🌿'},
     {t:'sandalo', tip:'Sándalo', html:'🕯️'},
     {t:'reino', tip:'Reino', html:'👑'},
@@ -268,3 +269,15 @@ document.addEventListener('keydown', (e)=>{
     window.applyThemeIcons = applyThemeIcons;
   }
 })();
+
+function applyViewportClass(){
+  try{
+    const w = window.innerWidth || document.documentElement.clientWidth || 1200;
+    document.body.classList.remove('vp-narrow', 'vp-medium', 'vp-wide');
+    if(w < 1100) document.body.classList.add('vp-narrow');
+    else if(w < 1400) document.body.classList.add('vp-medium');
+    else document.body.classList.add('vp-wide');
+    if(typeof seferFitToolkit === 'function') seferFitToolkit();
+  }catch(e){}
+}
+window.applyViewportClass = applyViewportClass;

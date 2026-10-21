@@ -105,27 +105,66 @@ try{
 
 
 /* Ajusta la toolkit si aún no caben todos los botones */
+
 function seferFitToolkit(){
   try{
     var bar = document.getElementById('topbar');
     var actions = document.getElementById('topbar-actions');
     if(!bar || !actions) return;
-    actions.style.transform = 'none';
-    actions.style.transformOrigin = 'right center';
-    /* medir con un frame libre de transform */
-    var avail = Math.max(40, bar.clientWidth - 4);
+
+    /* Quitar escala previa (causaba desacomodo en 2.º monitor / TV) */
+    actions.style.transform = '';
+    actions.style.transformOrigin = '';
+    actions.style.width = '';
+    bar.classList.remove('tk-density-0','tk-density-1','tk-density-2','tk-density-3');
+
+    var avail = Math.max(40, bar.clientWidth - 8);
+    /* medir sin compactar */
     var need = actions.scrollWidth;
-    if(need > avail){
-      var s = Math.max(0.68, (avail / need) * 0.98);
-      actions.style.transform = 'scale(' + s + ')';
+    var ratio = need > 0 ? (avail / need) : 1;
+    var dens = 0;
+    if(ratio < 0.98) dens = 1;
+    if(ratio < 0.88) dens = 2;
+    if(ratio < 0.78) dens = 3;
+    if(dens > 0) bar.classList.add('tk-density-' + dens);
+
+    /* Si aún no cabe, permitir wrap controlado (última opción) */
+    if(actions.scrollWidth > bar.clientWidth - 4){
+      bar.classList.add('tk-density-wrap');
+    } else {
+      bar.classList.remove('tk-density-wrap');
     }
   }catch(e){}
 }
 window.seferFitToolkit = seferFitToolkit;
-window.addEventListener('resize', function(){ seferFitToolkit(); });
+
+function seferBindDisplayFit(){
+  var t = null;
+  function run(){
+    if(t) clearTimeout(t);
+    t = setTimeout(function(){
+      seferFitToolkit();
+      try{
+        if(typeof applyViewportClass === 'function') applyViewportClass();
+        else if(typeof window.applyViewportClass === 'function') window.applyViewportClass();
+      }catch(e){}
+    }, 60);
+  }
+  window.addEventListener('resize', run);
+  window.addEventListener('orientationchange', run);
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize', run);
+    window.visualViewport.addEventListener('scroll', run);
+  }
+  /* al volver a la pestaña / cambiar de monitor */
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden) run(); });
+  run();
+  setTimeout(run, 200);
+  setTimeout(run, 600);
+}
+
 if(document.readyState === 'loading'){
-  document.addEventListener('DOMContentLoaded', function(){ setTimeout(seferFitToolkit, 50); setTimeout(seferFitToolkit, 300); });
+  document.addEventListener('DOMContentLoaded', seferBindDisplayFit);
 } else {
-  setTimeout(seferFitToolkit, 50);
-  setTimeout(seferFitToolkit, 300);
+  seferBindDisplayFit();
 }

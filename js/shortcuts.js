@@ -113,7 +113,7 @@ function seferRedrawThemeBatch(showB, active){
     {t:'reino', tip:'Reino', html:'👑'},{t:'eden', tip:'Edén', html:'🌿'}
   ];
   const B = [
-    {t:'lwm-day', tip:'LWM-Day', html:'☀️'},{t:'lwm-night', tip:'LWM-Night', html:'🌙'},{t:'arena', tip:'Arena', html:'⏳'},
+    {t:'lwm-day', tip:'Día', html:'☀️'},{t:'lwm-night', tip:'Noche', html:'🌙'},{t:'arena', tip:'Arena', html:'⏳'},
     {t:'sandalo', tip:'Sándalo', html:'🕯️'},{t:'amoled', tip:'Glass', html:'🫧'}
   ];
   const list = showB ? B : A;

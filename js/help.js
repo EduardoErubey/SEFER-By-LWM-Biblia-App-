@@ -7,7 +7,7 @@ function openSeferHelp(){
   const title = document.getElementById('im-title');
   if(title) title.textContent = 'Ayuda de SIFRIÁ';
   const sub = document.getElementById('im-sub');
-  if(sub) sub.textContent = 'Life Word Mission · Playa del Carmen';
+  if(sub) sub.textContent = 'SIFRIÁ סִפְרִיָּה';
 
   const glassThemes = ['amoled','lwm-night','mexico','ucrania','corea'];
   const isGlass = (typeof currentTheme !== 'undefined' && glassThemes.indexOf(currentTheme) >= 0);
@@ -22,7 +22,7 @@ function openSeferHelp(){
     plan: '📅 Plan 1 año',
     proj: isGlass ? '🖥️ Proyectar' : '🎬 Proyectar',
     help: isGlass ? 'ℹ️ Ayuda' : '❓ Ayuda',
-    tourBtn: isGlass ? '✨ Iniciar tour interactivo' : '🎯 Iniciar tour interactivo'
+    tourBtn: isGlass ? '✨ Iniciar tour (zonas de SIFRIÁ)' : '🎯 Iniciar tour (zonas de SIFRIÁ)'
   };
   const ytSvg = '<svg class="yt-logo" viewBox="0 0 28 20" width="16" height="12" aria-hidden="true" style="vertical-align:-1px;margin-right:3px"><rect width="28" height="20" rx="4" fill="#FF0000"/><path d="M11 5.5v9l7.5-4.5L11 5.5z" fill="#fff"/></svg>';
 
@@ -36,7 +36,7 @@ function openSeferHelp(){
     <div class="im-text">
     <strong>SIFRIÁ</strong> (סִפְרִיָּה) es tu herramienta para <strong>leer</strong>, <strong>estudiar</strong> y <strong>proyectar</strong> la Biblia.<br><br>
     Texto predeterminado: <strong>Reina-Valera 1960</strong>. También: RV1909, RV2015, NVI, NTV y TLA.<br><br>
-    Si es tu primera vez, pulsa <strong>Iniciar tour interactivo</strong> para conocer las zonas de la app.
+    Si es tu primera vez, pulsa <strong>Iniciar tour (zonas de SIFRIÁ)</strong> para conocer las zonas de la app.
     </div></div>
 
     <div class="im-block"><div class="im-label">2. Mapa de SIFRIÁ</div>

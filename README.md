@@ -1,7 +1,7 @@
 # SIFRIÁ סִפְרִיָּה
 
 **SIFRIÁ** (סִפְרִיָּה) es una aplicación web de estudio y proyección bíblica  
-desarrollada para **Life Word Mission · Playa del Carmen**.
+aplicación web de estudio y proyección bíblica.
 
 Lee, busca, anota, proyecta y estudia la Biblia desde el navegador — sin instalar nada.
 
@@ -31,7 +31,7 @@ Abre el sitio publicado en GitHub Pages (la URL de tu repositorio) o abre `index
 - **Proyección** para culto (versículo, selección o capítulo; comparar traducciones)  
 - **YouTube** en la barra lateral (sermón junto a la lectura)  
 - **10 temas** en 2 lotes:  
-  - Clásicos: Life Word Mission, Edén, Sándalo, Reino, Arena  
+  - Clásicos: Día, Edén, Sándalo, Reino, Arena  
   - Glass: Day Glass, Night Glass, Mex Glass, Ukr Glass, Kor Glass  
 - **Tour guiado** e **Ayuda** integrados  
 - **Atajos de teclado** (ver Ayuda dentro de la app)  
@@ -51,3 +51,4 @@ Abre el sitio publicado en GitHub Pages (la URL de tu repositorio) o abre `index
 ├── styles/             # Hojas de estilo
 ├── js/                 # Lógica de la aplicación
 └── data/               # Diccionario, plan, genealogía, etc.
+

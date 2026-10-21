@@ -1,15 +1,137 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.23-stable";
-const SEFER_VERSION_NAME = "Buscador: scroll al escribir referencias largas";
+const SEFER_VERSION = "2.5.33-stable";
+const SEFER_VERSION_NAME = "Toolkit estable en 2.º monitor / TV";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.33-stable",
+    name: "Toolkit estable en 2.º monitor / TV",
+    date: "2026-10-20",
+    current: true,
+    changes: [
+      "Corrección de botones desacomodados en monitor secundario / TV",
+      "Se deja de usar transform:scale en la toolkit (provocaba desalineación)",
+      "Densidad automática (tk-density) según el ancho real de la ventana",
+      "Reajuste al cambiar de monitor, redimensionar o volver a la pestaña"
+    ]
+  },
+
+  {
+    id: "2.5.32-stable",
+    name: "Imagotipo: paletas arena, reino y glass",
+    date: "2026-09-21",
+    current: false,
+    changes: [
+      "Arena: páginas arena, lomo vino, acento oro (alineado al tema)",
+      "Reino: páginas navy, lomo y marca en oro (sin púrpura)",
+      "Glass (day/mex/ukr/kor/night): tonos cristal acordes a cada base",
+      "Mejor contraste marca/lomo sobre el fondo de cada tema"
+    ]
+  },
+
+  {
+    id: "2.5.31-stable",
+    name: "Imagotipo libro + branding bicolor unificado",
+    date: "2026-09-21",
+    current: false,
+    changes: [
+      "SVG reducido al libro (sin texto dentro del dibujo)",
+      "Branding SIFRIÁ + סִפְרִיָּה bicolor junto al imagotipo en bienvenida y cabecera",
+      "Menos separación entre logo y mensaje de bienvenida",
+      "Paleta del logo con mejor contraste por tema (incluye night)"
+    ]
+  },
+
+  {
+    id: "2.5.30-stable",
+    name: "Sin LWM/PDC; bienvenida y tipografía unificadas",
+    date: "2026-09-21",
+    current: false,
+    changes: [
+      "Eliminados textos BY LWM PDC, Life Word Mission, Playa del Carmen en UI, bienvenida, ayuda, tour y README",
+      "Bienvenida: menos espacio entre el logo SVG y el mensaje",
+      "Branding y bienvenida usan tipografía serif (Georgia) alineada al imagotipo"
+    ]
+  },
+
+  {
+    id: "2.5.29-stable",
+    name: "Logo: armonía total con el tema",
+    date: "2026-09-21",
+    current: false,
+    changes: [
+      "Logo transparente; toda la paleta del imagotipo sigue al tema",
+      "Páginas del libro ya no son azul fijo: tonos derivados de cada tema",
+      "Lomo y logotipo: --logo-spine / --logo-gold; páginas: --logo-page / --logo-page-deep",
+      "Armonía revisada en México, Corea, Ucrania, clásicos, night y glass"
+    ]
+  },
+
+  {
+    id: "2.5.28-stable",
+    name: "Logo transparente + armonía por tema",
+    date: "2026-09-21",
+    current: false,
+    changes: [
+      "Logo sin fondo blanco (transparencia)",
+      "Logotipo y lomo del libro siguen el tema (--logo-spine / --logo-gold)",
+      "Páginas de agua: cian armonizado por tema (--logo-water)",
+      "Armonía revisada para México, Corea, Ucrania, clásicos, night y glass"
+    ]
+  },
+
+  {
+    id: "2.5.27-stable",
+    name: "Logo SVG sin fondo (transparente)",
+    date: "2026-09-21",
+    current: false,
+    changes: [
+      "Logo SIFRIÁ: fondo blanco eliminado (transparencia)",
+      "Páginas de agua y dibujo sin cambios"
+    ]
+  },
+  {
+    id: "2.5.26-stable",
+    name: "Logo SVG del usuario, colores de tema",
+    date: "2026-09-21",
+    current: false,
+    changes: [
+      "Bienvenida: logo oficial SIFRIÁ (SVG del usuario)",
+      "Colores adaptativos al tema: oro (--gold) e ink/marca (--rubric)",
+      "Páginas de agua del libro: color fijo (no cambian con el tema)"
+    ]
+  },
+
+  {
+    id: "2.5.25-stable",
+    name: "Revert logo SVG e icono PWA",
+    date: "2026-09-19",
+    current: false,
+    changes: [
+      "Bienvenida: vuelve al texto SIFRIÁ + סִפְרִיָּה bicolor (sin logo SVG del libro)",
+      "Eliminados favicon/icon SVG, manifest.json y enlaces PWA de la 2.5.24",
+      "Se mantienen mejoras de historial (23b) y el resto de la app"
+    ]
+  },
+  {
+    id: "2.5.24-stable",
+    name: "PWA, favicon, logo bienvenida, alta+media",
+    date: "2026-09-19",
+    current: false,
+    changes: [
+      "Prioridad alta: historial alineado con SEFER_VERSION (base 2.5.23b); sin tour.js huérfano en la raíz",
+      "PWA: manifest.json + favicon/icon SVG (libro ספר|יה)",
+      "Bienvenida: logo SVG SIFRIÁ + סִפְרִיָּה bicolor con colores del tema (--rubric / --gold)",
+      "Ayuda/tour: textos más limpios; tour orientado a zonas, detalle en Ayuda"
+    ]
+  },
+  {
     id: "2.5.23-stable",
     name: "Buscador: scroll al escribir referencias largas",
     date: "2026-09-17",
-    current: true,
+    current: false,
     changes: [
       "Buscador de versículos: al escribir, el campo se desplaza para mostrar el cursor y el final del texto",
       "Útil con 2–3 pasajes unidos por | o /"

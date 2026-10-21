@@ -1484,3 +1484,109 @@ body[data-theme="lwm-night"] #topbar-actions .tb-group + .tb-group {
 [data-theme] .welcome .brand-heb-b {
   color: var(--gold) !important;
 }
+
+/* ========== Logo SIFRIÁ — paletas revisadas (arena, reino, glass prioritarios) ========== */
+
+/* Arena: pergamino arena, vino y oro — páginas arena clara, lomo vino, acento oro */
+[data-theme="arena"] {
+  --logo-page: #F2E8D0;
+  --logo-page-deep: #D4B87A;
+  --logo-spine: #8A2E28;
+  --logo-gold: #A6822B;
+  --logo-mark: #8A2E28;
+}
+
+/* Reino: fondo navy, oro real — páginas azul noche suave, lomo/marca oro */
+[data-theme="reino"] {
+  --logo-page: #2A3D5C;
+  --logo-page-deep: #1A2A42;
+  --logo-spine: #C9A227;
+  --logo-gold: #E0C35A;
+  --logo-mark: #E0C35A;
+}
+
+/* Edén / Sándalo (coherencia con clásicos) */
+[data-theme="eden"] {
+  --logo-page: #E4EEDC;
+  --logo-page-deep: #8AAA70;
+  --logo-spine: #5B7A4A;
+  --logo-gold: #A68B3C;
+  --logo-mark: #5B7A4A;
+}
+[data-theme="sandalo"] {
+  --logo-page: #3A3228;
+  --logo-page-deep: #2A241C;
+  --logo-spine: #C75B54;
+  --logo-gold: #D4AF37;
+  --logo-mark: #D4AF37;
+}
+
+/* Día clásico */
+[data-theme="lwm-day"], [data-theme="life-word-mission"], [data-theme="day"],
+[data-theme="claro"], [data-theme="paz"] {
+  --logo-page: #D8EAF8;
+  --logo-page-deep: #6AADD9;
+  --logo-spine: #0B5CAB;
+  --logo-gold: #1A7AD4;
+  --logo-mark: #0B5CAB;
+}
+
+/* Glass — misma familia que el tema base, tonos un poco más suaves/cristal */
+[data-theme="day-glass"], [data-theme="glass"] {
+  --logo-page: #E8F4FC;
+  --logo-page-deep: #8EC4E8;
+  --logo-spine: #0B5CAB;
+  --logo-gold: #0071E3;
+  --logo-mark: #0B5CAB;
+}
+[data-theme="mex-glass"] {
+  --logo-page: #E4F2EA;
+  --logo-page-deep: #7BC4A0;
+  --logo-spine: #006847;
+  --logo-gold: #CE1126;
+  --logo-mark: #006847;
+}
+[data-theme="ukr-glass"] {
+  --logo-page: #EEF4FC;
+  --logo-page-deep: #7AAFE0;
+  --logo-spine: #0057B7;
+  --logo-gold: #E6C200;
+  --logo-mark: #0057B7;
+}
+[data-theme="kor-glass"] {
+  --logo-page: #FCF0F1;
+  --logo-page-deep: #E88890;
+  --logo-spine: #CD2E3A;
+  --logo-gold: #0047A0;
+  --logo-mark: #CD2E3A;
+}
+[data-theme="night-glass"], [data-theme="lwm-night"], [data-theme="night"], [data-theme="amoled"] {
+  --logo-page: #2A3A4E;
+  --logo-page-deep: #1A2838;
+  --logo-spine: #5AC8FF;
+  --logo-gold: #0A84FF;
+  --logo-mark: #5AC8FF;
+}
+
+/* Banderas clásicas (no glass) */
+[data-theme="mexico"] {
+  --logo-page: #E4F2EA;
+  --logo-page-deep: #6BBF94;
+  --logo-spine: #006847;
+  --logo-gold: #CE1126;
+  --logo-mark: #006847;
+}
+[data-theme="corea"], [data-theme="korea"] {
+  --logo-page: #FCF0F1;
+  --logo-page-deep: #E07078;
+  --logo-spine: #CD2E3A;
+  --logo-gold: #0047A0;
+  --logo-mark: #CD2E3A;
+}
+[data-theme="ucrania"] {
+  --logo-page: #EEF4FC;
+  --logo-page-deep: #5B9AE0;
+  --logo-spine: #0057B7;
+  --logo-gold: #E6C200;
+  --logo-mark: #0057B7;
+}

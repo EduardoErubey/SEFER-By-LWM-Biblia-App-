@@ -32,9 +32,9 @@ body.mobile-mode #mobile-footer-search #ref-search-wrap{margin-top:0;}
 
 #nav-header{padding:18px 16px 12px;border-bottom:1px solid var(--line);}
 
-#nav-header .brand, #mobile-header .brand{font-family:var(--font-display);font-weight:600;font-size:19px;color:var(--rubric);letter-spacing:0.2px;}
+#nav-header .brand, #mobile-header .brand{font-family:Georgia,"Times New Roman",serif;font-weight:600;font-size:20px;color:var(--rubric);letter-spacing:0.04em;}
 
-#nav-header .brand-sub, #mobile-header .brand-sub{font-size:10px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.8px;margin-top:2px;line-height:1.3;}
+#nav-header .brand-sub, #mobile-header .brand-sub{display:none !important;}
 
 #nav-header-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
 
@@ -799,3 +799,126 @@ body.yt-sidebar-active #yt-iframe-box iframe {
   white-space: nowrap !important;
   text-overflow: clip !important;
 }
+
+
+
+
+
+/* .sifria-logo-water: colores originales del SVG (páginas de agua) — no sobrescribir */
+
+/* ========== Logo SIFRIÁ — paleta unificada por tema ========== */
+:root {
+  /* Derivados por defecto (tema claro genérico) */
+  --logo-page: color-mix(in srgb, var(--rubric) 35%, #E8F4FA 65%);
+  --logo-page-deep: color-mix(in srgb, var(--rubric) 55%, #B8D4E8 45%);
+  --logo-spine: var(--rubric);
+  --logo-gold: var(--gold);
+  --logo-mark: var(--rubric);
+}
+.welcome-logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 12px;
+  max-width: 300px;
+  width: 100%;
+  background: transparent;
+}
+.welcome-sifria-logo,
+.sifria-logo-root {
+  width: 100%;
+  height: auto;
+  max-width: 280px;
+  display: block;
+  background: transparent !important;
+}
+.sifria-logo-page,
+.sifria-logo-water {
+  fill: var(--logo-page) !important;
+  color: var(--logo-page);
+}
+.sifria-logo-page-deep {
+  fill: var(--logo-page-deep) !important;
+  color: var(--logo-page-deep);
+}
+.sifria-logo-spine,
+.sifria-logo-ink {
+  fill: var(--logo-spine) !important;
+  color: var(--logo-spine);
+}
+.sifria-logo-gold {
+  fill: var(--logo-gold) !important;
+  color: var(--logo-gold);
+}
+
+/* Bienvenida: logo y texto más juntos; tipografía alineada al imagotipo */
+.welcome-logo-wrap.welcome-logo-tight{
+  margin: 0 auto 4px !important;
+  max-width: 260px;
+}
+.welcome .welcome-logo-wrap + p,
+.welcome-mobile .welcome-logo-wrap + p{
+  margin-top: 6px !important;
+}
+.welcome,
+.welcome-mobile{
+  font-family: Georgia, "Times New Roman", serif;
+}
+.welcome p,
+.welcome-mobile p,
+.welcome .welcome-hint,
+.welcome-mobile .welcome-hint{
+  font-family: Georgia, "Times New Roman", serif;
+}
+.welcome-brand,
+.brand{
+  font-family: Georgia, "Times New Roman", serif !important;
+  letter-spacing: 0.04em;
+}
+.brand-heb{
+  font-family: Georgia, "Times New Roman", "Noto Serif Hebrew", serif !important;
+}
+
+/* ===== Imagotipo + branding (bienvenida) ===== */
+.welcome-hero{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0;
+  margin:0 auto 10px;
+}
+.welcome-logo-wrap.welcome-logo-tight{
+  margin:0 auto !important;
+  max-width:220px !important;
+  line-height:0;
+}
+.welcome-sifria-logo{
+  max-width:220px !important;
+  height:auto;
+}
+.welcome-brand-lockup{
+  text-align:center;
+  margin:2px 0 0;
+  line-height:1.15;
+}
+.welcome-brand-latin{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(28px, 5vw, 40px);
+  font-weight:600;
+  letter-spacing:0.06em;
+}
+.welcome-brand-heb{
+  font-family:Georgia,"Noto Serif Hebrew","Times New Roman",serif;
+  font-size:clamp(18px, 3.2vw, 24px);
+  font-weight:600;
+  margin-top:2px;
+  direction:rtl;
+}
+.brand-lat-a{ color: var(--logo-mark, var(--rubric)); }
+.brand-lat-b{ color: var(--logo-gold, var(--gold)); }
+.brand-heb-a{ color: var(--logo-mark, var(--rubric)); }
+.brand-heb-b{ color: var(--logo-gold, var(--gold)); }
+#nav-header .brand .brand-lat-a{ color: var(--logo-mark, var(--rubric)); }
+#nav-header .brand .brand-lat-b{ color: var(--logo-gold, var(--gold)); }
+.welcome p{ margin-top:12px; }
+.welcome-mobile p{ margin-top:10px; }
