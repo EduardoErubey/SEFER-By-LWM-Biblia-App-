@@ -132,7 +132,7 @@ function goToRandomVerse(){
     var st = document.getElementById('stage');
     if(st){ st.classList.remove('stage-stack','stage-stack-2','stage-stack-3','stage-compare'); }
     var paneB = document.getElementById('stage-pane-b');
-    if(paneB){ paneB.style.display = 'none'; paneB.style.visibility = 'hidden'; }
+    if(paneB){ paneB.style.display = 'none'; paneB.style.visibility = ''; }
     var paneC = document.getElementById('stage-pane-c');
     if(paneC){ paneC.style.display = 'none'; }
     var tb = document.getElementById('stage-text-b');

@@ -1,15 +1,28 @@
 /* SEFER data — sefer-version.js (extraído de index.html, sin cambios de lógica) */
 /* SEFER version control (local entre Grok y usuario) */
-const SEFER_VERSION = "2.5.34-stable";
-const SEFER_VERSION_NAME = "Dado: un solo versículo en proyección";
+const SEFER_VERSION = "2.5.35-stable";
+const SEFER_VERSION_NAME = "Proyectar 2–3 versículos / libros restaurado";
 
 
 const SEFER_VERSION_HISTORY = [
   {
+    id: "2.5.35-stable",
+    name: "Proyectar 2–3 versículos / libros restaurado",
+    date: "2026-10-22",
+    current: true,
+    changes: [
+      "Corregido: proyectar 2 versículos solo mostraba 1; con 3 solo se veían 2",
+      "Causa: el arreglo del dado dejaba el panel B invisible (visibility:hidden)",
+      "Stack de 2–3 libros y selección múltiple vuelven a mostrar todos los pasajes",
+      "El dado sigue proyectando un solo versículo"
+    ]
+  },
+
+  {
     id: "2.5.34-stable",
     name: "Dado: un solo versículo en proyección",
     date: "2026-10-21",
-    current: true,
+    current: false,
     changes: [
       "El dado proyecta exactamente un versículo",
       "Se limpian paneles de stack/compare residuales al usar el dado",

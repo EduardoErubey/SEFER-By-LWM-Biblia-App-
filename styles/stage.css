@@ -209,5 +209,13 @@ body.mobile-mode #stage-exit{top:14px;right:14px;font-size:11px;padding:5px 10px
 #stage:not(.stage-stack):not(.stage-compare) #stage-pane-b,
 #stage:not(.stage-stack):not(.stage-compare) #stage-pane-c{
   display:none !important;
-  visibility:hidden !important;
+}
+#stage.stage-stack #stage-pane-b,
+#stage.stage-compare #stage-pane-b{
+  display:block !important;
+  visibility:visible !important;
+}
+#stage.stage-stack-3 #stage-pane-c{
+  display:block !important;
+  visibility:visible !important;
 }

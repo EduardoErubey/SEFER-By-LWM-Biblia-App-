@@ -20,12 +20,20 @@ let stageStackThird = null;
 let stageCompareData = null; // segundo corpus BIBLE para compare
 
 function openStage(book, chap, verses, mode){
-  var vlist = (verses && verses.length) ? [...verses].map(String) : [];
-  stageMode = mode || (vlist.length > 1 ? 'selection' : 'single');
-  /* Si es single (p. ej. dado), forzar exactamente un versículo */
-  if(stageMode === 'single' && vlist.length > 1) vlist = [vlist[0]];
-  if(stageMode === 'single' && vlist.length === 0) return;
-  stagePassages = [{book, chap, verses: vlist.slice().sort((a,b)=>+a-+b)}];
+  var vlist = (verses && verses.length) ? [...verses].map(String).filter(Boolean) : [];
+  /* quitar duplicados conservando orden */
+  vlist = vlist.filter(function(v, i, a){ return a.indexOf(v) === i; });
+
+  /* Solo el dado fuerza un versículo: mode==="single" Y stageFromDice */
+  if(mode === 'single' && stageFromDice){
+    stageMode = 'single';
+    if(vlist.length > 1) vlist = [vlist[0]];
+  } else {
+    stageMode = mode || (vlist.length > 1 ? 'selection' : 'single');
+  }
+  if(!vlist.length) return;
+
+  stagePassages = [{book: book, chap: chap, verses: vlist.slice().sort(function(a,b){ return (+a) - (+b); })}];
   stageIndex = 0;
   stageStackSecond = null;
   stageStackThird = null;
@@ -35,18 +43,21 @@ function openStage(book, chap, verses, mode){
   if(stage){
     stage.classList.remove('stage-stack','stage-stack-2','stage-stack-3','stage-compare');
   }
-  const paneB = document.getElementById('stage-pane-b');
+  var paneB = document.getElementById('stage-pane-b');
   if(paneB){
     paneB.style.display = 'none';
-    paneB.style.visibility = 'hidden';
+    paneB.style.visibility = '';
   }
-  const paneC = document.getElementById('stage-pane-c');
-  if(paneC) paneC.style.display = 'none';
-  const textB = document.getElementById('stage-text-b');
+  var paneC = document.getElementById('stage-pane-c');
+  if(paneC){
+    paneC.style.display = 'none';
+    paneC.style.visibility = '';
+  }
+  var textB = document.getElementById('stage-text-b');
   if(textB) textB.innerHTML = '';
-  const refB = document.getElementById('stage-ref-b');
+  var refB = document.getElementById('stage-ref-b');
   if(refB) refB.textContent = '';
-  const sel = document.getElementById('stage-compare-sel');
+  var sel = document.getElementById('stage-compare-sel');
   if(sel) sel.style.display = 'none';
   renderStage();
   stage.classList.add('open');
@@ -74,7 +85,7 @@ function openStageStack(p1, p2, p3){
     else stage.classList.add('stage-stack-2');
   }
   const paneB = document.getElementById('stage-pane-b');
-  if(paneB) paneB.style.display = '';
+  if(paneB){ paneB.style.display = ''; paneB.style.visibility = 'visible'; }
   let paneC = document.getElementById('stage-pane-c');
   if(list.length >= 3){
     if(!paneC){
@@ -87,7 +98,7 @@ function openStageStack(p1, p2, p3){
         body.appendChild(paneC);
       }
     }
-    if(paneC) paneC.style.display = '';
+    if(paneC){ paneC.style.display = ''; paneC.style.visibility = 'visible'; }
   } else if(paneC){
     paneC.style.display = 'none';
   }
@@ -206,7 +217,7 @@ function renderStage(){
   const textB = document.getElementById('stage-text-b');
   if(stageMode === 'stack' && stageStackSecond){
     if(stage) stage.classList.add('stage-stack');
-    if(paneB) paneB.style.display = '';
+    if(paneB){ paneB.style.display = ''; paneB.style.visibility = 'visible'; }
     try{
       fillStagePane(refB, textB, stageStackSecond.book, stageStackSecond.chap, stageStackSecond.verses, null, BIBLE);
     }catch(e){ console.warn(e); }
@@ -214,7 +225,7 @@ function renderStage(){
     const refC = document.getElementById('stage-ref-c');
     const textC = document.getElementById('stage-text-c');
     if(stageStackThird){
-      if(paneC) paneC.style.display = '';
+      if(paneC){ paneC.style.display = ''; paneC.style.visibility = 'visible'; }
       try{ fillStagePane(refC, textC, stageStackThird.book, stageStackThird.chap, stageStackThird.verses, null, BIBLE); }catch(e){ console.warn(e); }
     } else if(paneC){
       paneC.style.display = 'none';
@@ -235,9 +246,9 @@ function renderStage(){
     }
   } else {
     if(stage){ stage.classList.remove('stage-stack','stage-stack-2','stage-stack-3','stage-compare'); }
-    if(paneB){ paneB.style.display = 'none'; paneB.style.visibility = 'hidden'; }
+    if(paneB){ paneB.style.display = 'none'; paneB.style.visibility = ''; }
     const _tc = document.getElementById('stage-pane-c');
-    if(_tc) _tc.style.display = 'none';
+    if(_tc){ _tc.style.display = 'none'; _tc.style.visibility = ''; }
   }
 
   // Anterior/Siguiente: ocultos en capítulo completo o stack multi-libro
